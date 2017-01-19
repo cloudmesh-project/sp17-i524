@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+
+set -o errexit                  # exit on failure
+
+declare DEST                    # one of paper1, paper2, paper3, project
+declare USER_ID                 # the homework ID or project ID
+declare OUTDIR                  # the directory that will be created.
+
+################################################################ Usage info
+
+usage() {
+cat <<EOF
+USAGE:
+  ./setup <TYPE> <ID>
+
+This script generates the scaffolding for working on the paper or
+projects. Input parameters:
+
+1) TYPE: one of "paper1", "paper2", "paper3", or "project"
+2) ID: this is your HID for the papers or PID for the project
+
+EXAMPLES:
+
+  1) Setup for paper 1 using my HID:
+    ./setup paper1 S17-EX-0000
+
+  2) Setup for the project using my PID
+    ./setup Project S17-P-0000
+EOF
+}
+
+
+################################################################ Argument checking
+
+# Fail if bad number of arguments
+case $# in
+    2);;
+    *)
+        echo "ERROR: invalid invocation: $0 $@"
+        echo
+        usage
+        exit 1
+        ;;
+esac
+
+################ check arguments
+DEST="$1"
+USER_ID="$2"
+
+# sanity check the DEST and declare TYPE
+case $DEST in
+    paper[1-3])
+        declare -r TYPE=paper
+        ;;
+    project)
+        declare -r TYPE=project
+        ;;
+    *)
+        echo "ERROR: Unsupported type $DEST"
+        echo
+        usage
+        exit 2
+        ;;
+esac
+
+################ sanity check that the USER_ID is correct
+case $TYPE in
+    paper)
+        case $USER_ID in
+            S17-??-????);;
+            *)
+                declare -r TYPE_MISMATCH_ERROR=0;;
+        esac
+esac
+
+if [ $TYPE_MISMATCH_ERROR ]; then
+    echo "ERROR: User ID '$USER_ID' is not supported for type $TYPE."
+    echo "ERROR: Check your ID"
+    echo
+    usage
+    exit 3;
+fi
+
+
+################ ensure that no previous work has been done already
+OUTDIR=$DEST/$USER_ID
+
+if [ -d $OUTDIR ]; then
+    echo "ERROR: Destination already exists: $OUTDIR"
+    echo "Make sure you specified TYPE correctly. You used: $DEST"
+    exit 4
+fi
+
+
+################################################################ 
+
+declare -r TMPDIR=$(mktemp -d)
+
+cleanup() {
+    rm -rf "$TMPDIR"
+}
+
+trap cleanup EXIT
+
+
+find_dir_contents() {
+    local -r path="$1"
+    shift
+    find "$path" -maxdepth 1 ! -path "$path" $@
+}
+
+
+git-clone-directory() {
+    # Retrieve a specific directory from a git repository
+    # NOTE: this strips the history
+    local -r url="$1"
+    local -r dir="$2"
+    local -r dst="$3"
+
+    git clone --depth 1 --recursive "$url" "$dst"
+    cd "$dst"
+
+    find_dir_contents "$dir"    -print0 | xargs -0 mv -t "$TMPDIR"
+    find_dir_contents .         -print0 | xargs -0 rm -rf
+    find_dir_contents "$TMPDIR" -print0 | xargs -0 mv -t .
+
+    rm *.docx
+
+}
+
+declare -r CLASS=git://github.com/cloudmesh/classes.git
+declare -r DIRECTORY=docs/source/format/report
+
+git-clone-directory $CLASS ./$DIRECTORY $OUTDIR
+
+echo "DONE: $OUTDIR"
