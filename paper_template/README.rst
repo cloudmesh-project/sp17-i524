@@ -1,4 +1,4 @@
-Report Format
+Using the Template
 =============
 
 This is a template that can be used for all papers in the class. Please note that we may update this template and it is your responsibility to check if your report follows the format.
@@ -13,7 +13,7 @@ Assuming you have LaTeX installed on your system, then you can go into your pape
   cd paper1/SP17-TS-0001
   make
 
-``make`` is a tool that automates builds by issuing a set of commands place in a *Makefile*. If you look at the Makefile that came with the template, you will find that the above command executed four other commands to compile the LaTeX code: ``pdflatex``, followed by ``bibtex``, followed by ``pdflatex``, followed by ``pdflatex`` again. These commands compile the file `report.tex` into `report.pdf` making sure that the references defined in `references.bib` are properly resolved and included in the final PDF.
+``make`` is a tool that automates builds by issuing a set of commands place in a *Makefile*. If you look at the Makefile that came with the template, you will find that the above command executed four other commands to compile the LaTeX code: ``pdflatex``, followed by ``bibtex``, followed by ``pdflatex``, followed by ``pdflatex`` again. These commands compile the file *report.tex* into *report.pdf* making sure that the references defined in *references.bib* are properly resolved and included in the final PDF.
 
 To view the generated report, you can execute the ``view`` target in the Makefile::
 
