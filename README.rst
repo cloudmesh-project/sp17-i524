@@ -12,19 +12,22 @@ Before submitting, use the `check-paper.sh` and `check-project.sh`
 script to check for some common submission errors.
 
 
-Paper submissions
-----------------
 
-Copy the `paper_template` directory into the appropriate
-`paper#/HID`. For example: if my HID is `sp17-st000`::
+Submissions
+-----------
 
+Setup your paper or project using the ``setup`` script.
+For example, if my HID is `S17-EX-0000`::
 
-  $ cp paper_template paper1/sp17-st000
+  $ ./setup paper1 S17-EX-0000
 
+This will setup a directory ``paper1/S17-EX-0000`` with all LaTeX
+materials to work on.
 
-Before submitting, run the `check-paper.sh` script on your submission
-to catch some common submission errors::
+Please make your changes to ``report.tex``.
 
+Before submitting a pull request, you should run the
+``check-paper.sh`` and ``check-project.sh`` scripts as needed::
 
   $ ./check-paper.sh paper#/HID
 
@@ -33,22 +36,3 @@ When ready to submit, create a pull request to
 https://github.com/cloudmesh/sp17-i524 with the subject in the form
 `paper# HID`. For example: `paper1 sp17-st000`
 
-
-Project submissions
-------------------
-
-Copy the `project_template` directory into the `projects/PID`
-directory. For example::
-
-$ cp project_template projects/sp17-p000
-
-
-Before submitting, run the `check-project.sh` script to catch some
-common errors::
-
-$ ./check-project.sh projects/PID
-
-
-When ready tp submit, create a pull request tp
-https://github.com/cloudmesh/sp17-i524 with the subject in the form
-`project PID`. For example: `project sp17-p000`.
