@@ -89,7 +89,14 @@ ENV/
 .ropeproject
 
 # LaTeX
-.aux
-.bbl
-.blg
-.log
+*.aux
+*.bbl
+*.dvi
+*.log
+*.out
+*.blg
+*.toc
+*.fdb_latexmk
+*.fls
+*.tdo
+*.bcf
