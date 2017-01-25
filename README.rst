@@ -5,6 +5,12 @@ Repository: https://github.com/cloudmesh/sp17-i524
 
 Class submissions for Spring 2017 i524
 
+0. We assume you have a GitHub account an uploaded your SSH key.
+
+   - `Linux Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux>`_
+   - `Windows Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-windows>`_
+   - `Mac Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-mac>`_
+   
 1. You will be assigned a **homework id** (or HID in the rest of this document).
 2. You will be assigned a **project id** (or PID in the rest of this document).
 3. Fork this repository by clicking the "Fork" button on the top right of this page.
