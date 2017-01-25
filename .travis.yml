@@ -1,5 +1,7 @@
+sudo: required
+services:
+  - docker
 before_install:
-  - sudo apt-get update 
-  - sudo apt-get install -y texlive-latex-extra
+  - docker pull badi/texlive
 script:
-  - make
+  - docker run -it -v $(pwd):/data --rm badi/texlive
