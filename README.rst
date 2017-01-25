@@ -15,7 +15,7 @@ Class submissions for Spring 2017 i524
 
    $ git remote add upstream https://github.com/cloudmesh/sp17-i524
 
-6. Keep your fork up to date https://help.github.com/articles/syncing-a-fork/::
+6. Keep your fork up to date https://help.github.com/articles/syncing-a-fork/
 
 ::
 
