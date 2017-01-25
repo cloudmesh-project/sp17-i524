@@ -90,7 +90,9 @@ If you have a LaTeX environment set up on your compute, you can compile the temp
   $ cd paper1/S17-EX-0000
   $ make
 
-This will compile the contents of the *report.tex* file in the template directory, resolve the references in *references.bib* and create a *report.pdf* file that you can then look at in your favorite PDF viewer.
+This will compile the contents of the *report.tex* file in the template directory, resolve the references in *references.bib* and create a *report.pdf*. You can then view the report with::
+
+  $ make view
 
 If you are using an online environment like ShareLaTeX, you will need to import the template files into it and compile the template that way.
 
