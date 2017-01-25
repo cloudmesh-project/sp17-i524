@@ -7,7 +7,7 @@ Class submissions for Spring 2017 i524
 
 1. You will be assigned a **homework id** (or HID in the rest of this document).
 2. You will be assigned a **project id** (or PID in the rest of this document).
-3. Fork this repository: https://github.com/cloudmesh/sp17-i524#fork-destination-box
+3. Fork this repository by clicking the "Fork" button on the top right of this page.
 4. Clone your forked repository
 5. Add the upstream repository https://help.github.com/articles/configuring-a-remote-for-a-fork/  ::
 
