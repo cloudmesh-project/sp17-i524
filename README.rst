@@ -93,7 +93,12 @@ recommend `TeXLive <http://www.tug.org/texlive>`_ for Linux, `MacTeX
 <http://www.tug.org/mactex/>`_ for OSX, `TexLive
 <http://www.tug.org/texlive>`_ for Windows. In addition, there are
 online LaTeX environments that you can use independent of what your OS
-is. One we recommend is `ShareLaTeX <https://www.sharelatex.com/>`_.
+is. One we recommend is `ShareLaTeX
+<https://www.sharelatex.com/>`_. Please note that other distributions
+you might be tempted to use, such as BasicTex on OSX do not contain
+all styles and packages by default and you might run into issues. If
+you don't have previous experience with LaTeX, please stick to the
+recomendation for your OS.
 
 If you have a LaTeX environment set up on your compute, you can
 compile the template by using the *make* utility that comes with the
