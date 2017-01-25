@@ -148,4 +148,3 @@ download the ShareLatex content, it needs to be following the original
 layout we have delivered as part of the instructions.  We may not have
 the time to work with you on uploading and fixing your ShareLatex,
 this will be up to you.
-
