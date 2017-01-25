@@ -12,8 +12,6 @@ You will be assigned a **homework id** (or `HID` in the rest of this document).
 You can verify your HID in `this Piazza
 thread <https://piazza.com/class/ix39m27czn5uw?cid=31>`_.
 
-You will be assigned a **project id** (or `PID` in the rest of this document).
-
 Additionally, we assume you have a GitHub account an uploaded your SSH key:
 
 - `Linux Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux>`_
