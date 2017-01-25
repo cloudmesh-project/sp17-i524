@@ -94,7 +94,37 @@ fi
 
 ################################################################ 
 
-declare -r TMPDIR=$(mktemp -d)
+## cross platform support
+
+mymktemp() {
+    ## `mktemp` works differently on linux and os x
+    ## The REAL issue is that Mac comes with BSD mktemp while Linux has GNU mktemp
+    ## These each support different flags.
+    ##
+    ## While checking with `uname` is not really the best option, it has caught most cases.
+    ##
+    ## Tested on
+    ## [x] macOS 10.12
+    ## [x] Linux
+    ## [ ] Windows with Cygwin
+    ## [ ] Windows with Ubuntu
+
+    case $(uname) in
+        Linux|Cygwin)
+            mktemp $@;;
+        Darwin)
+            mktemp -t 'tmp' $@;;
+        *)
+            echo "ERROR: unsupported platform $(uname)"
+            echo "Please file a bug at https://github.com/cloudmesh/sp17-i524/issues"
+            exit 3
+            ;;
+    esac
+}
+
+
+################################################################
+declare -r TMPDIR=$(mymktemp -d)
 
 cleanup() {
     rm -rf "$TMPDIR"
@@ -120,9 +150,10 @@ git-clone-directory() {
     git clone --depth 1 --recursive "$url" "$dst"
     cd "$dst"
 
-    find_dir_contents "$dir"    -print0 | xargs -0 mv -t "$TMPDIR"
-    find_dir_contents .         -print0 | xargs -0 rm -rf
-    find_dir_contents "$TMPDIR" -print0 | xargs -0 mv -t .
+    ## the pipe into read is due to `mv` on macOS not supporting `-t`
+    find_dir_contents "$dir"    -print0 | xargs -0 -n 1 | while read path; do mv "$path" "$TMPDIR"; done
+    find_dir_contents .         -print0 | xargs -0      rm -rf
+    find_dir_contents "$TMPDIR" -print0 | xargs -0 -n 1 | while read path; do mv "$path" "$PWD"; done
 
     rm *.docx
 
