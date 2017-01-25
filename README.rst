@@ -27,7 +27,7 @@ Setup Git
 example::
 
   $ git config --global user.name "Albert Zweistein"
-  $ git config --global user.email albert.zsweistein@gmail.com
+  $ git config --global user.email albert.zweistein@gmail.com
 
    
 2. Fork this repository by clicking the "Fork" button on the top right of this page.
