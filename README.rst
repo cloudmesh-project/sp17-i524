@@ -10,7 +10,7 @@ Class submissions for Spring 2017 i524
 3. Fork this repository by clicking the "Fork" button on the top right of this page.
    Verify that your github username is in the url. Eg::
    
-      https://github.com/YOUR_USERNAME/sp17-i524
+      https://github.com/YOUR_GITHUB_USERNAME/sp17-i524
    
 4. Clone your forked repository
 5. Add the upstream repository https://help.github.com/articles/configuring-a-remote-for-a-fork/  ::
