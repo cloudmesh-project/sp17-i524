@@ -1,4 +1,4 @@
- sp17-i524
+sp17-i524
 ----------
 
 Repository: https://github.com/cloudmesh/sp17-i524
