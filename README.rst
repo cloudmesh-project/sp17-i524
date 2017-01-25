@@ -79,8 +79,8 @@ Setting up Git and Repository
 First, make sure that git on your computer is configured properly. For
 example::
 
-  $ git config --global user.name "Dimitar Nikolov"
-  $ git config --global user.email dimitar.g.nikolov@gmail.com
+  $ git config --global user.name "Albert Zweistein"
+  $ git config --global user.email albert.zsweistein@gmail.com
 
 Next, you need to fork this repository using the *Fork* button on its
 Github page. This will create a copy of the repository under your
@@ -107,15 +107,15 @@ forked from). Currently, it only knows about the *origin* repository (the
 for in your Github account). To see this, run::
 
   $ git remote -v
-  origin  https://github.com/dimitargnikolov/sp17-i524.git (fetch)
-  origin  https://github.com/dimitargnikolov/sp17-i524.git (push)
+  origin  https://github.com/albertzweistein/sp17-i524.git (fetch)
+  origin  https://github.com/albertszweistein/sp17-i524.git (push)
 
 You can add upstream and verify you did so as follows::
 
   $ git remote add upstream https://github.com/cloudmesh/sp17-i524.git
   $ git remote -v
-  origin  https://github.com/dimitargnikolov/sp17-i524.git (fetch)
-  origin  https://github.com/dimitargnikolov/sp17-i524.git (push)
+  origin  https://github.com/albertzweistein/sp17-i524.git (fetch)
+  origin  https://github.com/albertzweistein/sp17-i524.git (push)
   upstream  https://github.com/cloudmesh/sp17-i524.git (fetch)
   upstream  https://github.com/cloudmesh/sp17-i524.git (push)
      
