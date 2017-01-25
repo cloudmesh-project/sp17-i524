@@ -23,6 +23,11 @@ Class submissions for Spring 2017 i524
    $ git merge upstream/master
    
 7. Push your changes to your fork
+
+   ::
+   
+     $ git push
+     
 8. Create a pull request
 
 Before submitting, use the `check-paper.sh` and `check-project.sh`
