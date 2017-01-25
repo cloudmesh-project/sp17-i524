@@ -105,6 +105,8 @@ First, make sure your repository is synchronized with the *upstream*::
   $ git fetch upstream
   $ git rebase upstream/master
 
+Build your report using the ``make`` command.
+
 Push your changes and submit a pull request::
 
   $ git push origin master
@@ -116,25 +118,3 @@ https://github.com/cloudmesh/sp17-i524 with the subject in the form
 `paper# HID`. For example: `paper1 S17-EX-0000`
 
 
-Submissions
------------
-
-Setup your paper or project using the ``setup`` script.
-For example, if my HID is `S17-EX-0000`::
-
-  $ ./setup paper1 S17-EX-0000
-
-This will setup a directory ``paper1/S17-EX-0000`` with all LaTeX
-materials to work on.
-
-Please make your changes to ``report.tex``.
-
-Before submitting a pull request, you should run the
-``check-paper.sh`` and ``check-project.sh`` scripts as needed::
-
-  $ ./check-paper.sh paper#/HID
-
-
-When ready to submit, create a pull request to
-https://github.com/cloudmesh/sp17-i524 with the subject in the form
-`paper# HID`. For example: `paper1 sp17-st000`
