@@ -11,6 +11,8 @@ Class submissions for Spring 2017 i524
    - `Windows Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-windows>`_
    - `Mac Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-mac>`_
    
+   We will be referring to your GitHub username as ``YOUR_GITHUB_USERNAME`` in the rest of this document.
+   
 1. You will be assigned a **homework id** (or HID in the rest of this document).
 2. You will be assigned a **project id** (or PID in the rest of this document).
 3. Fork this repository by clicking the "Fork" button on the top right of this page.
