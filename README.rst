@@ -116,3 +116,11 @@ https://github.com/cloudmesh/sp17-i524 with the subject in the form
 `paper# HID`. For example: `paper1 S17-EX-0000`
 
 
+ShareLatex
+-----------
+
+If you elect to use ShareLatex we have no ready-made instructions for you.
+However you are allowed to use ShareLatex but you must replicate the directory structure from the latex report precisely.
+If you were download the ShareLatex content, it needs to be following the original layout we have delivered as part of the instructions.
+We may not have the time to work with you on uploading and fixing your ShareLatex, this will be up to you.
+
