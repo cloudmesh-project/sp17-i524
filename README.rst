@@ -12,7 +12,10 @@ Class submissions for Spring 2017 i524
    
       https://github.com/YOUR_GITHUB_USERNAME/sp17-i524
    
-4. Clone your forked repository
+4. Clone your forked repository::
+
+    git clone git@github.com:YOUR_GITHUB_USERNAME/sp17-i524.git
+   
 5. Add the upstream repository https://help.github.com/articles/configuring-a-remote-for-a-fork/  ::
 
    $ git remote add upstream https://github.com/cloudmesh/sp17-i524
