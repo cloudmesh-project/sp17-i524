@@ -14,11 +14,11 @@ thread <https://piazza.com/class/ix39m27czn5uw?cid=31>`_.
 
 You will be assigned a **project id** (or `PID` in the rest of this document).
 
-Additionally, we assume you have a GitHub account an uploaded your SSH key.
+Additionally, we assume you have a GitHub account an uploaded your SSH key:
 
-   - `Linux Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux>`_
-   - `Windows Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-windows>`_
-   - `Mac Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-mac>`_
+- `Linux Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux>`_
+- `Windows Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-windows>`_
+- `Mac Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-mac>`_
    
 We will be referring to your GitHub username as ``YOUR_GITHUB_USERNAME`` in the rest of this document.
 
