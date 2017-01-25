@@ -17,7 +17,9 @@ Additionally, we assume you have a GitHub account an uploaded your SSH key:
 - `Linux Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux>`_
 - `Windows Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-windows>`_
 - `Mac Instructions <https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-mac>`_
-   
+
+We recommend that if you are working on a Windows computer, you download VM Box at https://www.virtualbox.org/ and use an Ubuntu 16.04 virtual machine to do the assignments.
+
 We will be referring to your GitHub username as ``YOUR_GITHUB_USERNAME`` in the rest of this document.
 
 Setup Git
