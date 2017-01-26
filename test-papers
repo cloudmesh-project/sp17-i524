@@ -17,3 +17,4 @@ for path in hid_dirs:
         print 'OK'
     except CalledProcessError, e:
         print 'FAIL'
+        raise
