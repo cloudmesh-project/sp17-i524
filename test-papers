@@ -91,6 +91,11 @@ class Verifier(object):
             if not req.status_code == 200:
                 raise ValueError('ERROR: Github user {} does not exist at {}'.format(username, user_url))
 
+        if 'report' in params:
+            report = os.path.join(self.path, submission['report'])
+            if not os.path.exists(report):
+                raise ValueError('REPORT NOT FOUND: {}'.format(report))
+
 for path in hid_dirs:
     verify = Verifier(path)
 
