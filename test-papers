@@ -4,6 +4,7 @@
 from __future__ import print_function
 
 import yaml
+import requests
 
 from subprocess import check_call, CalledProcessError
 from pipes import quote
@@ -83,6 +84,12 @@ class Verifier(object):
             if fnmatch(submitted, pattern):
                 raise ValueError('PATTERN %s NOT SET IN README. CURRENT: %s' % (property, submitted))
 
+        if 'github' in params:
+            username = submission['github']
+            user_url = 'http://github.com/{}'.format(username)
+            req = requests.get(user_url)
+            if not req.status_code == 200:
+                raise ValueError('ERROR: Github user {} does not exist at {}'.format(username, user_url))
 
 for path in hid_dirs:
     verify = Verifier(path)
