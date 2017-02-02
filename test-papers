@@ -3,8 +3,11 @@
 
 from __future__ import print_function
 
+import yaml
+
 from subprocess import check_call, CalledProcessError
 from pipes import quote
+from fnmatch import fnmatch
 
 import glob
 import sys
@@ -13,6 +16,23 @@ import os.path
 hid_dirs = sys.argv[1:]
 
 class Verifier(object):
+
+    def __init__(self, path):
+        self._path = path
+
+
+    @property
+    def path(self):
+        return self._path
+
+
+    @property
+    def readme(self):
+        return os.path.join(self.path, 'README.rst')
+
+
+    ################################################################
+
 
     def _call(self, cmd, **kwargs):
         """Wrapper around subprocess.check_call
@@ -25,25 +45,52 @@ class Verifier(object):
         check_call(cmd, **kwargs)
 
 
-    def make(self, path):
+    def _parse_readme(self, path):
+        lines = []
+        with open(path) as fd:
+            for line in fd:
+                if ':' in line:
+                    lines.append(line.strip())
+
+        return yaml.load('\n'.join(lines))
+
+    def make(self):
         """Checks that the 'make' command works for a submission"""
         print('Building', path)
         self._call(['make'], cwd=path)
 
-    def readme_exists(self, path, readme_name='README.rst'):
+    def readme_exists(self):
         """Checks that the README.rst file exists for a submission"""
-        readme = os.path.join(path, readme_name)
-        print('Checking for', readme)
-        if not os.path.exists(readme):
-            raise ValueError('NOT FOUND: %s' % readme)
+        print('Checking for', self.readme)
+        if not os.path.exists(self.readme):
+            raise ValueError('NOT FOUND: %s' % self.readme)
 
+    def readme_values(self, params=None):
+        params = params or dict(
+            submitted = 'ENTER DATE SUBMITTED',
+            author = 'ENTER*NAME*',
+            hid = 'ENTER*HID*',
+            github = '*GITHUB*',
+        )
 
-verify = Verifier()
+        submission = self._parse_readme(self.readme)
+
+        for property, pattern in params.iteritems():
+            if not property in submission:
+                raise KeyError('README DOES NOT HAVE: %s' % property)
+
+            submitted = submission[property]
+            if fnmatch(submitted, pattern):
+                raise ValueError('PATTERN %s NOT SET IN README. CURRENT: %s' % (property, submitted))
+
 
 for path in hid_dirs:
+    verify = Verifier(path)
+
     try:
-        verify.make(path)
-        verify.readme_exists(path)
+        # verify.make()
+        verify.readme_exists()
+        verify.readme_values()
         print('OK')
     except CalledProcessError, e:
         print('FAIL')
