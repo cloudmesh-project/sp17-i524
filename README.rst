@@ -131,6 +131,14 @@ First, make sure your repository is synchronized with the *upstream*::
 
 Build your report using the ``make`` command.
 
+Update the ``README.rst`` file in your project directory and commit
+your changes.
+
+**IMPORTANT**
+
+Your submission will not be accepted unless you update the readme with
+appropriate values.
+
 Push your changes and submit a pull request::
 
   $ git push origin master
@@ -141,6 +149,12 @@ generate a pull request to
 When ready to submit, create a pull request to
 https://github.com/cloudmesh/sp17-i524 with the subject in the form
 `paper# HID`. For example: `paper1 S17-EX-0000`
+
+Sumitting a Pull Request will trigger a continuous integration test on
+travis. This will attempt to build the latex file as well as validate
+your ``README.rst``. If the travis build fails, check the log after
+clicking the "details" link of the failing build, make the necessary
+changes, and push once more.
 
 
 ShareLatex
