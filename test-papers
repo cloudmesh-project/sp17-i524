@@ -1,20 +1,45 @@
 #!/usr/bin/env python
 # -*- elpy-mode: nil; auto-complete-mode: nil; company-mode: nil -*-
 
+from __future__ import print_function
+
 from subprocess import check_call, CalledProcessError
+from pipes import quote
+
 import glob
 import sys
 
 hid_dirs = sys.argv[1:]
 
-for path in hid_dirs:
-    cmd = ['make', '-C', path]
-    print 'Building %s' % path
-    print ' '.join(cmd)
+class Verifier(object):
 
+    def _call(self, cmd, **kwargs):
+        """Wrapper around subprocess.check_call
+
+        :param cmd: a list of strings that will be passed to check_call
+        """
+
+        pretty = ' '.join(map(quote, cmd))
+        print('Running:', pretty)
+        check_call(cmd, **kwargs)
+
+
+    def make(self, path):
+        """Checks that the 'make' command works for a submission"""
+        print('Building', path)
+        self._call(['make'], cwd=path)
+
+
+
+verify = Verifier()
+
+for path in hid_dirs:
     try:
-        check_call(cmd)
-        print 'OK'
+        verify.make(path)
+        print('OK')
     except CalledProcessError, e:
-        print 'FAIL'
+        print('FAIL')
         raise
+
+
+    
