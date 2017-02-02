@@ -8,6 +8,7 @@ from pipes import quote
 
 import glob
 import sys
+import os.path
 
 hid_dirs = sys.argv[1:]
 
