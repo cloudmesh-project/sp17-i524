@@ -12,7 +12,7 @@ test: test-papers
 docker-image: Dockerfile
 	docker build -t badi/texlive .
 
-docker-run: docker-image
+docker-run:
 	time docker run \
 	  -e HOST_UID=$(shell id -u) \
 	  -e HOST_GID=$(shell id -g) \
