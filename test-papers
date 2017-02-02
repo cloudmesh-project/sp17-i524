@@ -29,6 +29,12 @@ class Verifier(object):
         print('Building', path)
         self._call(['make'], cwd=path)
 
+    def readme_exists(self, path, readme_name='README.rst'):
+        """Checks that the README.rst file exists for a submission"""
+        readme = os.path.join(path, readme_name)
+        print('Checking for', readme)
+        if not os.path.exists(readme):
+            raise ValueError('NOT FOUND: %s' % readme)
 
 
 verify = Verifier()
@@ -36,6 +42,7 @@ verify = Verifier()
 for path in hid_dirs:
     try:
         verify.make(path)
+        verify.readme_exists(path)
         print('OK')
     except CalledProcessError, e:
         print('FAIL')
