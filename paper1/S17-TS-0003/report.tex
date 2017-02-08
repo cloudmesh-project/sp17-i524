@@ -2,32 +2,28 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{\LaTeX\ Template for Preparing a Paper or Report for I524}
+\title{Nagios - Example Paper for I524}
 
-\author[1,2,3]{John Smith}
-\author[2]{Alice Smith}
-\author[1]{Bruce Wayne}
-\author[1,*]{Gregor von Laszewski}
+\author[1]{Tony Liu}
+\author[1]{Vibhatha Abeykoon}
+\author[1]{Gregor von Laszewski}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
-\affil[2]{School of Science, University of Technology, 2000 J St. NW, Washington DC, 20036}
-\affil[3]{School of Optics, University of Technology, 2000 J St. NW, Washington DC, 20036}
 
-\affil[*]{Corresponding authors: laszewski@gmail.com}
 
-\dates{project-000, \today}
+\dates{paper-1, \today}
 
 \ociscodes{Cloud, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/vibhatha/sp17-i524/blob/master/paper1/S17-TS-0003/report.pdf}}
 
 
 \begin{abstract}
-This template can be used to prepare a research article for I524. Note
-that this template can be run from your own \TeX\ system or within the
-cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://www.sharelatex.com/}
-{Sharelatex} systems.\newline
+This paper is an example research article for I524, written under the example template. 
+We selected Techlist 363, Nagios, as the topic to demonstrate how to properly compose a research
+article.
+Nagios is a platform/tool, which provides a set of software for system and network infrastructure monitoring. Within this article, we explored what problem it tried to solve, how it solved the problem, and why it's important to have Nagios. We also discussed the advantages and disadvantages it possessed. 
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -38,37 +34,29 @@ cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://ww
 
 \section{Introduction}
 
-This template is designed to assist with creating an article for
-I524. The page length is typically done without images. Thus if you
-have images in your report, please add additional content to offset
-the space captured by images. We do not check exactly, so there is no
-reason to contact us if you are a paragraph short, but if you are half
-a page short you may add quality content.
+According to ~\cite{nagios-book}, even through the machines have become more and 
+more critical to us human being, they are untrustworthy. I just couldn't agree more with the author. Look at the GitLab.com incident happened on Jan 31st 2017. A tired system administrator, working late at night in the Netherlands, had accidentally deleted a directory on the wrong server during a frustrating database replication process: he wiped a folder containing 300GB of live production data that was due to be replicated~\cite{gitlabmeltdown}. Mistakes could be corrected easily since Gitlab have deployed several methods to backup and replicate the production data and all they just need to  do is to recover and restore from the backup. However, after several attempts, they found that out of 5 backup/replication techniques deployed none were working reliably or set up in the first place.
 
-\section{Chance for Publishing a Paper}
 
-If this work can lead to a publishable paper, you could engage with
-the course instructor as coauthor to work more closely with him/them.
-This however requires that the paper be worked on in a regular basis
-and that timely contributions from the instructor can be integrated.
-Hence this is going to be a significant effort and you need to decide
-if you like to conduct this. Naturally the project must be suitable
-for such an activity. It may even be that some projects may be
-combined.
+\section{What is Nagios}
 
-In such cases if the work is sufficient for publication submission, an
-A+ for the class could be considered. It will be however a lot of
-work. The length of such a paper is typically 10-12 high quality pages
-including figures and references. We may elect for the final
-submission to use a different LaTeX style. As Gregor is an expert in
-this, changing the format will be simple.
+Nagios is a system and network monitoring tool under open source license that provides instant awareness of mission-critical IT infrastructure. Nagios allows to monitor the infrastructure, alert the system admin, provide visualized reports, schedule downtime for maintenance, and plan upgrade in advance with trends and capacity diagrams. Its design emphasizes highly on flexibility and scalability. To provide such flexibility, Nagios is composed of different modules. The reason behind this modular design is that Nagios fully considers the variety of systems and networks it will monitor on. Different customers require a large amount of customization before they themselves know they do.
 
-\section{Examples of Article Components}
+
+
+\section{Why is Nagios Important}
+
+This section discusses why is Nagios important and why we need it.
+Elaborate Nagios' features with Gitlab example in the introduction.
+Modular. Scalable. Adaptable.
+
 \label{sec:examples}
 
 The sections below show examples of different article components.
 
-\section{Figures and Tables}
+\section{Advantages and Disadvantages}
+
+
 
 It is not necessary to place figures and tables at the back of the
 manuscript. Figures and tables should be sized as they are to appear
@@ -154,18 +142,9 @@ for i in range(0,100):
 \end{quote}
 \end{algorithm}
 
-\section{Reference Management}
+\section{Conclusion}
 
-The best programs to manage your references is jabref or emacs. You
-can edit the references and verify them with them for format
-errors. To cite them use the citation key. You can add multiple bib
-files to the bibliography command separated by comma.
 
-\noindent Add citations with the cite command. See
-\cite{las14cloudmeshmultiple} for an example on how to use multiple
-clouds. In \cite{www-i524} we list the class content.
-
-Here a test of a citation with an underscore in the url \cite{www-underscore}.
 
 \section{Supplemental Material}
 
