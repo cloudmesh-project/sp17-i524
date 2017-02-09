@@ -2,7 +2,7 @@
 
 set -o errexit                  # exit on failure
 
-declare DEST                    # one of paper1, paper2, paper3, project
+declare DEST                    # one of paper1, paper2, project
 declare USER_ID                 # the homework ID or project ID
 declare OUTDIR                  # the directory that will be created.
 
@@ -16,7 +16,7 @@ USAGE:
 This script generates the scaffolding for working on the paper or
 projects. Input parameters:
 
-1) TYPE: one of "paper1", "paper2", "paper3", or "project"
+1) TYPE: one of "paper1", "paper2", or "project"
 2) ID: this is your HID for the papers or PID for the project
 
 EXAMPLES:
@@ -25,7 +25,7 @@ EXAMPLES:
     ./setup paper1 S17-EX-0000
 
   2) Setup for the project using my PID
-    ./setup Project S17-P-0000
+    ./setup project S17-P-0000
 EOF
 }
 
@@ -49,7 +49,7 @@ USER_ID="$2"
 
 # sanity check the DEST and declare TYPE
 case $DEST in
-    paper[1-3])
+    paper[1-2])
         declare -r TYPE=paper
         ;;
     project)
