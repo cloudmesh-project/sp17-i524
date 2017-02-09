@@ -97,6 +97,10 @@ class Verifier(object):
                 raise ValueError('REPORT NOT FOUND: {}'.format(report))
 
 for path in hid_dirs:
+    if not os.path.exists(path):
+        print('Skipping %s. Path does not exist.' % path)
+        continue
+    
     verify = Verifier(path)
 
     try:
@@ -107,6 +111,3 @@ for path in hid_dirs:
     except CalledProcessError, e:
         print('FAIL')
         raise
-
-
-    
