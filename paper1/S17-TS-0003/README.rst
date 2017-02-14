@@ -1,12 +1,12 @@
 submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): EG: 2017-01-01"
 
-author: "ENTER YOUR NAME HERE"
+author: "Vibhatha Lakmal Abeykoon"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-TS-0003"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "YOUR GITHUB USERNAME"
+github: "vibhatha"
 
 report: "report.pdf"
 
