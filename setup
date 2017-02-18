@@ -155,7 +155,7 @@ git-clone-directory() {
     find_dir_contents .         -print0 | xargs -0      rm -rf
     find_dir_contents "$TMPDIR" -print0 | xargs -0 -n 1 | while read path; do mv "$path" "$PWD"; done
 
-    rm *.docx
+    rm -f *.docx
 
 }
 
