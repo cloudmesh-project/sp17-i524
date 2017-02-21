@@ -16,7 +16,7 @@ USAGE:
 This script generates the scaffolding for working on the paper or
 projects. Input parameters:
 
-1) TYPE: one of "paper1", "paper2", or "project"
+1) TYPE: one of "paper1", "paper2", "galaxy", or "project"
 2) ID: this is your HID for the papers or PID for the project
 
 EXAMPLES:
@@ -26,6 +26,9 @@ EXAMPLES:
 
   2) Setup for the project using my PID
     ./setup project S17-P-0000
+
+  3) Setup for the "galaxy" assignment using my PID
+    ./setup galaxy S17-EX-0000
 EOF
 }
 
@@ -188,6 +191,9 @@ do_project() {
 case $TYPE in
     paper*)
         do_paper
+        ;;
+    galaxy)
+        do_galaxy
         ;;
     project)
         do_project
