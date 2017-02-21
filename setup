@@ -52,6 +52,9 @@ case $DEST in
     paper[1-2])
         declare -r TYPE=paper
         ;;
+    galaxy)
+        declare -r TYPE=galaxy
+        ;;
     project)
         declare -r TYPE=project
         ;;
@@ -159,9 +162,37 @@ git-clone-directory() {
 
 }
 
-declare -r CLASS=git://github.com/cloudmesh/classes.git
-declare -r DIRECTORY=docs/source/format/report
+do_paper() {
 
-git-clone-directory $CLASS ./$DIRECTORY $OUTDIR
+    declare -r CLASS=git://github.com/cloudmesh/classes.git
+    declare -r DIRECTORY=docs/source/format/report
 
-echo "DONE: $OUTDIR"
+    git-clone-directory $CLASS ./$DIRECTORY $OUTDIR
+
+    echo "DONE: $OUTDIR"
+}
+
+do_galaxy() {
+
+    echo "ERROR to_galaxy NOT IMPLEMENTED"
+
+}
+
+do_project() {
+
+    do_paper
+
+}
+
+
+case $TYPE in
+    paper*)
+        do_paper
+        ;;
+    project)
+        do_project
+        ;;
+    *)
+        echo "ERROR: the impossible happened"
+        exit 4
+esac
