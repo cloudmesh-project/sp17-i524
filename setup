@@ -177,7 +177,7 @@ do_paper() {
 
 do_galaxy() {
 
-    echo "ERROR to_galaxy NOT IMPLEMENTED"
+    mkdir -p "$OUTDIR"
 
 }
 
