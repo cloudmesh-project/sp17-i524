@@ -1,10 +1,10 @@
 \documentclass[9pt,twocolumn,twoside]{styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
-
+\usepackage[nomarkers,figuresonly]{endfloat}
 
 \title{\centering%
-An Exploration on Nagios Project \\
+Nagios Shaping Organization Management \\
 \large Example Paper for I524}
 
 
@@ -25,7 +25,7 @@ An Exploration on Nagios Project \\
 
 
 \begin{abstract}
-Machines make mistakes far less frequent than humans, yet they make mistakes from time to time. In order to avoid machines causing more troubles, we explored a platform/tool called Nagios, which provided a set of software for system and network infrastructure monitoring. We took a close look at the main components of Nagios and how they worked as a whole system. We explored what Nagios was capable of, why Nagios can be important and the key factors that made it standing-out among other monitoring tools.
+Management of departments, employees, management tools and other entities for an organization is a vital task. In achieving this goal, there are many supporting tools that has been designed to monitor performance, security issues, network traffic, internet speed and many other vital features which are considered as major components in management of an organization. Nagios can be considered as a tool which support this context with a wide varitey of features such as network monitoring, performance analysis, reporting and a management tool to achieve organizational goals. In this paper, it is being  explored what Nagios is capable achieving these tasks and the key factors that made it standing-out among other monitoring tools.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -33,11 +33,6 @@ Machines make mistakes far less frequent than humans, yet they make mistakes fro
 \begin{document}
 
 \maketitle
-
-\section{Background}
-
-Even through the machines have become more and more critical to us human being, yet they are untrustworthy~\cite{nagios-book}. We couldn't agree more with the author on this. The lastest example on this is the GitLab.com incident happened on Jan 31st 2017. "A tired system administrator, working late at night in the Netherlands, had accidentally deleted a directory on the wrong server during a frustrating database replication process: he wiped a folder containing 300GB of live production data that was due to be replicated"~\cite{gitlabmeltdown}. Mistakes could be corrected easily since Gitlab have deployed several methods to backup and replicate the production data and all they just need to do is to recover and restore from the backup. However, after several attempts, they found that out of 5 backup/replication techniques deployed none were working reliably or set up in the first place. People haven't emphasize enough about how crucial it is to backup the important data. However, none of this matters if the backup mechanism no long works. That is the exact reason why we explore Nagios Project in this paper.
-
 
 \section{Introduction to Nagios}
 
@@ -51,15 +46,15 @@ The main component is Nagios core, which is a scheduler daemon detecting network
 
 Nagios plugin is an executable that takes arguments to trigger some actions and print results. It has two types, check and notification. Both are used by Nagios core. The check plugin is used to check and monitor devices and services. The notification plugin is used to send out alerts if the check plugin detected any status change. Beside these two, the users themselves can develop their own custom plugins. 
 
-Nagios module is a procedure that calls upon API called Nagios Event Broker. The user could develop the module with certain functionality and embed within Nagios core. Whenever certain event triggers the module, the module will be called to execute. The benefit of Nagios module is that the user can access all necessary information within the core process such as the Nagios status and check results. 
+Nagios module is a procedure that calls upon API called Nagios Event Broker. The user can develop the module with certain functionality and embed within Nagios core. Whenever certain event triggers the module, the module will be called to execute. The benefit of Nagios module is that the user can access all necessary information within the core process such as the Nagios status and check results. 
 
-Nagios' configuration file is text-based. It could be quite sophisticated if the user want to monitor large infrastructure. Also, the user must understand the configurable options. Furthermore, since it's text-based, the configuration file can be edited with a normal editor. This could cause more trouble since there is no spellchecking or proofreading. Luckily, there are tools helps user to generate configuration files by applying configuration template with a user-friendly web interface.
+Nagios' configuration file is text-based. It can be quite sophisticated if the user wants to monitor large infrastructure. Also, the user must understand the configurable options. Furthermore, since it's text-based, the configuration file can be edited with a normal editor. This can cause more trouble since there is no spellchecking or proofreading. Luckily, there are tools helping users to generate configuration files by applying configuration template with a user-friendly web interface.
 
-The last component is the web interface of Nagios. It's developed by CGI technology in C programming language. This means compilation is needed every time new features and functionalities are added. Also, it is not compatible with current popular web technologies like CSS, AJAX and JQuery.  But there are open-source tools that can replace Nagios web interface.
+The last component is the web interface of Nagios. It's developed by CGI technology in C programming language. This means compilation needs every time new features and functionalities are added orderly. It is not compatible with current popular web technologies like CSS, AJAX and JQuery.
 
 \section{Importance of Nagios}
 
-Now we know what Nagios is and what it is capable of, but why do we need it? Why is it important? Basically Nagios is scalable and a flexible solution for an organization, due to the scalability, when the structural change or any change happens it is easy to fit the new tools with Nagios, in order to manage them and monitor them. The importance of Nagios can be explained through the different features and facilities.
+Now it is clear the nature of Nagios and it's capabilities. There are many reasons that has to be clarified, before deciding whether Nagios is a vital tool to be used or not. Basically Nagios is a scalable and a flexible solution for an organization. Due to the scalability, when the structural changes or any changes happen, it is easier to fit the new tools with Nagios, in order to manage them and monitor them. The importance of Nagios can be explained through the different features and facilities included. 
 
 \subsection{Comprehensive Monitoring}
 
@@ -92,7 +87,7 @@ In referring to these factors, it is clear how Nagios can be used to implement a
 In referring to the architecture of Nagios, it is a very scalable and flexible design. As a tool Nagios provide a wide variety of features like system monitoring, alerting, maintenance, central administration, etc. For an organization the most important thing is to keep track on most of the tools and infrastructures they have. As far as the organization grows, the most important factor is the scalable monitoring capability with flexibility. And also the centralized system administration is also another important feature expected by most of the system administrators. Analyzing data is a vital factor in taking management base decisions, for instance predicting costs for a product, predicting system downtime, failures, etc can be done by analyzing data. And also for a highly scaled organization, the number of users and number of administrators that it has to handle grows by every year, so the most important thing is to have an easy access to the monitoring and managing tools. Nowadays, the attention paid to desktop application is less, and more attention is paid to the web applications. And also the multi-tenancy is also a vital factor when it comes to manage many users at one time in order to provide customer service to thousands or millions of users who consume a single product. For a long term system management tool, the most important fact is the continuous support, Nagios is a tool providing all these requirement. In referring to all these facts, it is clear that for a high end business solution provider, Nagios is a powerful tool to support many tasks as mentioned. 
 
 
-
+Figure \ref{fig:Nagios-architecture} shows a simplified version of how Nagios works~\cite{nagios-book}.
 
 
 
@@ -102,9 +97,11 @@ In referring to the architecture of Nagios, it is a very scalable and flexible d
  
 %\newpage
 
+
+
 \appendix 
-\section{figures}
-Figure \ref{fig:Nagios-architecture} shows a simplified version of how Nagios works~\cite{nagios-book}.
+
+
 
 \begin{figure}[htbp]
 \centering
