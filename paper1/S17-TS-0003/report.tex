@@ -24,7 +24,7 @@ Nagios (Example Paper for I524)}
 
 
 \begin{abstract}
-Management of departments, employees, management tools and other entities for an organization is a vital task. In achieving this goal, there are many supporting tools that has been designed to monitor performance, security issues, network traffic, internet speed and many other vital features which are considered as major components in management of an organization. Nagios can be considered as a tool which support this context with a wide varitey of features such as network monitoring, performance analysis, reporting and a management tool to achieve organizational goals. In this paper, it is being  explored what Nagios is capable achieving these tasks and the key factors that made it standing-out among other monitoring tools.
+Nagios is a system, network and infrastructure monitoring tool providing instant awareness of IT infrastructure. Nagios allows to monitor the infrastructure, alert the system admin, provide visualized reports, schedule downtime for maintenance, and plan upgrade in advance with trends and capacity diagrams.  The design emphasizes highly on flexibility and scalability. We summarize details of Nagios and outline how it is useful as part ofthe services used in big data.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -39,7 +39,12 @@ Nagios ~\cite{www-nagios, wiki-nagios} is a system, network and infrastructure m
 
 \subsection{Architecture}
 
-Let's take a look at how Nagios works in a network monitoring system~\cite{nagios-paper-2012}. Since Nagios has a flexible modular architecture, it allows user to customize modules to monitor the network and/or infrastructure. 
+Nagios \cite{nagios-paper-2012} flexible modular architecture  allows users to customize modules to monitor the network and/or infrastructure.  We show the elementary Nagios archirtecture in Figure~\ref{fig:Nagios-architecture} ~\cite{nagios-book}.
+
+<NOW DECSRIBE IT>
+
+
+Nagios has a number of components (a) ... (b) ... ....
 
 The main component is Nagios core, which is a scheduler daemon detecting network devices and services regularly. The core will alert administer by several notification methods like email, message and web interface. 
 
@@ -86,7 +91,6 @@ In referring to these factors, it is clear how Nagios can be used to implement a
 In referring to the architecture of Nagios, it is a very scalable and flexible design. As a tool Nagios provide a wide variety of features like system monitoring, alerting, maintenance, central administration, etc. For an organization the most important thing is to keep track on most of the tools and infrastructures they have. As far as the organization grows, the most important factor is the scalable monitoring capability with flexibility. And also the centralized system administration is also another important feature expected by most of the system administrators. Analyzing data is a vital factor in taking management base decisions, for instance predicting costs for a product, predicting system downtime, failures, etc can be done by analyzing data. And also for a highly scaled organization, the number of users and number of administrators that it has to handle grows by every year, so the most important thing is to have an easy access to the monitoring and managing tools. Nowadays, the attention paid to desktop application is less, and more attention is paid to the web applications. And also the multi-tenancy is also a vital factor when it comes to manage many users at one time in order to provide customer service to thousands or millions of users who consume a single product. For a long term system management tool, the most important fact is the continuous support, Nagios is a tool providing all these requirement. In referring to all these facts, it is clear that for a high end business solution provider, Nagios is a powerful tool to support many tasks as mentioned. 
 
 
-Figure \ref{fig:Nagios-architecture} shows a simplified version of how Nagios works~\cite{nagios-book}.
 
 
 
@@ -105,7 +109,7 @@ Figure \ref{fig:Nagios-architecture} shows a simplified version of how Nagios wo
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/nagios-architecture}}
-\caption{Nagios Architecture}
+\caption{Nagios Architecture~\cite{nagios-book}.}
 \label{fig:Nagios-architecture}
 \end{figure}
 
