@@ -38,7 +38,7 @@ Nagios (Example Paper for I524)}
 
 \maketitle
 
-\section{Introduction to Nagios}
+\section{Introduction}
 
 Nagios ~\cite{www-nagios, wiki-nagios} is a system, network and
 infrastructure monitoring tool under open source license that provides
@@ -93,33 +93,57 @@ services. The notification plugin is used to send out alerts if the
 check plugin detected any status change. Beside these two, the users
 themselves can develop their own custom plugins.
 
-Nagios module is a procedure that calls upon API called Nagios Event
-Broker. The user can develop the module with certain functionality and
-embed within Nagios core. Whenever certain event triggers the module,
-the module will be called to execute. The benefit of Nagios module is
-that the user can access all necessary information within the core
-process such as the Nagios status and check results.
+Nagios uses {\em modules} that call through the Nagios API Nagios
+Events that are enacted upon by the Nagios Broker. The user can
+develop a modules with customized functionality and embed them within
+Nagios core. Whenever an event triggers the module, the module
+will be called to execute. The benefit of Nagios module is that the
+user can access all necessary information within the core process such
+as the Nagios status and check results.
 
-Nagios' configuration file is text-based. It can be quite
-sophisticated if the user wants to monitor large infrastructure. Also,
-the user must understand the configurable options. Furthermore, since
-it's text-based, the configuration file can be edited with a normal
-editor. This can cause more trouble since there is no spellchecking or
-proofreading. Luckily, there are tools helping users to generate
-configuration files by applying configuration template with a
-user-friendly web interface.
+Nagios' configuration file is text-based. It supports the
+sophistication of Nagios al;lowing to monitor large
+infrastructure. Also, the user must understand the configurable
+options. Management of the configuration has to be condusted carefully
+to avoid simple mistakes such as introduced by spelling
+errors. However, sample configurations and tools to generate
+configuration files by applying such configuration templates are alos
+supported by a user-friendly web interface.
 
-The last component is the web interface of Nagios. It's developed by
-CGI technology in C programming language. This means compilation needs
-every time new features and functionalities are added orderly. It is
-not compatible with current popular web technologies like CSS, AJAX
-and JQuery.
+Nagios also contains a Web interface. It is developed using
+CGI technology in C programming language. Although it is not 
+compatible with current popular web technologies like CSS, AJAX
+and JQuery, it provides sufficient scalability for larger infrastructures.
 
-\section{Importance of Nagios}
+\section{Importance of Nagios fo Big Data}
 
-Now it is clear the nature of Nagios and it's capabilities. There are
-many reasons that has to be clarified, before deciding whether Nagios
-is a vital tool to be used or not. Basically Nagios is a scalable and
+THIS IS NOT AT ALL ADDRESSED HERE, WHAT ARE THE REQUIREMNTS EXPLICITLY
+THAT NEED NAGIOS. YOU FOCUS ON ORHANIZATIONS, BUT WE WANT TO FOCUS ON
+BIG DATA
+
+\subsection{Big Data Requirements for Monitoring}
+
+monitoring of compute infrastructure
+
+   clouds, clusters, containers?
+
+monitoring of networking 
+
+    write why this is impprtant, distributed networked environments
+
+moniotoring of data infrastructure
+
+   data servers, disks, filesystems, ???? look up what ecosusyems of
+   nagios provides here
+
+
+
+
+\subsection{OLDER TEXT}
+
+THIS IS UNCLEAR, POSSIBLY REPETITIVE:
+
+Basically Nagios is a scalable and
 a flexible solution for an organization. Due to the scalability, when
 the structural changes or any changes happen, it is easier to fit the
 new tools with Nagios, in order to manage them and monitor them. The
@@ -128,9 +152,15 @@ and facilities included.
 
 \subsection{Comprehensive Monitoring}
 
-Using Nagios there are many structures that can be monitored, and they
-are operating systems, networking protocols, system metrics and
-infrastructure components. And also there are many APIs to handle the
+
+
+Using Nagios there are many structures that can be monitored, such as
+operating systems, networking protocols, system metrics and
+infrastructure components. 
+
+THIS TEXT HAS NOT BEEN CORRECTED SO I WILL NOT READ IT
+
+And also there are many APIs to handle the
 easy monitoring of in-house applications, services and systems. In
 considering the network monitoring, basic use is the pinging and
 Nagios uses it in a complex way and configurations are complex as it
