@@ -202,3 +202,6 @@ case $TYPE in
         echo "ERROR: the impossible happened"
         exit 4
 esac
+
+
+echo "Submit your work in $OUTDIR"
