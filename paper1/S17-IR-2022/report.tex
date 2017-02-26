@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{\LaTeX\ Triana for Big Data}
+\title{Triana for Big Data}
 
 \author{Abhishek Naik}
 
@@ -91,6 +91,53 @@ Toolkit).  The GAT aims to shield the applications from the
 implementation details using a standard Application Programming
 Interface (GAT-API).  It also provides a set of Grid services for
 carrying out tasks such as resource and information management.
+
+Triana is further divided into a set of pluggable components that can 
+actively interact with each other. The GUI connects to the engine either 
+locally or via a network. Thus, the clients can log in into TCS and view 
+the results onto their devices, although the unit in itself might be 
+remote. They also have the option to log off and then log in again using 
+a different device altogether. In this way, the Triana can be used as a 
+monitoring system. Furthermore, there are three ways in which Triana can 
+be used, namely: 
+
+\being{itemize} 
+
+\item Using the GUI on top of an existing application. The various 
+interfaces can be used to connect various applications with Triana. 
+There are the work flow writers as well as the command writers. 
+
+\item Using the remote control facility of an existing application. The 
+Triana facility can be used in exactly the same way as highlighted 
+above, but in addition to it, the facility of logging in and off can 
+also be leveraged. Here, the scheduling would be implemented by a third 
+party system. 
+
+\item Forming various Triana units. This is the best and the most 
+preferred way of usage since it becomes very easy to prototype and can 
+be easily distributed using the Triana distribution mechanisms. 
+
+\end{itemize} 
+
+GAT provides simple communication mechanism with Triana. The calls are 
+independent of the GAT middleware binding. This decoupling enables easy 
+porting of Triana on different Grid middleware without any modification 
+to the core Triana code. Furthermore, the Triana project is concurrently 
+being developed with the GridLab project, that is developing the GridLab 
+GAT. The Triana is precisely being used as a test application to develop 
+requirements from the GridLab GAT. A prototype GAT API called the GAP 
+Interface (Grid Application Prototype Interface) has been developed. 
+This Interface is basically used for communicating with the remote 
+servers, which was one of the main functionalities to be developed as a 
+part of the GridLab GAT. JXTA currently has GAP interface bindings. 
+
+The GAP interface bindings implement the basic GAP functionality, which 
+is locating and communicating the JXTA services. Such a service has two 
+input nodes and may have multiple output nodes - either zero, one or 
+more. The input and the output nodes are delegated as the JXTA pipes and 
+a virtual communication channel is established between them. This 
+virtual communication channel adapts a particular communication protocol 
+depending upon the current operating environment. 
 
 \section{Projects}
 
