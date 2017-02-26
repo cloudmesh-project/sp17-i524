@@ -1,4 +1,3 @@
-:orphan:
 
 submitted: "2017-02-25"
 
@@ -8,7 +7,7 @@ hid: "S17-IO-3012"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "YOUR GITHUB USERNAME"
+github: "mmccombe"
 
 report: "report.pdf"
 
