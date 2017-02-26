@@ -15,7 +15,7 @@ Nagios (Example Paper for I524)}
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
 
-\dates{status: early draft, paper-1, HID ???, HID ???, HID ???\today}
+\dates{status: early draft, paper-1, S17-TS-000?, S17-TS-0003, S17-TS-0001\today}
 
 \ociscodes{Cloud, I524}
 
@@ -70,10 +70,13 @@ Figure~\ref{fig:Nagios-architecture} ~\cite{nagios-book}.
 Nagios architecture consists of two main databases. They are MySQL and
 Postgre SQL.  Nagios XI is directly connected with MySQL and Postgre
 SQL. There are two main components connected with MySQL, NDOUtils and
-NagioSQL are these two components. The NagiosSQL refers to the
-configuration files to get configuration parameters. Nagios local
-installation is also connected with three main components. They are
-Local Checks, NRDP/NSCA and NRPE components.
+NagioSQL are these two components. The databases keeps the parameters
+and configurations needed for the Nagios Core configuration from the
+XI interface \cite{archi-nagios}. The NagiosSQL refers to the
+configuration files to get configuration parameters. NagioSQL forms an
+advance configuration section of the XI interface to enable the
+functionality.Nagios local installation is also connected with three
+main components. They are Local Checks, NRDP/NSCA and NRPE components.
 
 Nagios has a number of components such as Nagios core, file system,
 Nagios daemon, services, plugins, event handlers, performance processors
@@ -148,7 +151,8 @@ marked up circular status map shows the connection between different
 hosts and routers in a network. This is an important tool to identify
 the service distribution and to identify breakdowns. By these views,
 the failures can be notified by a physical and geographical location,
-and this is a vital factor for a system management with less downtime.
+and this is a vital factor for a system management with less downtime
+\cite{info-nagios}.
 
 \subsection{Problem Remediation}
 
@@ -184,8 +188,8 @@ users can use the familiar reporting tools.
 \subsection{Open-Source}
 
 Nagios is an open source tool and the license for documentation and software
-is under different licenses. Nagios open software license, Nagios software
-license and GPL are the licenses own by Nagios. 
+is under different licenses. Nagios open software license \cite{op-sw-lic-nagios}, Nagios software
+license \cite{sw-lic-nagios} and GPL are the licenses own by Nagios. 
 
 \subsection{Multi-Tenant Capabilities}
 
@@ -226,22 +230,24 @@ data distribution and management in a particular network.
 \subsection{Big Data Requirements for Monitoring}
 
 In monitoring of clouds and clusters, Nagios can be used as a powerful
-tool. The clouds and clusters always depend on the network. 
+tool. The clouds and clusters always depend on the network. In such
+senarios, network traffic monitoring, failure detection, network
+bottle-neck detection and similar tasks can be done using Nagios.
+And also the status monitoring such as memory, network bandwith,
+cpu performance, gpu performance and similar activities can be
+tracked using Nagios. 
 
-monitoring of compute infrastructure
+Servers, disks and file systems are vital factors in big data management.
+The server performances and storage status is a vital factor for an
+organization providing cloud based software solutions. So these file system
+management becomes a very important task in order to provide less downtime
+services. Nagios has monitoring capability and visualizing capability,
+these dashboards can be used to provide information to the users in an easy
+manner. Real time performance update, storage status, server failures can be
+detected using Nagios. All these factors together form a solid background
+to provide cloud based software solutions \cite{bigdata-nagios}.  
 
-   clouds, clusters, containers?
-
-monitoring of networking 
-
-    write why this is impprtant, distributed networked environments
-
-moniotoring of data infrastructure
-
-   data servers, disks, filesystems, ???? look up what ecosusyems of
-   nagios provides here
-
-
+   
 \section{Nagios for Big Data Application}
 
 Big data applications are the applications handling huge amount of
