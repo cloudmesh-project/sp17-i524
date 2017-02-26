@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{Triana for Big Data}
+\title{Triana}
 
 \author{Abhishek Naik}
 
@@ -12,15 +12,19 @@
 
 \dates{paper-1, \today}
 
-\ociscodes{Cloud, I524}
+\ociscodes{Triana, Problem Solving Environment, I524}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/absnaik810/sp17-i524/blob/master/paper1/S17-IR-2022/report.pdf}}
 
 
 \begin{abstract}
-\href{https://www.overleaf.com}{Overleaf} system or \href{https://www.sharelatex.com/}
-{Sharelatex} systems.\newline
+Triana is an open source problem solving environment (PSE).  It
+provides a powerful data analysis tool alongwith a intuitive visual
+interface.  It is mainly used in the areas of signal, text and image
+processing. It comes with a set of inbuilt data analysis tools and
+also provides easy mechanisms for the integration of custom built
+ones.\newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -47,7 +51,30 @@ and specify their behavior.  In this, it is similar to tools like
 that provide the user with a graphical user interface (GUI) to draw
 the UML diagrams.  The users can model the work flow using the various
 units onto the workspace and then depict the relationship between them
-with some interconnection.
+with some interconnection.  The Triana PSE can also be extended to promote 
+discovery of web services, their composition and decomposition.
+
+\section{Features}
+The Triana framework that has been extended with the framework has the 
+following set of features: 
+
+\begin{itemize} 
+
+\item Simple creation of the Web services: In case of other frameworks, 
+the major challenge is that a composite service cannot be created 
+easily. However, by allowing the discovery, composition, invoking and 
+publishing of services in an atomic manner, Triana makes this easy. 
+
+\item Execution of services in a distributed fashion: Services can be 
+executed on a P2P or Grid middleware using Triana. 
+
+\item 'What-if' analysis: 'What-if' analysis can be easily carried out 
+using Triana, by monitoring the different resulting work flows. 
+
+\item Annotation: Triana allows the work flows to be annotated for later 
+use. 
+
+\end{itemize}
 
 \cite{TrianaGEO600} Triana was originally developed for the GEO600
 gravitation project.  In this project, it is still being used for
@@ -79,7 +106,8 @@ they can be distributed; and Triana has two distribution policies:
 
 \begin{itemize}
 
-\item Parallel: a 'farming-out' mechanism involving no communication between the hosts.
+\item Parallel: a 'farming-out' mechanism involving no communication
+  between the hosts.
 \item Pipeline: this involves distributing the group 'vertically'.
 
 \end{itemize}
@@ -101,7 +129,7 @@ a different device altogether. In this way, the Triana can be used as a
 monitoring system. Furthermore, there are three ways in which Triana can 
 be used, namely: 
 
-\being{itemize} 
+\begin{itemize} 
 
 \item Using the GUI on top of an existing application. The various 
 interfaces can be used to connect various applications with Triana. 
@@ -118,6 +146,16 @@ preferred way of usage since it becomes very easy to prototype and can
 be easily distributed using the Triana distribution mechanisms. 
 
 \end{itemize} 
+
+Triana has a pluggable architecture that can be extended using the 
+Triana GUI as a front end to some standalone application. This can be 
+carried out using the inbuilt task-graph or command writers. Custom 
+writers can also be used. Similarly, it can also be extended by 
+implementing the same set of interfaces that the Triana Control Service 
+includes. Another way of extension is by implementing custom Triana 
+units to achieve the desired functionality. This would require the 
+building of a number of Triana components and their seamless integration 
+with inbuilt components.
 
 GAT provides simple communication mechanism with Triana. The calls are 
 independent of the GAT middleware binding. This decoupling enables easy 
@@ -166,7 +204,7 @@ Triana was released as an open source project on 30th May 2003. It
 included two GAT bindings - one that was implemented as the JXTA and the 
 other as the Java socket based on the P2P mechanism (P2PS). How to run 
 Triana, as JXTA or as a Java socket based on P2P mechanism is upto the 
-user and the choice he makes at the system start. 
+user and the choice he makes at the system start.
 
 \section{Conclusion}
 
