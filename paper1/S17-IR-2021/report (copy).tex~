@@ -1,0 +1,254 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Apache Samza}
+
+\author[1]{Ajit Balaga, S17-IR-2004}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: abalaga@iu.edu, ajit.balaga@gmail.com}
+
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/argetlam115/sp17-i524/blob/master/paper1/S17-IR-2004/report.pdf}}
+
+\begin{abstract}
+Apache Samza is a stream processing framework which enables usesrs to analyze
+streaming datawith ease. The concepts required streaming data and the 
+architecture behind Samza is presented here. Samza relies on Kafka and YARN, and
+its relationship with the two technologies is elaborated upon. The API is
+introduced as a precursor to future streaming projects. \newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Messaging systems are a method of implementing realtime asynchronous
+computation, where messages can be added to a message queue, pub-sub system, or
+log aggregation system whenever an event occurs. Consumers or subscribers read
+these messages from the queues or systems and take actions based on the message
+contents. A messaging system stores messages and waits for consumers to consume
+them. Samza, a stream processing system, is a higher level of abstraction on top
+of messaging systems.\cite{www-samza}
+
+\section{Samza}
+Samza uses YARN and Kafka to provide a framework for stage-wise stream
+processing and partitioning. Samza is a stream processing framework with the
+following features:\cite{www-samza}
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item Simple API
+\item Managed state
+\item Fault tolerance
+\item Durability
+\item Scalability
+\item Pluggable
+\item Processor isolation
+\end{itemize}
+
+The Samza client uses YARN to run a Samza job: YARN starts and supervises one or
+more SamzaContainers, and your processing code runs inside those containers. The
+input and output for the Samza StreamTasks come from Kafka brokers that are
+co-located on the same machines as the YARN NMs.\cite{paper1}
+Samza is made up of three layers:
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item A streaming layer
+\item An execution layer
+\item A processing layer
+\end{itemize}
+
+Samza provides out of the box support for all three layers.
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item Streaming: Kafka
+\item Execution: YARN
+\item Processing: Samza API
+\end{itemize}
+
+%Figure \ref{fig:samza-arch2} shows Samza architecture.
+%\begin{figure}[htbp]
+%\centering
+%\fbox{\includegraphics[width=\linewidth]{images/samza3}}
+%\caption{Samza Architecture 1}
+%\label{fig:samza-arch2}
+%\end{figure}
+
+%These three pieces fit together to form Samza:
+%Figure \ref{fig:samza-arch} shows Samza architecture.
+%\begin{figure}[htbp]
+%\centering
+%\fbox{\includegraphics[width=\linewidth]{images/samza1}}
+%\caption{Samza Architecture 2}
+%\label{fig:samza-arch}
+%\end{figure}
+
+%This architecture follows a similar pattern to Hadoop:
+%Figure \ref{fig:hadoop-arch} shows Hadoop architecture.
+%\begin{figure}[htbp]
+%\centering
+%\fbox{\includegraphics[width=\linewidth]{images/samza2}}
+%\caption{Hadoop Architecture}
+%\label{fig:hadoop-arch}
+%\end{figure}
+
+Samza’s execution and streaming layers are differentiable from the processing
+layer allowing developers to implement alternatives of their choice.
+
+\section{Streaming with Kafka}
+Kafka is a distributed pub/sub and message queueing system that provides
+at-least once messaging guarantees, and highly available partitions. Each topic
+(streams in Kafka) is partitioned and replicated across multiple machines called
+brokers. When a producer sends a message to a topic, it provides a key, which is
+used to determine which partition the message should be sent to. The Kafka
+brokers receive and store the messages that the producer sends. Kafka consumers
+can then read from a topic by subscribing to messages on all partitions of a
+topic.\cite{paper2}
+Kafka has some interesting properties:
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item All messages with the same key are guaranteed to be in the same topic partition.
+\item A topic partition is a sequence of messages in order of arrival and are stored
+using a monotonically increasing offset. The consumer can keep track of the
+offset by storing the offset of the last message it has processed. 
+\end{itemize}
+
+\section{Resource Management with YARN}
+YARN is Hadoop’s next-generation cluster scheduler which allows you to allocate
+a number of containers in a cluster of machines, and execute arbitrary commands
+on them. Samza uses YARN to manage deployment, fault tolerance, logging,
+resource isolation, security, and locality. YARN has three important pieces: a
+ResourceManager, a NodeManager, and an ApplicationMaster. In a YARN grid, every
+machine runs a NodeManager, which is responsible for launching processes on that
+machine. A ResourceManager talks to all of the NodeManagers to tell them what to
+run. Applications talk to the ResourceManager when they wish to run something on
+the cluster. The third piece, the ApplicationMaster, is actually
+application-specific code that runs in the YARN cluster. It’s responsible for
+managing the application’s workload, asking for containers, and handling
+notifications when one of its containers fails.\cite{paper3}
+Samza provides a YARN ApplicationMaster and a YARN job runner out of the box.The
+Samza client talks to the YARN RM when it wants to start a new Samza job. The
+YARN RM talks to a YARN NM to allocate space on the cluster for Samza’s
+ApplicationMaster. Once the NM allocates space, it starts the Samza AM. After
+the Samza AM starts, it asks the YARN RM for one or more YARN containers to run
+SamzaContainers. Again, the RM works with NMs to allocate space for the
+containers. Once the space has been allocated, the NMs start the Samza
+containers.\cite{paper4}
+
+\section{Related Concepts}
+
+\subsection{Streams}
+A stream is composed of immutable messages of a similar type or category.
+Messages can be appended to a stream or read from a stream. A stream can have
+any number of consumers, and reading from a stream doesn’t delete the message.
+Messages can optionally have an associated key which is used for partitioning.
+\cite{www-samza}
+
+\subsection{Jobs}
+A Samza job performs a logical transformation on a set of input streams to
+append output messages to set of output streams. In order to scale the
+throughput of the stream processor, streams and jobs are cut into smaller units
+of parallelism: partitions and tasks.\cite{www-samza}
+
+\subsection{Partitions}
+Each stream is broken into a number of partitions, each with a few properties.
+Each partition is an ordered sequence of messages with an identifier called the
+offset, unique to its partition. When a message is appended to a stream, it is
+appended to only one of the stream’s partitions.\cite{www-samza}
+
+\subsection{Tasks}
+A job is broken into multiple tasks. Each task consumes data from a partition. A
+task processes messages from each of its input partitions sequentially, in the
+order of message offset, in parallel for all partitions available. The YARN
+scheduler assigns each task to a machine, so the job as a whole can be
+distributed across many machines. The number of tasks in a job is determined by
+the number of input partitions (there cannot be more tasks than input
+partitions, or there would be some tasks with no input). However, you can change
+the computational resources assigned to the job (the amount of memory, number of
+CPU cores, etc.) to satisfy the job’s needs. See notes on containers below. The
+assignment of partitions to tasks never changes: if a task is on a machine that
+fails, the task is restarted elsewhere, still consuming the same stream
+partitions.\cite{www-samza}\cite{paper5}
+
+\subsection{Dataflow Graphs}
+We can compose multiple jobs to create a dataflow graph, where the edges are
+streams containing data, and the nodes are jobs performing transformations. This
+composition is done purely through the streams the jobs take as input and
+output. The jobs are otherwise totally decoupled: they need not be implemented
+in the same code base, and adding, removing, or restarting a downstream job will
+not impact an upstream job. These graphs are often acyclic—that is, data usually
+doesn’t flow from a job, through other jobs, back to itself. However, it is
+possible to create cyclic graphs if you need to.\cite{www-samza}
+
+\subsection{Containers}
+Partitions and tasks are both logical units of parallelism—they don’t correspond
+to any particular assignment of computational resources. Containers are the unit
+of physical parallelism, and a container is essentially a Unix process. Each
+container runs one or more tasks. The number of tasks is determined
+automatically from the number of partitions in the input and is fixed, but the
+number of containers is specified by the user at run time and can be changed at
+any time.\cite{www-samza}
+
+\section{API}
+When writing a stream processor for Samza, you must implement the StreamTask
+interface. When you run your job, Samza will create several instances of your
+class. These task instances process the messages in the input streams. For each
+message that Samza receives from the task’s input streams, the process method is
+called. The envelope contains three things of importance: the message, the key,
+and the stream that the message came from. The key and value are declared as
+Object, and need to be cast to the correct type. If you don’t configure a
+serializer/deserializer, they are typically Java byte arrays. A deserializer
+can convert these bytes into any other type.\cite{www-samza}
+The getSystemStreamPartition() method returns a SystemStreamPartition object,
+which tells you where the message came from. It consists of three parts:
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item The system: the name of the system from which the message came, as defined
+in your job configuration. You can have multiple systems for input and/or
+output, each with a different name.
+\item The stream name: the name of the stream (topic, queue) within the source
+system. This is also defined in the job configuration.
+\item The partition: a stream is normally split into several partitions, and
+each partition is assigned to one StreamTask instance by Samza.
+\end{itemize}
+
+The API looks like this:\newline
+
+/** A triple of system name, stream name and partition. */\newline
+public class SystemStreamPartition extends SystemStream {\newline
+  /** The name of the system which provides this stream. It is
+      defined in the Samza job's configuration. */\newline
+  public String getSystem() { ... }\newline
+  /** The name of the stream/topic/queue within the system. */\newline
+  public String getStream() { ... }\newline
+  /** The partition within the stream. */\newline
+  public Partition getPartition() { ... }\newline
+}
+
+\section{Conclusion}
+Samza is a very powerful tool to work on streaming data. With its simple
+approach, it allows us to analyze large amounts of streaming data on the go. The
+architecture allows the developer to utilize their own resource manager and
+their message handling system. Samza's architecture is very similar to hadoop,
+enabling users to get started with their applications quickly and making the
+learning curve shallow. With its simpleapi, Samza is a comfortable technology
+for analyzing streaming data.
+
+\bibliography{references}
+
+\end{document}
+
