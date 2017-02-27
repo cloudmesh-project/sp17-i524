@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{\LaTeX\ Template for Preparing a Paper or Report for I524}
+\title{Microsoft Azure Data Factory}
 
 \author[1]{Sowmya Ravi}
 
@@ -20,7 +20,7 @@
 
 
 \begin{abstract}
-Azure Data Factory is a cloud based data integration service that handles and automates data movement and data integration services. The Data Factory stands out in it's ability to ingest data from multiple sources, efficiently build pipelines to manage processes and visualize the results in a pragmatic manner. This paper discusses the data movement and data transformation activities supported by Azure Data Factory \newline
+Azure Data Factory is a cloud based data integration service that handles and automates data movement and data integration services. The Data Factory stands out in its ability to ingest data from multiple sources, efficiently build pipelines to manage processes and visualize the results in a pragmatic manner. This paper discusses the data movement and data transformation activities supported by Azure Data Factory \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -64,7 +64,7 @@ In case of moving a data located on-premises to cloud, data management gateway m
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/copy2.png}}
-\caption{Move data between on-premises and cloud data stores}
+\caption{Moving data between on-premises and cloud data stores}
 \label{fig:copy-local}
 \end{figure}
 
@@ -96,13 +96,11 @@ The following transformations are supported By Azure Data Factory~\cite{www-micr
     \item .NET custom activity: One can create an activity with a customized logic to be used in a pipeline ~\cite{www-microsoft-azure-dotnet}
 \end{itemize}
 
-\section{Development}
-
 \section{Monitoring and Management}
 The Data Factory has a monitor and manage app which helps keep tab of available resources, handle alerts and monitor various views. The resource explorer has a tree view and a diagram view of all the existing pipelines, datasets and linked services. ~\cite{www-microsoft-azure-moniter}
 
 \section{Use Cases}
-Data factory can be used for a wide range of applications such as Product recommendations, Customer profiling etc. The sample solution for a recommendation system is illustrated below.
+Data factory can be used for a wide range of applications such as Product recommendations, Customer profiling etc. The sample solution for a recommendation system is illustrated in Fig.3.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/reco.png}}
