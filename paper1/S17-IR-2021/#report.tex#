@@ -1,0 +1,249 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Docker(Machine,Swarm)}
+
+\author[1]{Shree Govind Mishra}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors:shremish@indiana.edu and govindmisharaalld@gmail.com}
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524, Big Data, Virtualisation, Docker, Docker Swarm, Docker Machine , Virtual Machines, VMs, Containers,LInux Containers, lightweight containers,LXC}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/argetlam115/sp17-i524/blob/master/paper1/S17-IR-2021/report.pdf}}
+
+\begin{abstract}
+  Docker is a container based technology which helps in the packaging
+  and shipping of applications quickly and across networks. Docker is
+  being well accepted and appreciated in the Agile Software
+  Development workforce and among the DevOps because of their
+  attributes of Continous Integeration and testing.To create a cluster
+  of Docker Engines into a single docker virtual engine is used
+  Docker-Swarm sed which is tested for more than 50,000
+  containers. 
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+\cite{www-docker-2}Docker is an open-source container based
+technology. It is an extension of Linux Containers (LXC): which is a
+unique kind of lightweight, application-centric virtualization that
+drastically reduces overhead and makes it easier to deploy software on
+servers. A container allows a developer to package up an application
+and all its part includig it's code, stack it runs on, dependencies it
+is associated with,system tools and everything the application requirs
+to run within an isolated enviorment. This makes it easier for
+programmers and developers to run more apps on the same server and it
+even makes it easier to package and ship the apps very frequently.
+Docker has been able to popularize the container approach in part
+because it’s improved the security and simplicity of container
+environments. Plus, interoperability is enhanced by its association
+with major companies – such as Google, Canonical, and Red Hat – on its
+open source element libcontainer.
+
+\section{How Docker differs from VMs}
+
+The virtualisation of application can be obtained with Hyervisors or
+Virtual Machine Manager(VMM) which makes it easy for applications to
+the run in isolation with one another while sharing the same
+underlying hardware articture. VM hypervisors, such as Hyper-V, KVM,
+and Xen, all are "based on emulating virtual hardware" which means
+they’re fat in terms of system requirements.Instead of virtualizing
+hardware, containers rest on top of a single Linux instance.A full
+virtualized system gets its own set of resources allocated to it, and
+does a very minimal sharing of thoses resources. So, the developer
+gets more isolation but each Instance of the VM aslo has many "Junk VM
+files", which is not useful to the developers as it gets "heavy".Since
+they only require to keep the virtal machine image and it can be kept
+small.Thus, the smaller the image is the less we need to store and the
+less you need to send around the network which makes them fairly
+lightwight in comparison to the Virtal Machines. Thus, we can run even
+use 1000s of containers on a same host OS.
+\cite{www-stackoverflow-docker}A full virtualized system usually
+takes time to start whereas the Docker contaier do take even less than
+seconds to up start and running with a lower overhead than the VMs.
+Containers are potentially much more efficient than VMs because
+they’re able to share a single kernel and share application libraries.
+This can lead to substantially smaller RAM footprints even when
+compared to virtualisation systems that can make use of RAM
+overcommitment.  Storage footprints can also be reduced where deployed
+containers share underlying image layers. IBM’s Boden Russel has done
+
+
+\section{Uses Of Docker}
+
+\subsection{Docker for DevOps}
+Another major use of Docker is it's use in the DevOps community. Docker 
+is not there to replace other configuration management tools and instead 
+can be incoprporated with other configuration management tools like 
+Chef, Puppet, Salt or ansible. The other major benifit of using 
+Docker, Dockerfiles, the registry amd the whole Docker ecosystem is that 
+the teams don't have to learn domain specific language as these are 
+easier to learn than the domain specific Ecosystems. Though many a times 
+Docker can be made to work with the other configuration management 
+tools.\cite{www-docker-1}Docker can also the eliminate the need for a 
+development team to have the same versions of everything installed on 
+their local machine. The repeatable nature of Docker images makes it 
+easier for them to standardize their production code and configurations.
+Their work has led to the creation of Helios, an application that manages
+Docker deployments across multiple servers and that alerts them when a
+server isn't running the correct version of a container.
+
+\subsection{Docker as Virtualized Sandbox}
+\cite{www-docker-1} Docker allows sytems administrators and developers
+to build applications that can berun on any Linux distribution or
+hardware in a virtualized sandbox without making custom builds for all
+the different enviorments.Finally, it’s easy to deploy Docker
+containers in a cloud scenario. You can easily integrate it with
+typical DevOps environments seamlessly (Ansible, Puppet, etc.) or use
+it as a standalone.
+
+\subsection{Docker for continuous integration}
+Docker can be used as git for continious integeration. Docker is
+similar as changes in the system can be tracked just like chaneges in
+the git.  These collaboration features (docker push and docker pull)
+are one of the most disruptive parts of Docker. The fact that any
+Docker image can run on any machine running Docker is very much
+appreciated. But The Docker pull/push are the too new fot the first
+time developers and ops guys have ever been able to easily collaborate
+quickly on building infrastructure together.\cite{www-docker-2}The app
+guys can share app containers with ops guys and the ops guys can share
+MySQL and PosgreSQL and Redis servers with app guys.
+
+
+
+\section{Docker MACHINE}
+
+\cite{www-docker-machine}Docker Machine is a tool that lets you install 
+Docker Engine on virtual hosts, and manage the hosts with docker-machine 
+commands. You can use Machine to create Docker hosts on your local Mac 
+or Windows box, on your company network, in your data center, or on 
+cloud providers like AWS or Digital Ocean. Docker Machine is the only 
+way to run Docker Engine on Mac or Windows previous to Dockerv1.12 
+and starting with the Dockerv1.12 we have Docker for Mac and Docker for 
+Windows. Thus we can create a cluster of Docker hosts which is called
+a Swarm using Docker Machine.
+
+\section{Docker SWARM}
+\cite{www-docker-swarm}Docker Swarm provides native clustering 
+capabilites to turn a group of Docker engines into a single, vrtual 
+Docker Engine. These help you scale up the applications as if these all 
+are running on a single,huge computer.It does so by
+providing a stabdard Docker API where if any tool which communicates
+with the Docker deamon can use Docker Swarm to transparently scale to
+multiple hosts: Dokku, Docker Compose, Krane, Flynn, Deis, DockerUI,
+Shipyard, Drone, Jenkins and, of course, the Docker client itself.
+Docker Networking, Volumes and plugins can also be used through their
+respective Docker commands via Swarm. Swarm has been tested and is
+production ready to scale up to one thousand (1,000) nodes and fifty
+thousand (50,000) containers with no performance degradation in
+spinning up incremental containers onto the node cluste Swarm also
+comes with a built-in scheduler, but you can easily plugin the Mesos
+or Kubernetes backend while still using the Docker client for a
+consistent developer experience. To find nodes in your cluster, Docker
+Swarm can use either a hosted discovery service, static file, etcd,
+consul and zookeeper depending on what is best suited for your
+environment.
+
+
+\section{Ecosystem Support to Docker}
+\cite{www-docker-1}Finally, it’s easy to deploy Docker containers in a cloud
+scenario. You can easily integrate it with typical DevOps environments
+seamlessly (Ansible, Puppet, etc.) or use it as a standalone. The main
+reason it’s so popular is simplification, says Ben Lloyd Pearson via
+opensource.com. You can do local development within a system that is
+identical to a live server; deploy various development environments
+from your host that each use their own software, OS, and settings;
+easily run tests on various servers; and create an identical set of
+configurations, so that collaborative work isn’t ever hindered by
+parameters of the local host.Ecosystem support for Docker is
+improving with every passing day as it is gaing the popularity among
+the developers and the system operators.
+
+Operating Systems suppport to Docker: Is compatible with virtually
+any distribution with a 2.6.32 + kernel RedHat Docker collaboration to
+work with across fedora and other(2.6.32)+
+
+It is compatible with Private PaaS(Platform as a Service) technolgies:
+OPen Shift, Solum(Rackspace and OPenstack).
+
+Public PaaS technologies like Voxoz, Cocaine(Yandex),Biadu,etc.
+
+Ecosystem Support for IaaS is present via Rackspace,Digital Ocean,
+AWS(Amazon Web Services), AMI,etc.
+
+Orchestration tools Support and Integeration with:
+Chef,Puppt,Jerkins,Travis,Ansible..
+
+In Open Stack Docker integeration into NOVA(compatibility with
+Glance,Horizon)are aslo present
+
+\section{Shortfalls of Docker}
+
+Though dockers are leagcy virtualization techniques, they are not a go
+to solution for all kinds of virtualization and cannot be considered
+as a replacement of the VMs.
+
+VMs are self constarined with as they have a unique operating
+system(OS), drivers and application components whereas the containers
+are dependent as containers under Docker cannot run on Windows server.
+
+VMs provide high level of isolation as the system's underlying
+hardware resources are all virtualized and thus any bugs or viruses
+could not affetc the other VM in the virtualized enviorment.
+
+The kinds of tools and technologies required to manage the containers
+are still lacking in the industry and thus only a few management tools
+from companies like Google and Docker like Kubernetes and SWarm
+respectively are present which is not a good situation for an
+open-source products
+
+\section{Future with Docker}
+
+Docker Inc has set a clear path on the development of core
+capabilities (libcontainer), cross service management (libswarm) and
+messaging between containers (libchan). Docker's key open source
+project is libcontainers ,which is on it's way to becomiing the
+default standard for Linux-based technology.  Libcontainers enables
+the containers to work with the Linux namespace, control groups,
+capabilities, AppArmor security profiles, network interfaces and
+firewalling rules in a consistent and predictable way .
+\cite{www-docker-1}Libcontainers is getting help from Google, RedHat,
+and Parallels to build the program asthey will work with docker as
+core maintainers of the code.  libconatiner which is written natively
+in Google's Go, is also being ported into other languages. Microsoft
+may be porting it to ASP.NET.  Parallels' libct, which includes
+libcontainer's functionality, has native C/C++ and Python
+bindings. Microsoft is even jumping on board by bringing Docker to
+their Azure platform, a development that could potentially make
+integration of Linux applications with Microsoft products easier than
+ever before.
+
+
+
+\section{Conclusion}
+
+\cite{www-docker-3}With more than 1200 Docker Contributors , 10,000 Dockerized
+Applications at index.docker.io 3 to 4 million Developers using
+Docker, 300 Million Downloads, 32,0000 Docker related Projects and 70
+percent of enterprise using DockerIt is not an exaggeration that with
+Docker Ecosystem there is a greater potential for some advanced
+deployment tools that combine containers, configuration management,
+continuous integration, continuous delivery and service orchestration
+in the days ahead.
+
+
+\bibliography{references}
+
+\end{document}
+
