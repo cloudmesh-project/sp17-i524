@@ -1,0 +1,84 @@
+% Encoding: UTF-8
+
+@Misc{www-slashroot,
+  title        = {Hypervisor and container based virtulization},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {http://www.slashroot.in/difference-between-hypervisor-virtualization-and-container-virtualization},
+}
+
+@Misc{www-bondner,
+  title        = {Linux Container Building blocks},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {http://bodenr.blogspot.com/2014/03/linux-containers-building-blocks.html},
+}
+
+@Misc{www-ubuntu,
+  title        = {Basic Chroot},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {https://help.ubuntu.com/community/BasicChroot},
+}
+
+@Misc{www-infoworld,
+  title        = {LXC and Docker Explained},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {http://www.infoworld.com/article/3072929/linux/containers-101-linux-containers-and-docker-explained.html},
+}
+
+@Misc{www-wiki-LSM,
+  title        = {Linux Security Modules},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {https://en.wikipedia.org/wiki/Linux_Security_Modules},
+}
+
+@Misc{www-linux,
+  title        = {Linux Madandatory Access Controls},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {https://www.linux.com/news/securing-linux-mandatory-access-controls},
+}
+
+@Misc{www-lxc-docker,
+  title        = {Understanding the key differences between LXC and Docker},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {https://www.flockport.com/lxc-vs-docker/},
+}
+
+@Misc{www-docker,
+  title        = {Docker},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {https://www.docker.com},
+}
+
+@Misc{www-search,
+  title        = {Cons for Container Technology},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {http://searchservervirtualization.techtarget.com/feature/Five-cons-of-container-technology},
+}
+
+@Misc{www-virtual,
+  title        = {Use Cases for Conatiners},
+  howpublished = {web page},
+  owner        = {S17-IO-3024},
+  url          = {https://www.virtualizationpractice.com/container-use-cases-35048/},
+}
+
+@Misc{www-semantics,
+  author       = {Roberto Morabito, Jimmy Kjällman,Miika Komu},
+  title        = {Hypervisors vs. Lightweight Virtualization: a Performance Comparison},
+  howpublished = {web page},
+  year         = {2015},
+  abstract     = {Virtualization of operating systems provides a common way to run different services in the cloud. Recently, the lightweight virtualization technologies claim to offer superior performance. In this paper, we present a detailed performance comparison of traditional hypervisor based virtualization and new lightweight solutions. In our measurements, we use several benchmarks tools in order to understand the strengths, weaknesses, and anomalies introduced by these different platforms in terms of processing, storage, memory and network. Our results show that containers achieve generally better performance when compared with traditional virtual machines and other recent solutions. Albeit containers offer clearly more dense deployment of virtual machines, the performance difference with other technologies is in many cases relatively small.},
+  keywords     = {Performance; Benchmarking; Virtualization; Hypervisor; Container.},
+  owner        = {S17-IO-3024},
+  url          = {https://pdfs.semanticscholar.org/551d/2b55067c06b5667cfc35b3b20096b9235cb4.pdf},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

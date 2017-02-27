@@ -1,16 +1,15 @@
-submitted: "2017-02-08"
+submitted: "02-25-2017"
 
-author: "Dimitar Nikolov"
+author: "Kumar Satyam"
 
-hid: "S17-TS-0006"
+hid: "S17-IR-2031"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "dimitargnikolov"
+github: "satyamsah"
 
 report: "report.pdf"
 
 proposal: "proposal.pdf"
-
 
 --------------------------------------------------------------------------------

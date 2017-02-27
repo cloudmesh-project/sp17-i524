@@ -1,16 +1,15 @@
-submitted: "2017-02-08"
+submitted: "2017-02-26"
 
-author: "Dimitar Nikolov"
+author: "Sriram Sitharaman"
 
-hid: "S17-TS-0006"
+hid: "S17-IR-2037"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "dimitargnikolov"
+github: "sriramsitharaman"
 
 report: "report.pdf"
 
 proposal: "proposal.pdf"
-
 
 --------------------------------------------------------------------------------

@@ -1,16 +1,16 @@
-submitted: "2017-02-08"
+:orphan:
 
-author: "Dimitar Nikolov"
+submitted: "2017-02-26"
 
-hid: "S17-TS-0006"
+author: "Michael Smith"
+
+hid: "S17-IO-3019"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "dimitargnikolov"
+github: "michaelsmith1983"
 
 report: "report.pdf"
-
-proposal: "proposal.pdf"
 
 
 --------------------------------------------------------------------------------

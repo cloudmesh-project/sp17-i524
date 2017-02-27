@@ -16,7 +16,7 @@ USAGE:
 This script generates the scaffolding for working on the paper or
 projects. Input parameters:
 
-1) TYPE: one of "paper1", "paper2", or "project"
+1) TYPE: one of "paper1", "paper2", "galaxy", or "project"
 2) ID: this is your HID for the papers or PID for the project
 
 EXAMPLES:
@@ -26,6 +26,9 @@ EXAMPLES:
 
   2) Setup for the project using my PID
     ./setup project S17-P-0000
+
+  3) Setup for the "galaxy" assignment using my PID
+    ./setup galaxy S17-EX-0000
 EOF
 }
 
@@ -51,6 +54,9 @@ USER_ID="$2"
 case $DEST in
     paper[1-2])
         declare -r TYPE=paper
+        ;;
+    galaxy)
+        declare -r TYPE=galaxy
         ;;
     project)
         declare -r TYPE=project
@@ -159,9 +165,43 @@ git-clone-directory() {
 
 }
 
-declare -r CLASS=git://github.com/cloudmesh/classes.git
-declare -r DIRECTORY=docs/source/format/report
+do_paper() {
 
-git-clone-directory $CLASS ./$DIRECTORY $OUTDIR
+    declare -r CLASS=git://github.com/cloudmesh/classes.git
+    declare -r DIRECTORY=docs/source/format/report
 
-echo "DONE: $OUTDIR"
+    git-clone-directory $CLASS ./$DIRECTORY $OUTDIR
+
+    echo "DONE: $OUTDIR"
+}
+
+do_galaxy() {
+
+    mkdir -p "$OUTDIR"
+
+}
+
+do_project() {
+
+    do_paper
+
+}
+
+
+case $TYPE in
+    paper*)
+        do_paper
+        ;;
+    galaxy)
+        do_galaxy
+        ;;
+    project)
+        do_project
+        ;;
+    *)
+        echo "ERROR: the impossible happened"
+        exit 4
+esac
+
+
+echo "Submit your work in $OUTDIR"

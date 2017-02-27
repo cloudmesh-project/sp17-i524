@@ -1,16 +1,16 @@
-submitted: "2017-02-08"
 
-author: "Dimitar Nikolov"
+submitted: "2017-02-25"
 
-hid: "S17-TS-0006"
+author: "Mark McCombe"
+
+hid: "S17-IO-3012"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "dimitargnikolov"
+github: "mmccombe"
 
 report: "report.pdf"
 
 proposal: "proposal.pdf"
-
 
 --------------------------------------------------------------------------------
