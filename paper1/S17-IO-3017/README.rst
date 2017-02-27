@@ -1,12 +1,12 @@
-submitted: 2017-02-27
+submitted: "2017-02-27"
 
-author: Nandita Sathe
+author: "Nandita Sathe"
 
-hid: S17-IO-3017
+hid: "S17-IO-3017"
 
-pid: NIL
+pid: "Enter your PID"
 
-github: nsathe
+github: "nsathe"
 
 report: "report.pdf"
 
