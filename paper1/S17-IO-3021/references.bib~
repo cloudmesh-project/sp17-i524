@@ -1,0 +1,20 @@
+@misc{www-cubrid.org,
+  title =	 {{CUBRID}},
+  url =		 {http://www.cubrid.org},
+  howpublished = {Web Page},
+  address =	 {Indiana University},
+  year =	 2017,
+  month =	 feb
+}
+
+@misc{www-authetication,
+  title =	 {{CUBRID}},
+  url =		 {http://www.methodsandtools.com/tools/cubriddatabase.php},
+  howpublished = {Web Page},
+  address =	 {Indiana University},
+  year =	 2017,
+  month =	 feb
+}
+
+
+
