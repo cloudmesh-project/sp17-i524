@@ -1,0 +1,130 @@
+@INPROCEEDINGS{tajo-paper,
+  Author =	 {H. Choi and J. Son and H. Yang and H. Ryu and B. Lim
+                  and S. Kim and Y. D. Chung},
+  Booktitle =	 {2013 IEEE 29th International Conference on Data
+                  Engineering (ICDE)},
+  Title =	 {Tajo: A distributed data warehouse system on large
+                  clusters},
+  Year =	 2013,
+  Pages =	 {1320-1323},
+  Doi =		 {10.1109/ICDE.2013.6544934},
+  ISSN =	 {1063-6382},
+  Month =	 apr,
+  Publisher =	 {Institute of Electrical and Electronics Engineers
+                  ({IEEE})},
+  Address =	 {San Francisco, CA},
+  Owner =	 {S17-IR-2041},
+  Url =		 {http://ieeexplore.ieee.org/document/6544934/}
+}
+
+@INPROCEEDINGS{hive-paper,
+  Author =	 {A. Thusoo and J. S. Sarma and N. Jain and Z. Shao
+                  and P. Chakka and N. Zhang and S. Antony and H. Liu
+                  and R. Murthy},
+  Booktitle =	 {2010 IEEE 26th International Conference on Data
+                  Engineering (ICDE 2010)},
+  Title =	 {Hive - a petabyte scale data warehouse using Hadoop},
+  Year =	 2010,
+  Pages =	 {996-1005},
+  Doi =		 {10.1109/ICDE.2010.5447738},
+  ISSN =	 {1063-6382},
+  Month =	 mar,
+  Publisher =	 {Institute of Electrical and Electronics Engineers
+                  ({IEEE})},
+  Address =	 {San Francisco, CA},
+  Owner =	 {S17-IR-2041},
+  Url =		 {http://ieeexplore.ieee.org/document/5447738/ },
+}
+
+@misc{www-apache-tajo,
+  Title =	 {Apache Tajo},
+  HowPublished = {Web Page},
+  Key =		 {apache-tajo},
+  url =		 {https://tajo.apache.org },
+  note =	 {Accessed: 2017-2-26},
+  Owner =	 {S17-IR-2041},
+}
+
+@misc{www-apache-tajo-tsql,
+  Title =	 {Apache Tajo},
+  HowPublished = {Web Page},
+  Key =		 {apache-tajo-tsql},
+  url =		 {http://tajo.apache.org/docs/0.8.0/cli.html},
+  note =	 {Accessed: 2017-2-26},
+  Owner =	 {S17-IR-2041},
+}
+
+@misc{www-apache-tajo-tutorialspoint,
+  Title =	 {Apache Tajo},
+  HowPublished = {Web Page},
+  Key =		 {apache-tajo-tutorialspoint},
+  url =
+                  {https://www.tutorialspoint.com/apache_tajo/apache_tajo_introduction.htm
+                  },
+  note =	 {Accessed: 2017-2-26},
+  Owner =	 {S17-IR-2041},
+}
+
+@article{mapreduce-article,
+  Author =	 {Dean, Jeffrey and Ghemawat, Sanjay},
+  Title =	 {MapReduce: Simplified Data Processing on Large
+                  Clusters},
+  Journal =	 {Commun. ACM},
+  Volume =	 51,
+  Number =	 1,
+  Month =	 jan,
+  Year =	 2008,
+  Issn =	 {0001-0782},
+  Pages =	 {107--113},
+  Url =		 {http://doi.acm.org/10.1145/1327452.1327492},
+  Doi =		 {10.1145/1327452.1327492},
+  Publisher =	 {ACM},
+  Address =	 {New York, NY, USA},
+  Owner =	 {S17-IR-2041},
+  Note =	 {Published as an Article},
+}
+
+@article{Graefe:1993:QET:152610.152611,
+  Author =	 {Graefe, Goetz},
+  Title =	 {Query Evaluation Techniques for Large Databases},
+  Journal =	 {ACM Comput. Surv.},
+  Volume =	 25,
+  Number =	 2,
+  Month =	 jun,
+  Year =	 1993,
+  Issn =	 {0360-0300},
+  Pages =	 {73--169},
+  Url =		 {http://doi.acm.org/10.1145/152610.152611},
+  Doi =		 {10.1145/152610.152611},
+  Publisher =	 {ACM},
+  Address =	 {New York, NY, USA},
+  Note =	 {Published as an Article},
+}
+
+@article{Kossmann:2000:SAD:371578.371598,
+  Author =	 {Kossmann, Donald},
+  Title =	 {The State of the Art in Distributed Query
+                  Processing},
+  Journal =	 {ACM Comput. Surv.},
+  Volume =	 32,
+  Number =	 4,
+  Month =	 dec,
+  Year =	 2000,
+  Issn =	 {0360-0300},
+  Pages =	 {422--469},
+  Url =		 {http://doi.acm.org/10.1145/371578.371598},
+  Doi =		 {10.1145/371578.371598},
+  Publisher =	 {ACM},
+  Address =	 {New York, NY, USA},
+  Owner =	 {S17-IR-2041},
+  Note =	 {Published as an Article},
+}
+
+@misc{www-apache-hadoop,
+  Title =	 {Apache Hadoop},
+  HowPublished = {Web Page},
+  Key =		 {apache-hadoop},
+  url =		 {http://hadoop.apache.org/ },
+  note =	 {Accessed: 2017-2-26},
+  Owner =	 {S17-IR-2041},
+}
