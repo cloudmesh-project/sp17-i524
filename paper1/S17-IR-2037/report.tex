@@ -21,7 +21,7 @@
 \begin{abstract}
 
 
-The advent of computer systems in the later part of 20th century facilitated the increase in the digitization of documents that were in existence. In order to share those documents and files among peers situated remotely, there raised a need for a mechanism which could facilitate file sharing. File Transfer Protocol developed in the late 1970s provided an efficient and reliable mechanism for sharing files among hosts.\newline
+The advent of computer systems in the later part of 20th century facilitated the increase in the digitization of documents that were in existence. In order to share those documents and files among peers situated remotely, there raised a need for a mechanism which could facilitate file sharing. File Transfer Protocol developed in the late 1970s provided an efficient and reliable mechanism for sharing files among hosts. File Transfer Protocol (FTP) and its architecture is discussed in this paper along with the alternatives to FTP and how they fare when compared to FTP. FTP clients used for managing the file transfer at the client side is also discussed.\newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -40,18 +40,22 @@ According to \cite{www-wiki-ftp} FTP is an acronym for File Transfer Protocol. I
 \begin{center}
 \centering
 \includegraphics[width =6in ,height=3.5in]{images/Architecture}
-\caption{Model for FTP usage}
+\caption{Model for FTP usage \cite{www-rfc959}}
 \end{center}
 \end{figure*}
 
 Figure 1. shows the architecture of a model for using File Transfer Protocol. It is essential to understand the different components of the architecture to understand the flow of FTP.The next section describes in brief about the components that are part of the model architecture.
 
-
+\subsection{Components in FTP model}
 As shown in Figure 1., FTP model consists of two major components Server side FTP component and a client side FTP component. Each of those components consists of a Protocol Interpreter (PI) which takes of the respective protocol definitions for the user and server end, and a Data Transfer Process (DTP) which establishes and manages the connection between the server and the client. Apart from these two, client side FTP component has a User Interface through which the User authenticates himself with the server and requests for the files to be transferred.
 
+\subsection{File System}
 File system is the place where the files are located. It is present in both the client and the server end. When the user want to request a file from the server, a pathname (a character string) has to be specified as an input to the file system to locate the file. A location has be to specified by user/client in the client side for storing the file transferred by the client. 
 
+\subsection{File Request/Receive Process}
 Once the user wants to request a file from the server, the user protocol interpreter is responsible for initiating the connection process to the server-FTP. Once the control connection is established by the user PI, it generates standard FTP commands to the server. User PI is also responsible for managing the data transfer process (DTP) as part of the file transfer process. In response to the commands sent from the user, replies are sent by the server which acts as an acknowledgement.\\
+
+\subsection{FTP Commands}
 The FTP commands specifies the following parameters for the data connection:
 \begin{enumerate}
     \item \textbf{Data port} - Port is a communication endpoint in an operating system \cite{www-wiki-port}. Each computer system has ports numbered from 0 to 1023 each of which can be uniquely associated with a process. For File Transfer Protocol, the designated port number is 21.
@@ -85,7 +89,7 @@ WinSCP          & Martin Přikryl           & GPL                       & Yes   
 CuteFTP         &Globalscape & Proprietary               & Yes                & GUI                & Yes              & Yes           & No             & No           & No            \\ \hline
 Classic FTP     & NCH Software             & Proprietary               & Yes                & GUI                & Yes              & Yes           & No             & No           & No            \\ \hline
 \end{tabular}
-\caption{Comparisons of FTP Clients}
+\caption{Comparisons of FTP Clients \cite{www-wiki-perf}}
 \end{table*}
 
 \begin{table*}[hbt]
@@ -101,8 +105,10 @@ Classic FTP     & NCH Software             & Proprietary               & Yes    
 \textbf{CuteFTP}     & Yes          & Yes                   & Yes           & Yes                  & No                                                                      & Yes                      & Yes                   \\ \hline
 \textbf{Classic FTP} & Yes          & No                    & No            & No                   & ?                                                                       & ?                        & ?                     \\ \hline
 \end{tabular}
-\caption{Comparison of Functionalities - FTP Clients}
+\caption{Comparison of Functionalities - FTP Clients \cite{www-wiki-perf}}
 \end{table*}
+
+\subsection{Response from Server DTP}
 The user DTP should listen on the designated port mentioned in the parameters sent during the FTP commands and the server DTP initiates the data transfer process as per the specified parameters. The end of the data transfer process is indicated by the End-of-File (EOF) sequence which indicates the end of the file being transferred. The data transfer process, in general is made through a full duplex connection. A duplex connection \cite{www-wiki-duplex} is defined as a communication channel mechanism when the systems present at either end of the channel can communicate with each other in both directions. Full duplex is when the communication from both ends can occur simultaneously.
 
 \section{Alternatives to FTP}
@@ -123,11 +129,9 @@ TFTP \cite{www-wiki-tftp} is a type of file transfer protocol which the transfer
 Simple File Transfer Protocol (SFTP) \cite{www-wiki-ftp} (not to be confused with Secure Shell File Transfer Protocol) is a unsecured file transfer protocol with complexity between FTP and TFTP. On account of it being a simple protocol, it's command set comprises of only 11 commands. It is also known for supporting login with user id and password.
 
 \subsection{Secure Shell File Transfer Protocol (SFTP)}
-
-SSH File Transfer Protocol (SSH FTP or SFTP) \cite{www-wiki-sftp} is a file transfer mechanism that offers the same set of commands and functionalities as FTP but enables the data transfer with a secured shell connection. SSH is a encrypted network protocol for operating over an unsecured network \cite{www-wiki-ssh}. \\\\
+SSH File Transfer Protocol (SSH FTP or SFTP) \cite{www-wiki-sftp} is a file transfer mechanism that offers the same set of commands and functions as FTP but enables the data transfer with a secured shell connection. SSH is a encrypted network protocol for operating over an unsecured network \cite{www-wiki-ssh}. \\\\
 
 \section{Customized File Transfer Protocol (FTP) mechanisms}
-
 McWilliams in his patent \cite{mcwilliams2001high} proposed a modified version of file transfer protocol which provides the advantages that the files are transferred at a time specified by the client and that only those files which have been selected by the client are transferred. Bahlmann et.al  has specified an on the fly version of FTP \cite{bahlmann2001fly} which enables the creation of files on the fly based on the parameters sent through the FTP connection.
 
 \section{FTP Clients}
@@ -139,7 +143,7 @@ One of the important feature any FTP client is it's ability to transfer large fi
 
 \section{Conclusion}
 
-This paper has introduced the concept of file transfer protocol, the architecture of FTP which gives a clear picture of the flow involved in FTP from the moment where user initiates the request process till the point where the server ends the file transfer process by sending a end of file notation. An idea of the various parameters involved in the FTP command from client to the server and the kinds of values it can take depending on the need was explained. Different alternatives to FTP was putforth and how each of them differs and performs when compared to FTP is discussed. Finally, the concept of FTP client is introduced and comparison of a set of FTP clients across different parameters is performed. It is evident from th
+This paper has introduced the concept of file transfer protocol, the architecture of FTP which gives a clear picture of the flow involved in FTP from the moment where user initiates the request process till the point where the server ends the file transfer process by sending a end of file notation. An idea of the various parameters involved in the FTP command from client to the server and the kinds of values it can take depending on the need was explained. Different alternatives to FTP was putforth and how each of them differs and performs when compared to FTP is discussed. Finally, the concept of FTP client is introduced and comparison of a set of FTP clients across different parameters is performed.
 
 \bibliography{references}
 
