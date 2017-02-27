@@ -1,17 +1,15 @@
-:orphan:
+submitted: "2017-02-27"
 
-submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): EG: 2017-01-01"
+author: "Sabyasachi Roy Choudhury"
 
-author: "ENTER YOUR NAME HERE"
-
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IO-3015"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "YOUR GITHUB USERNAME"
+github: "sabyasachi087"
 
 report: "report.pdf"
 
-proposal: "proposal.pdf"
+proposal: ""
 
 --------------------------------------------------------------------------------
