@@ -122,7 +122,6 @@ MySQL and PosgreSQL and Redis servers with app guys.
 
 
 
-
 \section{Docker MACHINE}
 
 \cite{www-docker-machine}Docker Machine is a tool that lets you install 
