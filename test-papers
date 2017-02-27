@@ -14,6 +14,8 @@ import glob
 import sys
 import os.path
 
+import datetime
+
 hid_dirs = sys.argv[1:]
 
 class Verifier(object):
@@ -75,6 +77,14 @@ class Verifier(object):
         )
 
         submission = self._parse_readme(self.readme)
+
+        # in case the submission date was parsed as a date/datetime
+        # convert it back to a string for fnmatch to work below
+        if 'submitted' in submission and (
+				type(submission['submitted']) == datetime.datetime or
+				type(submission['submitted']) == datetime.date
+		):
+			submission['submitted'] = datetime.datetime.strftime(submission['submitted'], '%Y-%m-%d')
 
         for property, pattern in params.iteritems():
             if not property in submission:
