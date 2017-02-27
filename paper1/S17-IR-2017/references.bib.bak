@@ -28,6 +28,8 @@
 
 @Misc{www-about-opennebula,
   Title                    = {About-Techonology},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -37,6 +39,8 @@
 
 @Misc{www-components,
   Title                    = {OpenNebula Adavanced Components},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -46,6 +50,8 @@
 
 @Misc{www-dcv-opennebula,
   Title                    = {Data Center Virtualization and solutions},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -55,6 +61,8 @@
 
 @Misc{www-features-opennebula,
   Title                    = {Key Features of OpenNebula},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -62,16 +70,10 @@
   Url                      = {https://opennebula.org/about/key-features/}
 }
 
-@Misc{www-opennebula-documentation,
-  Title                    = {OpenNebula},
-  HowPublished             = {Web Page},
-
-  Owner                    = {S17-IR-2017},
-  Url                      = {https://opennebula.org/documentation/}
-}
-
 @Misc{www-opennebula-ecosystem,
   Title                    = {OpenNebula Ecosystem},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -81,6 +83,8 @@
 
 @Misc{www-opennebula-infraintegration,
   Title                    = {OpenNebula Infrastructure Integration},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -90,6 +94,8 @@
 
 @Misc{www-opennebula-systeminterfaces,
   Title                    = {OpenNebula System Interfaces},
+
+  Author                   = {OpenNebula},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
@@ -97,8 +103,20 @@
   Url                      = {http://docs.opennebula.org/5.2/integration/system_interfaces/index.html}
 }
 
+@Misc{www-opennebula-documentation,
+  Title                    = {OpenNebula},
+
+  Author                   = {OpenNebula Project},
+  HowPublished             = {Web Page},
+
+  Owner                    = {S17-IR-2017},
+  Url                      = {https://opennebula.org/documentation/}
+}
+
 @Misc{www-wiki-opennebula,
   Title                    = {Wikipedia-opennebula},
+
+  Author                   = {Wikipedia},
   HowPublished             = {webpage},
 
   Owner                    = {S17-IR-2017},
