@@ -14,13 +14,16 @@
 
 \dates{ \today}
 
-\ociscodes{Cloud, I524}
+\ociscodes{Cluster, Container, Pod, Kubernetes, I524}
 
 
 
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
 
 \begin{abstract}
-This paper explores the architecture, functioning and competition of Kubernetes.
+Kubernetes is cluster management software. This paper explores the architecture, functioning and competition of Kubernetes.
+\newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -30,14 +33,14 @@ This paper explores the architecture, functioning and competition of Kubernetes.
 \maketitle
 
 \section{Introduction}
-Google Kubernetes is a cluster management platform developed by Google. Kubernetes is an open source system for “automating deployment, scaling and management of containerized applications”.\cite{www-kubernetesdoc} It primarily manages clusters through containers as they decouple applications from the host operating system dependencies and allowing their quick and seamless deployment, maintenance and scaling.
+Google Kubernetes is a cluster management platform developed by Google. Kubernetes is an open source system for “automating deployment, scaling and management of containerized applications” \cite{www-kubernetesdoc}. It primarily manages clusters through containers as they decouple applications from the host operating system dependencies and allowing their quick and seamless deployment, maintenance and scaling.
 
 
 
 
 \section{About Kubernetes}
 
-Containers gained prominence for their ability to isolate the applications from host operating system dependencies and for being flexible by packaging. Docker tool, that can package applications and their dependencies into containers, was released in 2013, paving way for flexible and portable applications that can run on premises, public and private clouds. Google also decided to release key components of its orchestration, scheduling and load balancing software, called Borg as Open Source. This led to its release in 2015 as Kubernetes.\cite{www-kubernetesebook}
+Containers gained prominence for their ability to isolate the applications from host operating system dependencies and for being flexible by packaging. Docker tool, that can package applications and their dependencies into containers, was released in 2013, paving way for flexible and portable applications that can run on premises, public and private clouds. Google also decided to release key components of its orchestration, scheduling and load balancing software, called Borg as Open Source. This led to its release in 2015 as Kubernetes \cite{www-kubernetesebook}.
 
 
 
@@ -57,7 +60,7 @@ A Kubernetes Service is a set of pods usually constitute a tier of an applicatio
 \section{Architecture}
 
 Kubernetes has a Master-Worker architecture. The worker agents were earlier called minions but are now known as Nodes.
-The Kubernetes Master is the controlling unit of the cluster and is responsible for scheduling, managing the workload and communications.\cite{www-kubernetesebook}
+The Kubernetes Master is the controlling unit of the cluster and is responsible for scheduling, managing the workload and communications \cite{www-kubernetesebook}.
 
 
 
@@ -68,7 +71,7 @@ All the tasks by master and workers are accomplished through API calls, which ar
 This is a persistent key-value data store used for storing configuration and overall state of the cluster. Etcd was developed by the CoreOS team.
 
 \subsubsection{Scheduler and Controller Manager}
-Controller manager communicates with the API server and creates, manages or deletes pods according to the API calls and/or preset configurations.\cite{www-kuberneteswiki}
+Controller manager communicates with the API server and creates, manages or deletes pods according to the API calls and/or preset configurations \cite{www-kuberneteswiki}.
 \subsection{Worker Node}
 \subsubsection{Kubelet}
 This is a special background process meant for implementing commands from master. The common commands include create, destroy and monitor its containers.
@@ -91,15 +94,15 @@ Figure \ref{fig:ui-dashboard} shows an example figure.
 \label{fig:Kubernetes UI-dashboard}
 \end{figure}
 \section{License and Pricing}
-Kubernetes is licensed under Apache License 2.0.\cite{www-kuberneteslic}
+Kubernetes is licensed under Apache License 2.0. \cite{www-kuberneteslic}.
 
 \subsection{Pricing}
 While Kubernetes itself is free and open source, a paid kubernetes implementation is being offered by Google Cloud Platform.
-Nodes are priced between 0.010 USD and 0.240 USD per hour depending on the type of the machine.\cite{www-googlecontengpricing}
+Nodes are priced between 0.010 USD and 0.240 USD per hour depending on the type of the machine \cite{www-googlecontengpricing}.
 0 to 5 node clusters are free when you are paying for the nodes.
-6 plus node clusters are being charged at 0.15  USD per hour on top of the price for nodes.\cite{www-googlecloudpricing}
+6 plus node clusters are being charged at 0.15  USD per hour on top of the price for nodes \cite{www-googlecloudpricing}.
 \section{Comparison}
-Some of the choices for orchestration, clustering and cluster management are\cite{www-kubernetesarticle}:
+Some of the choices for orchestration, clustering and cluster management are \cite{www-kubernetesarticle}:
 \subsection{Docker Swarm}
  Swarm uses the standard  Docker interface. Though this makes it easy to integrate with existing work flows, this may make it difficult to implement complex scheduling with custom interfaces.
 \subsection{Fleet}
@@ -107,9 +110,9 @@ Fleet is a low level orchestration tool that can be used run other high level or
 \subsection{Mesos}
 Apache Mesos is also a low level, but more stable, scheduler that supports several frameworks for container orchestrations such as Kubernetes, Marathon and Swarm. Usually large applications and in Big Data centers.
 \subsection{Kontena}
-Kontena a relatively newcomer to the field is aimed at simplifying the whole process and is targeting smaller companies like startups and quicker deployment\cite{www-kontenasite}.
+Kontena a relatively newcomer to the field is aimed at simplifying the whole process and is targeting smaller companies like startups and quicker deployment \cite{www-kontenasite}.
 \section{Users}
-Some of the Current users of Kubernetes are Pearson, ebay, wikimedia, box, SAP and ComCast.\cite{www-kubernetesusers}
+Some of the Current users of Kubernetes are Pearson, ebay, wikimedia, box, SAP and ComCast \cite{www-kubernetesusers}.
 \section{Conclusion}
 Kubernetes is an open source custer management software. Kubernetes comes in with the advantage of being the result of 15 years of research and development by Google and is considered stable. It also has an active community of developers. While embracing Kubernetes might involve some redesigning of existing applications, when utilized efficiently it offers a fault-tolerant and efficient system.
 
