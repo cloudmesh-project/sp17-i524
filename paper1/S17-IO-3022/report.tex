@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{\LaTeX\ Netty vs ZeroMQ in Realtime Analytics}
+\title{Netty vs ZeroMQ in Realtime Analytics}
 
 \author[1]{Sunanda Unni}
 
@@ -10,7 +10,8 @@
 
 \dates{project-000, \today}
 
-\ociscodes{Cloud, I524}
+\ociscodes{I524, Netty, Storm, Distributed Computing System, Real time
+  Analytics}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/cloudmesh/classes/suunni/master/docs/source/format/report/report.pdf}}
@@ -44,10 +45,10 @@ throughput using the different messaging frameworks.
 
 Netty \cite{www-netty} is an asynchronous event-driven network
 application framework for rapid development of maintainable high
-performance protocol servers and clients.  Netty book
-\cite{netty-book} mentions Netty to have a performance superior to
-standard Java NIO API thanks to optimized resource management, pooling
-and reuse and low memory copying.
+performance protocol servers and clients.  Netty book ``Netty in
+Action'' \cite{netty-book} mentions Netty to have a performance
+superior to standard Java NIO API thanks to optimized resource
+management, pooling and reuse and low memory copying.
 
 \section{Design of a Distributed Realtime Computational System}
 
@@ -64,7 +65,7 @@ Fig. \ref{fig:Storm_worker-processes_executors_tasks}.
 	\centering
         \fbox{\includegraphics[width=\linewidth]{images/Storm_worker-processes_executors_tasks.png}}
 	\caption{The relationships of worker processes, executors
-          (threads) and tasks in Storm
+          (threads) and tasks in Storm, adopted from
           \cite{www-noll2012-parallelismofstormtopology} }
 	\label{fig:Storm_worker-processes_executors_tasks}
 \end{figure}
@@ -77,7 +78,7 @@ Fig. \ref{fig:Storm_example_of_a_running_topology}.
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/Storm_example_of_a_running_topology.png}}
-	\caption{Example of a Running Topology
+	\caption{Example of a Running Topology, adopted from
 	\cite{www-noll2012-parallelismofstormtopology} }
 	\label{fig:Storm_example_of_a_running_topology}
 \end{figure}
@@ -90,23 +91,26 @@ communicates with other Worker processes.
 Apache Storm is a free and open source distributed realtime
 computation system. Storm makes it easy to reliably process unbounded
 streams of data, doing for realtime processing what Hadoop did for
-batch processing. \cite{www-storm}
+batch processing \cite{www-storm}.
 
-Users are free to stitch together a directed graph of execution, with
-Spouts (data sources) and Bolts (operators). Architecturally, it
-consists of a central job and node management entity dubbed the Nimbus
-node, and a set of per-node managers called Supervisors. The Nimbus
-node is in charge of work distribution, job orchestration,
-communication, fault-tolerance, and state management (for which it
-relies on ZooKeeper). The parallelism of a Topology can be
-controlled at 3 different levels: number of workers (cluster wide
-processes), executors (number of threads per worker), and tasks
-(number of bolts/spouts executed per thread)
+As per \cite{article-nabi2014streams}, Users are free to stitch
+together a directed graph of execution, with Spouts (data sources) and
+Bolts (operators). Architecturally, it consists of a central job and
+node management entity dubbed the Nimbus node, and a set of per-node
+managers called Supervisors. The Nimbus node is in charge of work
+distribution, job orchestration, communication, fault-tolerance, and
+state management (for which it relies on ZooKeeper).
+
+The parallelism of a Topology can be controlled at 3 different levels:
+number of workers (cluster wide processes), executors (number of
+threads per worker), and tasks (number of bolts/spouts executed per
+thread)
 
 Communication is handled at different levels in Storm using-
 \begin{itemize}
   \renewcommand{\labelitemi}{\scriptsize$\square$}
-        \item Intra-worker communication in Storm (inter-thread on the same Storm node): using LMAX Disruptor
+        \item Intra-worker communication in Storm (inter-thread on the
+          same Storm node): using LMAX Disruptor
         \item Inter-worker communication (node-to-node across
           the network): using ZeroMQ or Netty
         \item Inter-topology communication: nothing
@@ -142,7 +146,7 @@ zeromq.
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/nettyvzmq-small.png}}
-	\caption{Small Topology- Netty vs ZeroMQ
+	\caption{Small Topology- Netty vs ZeroMQ, adopted from
           \cite{article-storm-netty} }
 	\label{fig:nettyvzmq-small}
 \end{figure}
@@ -152,12 +156,12 @@ zeromq.
 \subsection{Netty Behavior with large Topology}
 The Netty behavior with Topology of 100 workers, 100 spouts, 500 bolts
 spread out in 5 levels of 100 bolts each, and 100 ackers is shown in
-Fig \ref{fig:NettyVsZMQFull}
+Fig \ref{fig:NettyVsZMQFull}.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/NettyVsZMQFull.png}}
-	\caption{Large Topology- Netty vs ZeroMQ
+	\caption{Large Topology- Netty vs ZeroMQ, adopted from
           \cite{article-storm-netty}}
 	\label{fig:NettyVsZMQFull}
 \end{figure}
@@ -179,12 +183,12 @@ To resolve and better Netty performance we need to-
 
 \section{Performance - IBM Experiment}
 Another verification of the numbers stated by Yahoo was done in IBM
-Whitepaper "Of streams and storms" \cite{article-nabi2014streams}
+Whitepaper "Of streams and storms" \cite{article-nabi2014streams}.
 
-Here the performance benchmarking is carried out by processing an
-Enron email dataset of half a million emails through data processing
-pipeline. The processing pipeline used IBM Infosphere Stream versus
-Apache Storm.
+In \cite{article-nabi2014streams},the performance benchmarking is
+carried out by processing an Enron email dataset of half a million
+emails through data processing pipeline. The processing pipeline used
+IBM Infosphere Stream versus Apache Storm.
 
 \subsection{Setup and Configuration of Cluster}
 The cluster here consists of 6-nodes, 1 Nimbus node, 1 Zookeeper, 4
@@ -198,13 +202,13 @@ source, count, and sink on a 4-node configuration
 \subsection{Report of Throughput}
 The below table shows the throughput number improvement for Storm with
 Netty(Storm 0.8.2) vs Storm with ZeroMQ(Storm 0.9.0.1) in
-Fig. \ref{fig:OfStreamsAndStorms}
+Fig. \ref{fig:OfStreamsAndStorms}.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/OfStreamsAndStorms.png}}
-	\caption{Storm Results 0.9 vs 0.8.2
-          \cite{article-nabi2014streams}}
+	\caption{Storm Results 0.9 vs 0.8.2, adopted from
+          \cite[p.~27]{article-nabi2014streams}}
 	\label{fig:OfStreamsAndStorms}
 \end{figure}
 
