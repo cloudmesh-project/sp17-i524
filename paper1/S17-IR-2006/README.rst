@@ -8,7 +8,7 @@ hid: "S17-IR-2006, S17-IR-2026"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "snehalvartak, rahulraghatate"
+github: "snehalvartak"
 
 report: "report.pdf"
 
