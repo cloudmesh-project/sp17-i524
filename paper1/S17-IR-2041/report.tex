@@ -17,18 +17,18 @@
 
 \begin{abstract}
 
-\cite{tajo-paper} There has been an increase in the volume of
-relational data generated today through a large number of sources. The
-large volume of data forces us to find solutions which can cope with
-them. Recently several hybrid approaches like HadoopDB, Hive, etc)
-have been introduced to handle this large data. Although these have
-been successful in handling large data, but their architecture makes
-them inefficient to handle suboptimal execution strategies. Therefore,
-in order to solve the above problem, Apache has developed Tajo, a
-relational, distributed data warehouse system on large clusters. It
-uses Hadoop Distributed File System (HDFS) for storing data and has
-its own query execution engine instead of the MapReduce
-framework. \newline
+In \cite{tajo-paper} the authors mention that there has been an
+increase in the volume of relational data generated today through a
+large number of sources. The large volume of data forces us to find
+solutions which can cope with them. Recently several hybrid approaches
+like HadoopDB, Hive, etc) have been introduced to handle this large
+data. Although these have been successful in handling large data, but
+their architecture makes them inefficient to handle suboptimal
+execution strategies. Therefore, in order to solve the above problem,
+Apache has developed Tajo, a relational, distributed data warehouse
+system on large clusters. It uses Hadoop Distributed File System
+(HDFS) for storing data and has its own query execution engine instead
+of the MapReduce framework. \newline
 \end{abstract}
 
 % \setboolean{displaycopyright}{true}
@@ -44,55 +44,55 @@ processing large-scale data sets. To handle a large amount of data,
 several hybrid approaches have been integrated with Hadoop and
 parallel databases. However, these cannot avoid the choice of
 suboptimal execution strategies because of their architecture, which
-led to the development of Tajo. \cite{www-apache-tajo} Tajo is a
+led to the development of Tajo. Tajo \cite{www-apache-tajo} is a
 relational, distributed data warehouse system which runs on
 shared-nothing clusters. It uses Hadoop Distributed File System (HDFS)
 as the storage layer and has its own query execution engine instead of
 the MapReduce framework. A Tajo cluster consists of one master node
 and a number of workers. The master is responsible for the query
-planning and coordination among the workers. \newline \newline
-\cite{tajo-paper}The internals of Tajo has three main
-steps:- \newline1)Each worker has a local query engine that executes a
-directed acyclic graph (DAG) of physical operators. A DAG of operators
-can accommodate multiple sources of input and can be pipelined within
-the local query engine. Each worker generates query execution plan
-that can employ the existing query evaluation technique
-\cite{query-evaluation-article} \cite{query-processing-article} which
-lie in the database community. \newline2)Tajo can make use of various
-repartition methods specialized for specific queries. Consider joining
-two relations which are already sorted on the join key, Tajo needs to
-repartition only one relation to workers in which the corresponding
-part of another relation resides.\newline3) In Tajo, a physical plan that a
-worker executes is generated in runtime according to the available
-resources like memory, processing capability etc. of the
-workers. Workers can simultaneously execute different physical plans
-in the same phase which allows Tajo to maximize the utilization of the
-resources.
+planning and coordination among the workers. \newline \newline The
+internals of Tajo has three main steps:- \newline1) Each worker has a
+local query engine that executes a directed acyclic graph (DAG) of
+physical operators. A DAG of operators can accommodate multiple
+sources of input and can be pipelined within the local query
+engine. Each worker generates query execution plan that can employ the
+existing query evaluation technique \cite{query-evaluation-article}
+\cite{query-processing-article} which lie in the database
+community. \newline2) Tajo can make use of various repartition methods
+specialized for specific queries. Consider joining two relations which
+are already sorted on the join key, Tajo needs to repartition only one
+relation to workers in which the corresponding part of another
+relation resides.\newline3) In Tajo, a physical plan that a worker
+executes is generated in runtime according to the available resources
+like memory, processing capability etc. of the workers. Workers can
+simultaneously execute different physical plans in the same phase
+which allows Tajo to maximize the utilization of the resources.
 
 \section{Advantages of Tajo over MapReduce Hive}
-\cite{tajo-paper} The limitations of Hadoop \cite{mapreduce-article}
-\cite{hive-paper} MapReduce-Hive technology due to its architecture
-led to the development of Tajo. These limitations are as
-follows:- \newline \newline \cite{tajo-paper}Single Source Input: The
-join operation in relational data warehouses integrates heterogeneous
-data sets from multiple sources. But MapReduce supports only a single
-input source, the join operation is performed by dividing input
-relations through one map reduce job only which doesn't produce
-optimal results.\newline \newline \cite{tajo-paper}Fixed Data Flow:
-The 3 phases of MapReduce are the map, shuffle, and sort and
-reduce. The join operation and aggregation are performed in shuffle
-and sort phase. So it always follows a fixed execution flow leaving no
-room for any optimization needed in the processing. Sometimes
-processing huge datasets need to follow some hybrid map reduce flow
-which is not applicable to the Hadoop MapReduce
-framework. \newline \newline \cite{tajo-paper}Separate Storage: Some
-hybrid approaches using the database layer require separate data
-storages for data distribution and processing. The partitioned data
-must be loaded into the database layer for performance benefits. In
-Hadoop, it takes a long time for data loads causing overhead other
-running workloads in the cluster because of a separate data storage
-layer on the HDFS.\newline \newline Tajo's system architecture has
-been designed in such a way to overcome the above shortcomings.
+In \cite{tajo-paper} the authors mention the limitations of Hadoop
+\cite{mapreduce-article} \cite{hive-paper} MapReduce-Hive technology
+due to its architecture led to the development of Tajo. These
+limitations are as follows:- \newline \newline Single Source Input:
+The join operation in relational data warehouses integrates
+heterogeneous data sets from multiple sources. But MapReduce supports
+only a single input source, the join operation is performed by
+dividing input relations through one map reduce job only which doesn't
+produce optimal results.\newline \newline Fixed Data Flow: In
+\cite{tajo-paper} the authors mention the 3 phases of MapReduce which
+are the map, shuffle, and sort and reduce. The join operation and
+aggregation are performed in shuffle and sort phase. So it always
+follows a fixed execution flow leaving no room for any optimization
+needed in the processing. Sometimes processing huge datasets need to
+follow some hybrid map reduce flow which is not applicable to the
+Hadoop MapReduce framework. \newline \newline
+Separate Storage: Some hybrid approaches \cite{tajo-paper} using the
+database layer require separate data storages for data distribution
+and processing. The partitioned data must be loaded into the database
+layer for performance benefits. In Hadoop, it takes a long time for
+data loads causing overhead other running workloads in the cluster
+because of a separate data storage layer on the HDFS.\newline \newline
+Tajo's system architecture has been designed in such a way to overcome
+the above shortcomings.
 
 
 \section{System Architecture}
@@ -114,41 +114,40 @@ nodes. A Tajo worker and HDFS data node can run on the same physical
 machine.
 
 \subsection{Storage Layer}
-\cite{tajo-paper}Tajo uses Hadoop Distributed File System (HDFS) as
-the basic storage layer. The data in HDFS is distributed automatically
-among the cluster nodes. A local query engine of each worker scans
-data sets on HDFS. Tajo takes input data from HDFS and later outputs
-the results back into HDFS. Tajo even has a local file system and its
-storage manager provides interfaces to the operating system. The
-physical operators can process data sets on either HDFS or on local
-file system.
+In \cite{tajo-paper} they mention that Tajo uses Hadoop Distributed
+File System (HDFS) as the basic storage layer. The data in HDFS is
+distributed automatically among the cluster nodes. A local query
+engine of each worker scans data sets on HDFS. Tajo takes input data
+from HDFS and later outputs the results back into HDFS. Tajo even has
+a local file system and its storage manager provides interfaces to the
+operating system. The physical operators can process data sets on
+either HDFS or on local file system.
 
 \subsection{Master}
 
-\cite{tajo-paper} \cite{www-apache-tajo} The master is responsible for
-planning queries and coordinating the activities of workers. The
-master includes four components, cluster manager, catalog, global
-query engine, and history manager. All cluster nodes report their
-resource information like the number of available processors, memory
-usages, and remaining disk spaces periodically to the cluster
-manager. The catalog maintains various metadata, such as tables,
-schemas, partitions, functions, indices, and statistics. Since the
-metadata are frequently accessed by the global query engine, they are
-stored in a conventional RDBMS. The global query engine builds a
-global plan based on the metadata of tables and cluster information
-which are provided from the catalog and the cluster manager,
-respectively. Finally, the history manager records the metadata of the
-executed queries, including query statements, statistics, and logical
-plans.
+ In \cite{tajo-paper} they also mention that the master is responsible
+ for planning queries and coordinating the activities of workers. The
+ master includes four components, cluster manager, catalog, global
+ query engine, and history manager. All cluster nodes report their
+ resource information like the number of available processors, memory
+ usages, and remaining disk spaces periodically to the cluster
+ manager. The catalog maintains various metadata, such as tables,
+ schemas, partitions, functions, indices, and statistics. Since the
+ metadata are frequently accessed by the global query engine, they are
+ stored in a conventional RDBMS. The global query engine builds a
+ global plan based on the metadata of tables and cluster information
+ which are provided from the catalog and the cluster manager,
+ respectively. Finally, the history manager records the metadata of
+ the executed queries, including query statements, statistics, and
+ logical plans.
 
 \subsection{Worker}
 
-\cite{tajo-paper} \cite{www-apache-tajo}A worker has a query execution
-engine that performs assigned query. A query unit contains a logical
-plan and fragments. A fragment is chunk information of an input
-relation. During execution, a worker sends periodically the reports of
-the running queries and the resource status to the master which aids
-in failure.
+A worker has a query execution engine that performs assigned query. A
+query unit contains a logical plan and fragments. A fragment is chunk
+information of an input relation. During execution, a worker sends
+periodically the reports of the running queries and the resource
+status to the master which aids in failure.
 
 \section{Query Processing}
 Tajo has an SQL-like query language, called
@@ -169,10 +168,10 @@ Figure \ref{fig:queryplanning} shows the steps involved in query transformation.
 \end{figure}
 
 \noindent
-\cite{tajo-paper} \cite{www-apache-tajo}Tajo has multiple steps to
-transform a query statement to physical execution plans. When a user
-submits a query, the global query engine parses the query into an
-abstract syntax tree and compiles it into a logical plan. The query
+In Tajo \cite{tajo-paper} \cite{www-apache-tajo}, it has multiple
+steps to transform a query statement to physical execution plans. When
+a user submits a query, the global query engine parses the query into
+an abstract syntax tree and compiles it into a logical plan. The query
 optimizer finds the best logical plan which is similar to the original
 logical plan. This is the optimized logical plan which is transformed
 into a global query plan. In this step, some logical operators like
@@ -194,13 +193,14 @@ available memory). As a result, the query units of the same subquery
 can lead to different physical execution plans on different workers.
 
 \subsection{Query Execution}
-\cite{tajo-paper} For input and output of data, Tajo has scanners and
-appenders. A scanner reads input data from HDFS or local file system,
-whereas an appender writes output data to either of them. In the
-current implementation, the scanners/appenders of Tajo support CSV and
-row-based binary file formats. Since a worker executes a DAG of
-physical operators and Tajo can use various repartition methods, it
-can do more optimized and efficient query processing.
+In \cite{tajo-paper} for input and output of data, the authors mention
+that Tajo has scanners and appenders. A scanner reads input data from
+HDFS or local file system, whereas an appender writes output data to
+either of them. In the current implementation, the scanners/appenders
+of Tajo support CSV and row-based binary file formats. Since a worker
+executes a DAG of physical operators and Tajo can use various
+repartition methods, it can do more optimized and efficient query
+processing.
 
 \section{Experiment}
 
@@ -224,7 +224,7 @@ Tajo to execute SQL queries is less than Apache Hive on the top of
 MapReduce.
 
 \section{Tajo Shell}
-\cite{www-apache-tajo-tsql} Tajo provides a shell utility named
+Tajo provides a shell utility named \cite{www-apache-tajo-tsql}
 Tsql. It is a command-line interface where users can create or drop
 tables, inspect schema and query tables and can execute other sql
 commands.\newline \newline
@@ -235,18 +235,18 @@ connects to default database.
 
 \section{Use cases of Tajo}
 \subsection{Data warehousing and analysis}
-\cite{www-apache-tajo-tutorialspoint} Korea’s SK Telecom firm ran Tajo
-against 1.7 terabytes worth of data and found it could complete
-queries with greater speed than either Hive or Impala.
+Korea's SK Telecom firm \cite{www-apache-tajo-tutorialspoint} ran Tajo against 1.7 terabytes worth of data and found
+it could complete queries with greater speed than either Hive or
+Impala.
 
 \subsection{Data discovery}
-\cite{www-apache-tajo-tutorialspoint} The Korean music streaming
+The Korean music streaming \cite{www-apache-tajo-tutorialspoint}
 service Melon uses Tajo for analytical processing. Tajo executes ETL
 (extract-transform-load process) jobs 1.5 to 10 times faster than
 Hive.
 
 \section{Conclusion}
-\cite{www-apache-tajo} So, with the use of Tajo, efficient data
+So, with the use of \cite{www-apache-tajo} Tajo, efficient data
 processing and analysis is possible.It processes data faster than the
 MapReduce Hive framework and provides distributed data warehouse
 capabilities. By supporting SQL standards and advanced database
