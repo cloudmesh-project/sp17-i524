@@ -2,7 +2,7 @@
 
 submitted: "2017-02-27"
 
-author: "LEONARD MWANGI"
+author: "Leonard Mwangi"
 
 hid: "S17-IO-3013"
 

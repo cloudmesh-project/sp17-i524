@@ -2,7 +2,7 @@
 
 submitted: "2017-02-27"
 
-author: "ANVESH NAYAN LINGAMPALLI"
+author: "Anvesh Nayan Lingampalli"
 
 hid: "S17-IR-2016"
 

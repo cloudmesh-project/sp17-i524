@@ -2,7 +2,7 @@
 
 submitted: "2017-02-27"
 
-author: "JIMMY ARDIANSYAH"
+author: "Jimmy Ardiansyah"
 
 hid: "S17-IR-2002"
 

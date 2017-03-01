@@ -2,7 +2,7 @@
 
 submitted: "2017-02-27"
 
-author: "RAHUL SINGH"
+author: "Rahul Singh"
 
 hid: "S17-IR-2036"
 

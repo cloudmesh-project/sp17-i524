@@ -2,7 +2,7 @@
 
 submitted: "2017-02-27"
 
-author: "NITEESH KUMAR AKURATI"
+author: "Niteesh Kumar Akurati"
 
 hid: "S17-IR-2001"
 

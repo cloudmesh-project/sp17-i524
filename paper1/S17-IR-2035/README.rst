@@ -1,6 +1,6 @@
 submitted: "2017-02-26"
 
-author: "PIYUSH SHINDE"
+author: "Piyush Shinde"
 
 hid: "S17-IR-2035"
 

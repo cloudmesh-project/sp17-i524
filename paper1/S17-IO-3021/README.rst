@@ -2,7 +2,7 @@
 
 submitted: "27-02-2017"
 
-author: "ABHIJIT THAKRE"
+author: "Abhijit Thakre"
 
 hid: "S17-IO-3021"
 
