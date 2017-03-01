@@ -110,7 +110,10 @@ for path in hid_dirs:
     if not os.path.exists(path):
         print('Skipping %s. Path does not exist.' % path)
         continue
-    
+    elif not os.path.isdir(path):
+        print('Skipping %s. Path is not a directory.' % path)
+        continue
+
     verify = Verifier(path)
 
     try:
