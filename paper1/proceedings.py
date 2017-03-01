@@ -36,6 +36,7 @@ for readme in readmes:
 print ("""
 \\documentclass[12pt]{report}
 \\usepackage{fullpage}
+\\usepackage[final]{pdfpages}
 \\begin{document}
 
 \\title{Big Data Technologies}
@@ -44,6 +45,8 @@ print ("""
 \\maketitle
 
 \\newpage
+
+\section{Contributors}
 """)
 
 print("\\begin{footnotesize}")
@@ -54,5 +57,11 @@ for entry in entries:
     print ("\\hline")
 print("\\end{tabular}")
 print("\\end{footnotesize}")
+
+reports = glob.glob("*/report.pdf")
+
+for report in reports:
+    print ("\\includepdf[pages=-]{" + report + "}")
+
 
 print("\\end{document}")
