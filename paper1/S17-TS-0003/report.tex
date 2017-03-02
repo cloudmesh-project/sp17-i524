@@ -1,0 +1,296 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+%\usepackage[nomarkers,figuresonly]{endfloat}
+
+\title{\centering%
+Nagios (Example Paper for I524)}
+
+
+\author[1]{Tony Liu}
+\author[1]{Vibhatha Abeykoon}
+\author[1]{Gregor von Laszewski}
+
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+
+\dates{status: early draft, paper-1, S17-TS-000?, S17-TS-0003, S17-TS-0001\today}
+
+\ociscodes{Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/vibhatha/sp17-i524/blob/master/paper1/S17-TS-0003/report.pdf}}
+
+
+\begin{abstract} Nagios is a system, network and infrastructure
+  monitoring tool providing instant awareness of IT infrastructure.
+  Nagios allows to monitor the infrastructure, alert the system admin,
+  provide visualized reports, schedule downtime for maintenance, and
+  plan upgrade in advance with trends and capacity diagrams. The
+  design emphasizes highly on flexibility and scalability. We
+  summarize details of Nagios and outline how it is useful as part
+  ofthe services used in big data. \end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Nagios ~\cite{www-nagios, wiki-nagios} is a system, network and
+infrastructure monitoring tool under open source license that provides
+instant awareness of mission-critical IT infrastructure. Nagios allows
+to monitor the infrastructure, alert the system admin, provide
+visualized reports, schedule downtime for maintenance, and plan
+upgrade in advance with trends and capacity diagrams. Its design
+emphasizes highly on flexibility and scalability. To provide such
+flexibility, Nagios is composed of different modules. Through the
+modular design Nagios cab adapts easily to systems and networks
+monitoring needed by different users. It also allows integration of new
+components that allow adaptation towards service monitoring needs that
+have not yet been distributed with Nagios, allowing extensibility.
+
+\section{Architecture}
+
+Nagios \cite{nagios-paper-2012} flexible modular architecture allows
+users to customize modules to monitor the network and
+infrastructure. We show the elementary Nagios archirtecture in
+Figure~\ref{fig:Nagios-architecture} ~\cite{nagios-book}.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\columnwidth]{images/nagios-architecture}
+\caption{Nagios Architecture~\cite{nagios-book}.}
+\label{fig:Nagios-architecture}
+\end{figure}
+
+Nagios architecture consists of two main databases. They are MySQL and
+Postgre SQL.  Nagios XI is directly connected with MySQL and Postgre
+SQL. There are two main components connected with MySQL, NDOUtils and
+NagioSQL are these two components. The databases keeps the parameters
+and configurations needed for the Nagios Core configuration from the
+XI interface \cite{archi-nagios}. The NagiosSQL refers to the
+configuration files to get configuration parameters. NagioSQL forms an
+advance configuration section of the XI interface to enable the
+functionality.Nagios local installation is also connected with three
+main components. They are Local Checks, NRDP/NSCA and NRPE components.
+
+Nagios has a number of components such as Nagios core, file system,
+Nagios daemon, services, plugins, event handlers, performance processors
+and notification commands.
+
+The main component is {\em Nagios core}, which is a scheduler daemon
+detecting network devices and services regularly. The core can alert
+the administer through various notification methods like email,
+message and web interface about system and event changes to alert of
+issues and system states. Nagios plugin featues allows to register
+events that can be triggered to execute actions actions and print
+status updates.
+
+It has two types,check and notification. Both are used by Nagios
+core. The check plugin is used to check and monitor devices and
+services. The notification plugin is used to send out alerts if the
+check plugin detected any status change. Beside these two, the users
+themselves can develop their own custom plugins.
+
+Nagios uses {\em modules} that call through the Nagios API Nagios
+Events that are enacted upon by the Nagios Broker. The user can
+develop a modules with customized functionality and embed them within
+Nagios core. Whenever an event triggers the module, the module
+will be called to execute. The benefit of Nagios module is that the
+user can access all necessary information within the core process such
+as the Nagios status and check results.
+
+Nagios' configuration file is text-based. It supports the
+sophistication of Nagios al;lowing to monitor large
+infrastructure. Also, the user must understand the configurable
+options. Management of the configuration has to be condusted carefully
+to avoid simple mistakes such as introduced by spelling
+errors. However, sample configurations and tools to generate
+configuration files by applying such configuration templates are alos
+supported by a user-friendly web interface.
+
+Nagios also contains a Web interface. It is developed using
+CGI technology in C programming language. Although it is not 
+compatible with current popular web technologies like CSS, AJAX
+and JQuery, it provides sufficient scalability for larger infrastructures.
+
+
+\subsection{Comprehensive Monitoring}
+
+Using Nagios there are many structures that can be monitored, such as
+operating systems, networking protocols, system metrics and
+infrastructure components. There are many APIs to handle the easy
+monitoring of in-house applications, services and systems. In
+considering the network monitoring, basic use is the pinging and
+Nagios uses it in a complex way and configurations are complex as it
+is used to monitor many of the networking infrastructures. The feature
+is post query support is also there in Nagios, this is very important
+to monitor TCP or UDP connections with a particular host. The
+capability of pinging and keeping track on multiple ports is also
+enabled in this framework, so it is very easy to monitor a huge
+network in a particular organization. When it comes to service
+management, there are group service configurations that can be added
+to the system by Nagios, this provides a variety of options to a team
+to manage systems in a flexible way. There are a variety of
+centralized views provided. For instance General view provides a
+central dashboard which holds the keys to all other kinds of services
+and tools like monitoring performance, network outage, etc.  Service
+details view provides the last check details, service type, host and
+many other information related to services. This is a vital tool, when
+it comes to managing thousands of services from a single
+organization. Host details and host groups can also be viewed by the
+tools in Nagios, this is very important to provide a more structured
+service when an organization have a number of clients, so the group
+management is a vital task when it comes to isolating services in
+cases of maintenance and development. Collapsed tree status map and
+marked up circular status map shows the connection between different
+hosts and routers in a network. This is an important tool to identify
+the service distribution and to identify breakdowns. By these views,
+the failures can be notified by a physical and geographical location,
+and this is a vital factor for a system management with less downtime
+\cite{info-nagios}.
+
+\subsection{Problem Remediation}
+
+Systems running on live environments generally associated with
+expected and unexpected problems. Tracking these problems is a
+challenging task.  Nagios has the capability of providing such events
+as alerts in an automatic way.  Nagios consists of fast recoverying
+capability with the support of automated tools. These tools has the
+capability of providing services with less downtime. 
+
+\subsection{Visibility and Awareness}
+
+Visibility and awareness deal with a couple of factors. Notifications,
+real time updates, reporting, centralized dashboard are some of these
+main features. Nagios consists of a centralized dashboard which
+provides the access to all these information. The centralized
+architecture supports system administrators to deal with less problems
+in reaching vivid services in order to access information. In making
+decisions, it is vital to have access to all information in a quick
+manner.  Nagios provides these features with the centralized
+dashboard.
+
+\subsection{Reporting}
+
+In referring to records and statistics, Nagios provide reporting tools
+to keep track on the outputs from the dashboards and central
+data collection systems, so that the data can be analyzed at the
+present moment and also the ability to check the data in the history.
+When it comes to tools like crystal reporting, casper
+reporting, etc, Nagios provide support to third party tools so the
+users can use the familiar reporting tools.
+
+\subsection{Open-Source}
+
+Nagios is an open source tool and the license for documentation and software
+is under different licenses. Nagios open software license \cite{op-sw-lic-nagios}, Nagios software
+license \cite{sw-lic-nagios} and GPL are the licenses own by Nagios. 
+
+\subsection{Multi-Tenant Capabilities}
+
+Concurrent access for multiple users is a vital factor as far as a
+scaled business is considered. The necessity of multiple user login,
+accessing data, sharing data and updating data is a vital task in such
+an organization. Nagios consists of a web interface which consists of
+all these features. The importance of the web interface is that, the
+installation cost and maintenance cost is less. Once it is deployed to
+a server, every user in that particular network containing the server
+has access to the web interface by means of web browser. As mentioned
+earlier, Nagios dashboard comes with a web interface enabling easy
+access to all users.
+
+In referring to these factors, it is clear how Nagios can be used to
+implement a solid foundation to maintain the information technology
+based systems in an organization.
+
+\section{Nagios for Big Data}
+
+Big data is another word which refers to data sets generated by
+communication channels, networks, security details, etc. Nagios is a
+monitoring tool with major supporting tools to enhance network
+performance, failure detection, performance evaluation, etc. In
+referring to web services which access bulk data in form of JSON
+objects or SOAP format, network traffic occurred by these actions are
+very high. In such instances, Nagios can be used to monitor the
+network in order to provide better performance by analyzing the
+current status and providing suggestions on using the bandwith
+widely. Furthermore, the monitoring tools and reporting tools can
+provide a wide idea on the fact how data is being collected in a
+particular network. The rate of change of free capacity of local
+storages in servers is a vital factor in case of providing storage
+facility with less data damage and no data loss. Nagios has the
+capability of providing an analytic understanding on the nature of big
+data distribution and management in a particular network.
+
+\subsection{Big Data Requirements for Monitoring}
+
+In monitoring of clouds and clusters, Nagios can be used as a powerful
+tool. The clouds and clusters always depend on the network. In such
+senarios, network traffic monitoring, failure detection, network
+bottle-neck detection and similar tasks can be done using Nagios.
+And also the status monitoring such as memory, network bandwith,
+cpu performance, gpu performance and similar activities can be
+tracked using Nagios. 
+
+Servers, disks and file systems are vital factors in big data management.
+The server performances and storage status is a vital factor for an
+organization providing cloud based software solutions. So these file system
+management becomes a very important task in order to provide less downtime
+services. Nagios has monitoring capability and visualizing capability,
+these dashboards can be used to provide information to the users in an easy
+manner. Real time performance update, storage status, server failures can be
+detected using Nagios. All these factors together form a solid background
+to provide cloud based software solutions \cite{bigdata-nagios}.  
+
+   
+\section{Nagios for Big Data Application}
+
+Big data applications are the applications handling huge amount of
+data and thousands of users through out a network. In such a process,
+there are many factors that has to be considered. Performance is
+one of the main concerns in an organization. In order to achieve better
+performance, speed of the network, easy access to data, user management,
+security and many more factors contribute. Nagios has the capability of
+monitoring most of these factors and it provides updates, reports and
+centralized dashboard to system administrators. Big data always
+deal with very complex networks, so data flow must be smooth and fast.
+Nagios provides the network monitoring tools to understand the nature
+of a network in a given time. With the real time updates, the bottle-necks
+and network related problems can be traced quickly. Multi-user management
+is also a value added feature in Nagios, with big data applications, many
+users access same bulk of data in same time. Network monitoring tools and
+other performance tools in Nagios provide a wide understanding about user
+actions and network traffic distribution. Nagios provide a better infrastructure
+to this kind of applications. 
+
+\section{Conclusion}
+
+Nagios provides a wide understanding to the network management,
+reporting, centralized dashboard and many more other features enabling
+a solid foundation for a scalable organization. It offers a variety of
+reports and vivid dashboards under the main panel to help system
+administrators to make decisions in an easier way. Nagios can be
+identified as a long term solution for big data related systems to
+manage both users and resources.  Nagios shape up the organizational
+hierarchy in order to provide flexible and smooth services to the
+customers. In big data management, the network monitoring, file system
+monitoring, database monitoring are vital factors. Nagios provides
+infrastructure to all these components in order to provide better
+performance to the users. Cloud infrastructure relies on low downtime
+and better performance.  Nagios provide the necessary tools to track
+the health of clouds and storages.  Nagios is a useful tool to manage
+big data and big data related problems.
+
+% Bibliography
+
+\bibliography{references}
+ 
+%\newpage
+
+
+\end{document}

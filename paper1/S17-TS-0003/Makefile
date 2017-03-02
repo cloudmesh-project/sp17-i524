@@ -1,6 +1,5 @@
 FILE=report
 
-
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Darwin)
@@ -15,13 +14,6 @@ all:
 	bibtex ${FILE}
 	pdflatex ${FILE}
 	pdflatex ${FILE}
-
-review:
-	pdflatex ${FILE}-review
-	bibtex ${FILE}-review
-	pdflatex ${FILE}-review
-	pdflatex ${FILE}-review
-
 
 real-clean: clean
 	rm -rf *.pdf
