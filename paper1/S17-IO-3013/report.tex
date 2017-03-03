@@ -15,7 +15,7 @@
 \ociscodes{Cloud, I524, Apache Beam, Google Cloud Dataflow}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/lmundia/sp17-i524/tree/master/paper1/S17-IO-3013/report.pdf}}
 
 
 \begin{abstract}
@@ -145,8 +145,7 @@ as Apache Beam. Thus, in the example below Apache Beam is referenced.
 Below is the processing pipeline code, which is accomplishable with a
 few lines of code.
 
-\begin{algorithm}
-\caption{Processing pipeline code}\label{alg:python}
+\begin{figure}[htb]
 \begin{quote}
 \begin{Verbatim}
     
@@ -177,13 +176,10 @@ PATH/*.json'))
         CREATE_IF_NEEDED,
         write_disposition=df.io.BigQueryDisposition.
         WRITE_TRUNCATE)))
-p.run()
-
-\end{Verbatim}
+p.run() \end{Verbatim}
 \end{quote}
-Python Pipeline Code \cite{www-pythoncode}
-\end{algorithm}
-
+\caption{Processing Python Pipeline Code \cite{www-pythoncode}}\label{alg:python}
+\end{figure}
 
 \section{Relation to Big Data}
 
@@ -192,7 +188,7 @@ become essential as form of getting instant feedback in order to solve
 customer needs or solve a problem quickly. Cloud Dataflow provides
 that capability through its real-time streaming platform. Cloud
 Dataflow allows processing of unbound, out-of-bound and global scale
-data [www-statefulprocess].
+data \cite{www-statefulprocess}.
 
 \section{Use Cases}
 
@@ -211,7 +207,7 @@ of the customers when they are in a store and re-aligning to cater
 their needs helps increase sales. After Capturing these behaviors by
 use of RFIDs and QR code sensors, store owners can utilize Cloud
 Dataflow to analyze them in real-time and offer incentives like
-instant coupons to drive sales [www-storelayout].
+instant coupons to drive sales \cite{www-storelayout}.
 
 \subsection{Sentiments Tracking}
 
