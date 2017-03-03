@@ -22,7 +22,7 @@
 \begin{abstract}
 Ansible is a powerful open source automation tool which can be used in
 configuration management, deployment, and orchestration
-tool.\cite{www-ansible-wikipedia} This paper gives an in-depth
+tool \cite{www-ansible-wikipedia}. This paper gives an in-depth
 overview of Ansible.
 \newline
 \end{abstract}
@@ -38,7 +38,7 @@ overview of Ansible.
 Ansible is an open source automation engine which can be used to
 automate cloud provisioning, configuration management, and application
 deployment. It is designed to be minimal in nature, secure,
-consistent, and highly reliable.\cite{www-ansible3} In many respects,
+consistent, and highly reliable \cite{www-ansible3}. In many respects,
 it is unique from other management tools and aims to provide large
 productivity gains. It has an extremely low learning curve and seeks
 to solve major unsolved IT challenges under a single banner.  Michael
@@ -46,7 +46,7 @@ DeHaan developed the Ansible platform and Ansible, Inc. was the
 company set up to commercially support and sponsor Ansible. The
 company was later acquired by Red Hat Inc. It is available on Fedora,
 Red Hat Enterprise Linux, CentOS and other operating
-systems.\cite{www-ansible-wikipedia}
+systems \cite{www-ansible-wikipedia}.
 
 \section{Architecture}
 
@@ -55,14 +55,14 @@ the space is its architecture. Ansible is an agentless tool, it
 doesn't requires any software to be installed on the remote machines
 to make them manageable. By default is manages remote machines over
 SSH or WinRM, which are natively present on those
-platforms.\cite{www-ansible}
+platforms \cite{www-ansible}.
 
 Like many other configuration management software, Ansible
 distinguishes two types of servers: controlling machines and
 nodes. Ansible uses a single controlling machine where the
 orchestration begins. Nodes are managed by a controlling machine over
 SSH. The location of the nodes are described by the inventory of the
-controlling machine.\cite{www-ansible3}
+controlling machine \cite{www-ansible3}.
 
 Modules are deployed by Ansible over SSH. These modules are
 temporarily stored in the nodes and communicate with the controlling
@@ -77,9 +77,9 @@ WinRM. Ansible doesn't require dedicated users or credentials - it
 respects the credentials that the user supplies when running
 Ansible. Similarly, Ansible does not require administrator access, it
 leverages sudo, su, and other privilege escalation methods on request
-when necessary.\cite{github-ansible} If needed, Ansible can connect
+when necessary \cite{github-ansible}. If needed, Ansible can connect
 with LDAP, Kerberos, and other centralized authentication management
-systems.\cite{www-ansible2}
+systems \cite{www-ansible2}.
 
 \section{Advanced Features}
 
@@ -90,12 +90,12 @@ system, ability to spawn asynchronous long running actions, ability to
 operate in either a push or pull configuration, it also includes a
 “check” mode to test for pending changes without applying change, and
 the ability to tag certain plays and tasks so that only certain parts
-of configuration can be applied. \cite{www-ansible3}These features allow your
+of configuration can be applied \cite{www-ansible3}. These features allow your
 applications and environments to be modelled simply and easily, in a
 logical framework that is easily understood not just by the automation
 developer, but by anyone from developers to operators to CIOs. Ansible
 has low overhead and is much smaller when compared to other tools like
-Puppet. \cite{www-ansible4}
+Puppet \cite{www-ansible4}.
 
 \section{Playbook and Roles}
 
@@ -103,7 +103,7 @@ Playbook is what Ansible uses to perform automation and
 orchestration. They are Ansible's configuration, deployment and
 orchestration language. They can be used to describe policy you need
 your remote systems to enforce, or a set of steps in a general IT
-process.\cite{www-ansible5}
+process \cite{www-ansible5}.
 
 At a basic level, playbooks can be used to manage configurations and
 deployments to remote machines. While at an advanced level, they can
@@ -119,7 +119,7 @@ to an Ansible module - a small piece of code for doing a specific
 task. The tasks may be complex, such as spinning up an entire cloud
 formation infrastructure in Amazon EC2. Ansible includes hundreds of
 modules which help it perform a vast range of
-tasks.\cite{www-ansible}
+tasks \cite{www-ansible}.
 
 Similar to many other languages Ansible supports encapsulating
 Playbook tasks into reusable units called ‘roles.’ These roles can be
@@ -132,7 +132,7 @@ can be reused used to build Playbooks.
 \section{Complex Orchestration Using Playbooks}
 
 Playbook can be used to combine multiple tasks to achieve complex
-automation.\cite{www-ansible5} Playbook and Ansible can be easily used
+automation \cite{www-ansible5}. Playbook and Ansible can be easily used
 in implementing a cluster-wide rolling update that consists of
 consulting a configuration/settings repository for information about
 the involved servers, configuring the base OS on all machines and
@@ -143,7 +143,7 @@ out of a load balanced pool. The usage doesn't ends here and it can be
 utilized to start and stop server, running appropriate tests on the
 new server or even deploying/updating the server code, data, and
 content. Ansible can also be used to send email reports and as a
-logging tool.\cite{www-ansible}
+logging tool \cite{www-ansible}.
 
 \section{Extensibility}
 
@@ -154,7 +154,7 @@ might be a need to implement a new module to handle some portion of IT
 infrastructure. Ansible makes it simpler and by allowing the modules
 to be written in any language, with the only requirement that they are
 required to take JSON as input and product JSON as
-output.\cite{www-ansible}
+output \cite{www-ansible}.
 
 We can also extend Ansible through it's dynamic inventory which allows
 Ansible Playbooks to run against machines and infrastructure
@@ -192,7 +192,7 @@ OpenStack, and CloudStack. This includes not just compute
 provisioning, but storage and networks as well and the capability
 doesn't ends here. As noted, further integrations are easy, and more
 are added to each new Ansible release. And as Ansible is open source
-anyone can make his/her contributions.\cite{www-ansible}
+anyone can make his/her contributions \cite{www-ansible}.
 
 \section{Automating Network}
 
@@ -203,7 +203,7 @@ tools. Due to the Ansible’s agentless, task-based nature it can easily
 be utilized in the networking space, and the inbuilt support is
 included with Ansible for automating networking from major vendors
 such as Cisco, Juniper, Hewlett Packard Enterprise, Cumulus and
-more.\cite{www-ansible3}
+more \cite{www-ansible3}.
 
 By harnessing this networking support, network automation is no longer
 a task required to be done a separate team, with separate tools, and
