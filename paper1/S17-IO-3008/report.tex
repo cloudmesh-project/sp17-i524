@@ -1,40 +1,34 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\usepackage{url}
+\journal{i524} 
 
-\documentclass{acm_proc_article-sp}
+\title{Docker Container}
+
+\author[1,*]{Vishwanath Kodre}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: vkodre@iu.edu}
+
+\dates{paper1, \today}
+
+\ociscodes{Docker Container, Docker Machine, Docker Swarm, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/paper1/S17-IO-3008/report.pdf}}
+
+\begin{abstract}
+  A portable lightweight packing and run time tool a platform for developers and administrators to build, ship, and run distributed application with Docker Engine. Docker can get code tested and deployed faster. 
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
 
 \begin{document}
 
-\title{Docker Container}
-\subtitle{Container, Machine, Swarm}
-
-\numberofauthors{1} 
-\author{
-\alignauthor
-Vishwanath Kodre\\
-       \affaddr{Indiana University}\\
-       \affaddr{Bloomington, IN}\\
-       \email{vkodre@iu.edu}
-\alignauthor
-Author Three\\
-       \affaddr{Institute Three}\\
-       \affaddr{Address Three}\\
-       \email{author.three@emails.com}
-\alignauthor
-Author Four\\
-       \affaddr{Institute Four}\\
-       \affaddr{Address Four}\\
-       \email{author.four@emails.com}
-}
-
-\date{28 Feb 2017}
-
-
 \maketitle
-\begin{abstract}
-A portable lightweight packing and run time tool a platform for developers and administrators to build, ship, and run distributed application with Docker Engine. Docker can get code tested and deployed faster. 
-\end{abstract}
 
-
-\section{Introduction}
+\section{What is Docker}
 Dockers package the application into filesystem that contains software needed to run, runtime, system tools, system libraries. Anything that can be installed on server. These units are known as Docker containers which are also known as lightweight VMs, Docker containers are application images hosted on single machine. However Docker containers differs from the VM with its architecture. It runs on single machine shares the same Kernel. The images are constructed from layered filesystem and share common files, making disk usage and image download much more efficient. Virtual Machines also include application, binaries, libraries and entire guest operating system. "The ability to create multiple lightweight, self-contained execution environments on the same Linux host simplifies application deployment and management. By improving collaboration between developers and system administrators, container technology encourages a DevOps culture of continuous deployment and hyperscale, which is essential to meet current user demands for mobility, application availability, and performance."\cite{DockerandtheLinuxcontainerecosystem}.
 
 However Docker differs from conventional container based echo system. Docker enhances the container technology with its open source platform it makes it more accessible by creating simpler and more powerful tools. With the help of Docker the lifecycle of tens of thousands of containers can easily be managed.
@@ -90,14 +84,24 @@ Simple command-line tool "supports multiple container formats, including Docker,
 
 Though Docker has gain it popularity these are few technologies provides similar services, with companies like Amazon, Google, IBM in collaborating with few of these to provide cloud base solution to enterprise the service and support backed up by these big players.
 
-\section{Conclusion}
+\section{Take Away}
 Docker is container based ecosystem growing rapidly is most promising disruptive solution on cloud platform. Community is leveraging multiple IaaS service provider for portability, scale on demand, fault tolerance and performance with continuous application delivery.
 
 Docker containers has added the ease of installation to cloud platform over the heavy virtual machines because of its portability and one stop installation module many enterprises are moving towards container based services (Container-as-a-Service).
 
-\bibliographystyle{abbrv}
-\bibliography{references}
 
-%\balancecolumns 
+\bibliography{references}
+ 
+\section*{Author Biography}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+%  \begin{wrapfigure}{L}{0.25\columnwidth}
+%   \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
+%  \end{wrapfigure}
+  \noindent
+  {\bfseries Vishwanath Kodre} received his Masters Degree in Computer Science from Pune University.  He is currently studying Data Science at Indiana University Bloomington.
+\end{minipage}
+\endgroup
 
 \end{document}
