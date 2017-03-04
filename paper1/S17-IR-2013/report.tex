@@ -72,7 +72,7 @@ Shell script called flume-ng in the bin directory of Flume starts an Agent. Agen
 
 \begin{quote}
 \begin{Verbatim}[numbers=left]
-bin/flume-ng agent -n \$agent_name -c conf 
+bin/flume-ng agent -n \$agent\_name -c conf 
 -f conf/flume-conf.properties.template
 \end{Verbatim}
 \end{quote}
@@ -116,7 +116,7 @@ Note that in a full deployment we would typically include one more option: --con
 \subsection{Logging Raw Data}
 Flume does not log raw stream of data is not desired in many production environments. Flume attempts to provide clues for debugging the problems like broken pipeline. One way to debug is by connecting an additional Memory Channel connected to a Logger Sink which will output event data to the Flume logs. In some situations, however, this approach is insufficient. For this, Java system properties should be set in addition to log4j properties \cite{user-manual}.
 
-To enable configuration-related logging, set the Java system property $-Dorg.apache.flume.log.printconfig=true$. This can either be passed on the command line or by setting this in the $JAVA_OPTS$ variable in flume-env.sh.
+To enable configuration-related logging, set the Java system property $-Dorg.apache.flume.log.printconfig=true$. This can either be passed on the command line or by setting this in the $JAVA\_OPTS$ variable in flume-env.sh.
 
 To enable data logging, set the Java system property -Dorg.apache.flume.log.rawdata=true in the same way described above. For most components, the log4j logging level must also be set to DEBUG or TRACE to make event-specific logging appear in the Flume logs.
 
