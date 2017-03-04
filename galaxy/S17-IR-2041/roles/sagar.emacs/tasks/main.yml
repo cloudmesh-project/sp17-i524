@@ -1,0 +1,6 @@
+---
+# tasks file for sagar.emacs
+- name: install Emacs on Ubuntu 16.04
+#- name: install apache on Ubuntu 16.04
+  become: yes
+  package: name=emacs state=present
