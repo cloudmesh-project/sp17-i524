@@ -14,6 +14,8 @@ import glob
 import sys
 import os.path
 
+import datetime
+
 hid_dirs = sys.argv[1:]
 
 class Verifier(object):
@@ -76,6 +78,14 @@ class Verifier(object):
 
         submission = self._parse_readme(self.readme)
 
+        # in case the submission date was parsed as a date/datetime
+        # convert it back to a string for fnmatch to work below
+        if 'submitted' in submission and (
+				type(submission['submitted']) == datetime.datetime or
+				type(submission['submitted']) == datetime.date
+		):
+			submission['submitted'] = datetime.datetime.strftime(submission['submitted'], '%Y-%m-%d')
+
         for property, pattern in params.iteritems():
             if not property in submission:
                 raise KeyError('README DOES NOT HAVE: %s' % property)
@@ -100,7 +110,10 @@ for path in hid_dirs:
     if not os.path.exists(path):
         print('Skipping %s. Path does not exist.' % path)
         continue
-    
+    elif not os.path.isdir(path):
+        print('Skipping %s. Path is not a directory.' % path)
+        continue
+
     verify = Verifier(path)
 
     try:

@@ -1,0 +1,214 @@
+#!/usr/env/bin python
+# -*- mode: python -*-
+
+import glob
+import subprocess
+import os.path
+
+
+
+projects = sorted(glob.glob("../projects/p*"))
+
+
+
+print """
+\\documentclass[a4paper,11pt]{article}
+
+\\usepackage{pdfpages}
+\\usepackage[margin=3cm]{geometry} %% for bigger margins
+\\usepackage{hyperref}
+\\usepackage[utf8]{inputenc}
+\\usepackage{fourier} 
+\\usepackage{array}
+\\usepackage{makecell}
+\usepackage{rotating}
+
+\\begin{document}
+
+%% the cover page is made and exported to PDF with OpenOffice 
+% \\includepdf[pages=-]{cover-page.pdf}
+
+\\thispagestyle{empty} % no page number
+
+\\title{523 Project Proposals}
+\\author{Editor: Gregor von Laszewski}
+
+\\maketitle
+
+\\newpage
+\\thispagestyle{empty} % no page number
+% \\input{toc.tex} %% YOU STILL HAVE TO MANUALLY REPORT THE PAGE NUMBERS IN THE TOC
+"""
+############
+
+print "\\begin{tiny}%\\begin{sidewaystable}"
+
+print "\\begin{tabular}{lllllllll}"
+
+for f in projects:
+    url = f.replace("../projects/","")
+    # f = file.replace("../projects/","").replace("/report/report.pdf", "")
+    print "\\hline"
+    print "\\href{https://gitlab.com/cloudmesh_fall2016/%s}" % url, "{%s}&" % url
+    print "\\href{https://gitlab.com/cloudmesh_fall2016/%s/tree/master}" % url, "{repo}&"    
+    #print "url &"
+
+    readme = "../projects/%s/report/README.rst"
+
+    title = "ERROR: README.rst"
+    author = "ERROR: README.rst"
+    pages = "ERROR: README.rst"
+    state = "ERROR: README.rst"
+
+    try:
+        
+        change = subprocess.check_output('cd ../projects/%s ; git log -1  -- report/report.pdf | fgrep "Date:"' % f, shell=True).replace("Date:","")
+    except Exception, e:
+        change = str(e)
+        change = "undefined"
+    
+    try: 
+      title = subprocess.check_output("fgrep 'title:' ../projects/%s/report/README.rst" % f, shell=True).replace("title:", "")
+      author = subprocess.check_output("fgrep 'author:' ../projects/%s/report/README.rst" % f, shell=True).replace("author:", "")
+      pages = subprocess.check_output("fgrep 'pages:' ../projects/%s/report/README.rst" % f, shell=True).replace("pages:", "")
+      state = subprocess.check_output("fgrep 'status:' ../projects/%s/report/README.rst" % f, shell=True).replace("status:", "")
+
+    except Exception, e:
+      pass
+  
+    #print title.replace("_", " "), " & "
+    #print "\\makecell{"
+  
+    authors = author.split(" ")
+    all = ""
+    for a in authors:
+        if "@" not in a:
+            all += a + " "
+
+    author = all
+    
+    print author, " & "
+    #print pages, " & "
+    print state, " & "
+    print change, " & "
+    #if os.path.isfile("../projects/%s/report/report.pdf" % f):
+    #    print "+", " & "
+    #else:
+    #    print "-", " & "
+        
+    #if os.path.isfile("../projects/%s/report/README.rst" % f ):
+    #    print "+", " & "
+    #else:
+    #    print "-", " & "
+
+      
+
+    # output = subprocess.check_output("cd ../projects/%s ; git shortlog -sn " % f, shell=True)
+    # print "\\begin{verbatim} %s \\end{verbatim}" % output
+
+    print "~\\\\"
+    
+    
+print "\\end{tabular}"
+print "%\\end{sidewaystable}"
+print "\\end{tiny}"    
+
+print "\\newpage"
+
+
+###########
+###########
+
+    
+
+print "\\begin{footnotesize}"
+
+print "\\begin{itemize}"
+
+for f in projects:
+
+    #f = file.replace("../projects/","").replace("/report/report.pdf", "")
+    url = f.replace("../projects/","").replace("/report/report.pdf", "")
+    
+    print "\\item \underline{\hspace{15cm}}\\newline"
+    print "\\url{https://gitlab.com/cloudmesh_fall2016/%s}\\newline" % url
+    print "\\url{https://gitlab.com/cloudmesh_fall2016/%s/tree/master}\\newline" % url    
+
+    print "\\begin{description}"    
+
+    readme = "../projects/%s/report/README.rst"
+
+    title = "ERROR: README.rst"
+    author = "ERROR: README.rst"
+    pages = "ERROR: README.rst"
+    state = "ERROR: README.rst"
+
+    try:
+        
+        change = subprocess.check_output('cd ../projects/%s ; git log -1  -- report/report.pdf | fgrep "Date:"' % f, shell=True).replace("Date:","")
+    except Exception, e:
+        change = str(e)
+    
+    
+    try: 
+      title = subprocess.check_output("fgrep 'title:' ../projects/%s/report/README.rst" % f, shell=True).replace("title:", "")
+      author = subprocess.check_output("fgrep 'author:' ../projects/%s/report/README.rst" % f, shell=True).replace("author:", "")
+      pages = subprocess.check_output("fgrep 'pages:' ../projects/%s/report/README.rst" % f, shell=True).replace("pages:", "")
+      state = subprocess.check_output("fgrep 'status:' ../projects/%s/report/README.rst" % f, shell=True).replace("status:", "")
+
+    except Exception, e:
+      #print "\\item[ERROR]", "README.rst error", e
+      pass
+  
+    print "\\item[Title:]", title.replace("_", " ")
+    print "\\item[Authors:]~\\newline",author.replace("\n", "\\newline\n")
+    print "\\item[Pages:]", pages
+    print "\\item[Status:]", state
+    print "\\item[Last change:]", change
+    print "\\item[report/report.pdf]"
+    if os.path.isfile("../projects/%s/report/report.pdf" % f):
+        print "found"
+    else:
+        print "ERROR: not found"
+        
+    print "\\item[report/README.rst]"
+    if os.path.isfile("../projects/%s/report/README.rst" % f ):
+        print "found"
+    else:
+        print "ERROR: not found"
+        
+    print "\\end{description}"    
+
+      
+
+    output = subprocess.check_output("cd ../projects/%s ; git shortlog -sn " % f, shell=True)
+    print "\\begin{verbatim} %s \\end{verbatim}" % output
+
+    
+    
+print "\\end{itemize}"
+print "\\end{footnotesize}"    
+print """
+
+\\newpage
+\\thispagestyle{empty} % no page number
+% \\input{foreword.tex}
+
+
+%% reset the counter
+\\setcounter{page}{0}
+"""
+
+for project in projects:
+    report = project + "/report/report.pdf"
+    if os.path.isfile(report):
+        print "\\includepdf[pages=-,pagecommand={\\thispagestyle{plain}}]{%s}" % report
+    else:
+        print '\\section{report + " missing"}'
+
+print """
+
+
+\\end{document}
+"""    
+
