@@ -1,5 +1,3 @@
-:orphan:
-
 submitted: "2017-03-04"
 
 author: "Sagar Vora"
