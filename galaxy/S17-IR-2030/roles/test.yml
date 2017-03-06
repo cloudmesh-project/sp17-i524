@@ -1,5 +1,5 @@
 ---
-- hosts: apache
+- hosts: emacs
   remote_user: root
   roles:
     - sowmya.emacs
