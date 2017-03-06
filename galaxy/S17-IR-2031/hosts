@@ -1,0 +1,9 @@
+[apache]
+192.168.33.10 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
+[R_hosts]
+192.168.33.10 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
+
+[emacs_hosts]
+192.168.33.10 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
