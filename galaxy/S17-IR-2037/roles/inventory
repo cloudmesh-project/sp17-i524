@@ -1,0 +1,2 @@
+[apache]
+129.114.33.150 ansible_ssh_user=cc
