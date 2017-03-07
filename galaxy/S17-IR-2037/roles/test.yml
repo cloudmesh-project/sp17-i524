@@ -1,4 +1,4 @@
-- hosts: emacs
+- hosts: apache
   remote_user: root
   roles:
     - srirsith.emacs
