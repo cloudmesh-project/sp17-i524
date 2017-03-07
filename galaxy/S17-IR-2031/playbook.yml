@@ -1,0 +1,5 @@
+---
+- hosts: emacs_hosts
+
+  roles:
+    - emacs
