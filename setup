@@ -183,6 +183,10 @@ do_galaxy() {
 
 do_project() {
 
+    mkdir -p $OUTDIR
+    mkdir -p $OUTDIR/code
+    mkdir -p $OUTDIR/report
+    declare -r OUTDIR=$OUTDIR/report
     do_paper
 
 }
