@@ -185,10 +185,11 @@ do_project() {
 
     mkdir -p $OUTDIR
     mkdir -p $OUTDIR/code
+    touch $OUTDIR/code/.gitkeep
     mkdir -p $OUTDIR/report
+    touch $OUTDIR/code/.gitkeep
     declare -r OUTDIR=$OUTDIR/report
     do_paper
-
 }
 
 
