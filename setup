@@ -190,6 +190,7 @@ do_project() {
     touch $OUTDIR/code/.gitkeep
     declare -r OUTDIR=$OUTDIR/report
     do_paper
+    mv README.rst ../
 }
 
 
