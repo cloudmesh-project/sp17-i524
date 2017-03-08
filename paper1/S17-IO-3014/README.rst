@@ -6,7 +6,7 @@ hid: "S17-IO-3014"
 
 pid: ""
 
-github: "YOUR GITHUB USERNAME"
+github: "piyurai"
 
 report: "report.pdf"
 
