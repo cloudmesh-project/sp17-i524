@@ -1,0 +1,51 @@
+- name: Step 1 of 11 -> apt-get update
+  become: yes
+  apt: update_cache=yes
+
+- name: Step 2 of 11 -> apt-get upgrade
+  become: yes
+  apt: upgrade=full
+
+- name: Step 3 of 11 -> Install unzip
+  become: yes
+  apt: name=unzip update_cache=yes state=latest
+
+- name: Step 4 of 11 -> Install build-essential
+  become: yes
+  apt: name=build-essential update_cache=yes state=latest
+
+- name: Step 5 of 11 -> Download & Unarchive Intel (2HWS-F758WJVR)
+  unarchive:
+    src: http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/11298/parallel_studio_xe_2017_update2.tgz
+    dest: /home/cc
+    remote_src: True
+
+- name: Step 6 of 11 -> Send Intel Silent Configuration File
+  copy:
+    src: roles/scottmcclary1.cdms/files/silent.cfg
+    dest: /home/cc/silent.cfg
+
+- name: Step 7 of 11 -> Install Intel (Silent Mode)
+  shell: /home/cc/parallel_studio_xe_2017_update2/install.sh --silent silent.cfg
+
+- name: Step 8 of 11 -> Download CDMS Data for Simulation
+  unarchive:
+    src: https://github.com/scottmcclary1/CDMS-Data/archive/master.zip
+    dest: /home/cc
+    remote_src: True
+
+- name: Step 9 of 11 -> Download CDMS Source Code
+  unarchive:
+    src: https://github.com/scottmcclary1/CDMS/archive/master.zip
+    dest: /home/cc
+    remote_src: True
+
+- name: Step 10 of 11 -> Compile CDMS Source Code
+  shell: source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/CDMS-master/trap_analysis && make clean && make trap && make clean && make trap_omp
+  args:
+     executable: /bin/bash
+
+- name: Step 11 of 11 -> Run CDMS Applicaton
+  shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && export OMP_STACKSIZE=100M && cd /home/cc/CDMS-Data-master && /home/cc/CDMS-master/trap_analysis/trap_omp < /home/cc/CDMS-master/trap_analysis/input.txt 
+  args:
+     executable: /bin/bash
