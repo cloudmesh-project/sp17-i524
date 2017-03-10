@@ -1,0 +1,4 @@
+---
+- name: install the emacs package
+  apt: name=emacs update_cache=yes state=latest
+  become: yes

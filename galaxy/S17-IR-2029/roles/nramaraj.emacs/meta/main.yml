@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Naveenkumar Ramaraju
+  description: emacs installation on Ubuntu 16.04
+  license:
+    - Apache 2.0
+  min_ansible_version: 2.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags:
+    - development
+
+dependencies: []

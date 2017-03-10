@@ -1,0 +1,4 @@
+---
+- hosts: emacs_hosts
+  roles:
+    - nramaraj.emacs
