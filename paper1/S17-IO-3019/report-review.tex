@@ -1,0 +1,257 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\usepackage[colorinlistoftodos,prependcaption,textsize=normal]{todonotes}
+\newcommand{\TODO}[2][]{\todo[color=red!10,inline,#1]{#2}}
+\newcommand{\GE}{\TODO{Grammar}}
+\newcommand{\SE}{\TODO{Spelling}}
+\newcommand{\TE}{\TODO{Term}}
+\newcommand{\CE}{\TODO{Citation}}
+\journal{i524} 
+
+\title{\LaTeX\ vCloud and vSphere}
+
+\author[1] {Michael Smith}
+
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+
+\affil[*]{Corresponding authors: mls35@iu.edu}
+
+\dates{Paper 1, \today}
+
+\ociscodes{vCloud, vSphere, Iaas, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+
+
+\begin{abstract}
+vSphere and vCloud are categorized as infractructure as a
+service(Iaas) offering.  vSphere was developed by VMware and is a
+cloud computing virtualization platform.\cite{www-vmware} vSphere is
+not one piece of software but a suite of tools that contains software
+such as vCenter, ESXi, vSphere client and a number of other
+technologies.  Similarly, vCloud is also a suite of applications but
+for establishing an infrastructure for a private
+cloud.\cite{www-mustbegeek} The suite includes the vsphere suite,
+but also contains site recovery management for disaster recovery, site
+networking and security.  These services as well as Iaas in general
+are discussed.  Advantages and disadvantages of utilizing such as
+service are presented followed by an analysis of vSphere and vCloud.
+The big data extensions available for these services are examined.
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\TODO{This review document is provided for you to achieve your
+  best. We have listed a number of obvious opportunities for
+  improvement. When improving it, please keep this copy untouched and
+  instead focus on improving report.tex. The review does not include
+  all possible improvement suggestions and if you sea comment you may
+  want to check if this comment applies elsewhere in the document.}
+
+\section{Cloud Computing}
+
+With the rise of high speed internet, connectivity amongst devices
+locally made cloud computing a practical alternative to the standard
+local solution.  Cloud computing is defined as the utilization of
+remote servers to provide the computing power and data management
+instead of utilizing a local computer.  During the late 1990's,
+companies started to see the potential benefits of moving to the
+cloud, one of the first companies to do so was salesforce.com how
+delivered applications to end users over the internet. \cite{www-eci}
+Today there are many companies in the business of cloud computing.
+The majority of business coming from Microsoft, Google, and Amazon.
+There are subdivisions of cloud computing such as software as
+service(Saas), platform as a service(Paas), and infrastructure as a
+service(Iaas).  Saas is software that runs remotely from a service
+provider and is utilized over the internet, some examples that call
+into this category are google docs, gmail, office, and office 365.
+Paas are web and database services enabling the user to develop and
+run applications in the cloud, some examples are google app engine,
+microsoft azure, and amazon web services.  Iaas provides the user
+virtualized computing resources over the internet, amazon web
+services, Microsoft azure, and VMware.  It is important to note that
+many providers offer more than just one type of cloud computing
+option. \cite{www-rackspace}
+
+
+
+
+\section{Advantages of Iaas}
+
+
+Iaas is a business model in where a provider will host all components
+of infrastructure including hardware, software, servers, data storage
+for their clients.  The cost to the client is at a rate of usage can
+range from different rates such as per hour, week or month.  While it
+might seem costly to pay for such as service, utilization of Iaas
+provide several advantages for organizations to use such as service.
+Management does not have the upfront costs their own IT infrastructure
+as well as maintaining hardware or replacing equipment that is
+obsolete.  The responsibility of ensuring the network is and up and
+running through having a qualified team of IT staff is also mitigated.
+The cost of Iaas is metered thus companies will only pay for what they
+need. \cite{www-statetech} Depending on the application of an Iaas, there
+may be instances where a company may need to quickly scale up their
+usage.  A great example is when a website produces an unexpected
+influx of visits in short period.  If the IT infrastructure is
+maintained in house, it might not be able to quickly scale up to the
+demand.  This would be detrimental to the business due to a slow
+online experience of the customer or possibly a website that
+crashes. \cite{www-linkedin} It is both costly and impractical to
+staff IT personnel to monitor demands twenty four hours a day seven
+days a week.  The Iaas has the capacity to scale with depends and
+solutions are in place to help alleviate instances where a sudden
+increase in IT infrastructure is required.  Disaster recovery is a
+major worry for companies, implementation of a safe backup solution
+can be both costly and difficult to execute.  Iaas offer disaster
+recovery solutions, as long as an internet connection is available the
+same environment can be accessed from leading to little to no
+downtime.  With offsite storage of data via Iaas any form of data loss
+is potential is limited to very little or none. \cite{www-statetech}
+
+\section{Disadvantages of Iaas}
+
+Iaas is not a perfect solution, it does come with potential problems.
+Security is a major concern, becoming fully reliant on a service
+provider for IT solutions means their outages become a major problem
+for the client’s business.  Sensitive data that is being protected in
+the cloud always has the risk of possibly being stolen.  As these Iaas
+services grow with a list of companies they support, this can lead
+them to become appealing targets for possible hackers due to the
+degree of damage that can be done.  A common threat to all websites
+that Iaas are not immune to are called distributed denial of service
+(DDos) attacks.  This is a type of cyber-attack where the goal is to
+make a network unavailable for normal users by disrupting service of a
+host on the internet. \cite{www-wikipedia} The typical method to
+disrupt service by flooding the bandwidth of a host with plethora of
+requests through a botnet which is definied as a network of computers
+programmed to receive commands without the owners knowledge.  These
+attacks have grown to such an extent that the department of homeland
+security has initiated funding new research leading to the prevention
+of DDos. \cite{www-ciodive} From a business perspective, this
+vulnerability can have disastrous effects to the users of Iaas, risks
+should be assessed and possible backup plans in place.
+
+\TODO{the above three sections are too general. should be reduced to
+one Background section}
+
+\section{vCloud and vSphere}
+
+vCloud falls into the cloud computing subcategory Iaas.  It is a suite
+of multiple products that include vSphere, vCloud Director, vCloud,
+connector, vCloud networking and security, vCloud networking and
+security, vCenter site recovery and manager, vCenter operations
+management suite, vFabric application director, and vCloud automation
+center.  vSphere is responsible for the physical hardware resource
+management and allocation of virualization across alarge group of
+infrastructure such as CPUs, data storage and networking.
+
+vSphere utilizes ESXi which is an enterprise class type 1 hypervisor.  A
+hypervisor also known as a virtual machine manager is defined as “a
+hardware virualization technique that allows multiple guest operating
+systems (OS) to run on a single host system at the same time.  The
+guest OS shares the hardware of the host computer, such that each OS
+appears to have its own processor, memory and other hardware
+resources.” \cite{www-technopedia} The type 1 refers to a type of
+hypervisor that can run directly on the hosts pc to control its
+resources.
+
+vCloud director is a tool for overall cloud management it
+helps the user build hybrid clouds through pooling resources into data
+centers.  This product helps empower exisiting IT within an
+organization the tools necessary to expand their infrastructure into
+the cloud. vCloud connector creates a single user interface that as a
+bridge between private and public clouds, this simplifies management
+by enabling the user to transfer workloads under a single hybrid cloud
+umbrella.
+
+vCloud networking and security provides capabilities to
+protect virtual machines.  A firewall is applied either encompassing a
+virtual datacenter or at the network interface.  VPN or virtual
+private network is utilized to ensure safety for extensions of the
+virtual data center, as well as secure sockets layer (SSL) VPN which
+is an industry standard for security compliance. \cite{www-vmware3}
+With regards to data security, a feature included will scan file
+servers for sensitive data such as credit card or social security
+numbers and ensure proper measures are place for protection of such
+critical data.
+
+Cloud Disaster recovery is defined as “a backup and
+restore strategy that involves storing and maintaining copies of
+electronic records in a cloud computing environment”. \cite{www-cloud}
+This also addressed in the feature vCenter site recovery manager.  It
+is an automated solution that will recovery from downtimes in a timely
+manner.  This is done so by using replication technology to migrate
+virtual machines to a different site.  Users are able to test the
+migration process in order to safely address any potential migration
+issues.
+
+\section{Licensing}
+
+Depending on the demand, the cost of vCloud can be quite expensive.
+It is important to note that there are currently Iaas offerings that
+are free but with limit usage.  Amazon web services offers a free tier
+consisting of certain limits such as 1 million requests per month on
+aws lambda, 25 gb of storage through dynamoDB, 100 million free events
+per month on amazon mobile analytics and many other
+limits. \cite{www-aws} Other services generally offer limited time
+services followed by a pay requirement.
+
+\section{vSphere Big Data Extensions}
+
+Within the vSphere suite is a feature that can support big data and
+Apache Hadoop workloads.  A set of tools are available for the user to
+deploy and run Haddop within the virtual infrastructure.  The
+following distributions of Hadoop are supported: apache Hadoop,
+cloudera, pivotal, hortonworks, and mapR.  Customization options such
+deploying a specific version of Hadoop or even multiple types of
+Hadoop are supported.  In order to automate the management of Hadoop,
+VMware initiated project Serengeti.  It can quickly deploy a Hadoop
+cluster into vSphere, it will protect master node by automatically
+starting a new virtual machine if there is a suspected failure.  An
+important note is that graphical user interface of big data extensions
+is only supported on the web client 5.1 or later, if big data
+extensions is installed on vSphere 5.0, all abilities of the
+administrator can only be performed within the
+command-line. \cite{www-vmware2}
+
+\section{VCloud API}
+
+The vcloud application program interface (API) clients and the
+director communicate via HTTP through an XML exchange. “You use HTTP
+GET requests to retrieve the current representation of an object, HTTP
+POST and PUT requests to create or modifty an object, and HTTP DELETE
+requests to delete an object.” \cite{www-api}
+\TODO{HTTP requests are used in web APIs. but what are those API message
+definitions? It needs to be shown to help people understand how to use
+this API.}
+
+
+\section{Conclusion}
+
+VMware is one of the oldest companies that have been involved in the
+virtualization market.  Their service provides a suite of tools that
+assist companies who want to utilize IT virtual infrastructure.  The
+Iaas can help businesses in a lot of areas that would be difficult in
+a private IT environment such as scalablity, cost, disaster recovery
+and backup.  There are drawbacks to Iaas such as risk of downtime from
+the IT service provider and security risks of sensitive dat, however
+the vCloud suite has features that can address these drawbacks with
+regards to security.  Additionally, vcloud supports big data
+extensions including support for various versions of hadoop and have
+initiatives such as project serengeti which will automate its
+management. Vcloud is a potential option for clients interested in
+extending their IT infrastructure into the cloud.
+
+% Bibliography
+
+\bibliography{references}
+
+\end{document}
