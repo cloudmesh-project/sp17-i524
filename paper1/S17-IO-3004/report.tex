@@ -1,25 +1,25 @@
-\documentclass{acm_proc_article-sp}
-
-\makeatletter
-\def\@copyrightspace{\relax}
-\makeatother
-
-\begin{document}
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
 
 \title{MySQL}
 
-\numberofauthors{1} 
-\author{
-\alignauthor
-Cory Coulter, S17-IO-3004\\
-       \affaddr{Indiana University}\\
-       \email{cacoulte11@gmail.com}
-}
+\author[1,*, +]{Cory Coulter}
 
-\date{27 February 2017}
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding Authors: cacoulte11@gmail.com}
+
+\affil[+]{HID - S17-IO-3004}
+
+\dates{project-000, \today}
+
+\ociscodes{Database, Relational Database, Relational Database Management System, Structured Query LanguageL}
+
+% replace this with url in github/gitlab
+\doi{\url{https://github.com/cacoulte/sp17-i524/blob/master/paper1/S17-IO-3004/report.pdf}}
 
 
-\maketitle
 \begin{abstract}
 This paper covers various aspects relating to the MySQL. Topics
 covered include a basic overview of the technology, modern use cases
@@ -27,8 +27,11 @@ in the area of Big Data, infrastructure needs, and further educational
 resources.
 \end{abstract}
 
-\terms{Database, Relational Database, Relational Database Management
-  System, Structured Query Language}
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
 
 \section{Introduction}
 MySQL is an "...Open Source SQL database management system [that] is
@@ -213,10 +216,8 @@ PostreSQL is also objective and thus supports
 nesting. \cite{mysqlcomp} One disadvantage of PostgreSQL is that it
 does not offer fast read operations. \cite{mysqlcomp}
 
-\bibliographystyle{IEEEtran}
-\bibliography{references}
-
-%\balancecolumns 
+% Bibliography
+\bibliography{references} 
 
 \end{document}
 
