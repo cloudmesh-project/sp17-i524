@@ -58,18 +58,17 @@ Apache Ranger is open source software project designed to provide centralized
 
 \section{ARCHITECTURE OVERVIEW}
 
-Fig1 provides the high level architecture of Apache Ranger.
 \cite{www-ranger-architecture} describes the important components of Ranger as
  explained below:
 
-1. Ranger Admin Portal:
+\subsection{Ranger Admin Portal}
 
 Ranger Admin Portal is the main interaction point for the user. Using Admin
 Portal, user can define policies. The policies are stored in Policy Database.
  The Policies are polled by various plugins. The Admin Portal also collects
  the audit data from plugins and stores in HDFS or in a relational database.
 
-2. Ranger Plugins:
+\subsection{Ranger Plugins}
 
 Plugins are Java Programs, which are invoked as part of the cluster component.
  For example, the ranger-hive plugin is embedded as part of Hive Server2. The
@@ -77,7 +76,7 @@ Plugins are Java Programs, which are invoked as part of the cluster component.
    against the policies. Plugins also collect the audit data for that
    specific component and send to Admin Portal.
 
-3. User group sync:
+\subsection{User group sync}
 
 While Ranger provides authorization or access control mechanism, it needs to
 know the users and the groups. Ranger integrates with Unix users management or
