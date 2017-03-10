@@ -1,0 +1,223 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{MySQL}
+
+\author[1,*, +]{Cory Coulter}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding Authors: cacoulte11@gmail.com}
+
+\affil[+]{HID - S17-IO-3004}
+
+\dates{project-000, \today}
+
+\ociscodes{Database, Relational Database, Relational Database Management System, Structured Query LanguageL}
+
+% replace this with url in github/gitlab
+\doi{\url{https://github.com/cacoulte/sp17-i524/blob/master/paper1/S17-IO-3004/report.pdf}}
+
+
+\begin{abstract}
+This paper covers various aspects relating to the MySQL. Topics
+covered include a basic overview of the technology, modern use cases
+in the area of Big Data, infrastructure needs, and further educational
+resources.
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+MySQL is an "...Open Source SQL database management system [that] is
+developed, distributed, and supported by Oracle Corporation."
+\cite{devmysql} MySQL Server provides the means to manage data stored
+in a relational database. \cite{devmysql} The origins of MySQL can be
+traced back to 1979 when Micharl Widenius began creating an in-house
+tool for managing databases. \cite{mik}
+
+\section{Database}
+A database provides a logical way to store information that can later
+be retrieved. \cite{mysqlbible} Databases also provide a structure to
+data that can facilitate the access to stored data.
+
+\section{Relational Database}
+Relational databases, which were invented by E.F. Codd in 1970, are a
+type of database that allows for the access and reassembly of data in
+a database without the need to entirely reorganize the
+database. \cite{searchsql} A simple example of the flexibility of a
+relational database is the ability to add new data categories without
+having to modify existing applications. \cite{searchsql} The
+categories in the table correspond to the columns in the table while
+each row of a table defines a separate entry into that
+table. \cite{ibm} In more abstract terms, the columns of a table are
+referred to as attributes and the rows or entries in a table are
+referred to as tuples. This framework provides the structure by which
+data can be logically organized, thus allowing for easy access and
+analysis of the data. The data in the various tables of the database
+can be analyzed and filtered based on various sets of criteria and the
+results presented in a view to an end user. \cite{searchsql}
+
+A simple top down overview of the structure of, say, a database
+managed with MySQL is database>table>entry. A database consists of a
+table or tables. Every table contains columns that attempt to define
+the type of data that is to be stored in the column. Tables are in
+turn made up of rows which correspond to separate entries in the
+table. A potentially useful analogy is to think of a database as a
+warehouse. The warehouse can be partitioned into different
+sections. The different sections of the warehouse are like the tables
+in a database. Each section of the warehouse is responsible for
+storing a particular type of container. The different containers in
+the sections of the warehouse are analogous to the individual entries
+in a table. These containers are themselves partitioned further so
+that corresponding sections of different containers contain the same
+type or category of stuff (data). The various sections within the
+containers are similar to the different columns in a table. While the
+utility of this analogy may be limited, it may prove useful in
+providing a basic idea of the different parts that allow the
+structured storage of data in a database.
+
+\section{RDBMS}
+Relational Database Management Systems (RDBMS) are programs that allow
+for the creation, updating and administration of relational
+databases. \cite{searchsql} Many commercial RDBMS softwares use
+Structured Query Language to access and interact with the relational
+databases they manage. \cite{techrdbms} SQL is a standardized
+programming language used to perform tasks in relational databases
+such as creating databases and tables, adding and deleting entries,
+and querying databases and tables. \cite{techsql} Databases that
+utilize the SQL language are colloquially referred to as SQL
+databases. \cite{techsql} According to \cite{techsql}, "an official
+SQL standard was adopted by the American National Standards Institute
+(ANSI) in 1986 and then by the International Organization for
+Standardization, known as ISO, in 1987." Although a standard SQL
+syntax is defined, many RDBMSs have added their own extensions to the
+language which, in many cases, can only be used with their own
+systems. \cite{sqlcourse}
+
+\section{MySQL Use Cases}
+MySQL has been used by many different organizations to solve many
+different problems. \cite{mysqlcase}. The number of organizations that
+are listed in \cite{mysqlcase}, and the wide array of problems that
+they use MySQL to solve, demonstrates the flexibility and utility of
+relational databases managed by MySQL. Some of the applications that
+MySQL has been applied to range from science to marketing to
+health-care. \cite{mysqlcase} These applications have a wide ranging
+impact on those that utilize their services. \newline
+\newline
+
+\subsection{CERN}
+MySQL has been employed at the European Organization for Nuclear
+Research (CERN). \cite{mysqlcern} Scientists at CERN use sensitive and
+complex instruments to study the fundamental building blocks and
+origin of our universe. \cite{mysqlcern} The IT department at CERN has
+offered a MySQL Database-as-a-Service to its employees and the
+scientists associated with its various projects to aid in the
+management of the data it collects. \cite{mysqlcern} The management of
+the database itself is handled by CERN's IT staff but is made
+available to those with responsibilities and interests in analyzing
+the data collected. \cite{primarynumbers}
+
+A specific project at CERN that utilizes MySQL is the ATLAS
+project. \cite{primarynumbers} ATLAS uses MySQL to manage its Primary
+Numbers database. \cite{primarynumbers} These Primary Numbers are
+parameters that describe the "detector geometry and digitization in
+simulations, as well as certain reconstruction parameters, including
+the identifier maps of the detector elements." \cite{primarynumbers}
+An example of the type of data stored in the Primary Numbers database
+is are maps of magnetic fields associated with instrumentation used in
+the experiment. \cite{primarynumbers} One of the specific benefits
+that MySQL offers to the group at CERN, with relation to managing the
+Primary Numbers database with MySQL, is that the database can be used
+by a researcher although they are not currently connected to the
+central database. \cite{primarynumbers} Once they are connected to the
+database again, the database will be updated. \cite{primarynumbers}
+Other features that have been found useful include the transfer of
+data in binary form and MySQL's certificate authorization
+technology. \cite{primarynumbers}
+
+\subsection{boo-box}
+boo-box is an advertising network that primarily focuses on the South
+American market. \cite{boo} boo-box facilitates the coupling of
+marketing platforms with marketers to display approximately one
+billion advertisements per month. \cite{boo} boo-box connects
+marketers with marketing space on "web sites, blogs and social media
+properties." \cite{boo} MySQL is used by boo-box to log user activity
+such as what pages they view and their click-through rates. \cite{boo}
+Analyzing this data helps boo-box to accurately report and direct ads
+in marketing campaigns. \cite{boo}
+
+MySQL has offered boo-box low latency query performance which allows
+them to place targeted advertisements in under 250
+milliseconds. \cite{boo} Ruby and Python interact with boo-box's MySQL
+database to offer other services in their advertising
+platform. \cite{boo} boo-box is able to capture 2 TB of web logs and
+process 22 billion rows with MySQL. \cite{boo} boo-box is able to use
+MySQL to store over 8 TB of data and manage 1 TB in a Statistics
+database. \cite{boo}
+
+\subsection{Health-care}
+In the health-care industry, MySQL can be used to manage data related
+to scheduling, billing, prescriptions, and Electronic Medical
+Records. \cite{health} A couple of the benefits of using MySQL in a
+health-care application include scalability and security options (with
+MySQL Enterprise Audit) allowing for compliance with applicable
+regulations. \cite{health} Waiting Room Solutions (WRS) is a web-based
+service for physicians' offices that uses MySQL. \cite{health} They
+offer solutions for the management of "electronic medical and health
+records, billing, scheduling, electronic prescriptions, [and] online
+patient registration" among many other services. \cite{health}
+
+\section{Education}
+MySQL has been available for download for free since
+2000. \cite{mysqlhist} As such, it should come as no surprise that
+there are plenty of educational resources available free of charge to
+those who wish to learn how to use MySQL. \cite{mysql50} provides a
+list of 50 different sources that offer lessons about various aspects
+of using MySQL. w3shools.com offers free interactive lessons that
+cover the basics of the SQL language, which of course is an essential
+skill if one would like to work with and understand
+MySQL. \cite{w3mysqlintro} An educational resource that focuses more
+on MySQL can be found at www.mysqltutorial.org. \cite{mysql50} The
+MySQL Tutorial website offers many lessons in using MySQL; from a
+Basic MySQL Tutorial to MySQL Administration to programming interfaces
+such as a Python MySQL Tutorial, this site is a near exhaustive
+resource to learn all things related to MySQL. \cite{mysqltutorial}
+
+\section{Alternatives}
+MySQL is not the only RDBMS. Different RDBMSs have advantages and
+disadvantages in any given situation/application. \cite{mysqlcomp} Two
+other RDBMSs that are worth comparing to MySQL are SQLite and
+PostgreSQL. \cite{mysqlcomp} These three RDBMSs provide end users with
+a wide array of options, each possibly more suitable than the next in
+different situations.
+
+\subsection{SQLite}
+SQLite is an embedded RDBMS. \cite{mysqlcomp} It is a file-based
+database that contains a many tools that enable it to deal with a wide
+array of data types. \cite{mysqlcomp} SQLite is faster than server
+relational databases. \cite{mysqlcomp} One of the main disadvantages
+of SQLite is that it doesn't offer user management. \cite{mysqlcomp}
+Depending on the intended use, this can be a real concern if the
+application requires multiple users to access the
+database. \cite{mysqlcomp}
+
+\subsection{PostgreSQL}
+PostgreSQL is another open-source RDBMS that is compliant with
+applicable SQL standards. \cite{mysqlcomp} PostgreSQL is extensible,
+meaning that functions can be stored as procedures. \cite{mysqlcomp}
+In addition to being a a relational database management system,
+PostreSQL is also objective and thus supports
+nesting. \cite{mysqlcomp} One disadvantage of PostgreSQL is that it
+does not offer fast read operations. \cite{mysqlcomp}
+
+% Bibliography
+\bibliography{references} 
+
+\end{document}
+
