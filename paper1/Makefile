@@ -5,3 +5,7 @@ all:
 view:
 	open proceedings.pdf
 
+
+review:
+	python reviews.py > reviews.tex
+	pdflatex reviews

@@ -1,6 +1,6 @@
 :orphan:
 
-submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): EG: 2017-01-01"
+submitted: "yyyy-mm-dd"
 
 author: "ENTER YOUR NAME HERE"
 
