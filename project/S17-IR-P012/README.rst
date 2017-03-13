@@ -8,7 +8,7 @@ hid: "S17-IR-2038,S17-ER-1001"
 
 pid: "S17-IR-P012"
 
-github: "ssheybani, SushmitaSivaprasad"
+github: "SushmitaSivaprasad, ssheybani"
 
 report: "report.pdf"
 
