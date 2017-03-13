@@ -1,0 +1,111 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Project Report:Integrate Docker  into cloudmesh and demonstrate its use}
+
+\author[1]{Karthick Venkatesan}
+\author[1]{Ashok Vuppada}
+
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+
+
+\begin{abstract}
+This project will be to create a cmd5 based command line interface to docker with commands similiar to those currently supported in cloudmeshclient .The client will also be enhanced to integrate  to docker swarm.A Benchmark suite will be created to benchmark the deployment of application using the client.
+
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The project will be to create a cmd5 based command line interface to docker with commands similiar to those currently supported in cloudmeshclient .The client will also be enhanced to integrate  to docker swarm.A Benchmark suite will be created to benchmark the deployment of application using the client.
+Ansible scripts will be created for deployment of Docker into the virtual machines and also to deploy docker images  for Application/Services
+
+\section{Technology Used}
+
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+
+\begin{itemize}
+\item Cloud Mesh
+\item Docker
+\item Docker Swarm
+\item Ansible
+\end{itemize}
+
+\section{Development}
+
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+
+\begin{itemize}
+\item Task 1: Develop Ansible Script for Docker Install on Virtual Machine
+ 
+\item Task 2: Develop Ansible Script for Installing an service(TBD) on a Docker Swarm 
+
+\item Task 3: Develop Docker interface to create and provision single containers leveraging Docker Rest API
+
+\item Task 4: Develop commands in cloud mesh using cmd5 to manage Docker Swarm leveraging Docker Rest API
+
+\item Task 5: Develop benchmark script for bechmarking the docker container management options and deployment of application into containers.
+\end{itemize}
+
+\section{Execution Plan}
+
+\begin{itemize}
+\item Step 1: Create a a group of Virtual Machines in Chameleon cloud using Cloud Mesh
+ 
+\item Step 2: Run Ansible script to install Docker on all the Virtual Machines provisioned
+
+\item Step 3: Create a Docker Swarm with multipe Nodes in each Virtual Cluster using Cloud Mesh
+
+\item Step 4: Deploy Application (TBD) Docker Images into the Docker nodes using Ansible
+
+\item Step 5: Run Bechmark scripts to bechmark both Application Deployment and Provisioning .
+
+\end{itemize}
+
+\section{Docopts Manual Page for Cloudmesh Docker}
+
+TBD
+
+\section{Data Analysis Application to be deployed in Docker}
+
+TBD
+
+\section{Benchmark Process}
+
+TBD
+
+\section{Benchmark Results}
+
+TBD
+
+\section{Steps to Execute}
+
+TBD
+
+% Bibliography
+
+\bibliography{references}
+ 
+
+
+\newpage
+
+\appendix
+
+
+\end{document}
