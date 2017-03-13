@@ -1,16 +1,14 @@
-submitted: "2017-02-08"
+submitted: 2017-02-08
 
-author: "Dimitar Nikolov"
+author: Dimitar Nikolov
 
-hid: "S17-TS-0006"
+hid: S17-TS-0006
 
-pid: "ENTER YOUR PID HERE"
+pid: ENTER YOUR PID HERE
 
-github: "dimitargnikolov"
+github: dimitargnikolov
 
-report: "report.pdf"
+report: report.pdf
 
-proposal: "proposal.pdf"
+proposal: proposal.pdf
 
-
---------------------------------------------------------------------------------
