@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-13"
 
-author: "ENTER YOUR NAME HERE"
+author: "Sushmita Sivaprasad, Saber Sheybani"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2038,S17-ER-1001"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P012"
 
-github: "YOUR GITHUB USERNAME"
+github: "ssheybani, SushmitaSivaprasad"
 
 report: "report.pdf"
 
