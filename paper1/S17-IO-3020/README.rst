@@ -1,10 +1,10 @@
 :orphan:
 
-submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): S17-IO-3015"
+submitted: "2017-03-13"
 
 author: "Milind Suryawanshi"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IO-3020"
 
 pid: "ENTER YOUR PID HERE"
 
