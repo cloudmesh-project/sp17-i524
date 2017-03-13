@@ -1,0 +1,227 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Big data Visualization with Apache Zeppelin}
+
+\author[1, *]{Naveenkumar Ramaraju}
+\author[1,*]{Veera Marni}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+
+\affil[*]{Corresponding authors: naveenkumar2703@gmail.com, narayana1043@gmail.com}
+
+\dates{project-008, \today}
+
+\ociscodes{Zeppelin, Apache, Big data, Visualization}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IR-P008/report/report.pdf}}
+
+
+\begin{abstract}
+Apache Zeppelin is an open source notebook for data analytics and visualization. In this project we deploy Apache Zeppelin in cluster and visualize data stored in Spark across cluster using Apache Zeppelin interpreter that employs Python and Scala in same notebook. \newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Apache Zeppelin\cite{www-zeppelin}  is an interactive notebook that is used for data ingestion, discovery, analytics, visualization and collaboration. It has built in Spark integration and supports multiple language backends like Python, Hadoop HDFS, R etc.  Multiple languages can be used within same Zeppelin script and share data between them. In this project we aim to deploy Zeppelin 0.7 along with in built Spark and backend languages R and Python across cluster using Ansible. Then install additional  visualization packages provided by Apache Zeppelin Helium APIs. 
+
+We also aim to load a large data set into Spark across cluster and perform data analytics and visualization in cloud using Zeppelin. We have not decided about data set at this point.
+
+\section{Execution plan}
+
+Deploy Spark, Zeppelin, Helium, R and Python using ansible by March 31.
+
+Find a  data set by March 31.
+
+Benchmark the deployment times of individual and all items by April 7.
+
+Load the data distributed across machines using Spark by April 7.
+
+Perform Visualization on loaded data with Zeppelin using Spark, Scala and Python in same environment and validate the collaboration across cluster by April 14.
+
+See, if configuration of Apache clusters inside Zeppelin could be done employing Ansible at deployment time by April 17.
+
+Finish report and submit project on April 21.
+
+
+\section{Deployment}
+TBD
+
+\section{Benchmarks}
+TBD
+
+\section{Visualization with Zeppelin}
+TBD
+
+\section{Supplemental Material}
+TBD
+
+\section*{Acknowledgements}
+
+TBD
+
+
+% Bibliography
+
+\bibliography{references}
+ 
+\section*{Author Biographies}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Naveenkumar Ramaraju} yet to update his Bio\end{minipage}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Veera Marni} yet to update his bio
+\end{minipage}
+
+\endgroup
+
+\newpage
+
+\appendix
+
+\section{Work Breakdown}
+
+TBD
+
+\begin{description}
+
+\item[Naveenkumar Ramaraju] TBD
+
+\item[Veera Marni] TBD
+
+
+\end{description}
+
+\section{Report Checklist}
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item Have you written the report in word or LaTeX in the specified
+  format?
+\item Have you included the report in github/lab?
+\item Have you specified the names and e-mails of all team members in
+  your report. E.g. the username in Canvas?
+\item Have you included the HID of all team members?
+\item Does the report have the project number added to it?
+\item Have you included all images in native and PDF format in gitlab
+  in the images folder?
+\item Have you added the bibliography file in bibtex format?
+\item Have you submitted an additional page that describes who did
+  what in the project or report?
+\item Have you spellchecked the paper?
+\item Have you made sure you do not plagiarize?
+\item Have you made sure that the important directories are all lower
+  case and have no underscore or space in it?
+\item Have you made sure that all authors have a README.rst in their
+  HID github/lab repository?
+\item Have you made sure that there is a README.rst in the project
+  directory and that it is properly filled out?
+\item Have you put a work breakdown in the document if you worked in a
+  group?
+\end{itemize}
+
+\section{Possible technology paper outline}
+
+The next sections are just some suggestions, your may want to add
+sections and subsections as you see fit. Images and references do not
+count towards the 2 page length. Please use the \verb|\section|,
+\verb|\subsection|, and \verb|\subsubsection| commands in your
+paper. do not introduce hardcoded numbers. Use the \verb|\ref| and
+\verb|\label| commands to refer
+ to the sections.
+
+
+\paragraph{Abstract}
+
+Put in the abstract a summary what this paper is about
+
+\paragraph{1. Introduction}
+
+Introduce the technology and provide general useful information.
+
+\paragraph{2. Architecture} 
+
+If applicable include a description about architectural details. This
+may include a figure. Make sure that if you copy a figure you put the
+\cite{?} in the caption also. Otherwise it is plagiarism.
+
+\paragraph{2.1. API}
+
+comment on the API which could include language bindings
+
+\paragraph{2.2. Shell Access}
+
+If applicable comment on how the tool can be used from the command line
+
+\paragraph{2.3.Graphical Interface}
+
+If applicable comment on if the technology has a GUI
+
+\paragraph{3. Licensing}
+
+Often tools may have different versions, some fre, some for
+pay. Comment on this. For example while a tool may offer a comercial
+version this version may be too costly for others. Identify especially
+the difference between features for free vs commercial tools.
+
+Sometimes you may need to introduce this also in the introduction as
+there may be a big difference and without the knowledge you do not
+provide the user an adequate introduction.
+
+\paragraph{4. Ecosystem}
+
+Some technologies have a large ecosystem developed around them with
+extensions plugins and other useful tools. Identify if they exists and
+comment on what they can achieve
+
+provide potentially a mindmap or a figure illustrating how the
+technology fits in with other technologies if applicable.
+
+\paragraph{4. Use Cases}
+
+\paragraph{4.1. Use Cases  for Big Data}
+
+Locate and describe major usecases that demonstrate the technology
+while focussing on big data related use cases. Make sure you do proper
+references with the \cite{?} command. Do not put URLs in the text.
+
+\paragraph {4.2. Other Use Cases}
+
+Some technologies may not just be used for big data, find other makor
+use cases from other areas if applicable.  Make sure you do proper
+references with the \cite{?} command. Do not put URLs in the text.
+
+\paragraph{5. Educational material}
+
+Put information here how someone would find out more about the
+technology. Use important material and do not list hundrets of web
+pages, be selective.
+
+\paragraph{6. Conclusion}
+
+Put in some conclusion based on what you have researched
+
+\paragraph{Acknowledgement}
+
+Put in the information for this class and who may sponsor
+you. Examples will be given later
+
+\end{document}

@@ -1,0 +1,201 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb} \journal{i524}
+
+\title{Project Report: Detecting Street Signs in Videos in a Robot
+  Swarm}
+
+\author[1,*]{Rahul Raghatate} \author[1,*]{Snehal Chemburkar}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408,
+  U.S.A.}
+
+\affil[*]{Corresponding authors: rraghata@iu.edu, snehchem@iu.edu}
+
+\dates{project-001, \today}
+
+\ociscodes{Street Signs, Video Streams, OpenCV, Spark, Cloud, I524}
+
+
+\doi{\url{https://github.com/rahulraghatate/sp17-i524/project/S17-IR-P003/report/report.pdf}}
+
+\begin{abstract}
+The aim of this project is to deploy a software package to detect
+different street signs in a video stream. This will be a scalable
+system over Hadoop based cloud ecosystem to incorporate multiple video
+feeds and parallel real-time processing of the feeds. A comparative
+benchmark will be developed based on the performance of package on
+multiple cloud systems.\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Detecting objects in images has always been keen area of interest in
+the field of computer vision. There are many applications developed
+based on this simple idea like auto tagging pictures (e.g. Facebook,
+Phototime), counting the number of people in a
+street(e.g. Placemeter), classifying pictures, detecting vehicles,
+etc.On the similar grounds, we are building a software package which
+can be deployed easily on cloud infrastructure and establish a
+platform to detect different street signs in a video stream. A
+benchmark will be developed based on performance of this software on
+different cloud systems. The database of street signs will be
+restricted to US street signs. The video streams used for this project
+are simulated or captured using mobile camera.
+
+\section{Requirement Analysis}
+We are using following technologies for complete project development
+and deployment:
+\begin{enumerate}
+\item Cloudmesh - For connecting to different cloud environments.
+\item Ansible -For deploying software from master node on virtual
+  slave nodes.
+\item Python - Writing script for data analysis and data processing in
+  Spark \cite{www-apache-spark} engine over Hadoop.
+
+\item Hadoop -Required for uploading our data set of images on
+  distributed data storage platform as well as for video streams and
+  its processing in Spark Stream. Using pre-build Hadoop and Spark in
+  Cloudmesh so as to focus on video data distribution and analysis and
+  perform optimization testing on cluster.
+
+\item OpenCV \cite{www-opencv} -Perform video analysis for street sign
+  detection using open source computer vision libraries of video/image
+  analysis algorithms.The OpenCV library provides several features to
+  manipulate images(apply filters, transformation), detect and
+  recognize objects in images.
+\end{enumerate}
+
+\section{Methodology}
+\begin{enumerate}
+\item Data gathering for street signs and video streams
+\item Deploy Hadoop clusters on cloud using Cloudmesh
+\item Develop Ansible script to install OpenCV on cloud
+\item Build a model to detect or track street signs using OpenCV. We
+  plan on implementing two programs-
+    \begin{itemize}
+    \item Read an image and run the Haar cascade classifier to detect
+      the signs in the image and
+    \item use the video stream and detect signs in real time.
+    \end{itemize}
+\item To detect street signs, we will be using Haar based cascade
+  classifier which detect objects in an image. As detecting signs and
+  categorizing them are two different problems and use two different
+  approaches. Hence, we will benchmark detection first and will work
+  on categorization as future development.
+\item Test the performance of software package on 3 different clouds
+  or on the same cluster with multiple nodes.
+\item Create benchmarks based on the above results
+
+\end{enumerate}
+
+
+\section{Execution Summary}
+This section specifies the week by week timeline for project
+completion.
+\begin{enumerate}
+\item {Mar 6 - Mar 12, 2017} Create virtual machines on Chameleon
+  cloud using Cloudmesh and submit the project proposal.
+\item {Mar 13-Mar 19, 2017} Deploy Hadoop cluster to Chameleon cloud
+  using Cloudmesh and develop Ansible playbook to install the required
+  software packages to the clusters (OpenCV, etc)
+\item {Mar 20-Mar 26, 2017} Train data to detect or track street signs
+  using OpenCV. Develop Ansible playbook to setup database and
+  connectivity among multiple nodes.
+\item {Mar 27-Apr 02, 2017} Capture the results of street sign
+  tracking in video streams.
+\item {Apr 03-Apr 09, 2017} Test on different cloud systems and define
+  benchmarks.
+\item {Apr 10 - Apr 16, 2017} Create deployable software package in
+  Python.
+\item {Apr 17-Apr 23, 2017} Write Project Report
+\end{enumerate}
+
+\section{Use Cases}
+\begin{enumerate}
+\item Street Sign Detection for autonomous vehicles.
+\item Analysis of traffic signs in Google Street View to estimate all
+  signs ahead hence, useful in ambulance , fire brigade services,
+  simplest path finder etc.
+\end{enumerate}
+
+\section{Benchmark}
+Benchmarks will be created based on the performance of the software in
+different cloud environments. The initial analysis will be done on a
+single short video stream and then on video streams distributed across
+2 or 3 nodes. The different cloud systems used for the purpose of
+benchmarking are Chameleon, FutureSystems and JetStream.
+
+
+
+\section*{Acknowledgements}
+This project is undertaken as part of the I524: Big Data and Open
+Source Software Projects coursework at Indiana University. We would
+like to thank our Prof. Gregor von Laszewski, Prof. Gregory Fox and
+the Associate Instructors for their help and support
+
+% Bibliography
+\bibliography{references}
+
+\section*{Author Biographies}
+\begingroup \setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth}
+% Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Rahul Raghatate} will receive his Masters (Data Science)
+  in 2018 from The Indiana Univeristy Bloomington. His research
+  interests include Big Data and Machine Learning.
+\end{minipage}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Snehal Chemburkar} will receive her Masters (Data
+  Science) in 2018 from Indiana University Bloomington. Her research
+  interests also include Big Data and Machine Learning.
+\end{minipage}
+\endgroup
+\newpage
+
+\appendix
+\section{Work Breakdown}
+Will be updated in later phases of project.
+\section{following topics are yet to be included}
+\paragraph{2.2. Shell Access}
+If applicable comment on how the tool can be used from the command
+line
+\paragraph{3. Licensing}
+Often tools may have different versions, some fre, some for
+pay. Comment on this. For example while a tool may offer a comercial
+version this version may be too costly for others. Identify especially
+the difference between features for free vs commercial tools.
+
+Sometimes you may need to introduce this also in the introduction as
+there may be a big difference and without the knowledge you do not
+provide the user an adequate introduction.
+
+\paragraph{4. Ecosystem}
+
+Some technologies have a large ecosystem developed around them with
+extensions plugins and other useful tools. Identify if they exists and
+comment on what they can achieve
+
+provide potentially a mindmap or a figure illustrating how the
+technology fits in with other technologies if applicable.
+
+
+\paragraph{5. Educational material}
+
+Put information here how someone would find out more about the
+technology. Use important material and do not list hundreds of web
+pages, be selective.
+
+\end{document}

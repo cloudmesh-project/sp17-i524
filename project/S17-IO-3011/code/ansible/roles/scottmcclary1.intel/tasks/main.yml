@@ -1,0 +1,13 @@
+- name: Step 5 of 11 -> Download & Unarchive Intel (2HWS-F758WJVR)
+  unarchive:
+    src: http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/11298/parallel_studio_xe_2017_update2.tgz
+    dest: /home/cc
+    remote_src: True
+
+- name: Step 6 of 11 -> Send Intel Silent Configuration File
+  copy:
+    src: roles/scottmcclary1.intel/files/silent.cfg
+    dest: /home/cc/silent.cfg
+
+- name: Step 7 of 11 -> Install Intel (Silent Mode)
+  shell: /home/cc/parallel_studio_xe_2017_update2/install.sh --silent silent.cfg

@@ -1,0 +1,98 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Deploying CouchDB Cluster}
+
+\author[1,*]{Ribka Rufael}
+
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: rrufael@umail.iu.edu}
+
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+
+
+\begin{abstract}
+  This project focuses on deployment of CouchDB Cluster using Ansible
+  playbook on Ubuntu Chameleon Cloud VMs and benchmarking of the
+  deployment. \newline
+\end{abstract} 
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+CouchDB \cite{www-Couchdb} is a no sql database management system
+under Apache. Data is stored as documents in CouchDB. In this project
+CouchDB cluster of one or more Chameleon cloud VMS is deployed using
+Ansible playbook and benchmarking is done to measure the time it took
+for deployement using a TBD benchmarking tool.
+
+\section{Execution Plan}
+
+This section depicts week by week execution plan for the project
+
+\subsection{Week 1}
+
+Develop Ansible script to deploy CouchDB on Ubuntu 16.04
+
+\subsection{Week 2}
+
+Run Ansible playbook to deploy CouchDB on Chameleon Cloud
+VM. Benchmark time it takes to deploy CouchDB on Chameleon Cloud VM
+
+\subsection{Week 3}
+
+Extend the Ansible script developed in Week 1 to deploy CouchDB into
+two Chameleon Cloud VMs.
+
+\subsection{Week 4}
+
+Run Ansible playbook to deploy CouchDB on two Chameleon Cloud
+VMs. Benchmark time it takes to deploy CouchDB on Chameleon Cloud VMs.
+
+\subsection{Week 5}
+
+Analysis of the benchmark results for deployment of CouchDB
+cluster. Document results in report and finalize report.
+
+\section{Technologies Used}
+\begin{itemize}
+\item[$\bullet$] Ansible
+\item[$\bullet$] Cloudmesh
+\item[$\bullet$] Other technologies TBD
+\end{itemize}
+
+\section{Deployment}
+TBD
+
+\section{Benchmark Results}
+TBD
+
+\section{Conclusion}
+TBD
+\section*{Acknowledgements}
+
+TBD
+
+
+
+% Bibliography
+
+\bibliography{references}
+ 
+
+
+
+\end{document}

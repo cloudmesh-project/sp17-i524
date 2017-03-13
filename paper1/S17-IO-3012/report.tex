@@ -21,7 +21,7 @@
 
 \begin{abstract}
 
-Google's NoSQL database, Bigtable, is a critical technology in big data for its use internally at Google, as the external service Cloud Bigtable, and for inspiring open source technologies such as Hbase.  An overview of Bigtable's storage model and architecture are presented, including available APIs, shell access, and the graphical user interfaces. Performance and security features of Bigtable are discussed along with technologies related to Bigtable. Internal and external use cases involving Bigtable are detailed. Finally, educational resources for learning more about Bigtable are listed.
+Google's NoSQL database, Bigtable, is a critical technology in big data for its use internally at Google, as the external service Cloud Bigtable, and for inspiring open source technologies such as Hbase.  An overview of Bigtable's storage model and architecture are presented, including available APIs, shell access, and the graphical user interfaces. Performance and security features of Bigtable are discussed along with technologies related to Bigtable. Internal and external use cases involving Bigtable are detailed. Finally, educational resources for learning more about Bigtable are identified.
 \newline
 \end{abstract}
 
@@ -47,7 +47,7 @@ Figure 1 shows the Bigtable Storage model. It contains four rows (row keys - gwa
 
 \begin{figure}[ht]
   \includegraphics[scale=0.45]{images/bigtable-example.jpg}
-  \caption{Bigtable Data Model}\cite{www-bigtabledocoverview}
+  \caption{Bigtable Data Model \cite{www-bigtabledocoverview}}
 \end{figure}
 
 \section{Architecture}
@@ -61,75 +61,60 @@ The approach of storing data in tablets rather than rows provides performance be
 Bigtable balances data volume and workload across clusters automatically. Bigtable handles this automatically, reducing the administrative effort required\cite{www-bigtabledocoverview}.
 
 
-\vspace{-\topsep}
+%\vspace{-\topsep}
 
 
 \begin{figure}[ht]
   \includegraphics[scale=0.45]{images/bigtable-architecture.jpg}
-  \caption{Bigtable Architecture} \cite{www-bigtabledocoverview}
+  \caption{Bigtable Architecture \cite{www-bigtabledocoverview}}
 \end{figure}
 
 \subsection{API}
 
-Bigtable APIs exist for several languages \cite{www-bigtabledocapi}.
-
-\vspace{-\topsep}
-\begin{itemize}
-\item HBase Client for Java
-\item Go Client
-\item Python Client
-\item Bigtable-dotnet (.NET)
-\item Scio (Scala)
-\item Dataflow Connector (for use in Pipelines)
-\end{itemize}
+Bigtable APIs exist for several languages including HBase Client for Java, Go Client, Python Client, Bigtable-dotnet (.NET), Scio (Scala), and Dataflow Connector (for use in Pipelines) \cite{www-bigtabledocapi}.
 
 Bigtable can also integrate with Google Cloud Dataflow, a cloud based, big data programming model, and with Apache Hadoop through the use of Google Cloud Dataproc \cite{www-bigtabledocapi}.
 
 \subsection{Shell Access}
 
 
-Shell access in Cloud Bigtable can be performed through the HBase Shell \cite{www-hbaseshell}. The HBase shell provides a Ruby environment that allows functions in BigTable to be executed on the command line and provides scripting capabilities. HBase shell commands fall into four main categories \cite{www-hbaseshell2}.
+Shell access in Cloud Bigtable can be performed through the HBase Shell \cite{www-hbaseshell}. The HBase shell provides a Ruby environment that allows functions in BigTable to be executed on the command line and provides scripting capabilities. 
 
-\vspace{-\topsep}
-\begin{itemize}
-\item General Commands - version, status, etc.
-\item Table Management Commands - create, drop, alter, etc.
-\item Data Manipulation Commands - count, get, delete, etc.
-\item Cluster Replication Commands - start/stop replication, add/remove peer 
-\end{itemize}
-\vspace{-\topsep}
+HBase shell commands fall into four main categories \cite{www-hbaseshell2}.  First are general commands.  Examples of general commands are version and status.  Second are table management commands, which provide functionality to create, drop, and alter tables.  The third category is data management commands which include commands like count, get, and delete.  The final type of commands enabled by the shell are cluster replication commands, which enable stopping and starting replication and adding and removing peers.
 
 In addition to HBase Shell, cbt, a command line tool written in Go, can be used to perform operations against Bigtable \cite{www-cbt}. 
 
-
 \subsection{Graphical Interface}
 
-BigQuery Web UI is a graphical interface, designed to run in Google's Chrome browser, that allows users to interact with BigTable in various ways \cite{www-bigquerywebui}.
-
-\vspace{-\topsep}
-\begin{itemize}
-\item Load and Export Data
-\item Run Queries
-\item Create, Delete, Copy, and Append to Tables 
-\item View, Add, Delete, and Share Datasets 
-\end{itemize}
-\vspace{-\topsep}
-
+BigQuery Web UI is a graphical interface, designed to run in Google's Chrome browser, that allows users to interact with BigTable. Functionality provided by BigQuery Web UI includes the ability to load and export data, to run queries, to create, delete, copy and append to tables, and to view, add, delete and share datasets \cite{www-bigquerywebui}.
 
 \section{Licensing}
 
-Bigtable is closed source software and is not available for free use outside of Google. Cloud Bigtable is available for public use on at a cost to the user. The current pricing structure is as follows: \cite{www-cloudbigtable}.
+Bigtable is closed source software and is not available for free use outside of Google. Cloud Bigtable is available for public use on at a cost to the user. The current pricing structure in Figure 3.
 
-\vspace{-\topsep}
-\begin{itemize}
-\item Nodes - \$0.65 node/hr (minimum 3 nodes) 
-\item SSD Storage -  \$0.17 (GB/Month)  
-\item HDD Storage - \$0.026 (GB/Month) 
-\item Network Ingress - FREE 
-\item Network Egress -Cross-region and Internet egress rates apply  
-\end{itemize}
-\vspace{-\topsep}
+\begin{figure}[ht]
+\begin{center}
+ \begin{tabular} {| c | c | c |}
 
+ \hline
+%  Resource &  Cost \\ [0.5ex] 
+% \hline
+% \hline
+    
+Nodes     &    \$0.65 node/hr (minimum 3 nodes) \\
+ \hline
+SSD Storage     &    \$0.17 (GB/Month)  \\
+ \hline
+HDD Storage & \$0.026 (GB/Month) \\
+ \hline
+Network Ingress & Free \\
+ \hline
+Network Egress & Cross-region and Internet egress rates apply \\
+ \hline
+\end{tabular}
+\end{center}
+  \caption{Cloud Bigtable Cost Structure \cite{www-cloudbigtable}} 
+\end{figure}
 
 Bigtable has inspired several open source projects which are based on the concepts of Bigtable, notably HBase, Hypertable, and Accumulo (all further discussed in \emph{Bigtable Alternates}). Hypertable is licensed under the GNU General Public License Version 3 while HBase and Accumulo are licensed under the Apache License Version 2.0.
 
@@ -139,14 +124,14 @@ Bigtable has inspired several open source projects which are based on the concep
 According to Google, "Bigtable is designed to handle massive workloads at consistent low latency and high throughput" \cite{www-cloudbigtable}.  While Google does not release performance details of its internal applications, the fact that Google uses Bigtable as the data store for applications that successfully support extremely large data volumes such as Search, Gmail, and Maps supports this claim.
 
 FIS Advanced Technology analyzed the performance of Cloud Bigtable for an application Consolidated Audit Trail (CAT), that will analyze over 100 billion financial market events and store over 30 petabytes of data in the coming years.  They reached several conclusions regarding Bigtable's performance capabilities.
-\vspace{-\topsep}
+%\vspace{-\topsep}
 \begin{itemize}
 \item Bigtable was able to handle the demands of the CAT application 
 \item Scaling was linear with clusters of up to 300 nodes 
 \item Data insertion scaled linearly for MapReduce jobs 
 \item No tuning was needed to get sufficient performance from Bigtable
 \end{itemize}
-\vspace{-\topsep}
+%\vspace{-\topsep}
 
 FIS found that Bigtable could write up to 2.7 Gigabytes per second and 10 Terabytes per hour and could process and insert 2.7 million FIX messages per second and 10 billion Fix messages per hour \cite{www-fis}.
 
@@ -158,15 +143,13 @@ Security in Cloud Bigtable is at the cloud project level. If a user has access t
 
 \subsection{Based on Bigtable}
 
-Multiple NoSQL databases have been built based on the specifications presented in the 2006 paper introducing Bigtable.
+Multiple NoSQL databases have been built based on the specifications presented in the 2006 paper introducing Bigtable. Three important examples are Hbase, Hypertable and Accumulo.
 
-\vspace{-\topsep}
-\begin{itemize}
-\item Hbase \cite{www-hbase} - The most well known database patterned after Bigtable, HBase is part of the Apache Big Data stack and "provides Bigtable-like capabilities on top of Hadoop and HDFS"\cite{www-hbase}.  Hbase is written in Java.
-\item Hypertable \cite{www-wikihypertable} - Hypertable, which is currently sponsored by Baidu, the Chinese search engine, was also inspired by Bigtable's design.  It is written in C++.
-\item Accumulo \cite{www-wikiaccumulo} - Accumulo, developed by the National Security Agency and contributed to the Apache Software Foundation, extends Bigtable's data model with a new element called Column Visibility.  Accumulo is written in Java.
-\end{itemize}
-\vspace{-\topsep}
+Hbase \cite{www-hbase} is the most well known database patterned after Bigtable, HBase is part of the Apache Big Data stack and "provides Bigtable-like capabilities on top of Hadoop and HDFS"\cite{www-hbase}.  Hbase is written in Java.
+
+Hypertable \cite{www-wikihypertable} which is currently sponsored by Baidu, the Chinese search engine, was also inspired by Bigtable's design.  It is written in C++.
+
+Accumulo \cite{www-wikiaccumulo} developed by the National Security Agency and contributed to the Apache Software Foundation, extends Bigtable's data model with a new element called Column Visibility.  Accumulo is written in Java.
 
 \subsection{Bigtable Alternatives}
 
@@ -174,16 +157,7 @@ In addition to being a NoSQL database, Bigtable is classified as a wide column s
 
 Bigtable is not well suited for all applications.  Google recommends Bigtable for a applications that require "high throughput and scalability for non-structured key/value data, where each value is typically no larger than 10 MB" \cite{www-bigtabledocoverview}.  Additionally, Google recommends Bigtable for machine learning, stream processing/analytics, and MapReduce operations.\cite{www-bigtabledocoverview}
 
-For applications with other needs, Google recommends other Databases in the Google suite \cite{www-bigtabledocoverview}:
-
-\vspace{-\topsep}
-\begin{itemize}
-\item Google Cloud SQL - for application needing online transaction processing (OLTP)
-\item Google BigQuery - for applications requiring online analytical processing (OLAP) 
-\item Google Cloud Storage - for immutable blobs like images or movies greater than 10 MB 
-\item Cloud Datastore - for structure objects, SQL like queries, and ACID transactions.
-\end{itemize}
-\vspace{-\topsep}
+For applications with other needs, Google recommends other databases in the Google suite \cite{www-bigtabledocoverview}. For application needing online transaction processing (OLTP), Google recommends Google Cloud SQL. For applications requiring online analytical processing (OLAP), Google recommends Google BigQuery. For immutable blobs including images or movies greater than 10 MB, Google recommends Google Cloud Storage.  Finally, for structured objects, SQL like queries, and ACID transactions, Google recommends Cloud Datastore.
 
 \section{Use Cases}
 
@@ -191,43 +165,22 @@ Bigtable is used both internally by Google and externally as Cloud Bigtable by o
 
 \subsection{Google Use Cases}
 
-Google uses Bigtable internally as the data store for many applications that deal with extremely large data volumes. While Google does not provide the proprietary implementation details of the Bigtable in these applications, their success handling large data volumes is evident.  A partial list of applications that utilize Bigtable is below \cite{www-wikibigtable}.
-
-
-\vspace{-\topsep}
-\begin{itemize}
-\item Search and Search History
-\item Book Search
-\item Analytics  
-\item Maps
-\item Earth
-\item Gmail 
-\item YouTube
-\item Blogger
-
-\end{itemize}
-\vspace{-\topsep}
+Google uses Bigtable internally as the data store for many applications that deal with extremely large data volumes. While Google does not provide the proprietary implementation details of the Bigtable in these applications, their success handling large data volumes is evident.  A partial list of applications that utilize Bigtable includes Web Search, Book Search, Search History, Analytics, Maps, Earth, Gmail, YouTube, and Blogger \cite{www-wikibigtable}.
 
 
 \subsection{External Use Case - CAT Application}
 
-As discussed in the \emph{Performance}, FIS Advanced Technology found that Cloud Bigtable was a viable technology for the extreme performance demands of the financial market auditing CAT system. \cite{www-fis}
+As discussed in the \emph{Performance}, FIS Advanced Technology found that Cloud Bigtable was a viable technology for the extreme performance demands of the financial market auditing CAT system \cite{www-fis}.
 
 \section{Educational Material}
 
 Three key resources exist for learning more about Bigtable. First is the paper \emph{Bigtable: A Distributed Storage System for Structured Data} introducing Bigtable in 2006 \cite{introbigtable}.  It contains very detailed descriptions of Bigtable's storage model and architecture. Second is Google's documentation for Cloud Bigtable \cite{www-bigtabledocumentation}.  The documentation is current and covers all aspects of Cloud Bigtable. Finally, the GoogleCloudPlatform github repository contains many examples of how to use Cloud Bigtable. \cite{git-googlecloud}.
 
-Links to these three resources are provided below:
-
-\url{https://research.google.com/archive/bigtable.html}
- 
-\url{https://cloud.google.com/bigtable/docs}
-
-\url{https://github.com/GoogleCloudPlatform/cloud-bigtable-examples}
-
 \section{Conclusion}
 
-As the the storage layer for Google applications like Search, Gmail, and many others, Bigtable has been one of the most important database technologies in the Big Data Revolution. With Cloud Bigtable, the performance and scalability of Bigtable is now available to the public.  In addition to Bigtable's own impact, it has inspired other important open source NoSQL datastores, notably The Apache Software Foundation's Hbase.
+As the the storage layer for Google applications like Search, Gmail, and many others, Bigtable has been one of the most important database technologies in the Big Data Revolution. Based on Google's internal usage of Bigtable and the performance evaluation of Bigtable done by FIS Advanced Technology for the CAT system, it is clear that Bigtable provides excellent performance when processing large amounts of data. With Cloud Bigtable, this performance and scalability is now available to the public.  
+
+In addition to Bigtable's own impact, it has inspired other important open source NoSQL datastores, notably Hbase, Accumulo, and Hypertable.  These technologies, particularly the Apache Software Foundations, Hbase, have become important players in their own right in the Big Data software stack. 
 
 % Bibliography
 
@@ -241,7 +194,7 @@ As the the storage layer for Google applications like Search, Gmail, and many ot
 %   \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
 %  \end{wrapfigure}
   \noindent
-  {\bfseries Mark McCombe} received his BS (Business Administration/Finance) and MS (Computer Information Systems) from Boston University.  He is currently studying Data Science at Indiana University Bloomington.
+  {\bfseries Mark McCombe} received his B.S. (Business Administration/Finance) and M.S. (Computer Information Systems) from Boston University.  He is currently studying Data Science at Indiana University Bloomington.
 \end{minipage}
 \endgroup
 

@@ -1,0 +1,139 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Deployment of Vehicle Detection application on Chameleon clouds}
+
+\author[1,*]{Abhishek Naik}
+\author[2,*]{Shree Govind Mishra}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+\affil[2]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+\affil[*]{Corresponding authors: absnaik810@gmail.com, shremish@indiana.edu}
+
+\dates{project-001, \today}
+
+\ociscodes{Vehicle detection, Ansible, Cloudmesh, OpenCV, Haar Cascades, Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/absnaik810/sp17-i524/blob/master/project/S17-IR-P010/report.pdf}}
+
+\begin{abstract}
+This project focuses on the deployment of Vehicle Detection
+application on multiple Chameleon clouds using Ansible playbook.  It
+also focuses on the benchmarking of the deployment results and its
+analysis.\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Vehicle Detection forms an integral part of the development of new
+technologies like fully self-driving cars, etc.  One of the techniques
+to perform such detection is by using Haar Cascades \cite{haar-cascade}.  This
+technique has been applied to vehicle detection by creating a
+haar-cascade cars.xml file which has been trained using 526 rear-end
+images of cars.  In this project, we would be extending this vehicle
+detection approach to enable it to run on multiple clouds.  This
+deployment would initially be done on the localhost, followed by
+deployment on 1, 2, 3 and 4 clouds.  Cloudmesh client would be used
+for cloud management and Ansible scripts would be used for software
+stack deployment.  Appropriate benchmarking would be carried out at
+each iteration using some benchmarking technique or tool (TBD).
+
+\section{Software stack}
+\begin{itemize}
+\item[$\bullet$] Ansible
+\item[$\bullet$] Cloudmesh
+\item[$\bullet$] TBD
+\end{itemize}
+
+\section{Execution Plan}
+
+The execution plan that would be followed is as under:
+
+\subsection{Week 1}
+Deployment of the vehicle detection application on the localhost,
+using Ansible playbook.  Benchmarking of the important factors that
+are chosen for observation.  Analysis of the benchmarking results thus
+obtained.
+
+\subsection{Week 2}
+Reservation of a single Chameleon cloud using cloudmesh client.
+Deployment of the vehicle detection application on the cloud, using
+Ansible playbook.  Benchmarking of the important factors that are
+chosen for observation.  Analysis of the benchmarking results thus
+obtained.
+
+\subsection{Week 3}
+Reservation of 2 Chameleon clouds using cloudmesh client.  Deployment
+of the vehicle detection application on the clouds, using Ansible
+playbook.  Benchmarking of the important factors that are chosen for
+observation.  Analysis of the benchmarking results thus obtained.
+
+\subsection{Week 4}
+Reservation of 3 and 4 Chameleon clouds using cloudmesh client.
+Deployment of the vehicle detection application on the clouds, using
+Ansible playbook.  Benchmarking of the important factors that are
+chosen for observation.  Analysis of the benchmarking results thus
+obtained.
+
+\subsection{Week 5}
+Final analysis of the benchmarking results obtained so far.  Studying
+the effect of software stack deployment on multiple clouds.
+Publishing the final report and conclusion.This project focuses on the
+deployment of Vehicle Detection application on multiple Chameleon
+clouds using Ansible playbook.  It also focuses on the benchmarking of
+the deployment results and its analysis.
+
+\section{Deployment}
+
+As per the current plan, we would first identify the software stack
+that would be required to run the vehicle detection application on the
+localhost, which is a Ubuntu 16.04.02 machine with 3 GB RAM.  This
+software deployment would be done using an Ansible script
+\cite{Ansible}.  Ansible is an automation engine which we would use to
+orchestrate the software deployment via playbooks using the
+inventory.txt file.  Important factors like the time required for
+deployment, the 'ease' of deployment (TBD), etc. would be benchmarked
+using some benchmarking technique or tool (TBD).
+
+The next step would be to deploy this software stack on a single
+cloud.  We would be using the cloudmesh client
+\cite{github-cloudmesh-client}, a command line based client, to
+reserve a cloud and enable access to it.  We would consider the
+feasibility of deploying the software stack on the cloud, by careful
+observation of the benchmarking results obtained in the previous step
+of deploying it on the localhost.  Depending upon the outcomes, we
+would be able to identify the minimum system requirements that would
+be typically required for the deployment of the software stack.  This
+deployment would again be achieved by using Ansible
+scripts \cite{Ansible}.  These results would again we benchmarked for
+further analysis.
+	
+As the next step, we would carry out this deployment on two clouds.
+Ansible would again be used for deployment of the software stack and
+cloudmesh client for the management of the clouds.  The results
+obtained would again be benchmarked and analysis performed.  We would
+iterate this for 3 and 4 clouds.  More clouds might be considered
+depending upon the time constraints of the project.
+
+Finally the observations and analyses would be published as a report.
+
+\section{Benchmarking results and analysis}
+TBD
+
+\section{Conclusion}
+TBD
+
+\section{Acknowledgements}
+TBD
+
+\bibliography{references}
+
+\end{document}
