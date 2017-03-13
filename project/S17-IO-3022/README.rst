@@ -1,17 +1,17 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-13"
 
-author: "ENTER YOUR NAME HERE"
+author: "Sunanda Unni"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IO-3022"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IO-3022"
 
-github: "YOUR GITHUB USERNAME"
+github: "suunni"
 
 report: "report.pdf"
 
-proposal: "proposal.pdf"
+proposal: "report.pdf"
 
 --------------------------------------------------------------------------------
