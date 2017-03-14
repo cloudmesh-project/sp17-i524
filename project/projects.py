@@ -55,7 +55,7 @@ def read_readme(filename):
     # FIND AUTHOR IN TEX FILE
 
     authors = ""
-    print (document)
+    # print (document)
     for line in document.split("\n"):
         if "\\author" in line:
             authors = authors + line.split("{")[1].replace("}",", ")
@@ -105,6 +105,7 @@ print ("""
 \section{Contributors}
 """)
 
+'''
 print("\\begin{footnotesize}")
 print("\\begin{tabular}{|llll|}")
 print("\\hline \\textbf{Name} & \\textbf{HID} & \\textbf{Title} & \\textbf{Pages}\\\\ \hline \hline")
@@ -116,6 +117,7 @@ print("\\end{tabular}")
 print("\\end{footnotesize}")
 
 print ("\\newpage")
+'''
 
 #reports = glob.glob("*/report/report.pdf")
 reports = glob.glob("*/report/report.tex")
@@ -131,8 +133,8 @@ for report in reports:
 
     print("\\addtocounter{section}{1}")
     print("\\addcontentsline{toc}{section}{\\arabic{section} ",
-              id + ":",
-              entries[id]["textitle"] + ",",
+              id + "\\newline",
+              entries[id]["textitle"],"\\newline",
               entries[id]["texauthor"],
               "}")
 
