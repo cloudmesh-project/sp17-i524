@@ -1,6 +1,0 @@
----
-- hosts: remote
-
-  roles:
-#    - scottmcclary1.emacs
-    - scottmcclary1.cdms
