@@ -154,7 +154,7 @@ titlepage = '''
 \\begin{titlepage}
 
 \\noindent
-\\titlefont Projects in Big Data \\\\ Software and Applications\\par
+\\titlefont Big Data Software\\par
 \\epigraph{Spring 2017}%
 {\\textit{Bloomington, Indiana}}
 \\null\\vfill
