@@ -6,11 +6,11 @@ author: "Matthew Lawson"
 
 hid: "S17-IO-3010"
 
-pid: "555-55-5555"
+pid: "not applicable (yet)"
 
 github: "eunosm3"
 
-report: "report.pdf"
+report: "Couchbase Server: A Usable Overview"
 
 proposal: "proposal.pdf"
 

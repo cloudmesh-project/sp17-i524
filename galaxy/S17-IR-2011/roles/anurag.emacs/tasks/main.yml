@@ -1,0 +1,4 @@
+---
+- name: install apache2 on Ubuntu 16.04
+  become: yes
+  package: name=apache2 state=present
