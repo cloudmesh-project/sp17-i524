@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-17"
 
-author: "ENTER YOUR NAME HERE"
+author: "Anurag Kumar Jain, Pratik Sushil Jain, Ronak Parekh"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2011, S17-IR-2012, S17-IR-2024"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P011"
 
-github: "YOUR GITHUB USERNAME"
+github: "anurag2301, pratik11jain, ronak1182"
 
 report: "report.pdf"
 
