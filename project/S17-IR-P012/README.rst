@@ -14,4 +14,6 @@ report: "report.pdf"
 
 proposal: "report.pdf"
 
+title: "OpticalCharacterRecognition"
+
 --------------------------------------------------------------------------------
