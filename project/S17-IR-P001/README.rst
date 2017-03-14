@@ -1,17 +1,16 @@
-:orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-13"
 
-author: "ENTER YOUR NAME HERE"
+author: "Sowmya Ravi, Shahidhya Ramachandran, Sriram Sitharaman"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2030, S17-IR-2027, S17-IR-2037"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P001"
 
-github: "YOUR GITHUB USERNAME"
+github: "sowravi, shah0112, sriramsitharaman"
 
 report: "report.pdf"
 
-proposal: "proposal.pdf"
+proposal: "report.pdf"
 
 --------------------------------------------------------------------------------
