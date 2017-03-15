@@ -8,6 +8,6 @@ pid: "ENTER YOUR PID HERE"
 
 github: "karvenka"
 
-report: "H-Store.pdf"
+report: "report.pdf"
 
 proposal: "proposal.pdf"
