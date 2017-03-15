@@ -1,33 +1,32 @@
 \documentclass[9pt,twocolumn,twoside]{styles/osajnl}
 \usepackage{fancyvrb}
+
 \journal{i524} 
 
-\title{\LaTeX\ Template for Preparing a Paper or Report for I524}
+\title{H-Store}
 
-\author[1,2,3]{John Smith}
-\author[2]{Alice Smith}
-\author[1]{Bruce Wayne}
-\author[1,*]{Gregor von Laszewski}
+\author[1,*,+]{Karthick Venkatesan}
+
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
-\affil[2]{School of Science, University of Technology, 2000 J St. NW, Washington DC, 20036}
-\affil[3]{School of Optics, University of Technology, 2000 J St. NW, Washington DC, 20036}
 
-\affil[*]{Corresponding authors: laszewski@gmail.com}
 
-\dates{project-000, \today}
+\affil[*]{Corresponding authors: vkarthickprabu@gmail.com}
 
-\ociscodes{Cloud, I524}
+\affil[+]{HID - S17-IO-3023}
+
+\dates{paper1, \today}
+
+\ociscodes{H-Store,OLTP, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/karvenka/sp17-i524/tree/master/paper1/S17-IO-3023/H-Store.pdf}}
 
 
 \begin{abstract}
-This template can be used to prepare a research article for I524. Note
-that this template can be run from your own \TeX\ system or within the
-cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://www.sharelatex.com/}
-{Sharelatex} systems.\newline
+This paper provides information on the H-Store database technology.H-Store is a complete redesign of the traditional RDMS database.The paper provides details on the problems that it solves and its application to the Fast Data problem in Data Processing.
+It also provides details on the architecture and references details on research done to compare
+the database to current market OLTP databases
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -38,333 +37,94 @@ cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://ww
 
 \section{Introduction}
 
-This template is designed to assist with creating an article for
-I524. The page length is typically done without images. Thus if you
-have images in your report, please add additional content to offset
-the space captured by images. We do not check exactly, so there is no
-reason to contact us if you are a paragraph short, but if you are half
-a page short you may add quality content.
+H-Store is an experimental database management system (DBMS) designed for online transaction processing applications 
+that was developed by a team of researchers  at Brown University, Carnegie Mellon University, the Massachusetts Institute of Technology, and Yale University.
 
-\section{Chance for Publishing a Paper}
+Traditional SQL databases offer rich transaction capabilities, ad-hoc query and reporting capability, and vast amounts of standards-based tooling. Where they fall short is in the ability to scale out to meet the needs of modern, high-performance applications.NoSQL is  a solution to issues of scale that emerged as organizations began dealing with immense volumes, velocity, and variety of big data from a multitude of sources. NoSQL solutions offered availability, flexibility and scale. However, they came with difficult tradeoffs - sacrifice of data consistency and transactional (ACID) guarantees, loss of ad-hoc query capability and increased application complexity.By removing just the parts of SQL that hampered scalability and performance, it was able to increase both while maintaining key advantages of SQL systems.NewSQL technologies offer the best of both worlds: the scale of NoSQL with the ACID guarantees, strong consistency, minimized application complexity and interactivity of SQLThe H-Store DBMS belongs to this class of parallel database management systems, called NewSQL.
 
-If this work can lead to a publishable paper, you could engage with
-the course instructor as coauthor to work more closely with him/them.
-This however requires that the paper be worked on in a regular basis
-and that timely contributions from the instructor can be integrated.
-Hence this is going to be a significant effort and you need to decide
-if you like to conduct this. Naturally the project must be suitable
-for such an activity. It may even be that some projects may be
-combined.
+As noted in \cite{stonebraker2007} the current RDBMS systems were architected more than 25 years ago, when
+hardware characteristics were much different than today.
+Today processors are thousands of times faster and memories are
+thousands of times larger. Disk volumes have increased
+enormously, making it possible to keep essentially everything, if
+one chooses to in memory. The current day DBMS 
+include the following architectural features which are not fully utilising 
+the technological advancements in the last 25 years
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\bullet$} 
+\item Disk oriented storage and indexing structures
+\item Multithreading to hide latency
+\item Locking-based concurrency control mechanisms
+\item Log-based recovery
+\end{itemize}
 
-In such cases if the work is sufficient for publication submission, an
-A+ for the class could be considered. It will be however a lot of
-work. The length of such a paper is typically 10-12 high quality pages
-including figures and references. We may elect for the final
-submission to use a different LaTeX style. As Gregor is an expert in
-this, changing the format will be simple.
+H-Store is a complete redesign of the traditional RDMS database and 
+experimetal results show that the OLTP processing on a H-Store database is faster 
+by a factor of 82.  \cite{stonebraker2007}
 
-\section{Examples of Article Components}
-\label{sec:examples}
-
-The sections below show examples of different article components.
-
-\section{Figures and Tables}
-
-It is not necessary to place figures and tables at the back of the
-manuscript. Figures and tables should be sized as they are to appear
-in the final article. Do not include a separate list of figure
-captions and table titles.
-
-Figures and Tables should be labelled and referenced in the standard
-way using the \verb|\label{}| and \verb|\ref{}| commands.
-
-\subsection{Sample Figure}
-
-Figure \ref{fig:false-color} shows an example figure.
+\section{Architecture}
 
 \begin{figure}[htbp]
 \centering
-\fbox{\includegraphics[width=\linewidth]{images/sample}}
-\caption{False-color image, where each pixel is assigned to one of seven reference spectra.}
+\fbox{\includegraphics[width=\linewidth]{hstore}}
+\caption{H-Store Architecture}
 \label{fig:false-color}
 \end{figure}
 
-\subsection{Sample Table}
+H-Store is a parallel, row-storage relational DBMS that runs on a cluster of shared-nothing, main memory executor nodes.
 
-Table \ref{tab:shape-functions} shows an example table.
+A single H-Store instance is a cluster of two or more computational nodes deployed within the same domain. A node is a single physical computer system that hosts one or more execution sites and one transaction coordinator. A site is the logical operational entity in the system; it is a single-threaded execution engine that manages some portion of the database and is responsible for executing transactions on behalf of its transaction coordinator. The transaction coordinator is responsible for ensuring the serializability of transactions along with the coordinators located at other nodes.A typical H-Store node contains one or more multi-core CPUs, each with multiple hardware threads per core. As such, multiple sites are assigned to nodes independently and do not share any data structures or memory.
 
-\begin{table}[htbp]
-\centering
-\caption{\bf Shape Functions for Quadratic Line Elements}
-\begin{tabular}{ccc}
-\hline
-local node & $\{N\}_m$ & $\{\Phi_i\}_m$ $(i=x,y,z)$ \\
-\hline
-$m = 1$ & $L_1(2L_1-1)$ & $\Phi_{i1}$ \\
-$m = 2$ & $L_2(2L_2-1)$ & $\Phi_{i2}$ \\
-$m = 3$ & $L_3=4L_1L_2$ & $\Phi_{i3}$ \\
-\hline
-\end{tabular}
-  \label{tab:shape-functions}
-\end{table}
+Every table in H-Store is horizontally divided into multiple shards that each consist of a disjoint sub-section of the entire table. The boundaries of a table’s fragments are based on the selection of a  column for that table; each tuple is assigned to a fragment based on the hash values of this attribute. H-Store also supports partitioning tables on multiple columns. Related fragments from multiple tables are combined together into a partition that is distinct from all other partitions. Each partition is assigned to exactly one site.
 
-\section{Sample Equation}
+All tuples in H-Store are stored in main memory on each node; the system never needs to access a disk in order to execute a query.It replicates partitions to ensure both data durability and availability in the event of a node failure. Data replication in H-Store occurs in two ways: (1) replicating partitions on multiple nodes and (2) replicating an entire table in all partitions. For the former, H-Store adobts the k-safety concept, where $k$ is defined by the administrator as the number of node failures a database can tolerate before it is deemed unavailable.
 
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and
-identically distributed random variables with $\text{E}[X_i] = \mu$
-and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+Client applications make calls to the H-Store system to execute pre-defined stored procedures. Each procedure is identified by a unique name and consists of user-written Java control code intermixed with parameterized SQL commands. The input parameters to the stored procedure can be scalar or array values, and queries can be executed multiple times.
 
-\begin{equation}
-S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i
-\label{eq:refname1}
-\end{equation}
+Each instance of a stored procedure executing in response to a client request is called a transaction. Similarly as with tables, stored procedures in H-Store are assigned a partitioning attribute of one or more input parameters. When a new request arrives at a node, the transaction coordinator hashes the value of the procedure’s partitioning parameter and routes the transaction request to the site with the same id as the hash. Once the request arrives at the proper site, the system invokes the procedure’s Java control code, which will use the H-Store API to queue one or more queries in a batch. The control code invokes another command in H-Store to block the transaction while the execution engine executes the batched queries.
 
-denote their mean. Then as $n$ approaches infinity, the random
-variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal
-$\mathcal{N}(0, \sigma^2)$. 
+All of operations within a transaction are atomic across all the partitions involved in the transaction. When a transaction executes, it has exclusive access to the data at the partitions that it locks, therefore all of its operations execute on a consistent view of the database and are isolated from all other transactions (since no other transactions execute concurrently at those partitions). Finally, with snapshots and command logging, the state of the database is completely recoverable and all changes made by transactions are durable \cite{kallman2008} \cite{www-H-StoreArch}.
 
-\section{Sample Algorithm}
+\section{Documentation}
 
-Algorithms can be included using the commands as shown in algorithm
-\ref{alg:euclid}.
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\bullet$} 
+\item Detailed documentation on H-Store  Deployment , Configuration,Debugging and Development is available at  \cite{www-H-Store}
+\item H-Store DBMS is open source and complete source code is available in the  \cite{github-H-Store} github repository. 
+\end{itemize}
 
-\begin{algorithm}
-\caption{Euclid’s algorithm}\label{alg:euclid}
-\begin{algorithmic}[1]
-\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
-\State $r\gets a\bmod b$
-\While{$r\not=0$}\Comment{We have the answer if r is 0}
-\State $a\gets b$
-\State $b\gets r$
-\State $r\gets a\bmod b$
-\EndWhile\label{euclidendwhile}
-\State \textbf{return} $b$\Comment{The gcd is b}
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
+\section{Licensing and Commercial Use}
 
-\begin{algorithm}
-\caption{Python example}\label{alg:python}
-\begin{quote}
-\begin{Verbatim}[numbers=left]
-for i in range(0,100):
-  print i
-\end{Verbatim}
-\end{quote}
-\end{algorithm}
+A commercial implementation of H-Store is VoltDB.VoltDB was developed for production environments, and thus it is focused on high-performance throughput for single-partition transactions and provides robust handling of failures that are obviously needed for a main memory system. H-Store does not have VoltDB’s tools for managing and maintaining clusters. But because H-Store is a research database (thus does not provide many of the safety guarantees that VoltDB does), this allows H-Store to support additional optimizations, such as speculative execution and arbitrary multi-partition transactions.For example, in VoltDB every transaction is either single-partition or all-partition. That is, any transaction that needs to touch multiple partitions will cause the VoltDB’s transaction coordinator to lock all partitions in the cluster, even if the transaction only needs to touch data at two partitions. However H-Store has a different internal transaction coordination subsystem . For each query batch submitted by a transaction, the heavily optimized H-Store Batch Planner determines what partitions each query needs to access and only dispatches requests to those partitions.H-Store uses VoltDB’s VoltProcedure API, so any stored procedures written for VoltDB should still work in H-Store\cite{www-H-StoreFaq}. 
 
-\section{Reference Management}
 
-The best programs to manage your references is jabref or emacs. You
-can edit the references and verify them with them for format
-errors. To cite them use the citation key. You can add multiple bib
-files to the bibliography command separated by comma.
+\section{Use Case}
 
-\noindent Add citations with the cite command. See
-\cite{las14cloudmeshmultiple} for an example on how to use multiple
-clouds. In \cite{www-i524} we list the class content.
+Big Data is data at rest. Big Data describes data’s volume – petabytes to exabytes - and variety: structured, semi-structured and unstructured data that has the potential to be analyzed for information. Big Data systems facilitate the exploration and analysis of stored, large data sets.
+Big data is often created by data that is generated at incredible speeds, such as click-stream data, financial ticker data, log aggregation, or sensor data. Often these events occur thousands to tens of thousands of times per second. The benefits of big data are lost if fresh, fast-moving data from real time sources is dumped into HDFS, an analytic RDBMS, or even flat files, because the ability to act or alert right now, as things are happening, is lost. 
 
-\section{Supplemental Material}
+So this data stream which is the source for big data is called Fast Data.For Fast Data we're not measuring volume in the typical gigabytes, terabytes, and petabytes . For Fast Data we are measuring volume in terms of time: the number of megabytes per second, gigabytes per hour, or terabytes per day. So the key difference between Big and Fast Data is Volumne vs Velocity.So to build systems and applications to take advantage of Fast Data  to make real-time, per-event decisions that have direct, immediate impact on business interactions and observations we need a DBMS which  offers high speed transactional ACID performance and the ability to process thousands to millions of discrete incoming events per second is ideal for processing such type of data. Fast data systems operationalize the learning and insights that companies derive from big data.NewSQL systems such as H-Store and VoltDB are ideal for the Fast Data use case.\cite{www-FastData}
 
-You can include an appendix with important information and additional
-figures if needed. However they must be referenced and follow the same
-guidelines as in the main text.  All materials must be associated with
-a figure, table, or equation or be referenced in the results section
-of the manuscript.  (1) 2D and 3D image files and video must be
-labeled “Visualization,” not “Movie,” “Video,” “Figure,” etc.  (2)
-Machine-readable data (for example, csv files) must be labeled “Data
-File.”  Number data files and visualizations consecutively, e.g.,
-“Visualization 1, Visualization 2….”  (3) Large datasets or code files
-must be placed in github/gitlab.  Such items should be mentioned in
-the text as either “Dataset” or “Code,” as appropriate, and also be
-cited in the references list. Appropriate citations in jabref as Misc
-need to be created.
+Below are four common uses cases for Fast Data 
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\bullet$} 
+\item Real-time recommendation engines or hyper-personalization applications that can detect and act on individual customer needs in real-time.For example real-time analysis of subscriber data based on event triggers such as the end of a call, use of the mobile device in a particular location, or a user hitting a data usage threshold. These insights can then used to initiate real-time campaigns and communications, delivered while the customer’s device is still in hand. Timely and relevant offers, improved service response, and proactive updates on billing/usage result in a superior customer experience.
+\item Real-time, "down to the last dollar" resource management applications, e.g., bid and order management.Managing advertising transactions at scale requires the ability to process transactions fast enough to align advertising purchases with customer budgets. H-Store high speed processing capabilities has the ability to meet the real-time demands of mobile advertising customers while handling a growing number of transactions – all while keeping client ad budget and actual spend aligned.
+\item Per-event analytics with automated decision making to enforce a policy or authorization level, e.g., credit card fraud, managing API calls and authorizations in real time.For example we can apply bank business rules to a stream of card swipes, hundreds to thousands of times per second in real time. Using stored procedures to manage the analytic logic, paired with state held in the DBMS, banks can increase their ability to detect fraudulent cards on the first swipe. As blacklists and rules change, these can be uploaded into DBMS , where the new rules and stored procedures immediately affect card processing decisions.
+\item Sensor data management in Internet of Things (IoT) applications.For example high-velocity data can be used by utilities to generate insights on a per-event basis. Leveraging the smart energy data, it can alert utilities if their usage is trending toward exceeding their forecasted energy budget.Additionally, reporting meters can be automatically compared to identify meters that did not provide a current status. If a meter misses a defined number of consecutive reporting intervals, a technician can be automatically assigned to fix or replace it.
+\end{itemize}
+
+\section{Conclusion}
+H-Store and its commercial implementation VoltDB are main memory DBMS designed for applications running on a cluster of nodes needing high transaction throughput. They are ideally suited for the Fast Data use case of Big Data. As an example of a ”NewSQL” DBMS, we
+can expect them and other similar main memory Data bases to gradually take over the Modern Transaction Processing market from legacy disk-oriented vendors
+because of superior performance.
 
 \section*{Acknowledgements}
 
-Funding information should be listed in this section. Please evaluate
-if you like to list your employer that may have funded your activities
-here.  If you receive grants or project numbers, as shown in the
-example.  This work was in part supported by National Science
-Foundation (NSF) (1234567, 891012345) (These numbers are invented)
-
-The acknowledgments may also contain any information that is not
-related to funding:
-
-The authors thank H. Haase, C. Wiede, and J. Gabler for technical
-support.
-
-
+The authors thank Prof. Gregor von Laszewski for his technical guidance.
 % Bibliography
 
 \bibliography{references}
- 
-\section*{Author Biographies}
-\begingroup
-\setlength\intextsep{0pt}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries John Smith} received his BSc (Mathematics) in 2000 from
-  The University of Maryland. His research interests include lasers
-  and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Alice Smith} received her BSc (Mathematics) in 2000 from
-  The University of Maryland. Her research interests also include
-  lasers and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Bruce Wayne} received his BSc (Aeronautics) in 2000 from
-  Indiana University. His research interests include lasers and optics.
-\end{minipage}
-\endgroup
 
-\newpage
-
-\appendix
-
-\section{Work Breakdown}
-
-The work on this project was distributed as follows between the
-authors:
-
-\begin{description}
-
-\item[John Smith.] Explored the deep mathematical knowledge needed for
-  this paper and taught it to the other authors.
-
-\item[Alice Smith.] She explored the world of Oz and was instrumental
-  to work on the deployment of hadoop.
-
-\item[Bruce Wayne.] He did not contribute at all to this paper and
-  flew around to safe the world.  
-
-\end{description}
-
-\section{Report Checklist}
-
-\begin{itemize}
-\renewcommand{\labelitemi}{\scriptsize$\square$} 
-\item Have you written the report in word or LaTeX in the specified
-  format?
-\item Have you included the report in github/lab?
-\item Have you specified the names and e-mails of all team members in
-  your report. E.g. the username in Canvas?
-\item Have you included the HID of all team members?
-\item Does the report have the project number added to it?
-\item Have you included all images in native and PDF format in gitlab
-  in the images folder?
-\item Have you added the bibliography file in bibtex format?
-\item Have you submitted an additional page that describes who did
-  what in the project or report?
-\item Have you spellchecked the paper?
-\item Have you made sure you do not plagiarize?
-\item Have you made sure that the important directories are all lower
-  case and have no underscore or space in it?
-\item Have you made sure that all authors have a README.rst in their
-  HID github/lab repository?
-\item Have you made sure that there is a README.rst in the project
-  directory and that it is properly filled out?
-\item Have you put a work breakdown in the document if you worked in a
-  group?
-\end{itemize}
-
-\section{Possible technology paper outline}
-
-The next sections are just some suggestions, your may want to add
-sections and subsections as you see fit. Images and references do not
-count towards the 2 page length. Please use the \verb|\section|,
-\verb|\subsection|, and \verb|\subsubsection| commands in your
-paper. do not introduce hardcoded numbers. Use the \verb|\ref| and
-\verb|\label| commands to refer
- to the sections.
-
-
-\paragraph{Abstract}
-
-Put in the abstract a summary what this paper is about
-
-\paragraph{1. Introduction}
-
-Introduce the technology and provide general useful information.
-
-\paragraph{2. Architecture} 
-
-If applicable include a description about architectural details. This
-may include a figure. Make sure that if you copy a figure you put the
-\cite{?} in the caption also. Otherwise it is plagiarism.
-
-\paragraph{2.1. API}
-
-comment on the API which could include language bindings
-
-\paragraph{2.2. Shell Access}
-
-If applicable comment on how the tool can be used from the command line
-
-\paragraph{2.3.Graphical Interface}
-
-If applicable comment on if the technology has a GUI
-
-\paragraph{3. Licensing}
-
-Often tools may have different versions, some fre, some for
-pay. Comment on this. For example while a tool may offer a comercial
-version this version may be too costly for others. Identify especially
-the difference between features for free vs commercial tools.
-
-Sometimes you may need to introduce this also in the introduction as
-there may be a big difference and without the knowledge you do not
-provide the user an adequate introduction.
-
-\paragraph{4. Ecosystem}
-
-Some technologies have a large ecosystem developed around them with
-extensions plugins and other useful tools. Identify if they exists and
-comment on what they can achieve
-
-provide potentially a mindmap or a figure illustrating how the
-technology fits in with other technologies if applicable.
-
-\paragraph{4. Use Cases}
-
-\paragraph{4.1. Use Cases  for Big Data}
-
-Locate and describe major usecases that demonstrate the technology
-while focussing on big data related use cases. Make sure you do proper
-references with the \cite{?} command. Do not put URLs in the text.
-
-\paragraph {4.2. Other Use Cases}
-
-Some technologies may not just be used for big data, find other makor
-use cases from other areas if applicable.  Make sure you do proper
-references with the \cite{?} command. Do not put URLs in the text.
-
-\paragraph{5. Educational material}
-
-Put information here how someone would find out more about the
-technology. Use important material and do not list hundrets of web
-pages, be selective.
-
-\paragraph{6. Conclusion}
-
-Put in some conclusion based on what you have researched
-
-\paragraph{Acknowledgement}
-
-Put in the information for this class and who may sponsor
-you. Examples will be given later
 
 \end{document}
