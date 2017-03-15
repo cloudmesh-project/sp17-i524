@@ -10,4 +10,4 @@ github: "karvenka"
 
 report: "H-Store.pdf"
 
-proposal: ""
+proposal: "proposal.pdf"
