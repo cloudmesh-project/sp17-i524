@@ -8,7 +8,7 @@ hid: "ENTER YOUR HID HERE"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "	ssheybani"
+github: "ssheybani"
 
 report: "report.pdf"
 
