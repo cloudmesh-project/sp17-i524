@@ -1,17 +1,19 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-13"
 
-author: "ENTER YOUR NAME HERE"
+author: "Saber Sheybani" "Sushmita Sivaprasad" 
+        
+hid: "S17-ER-1001" "S17-IR-2038"
 
-hid: "ENTER YOUR HID HERE"
+pid: "S17-IR-P012"
 
-pid: "ENTER YOUR PID HERE"
-
-github: "YOUR GITHUB USERNAME"
+github: "ssheybani" "SushmitaSivaprasad" 
 
 report: "report.pdf"
 
-proposal: "proposal.pdf"
+proposal: "report.pdf"
+
+title: "OpticalCharacterRecognition"
 
 --------------------------------------------------------------------------------
