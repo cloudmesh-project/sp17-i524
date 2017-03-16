@@ -1,10 +1,10 @@
 :orphan:
 
-submitted: "YYYY-MM-DD"
+submitted: "2017-03-05"
 
-author: "ENTER YOUR NAME HERE"
+author: "Saber Sheybani"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-ER-1001"
 
 pid: "ENTER YOUR PID HERE"
 
