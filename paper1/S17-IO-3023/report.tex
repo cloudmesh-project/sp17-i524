@@ -20,7 +20,7 @@
 \ociscodes{H-Store,OLTP, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/karvenka/sp17-i524/tree/master/paper1/S17-IO-3023/H-Store.pdf}}
+\doi{\url{https://github.com/karvenka/sp17-i524/tree/master/paper1/S17-IO-3023/report.pdf}}
 
 
 \begin{abstract}
@@ -60,14 +60,14 @@ the technological advancements in the last 25 years
 
 H-Store is a complete redesign of the traditional RDMS database and 
 experimetal results show that the OLTP processing on a H-Store database is faster 
-by a factor of 82.  \cite{stonebraker2007}
+by a factor of 82 \cite{stonebraker2007}.
 
 \section{Architecture}
 
-\begin{figure}[htbp]
+\begin{figure}[http]
 \centering
 \fbox{\includegraphics[width=\linewidth]{hstore}}
-\caption{H-Store Architecture}
+\caption{H-Store Architecture} \cite{www-H-StoreArch}
 \label{fig:false-color}
 \end{figure}
 
@@ -95,7 +95,7 @@ All of operations within a transaction are atomic across all the partitions invo
 
 \section{Licensing and Commercial Use}
 
-A commercial implementation of H-Store is VoltDB.VoltDB was developed for production environments, and thus it is focused on high-performance throughput for single-partition transactions and provides robust handling of failures that are obviously needed for a main memory system. H-Store does not have VoltDB’s tools for managing and maintaining clusters. But because H-Store is a research database (thus does not provide many of the safety guarantees that VoltDB does), this allows H-Store to support additional optimizations, such as speculative execution and arbitrary multi-partition transactions.For example, in VoltDB every transaction is either single-partition or all-partition. That is, any transaction that needs to touch multiple partitions will cause the VoltDB’s transaction coordinator to lock all partitions in the cluster, even if the transaction only needs to touch data at two partitions. However H-Store has a different internal transaction coordination subsystem . For each query batch submitted by a transaction, the heavily optimized H-Store Batch Planner determines what partitions each query needs to access and only dispatches requests to those partitions.H-Store uses VoltDB’s VoltProcedure API, so any stored procedures written for VoltDB should still work in H-Store\cite{www-H-StoreFaq}. 
+A commercial implementation of H-Store is VoltDB.VoltDB was developed for production environments, and thus it is focused on high-performance throughput for single-partition transactions and provides robust handling of failures that are obviously needed for a main memory system. H-Store does not have VoltDB’s tools for managing and maintaining clusters. But because H-Store is a research database (thus does not provide many of the safety guarantees that VoltDB does), this allows H-Store to support additional optimizations, such as speculative execution and arbitrary multi-partition transactions.For example, in VoltDB every transaction is either single-partition or all-partition. That is, any transaction that needs to touch multiple partitions will cause the VoltDB’s transaction coordinator to lock all partitions in the cluster, even if the transaction only needs to touch data at two partitions. However H-Store has a different internal transaction coordination subsystem . For each query batch submitted by a transaction, the heavily optimized H-Store Batch Planner determines what partitions each query needs to access and only dispatches requests to those partitions.H-Store uses VoltDB’s VoltProcedure API, so any stored procedures written for VoltDB should still work in H-Store \cite{www-H-StoreFaq}. 
 
 
 \section{Use Case}
@@ -103,7 +103,7 @@ A commercial implementation of H-Store is VoltDB.VoltDB was developed for produc
 Big Data is data at rest. Big Data describes data’s volume – petabytes to exabytes - and variety: structured, semi-structured and unstructured data that has the potential to be analyzed for information. Big Data systems facilitate the exploration and analysis of stored, large data sets.
 Big data is often created by data that is generated at incredible speeds, such as click-stream data, financial ticker data, log aggregation, or sensor data. Often these events occur thousands to tens of thousands of times per second. The benefits of big data are lost if fresh, fast-moving data from real time sources is dumped into HDFS, an analytic RDBMS, or even flat files, because the ability to act or alert right now, as things are happening, is lost. 
 
-So this data stream which is the source for big data is called Fast Data.For Fast Data we're not measuring volume in the typical gigabytes, terabytes, and petabytes . For Fast Data we are measuring volume in terms of time: the number of megabytes per second, gigabytes per hour, or terabytes per day. So the key difference between Big and Fast Data is Volumne vs Velocity.So to build systems and applications to take advantage of Fast Data  to make real-time, per-event decisions that have direct, immediate impact on business interactions and observations we need a DBMS which  offers high speed transactional ACID performance and the ability to process thousands to millions of discrete incoming events per second is ideal for processing such type of data. Fast data systems operationalize the learning and insights that companies derive from big data.NewSQL systems such as H-Store and VoltDB are ideal for the Fast Data use case.\cite{www-FastData}
+So this data stream which is the source for big data is called Fast Data.For Fast Data we're not measuring volume in the typical gigabytes, terabytes, and petabytes . For Fast Data we are measuring volume in terms of time: the number of megabytes per second, gigabytes per hour, or terabytes per day. So the key difference between Big and Fast Data is Volumne vs Velocity.So to build systems and applications to take advantage of Fast Data  to make real-time, per-event decisions that have direct, immediate impact on business interactions and observations we need a DBMS which  offers high speed transactional ACID performance and the ability to process thousands to millions of discrete incoming events per second is ideal for processing such type of data. Fast data systems operationalize the learning and insights that companies derive from big data.NewSQL systems such as H-Store and VoltDB are ideal for the Fast Data use case \cite{www-FastData}.
 
 Below are four common uses cases for Fast Data 
 \begin{itemize}
