@@ -1,0 +1,4 @@
+---
+- name: Install Emacs on Chameleon Cloud
+  become: yes
+  apt: name=emacs update_cache=yes state=latest

@@ -1,14 +1,16 @@
 :orphan:
 
-submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): EG: 2017-01-01"
+submitted: "2017-03-12"
 
-author: "ENTER YOUR NAME HERE"
+title: "Automated Sharded MongoDB Deployment and Benchmarking for Big Data Analysis"
 
-hid: "ENTER YOUR HID HERE"
+author: "Mark McCombe"
 
-pid: "ENTER YOUR PID HERE"
+hid: "S17-IO-3012"
 
-github: "YOUR GITHUB USERNAME"
+pid: "S17-IO-3012"
+
+github: "mmccombe"
 
 report: "report.pdf"
 

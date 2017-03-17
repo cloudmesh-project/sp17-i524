@@ -1,0 +1,354 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\usepackage[colorinlistoftodos,prependcaption,textsize=normal]{todonotes}
+\newcommand{\TODO}[2][]{\todo[color=red!10,inline,#1]{#2}}
+\newcommand{\GE}{\TODO{Grammar}}
+\newcommand{\SE}{\TODO{Spelling}}
+\newcommand{\TE}{\TODO{Term}}
+\newcommand{\CE}{\TODO{Citation}}
+\journal{i524} 
+
+\title{ Analysis of Pentaho}
+
+
+\author[1,*]{Bhavesh Reddy Merugureddy}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+
+\affil[*]{Corresponding authors: bmerugur@umail.iu.edu}
+
+\dates{Paper 1, \today}
+
+\ociscodes{Pentaho, Data Integration, Big Data, Community, ETL, MapReduce, SQL, Hadoop, OLAP}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/bhavesh37/sp17-i524/blob/master/paper1/S17-IR-2018/report.pdf}}
+
+
+\begin{abstract}
+Pentaho is a leading business analytics and data integration tool that
+provides a qualified open source-based platform to assist a variety of
+big data deployments. It enables different organizations to utilize
+their data which helps them in delivering their services efficiently
+with minimum risk.Pentaho is often considered as an ideal application
+which can be used by businesses that desire to get the most out of
+their data and can also be used for embedded analytics. \newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\TODO{This review document is provided for you to achieve your
+  best. We have listed a number of obvious opportunities for
+  improvement. When improving it, please keep this copy untouched and
+  instead focus on improving report.tex. The review does not include
+  all possible improvement suggestions and for each comment you may
+  want to check if it applies elsewhere in the document.}
+
+\TODO{Abstract: Sounds a bit too much like a press release. Words and
+  phrases like "leading", "qualified", "minimum risk", as well as the
+  whole last sentence, are subjective. Please revise.}
+
+\TODO{The paper in general sounds too much like an advertisement or
+  press release. Your goal should be to inform readers about 1) the
+  context in which using Pentaho makes sense, and 2) what Pentaho can
+  do and how it compares to other similar services. In many cases,
+  you've used assertions or words that don't belong in a neutral
+  comparison like this. Please see the comments below.}
+
+\TODO{Please use more descriptive names for your references instead of
+  "pent1", "pent2", etc.}
+
+\TODO{Assessment: Revisions required. Please address the review
+  comments by end of March.}
+
+\section{Introduction}
+
+Pentaho can be viewed as a business intelligence suite that provides
+data mining, reporting, dashboarding and data integration
+capabilities. Generally, organizations tend to obtain meaningful
+relationships and useful information from the data present with
+them. Pentaho addresses the obstacles that obstruct them from doing so
+\cite{pent1}. \TODO{What are these obstacles? You can help
+  understanding by providing more context here.} The platform includes
+a wide range of tools that analyze, explore, visualize and predict
+data easily \TODO{"easily" is subjective; please don't use} which
+simplifies blending the data. The sole objective of pentaho is to
+translate data into value. \TODO{This sentence reads like an
+  advertisement. Translating data into value is such a general
+  statement it can be applied to any of a large number of
+  technologies. You need to focus on exactly what Pentaho does.} Being
+an open and extensible source, pentaho provides big data tools to
+extract, prepare and blend any data. \TODO{What do you mean by
+  blending data? I am not familiar with this term.} Along with this,
+the visualizations and analytics will help in changing the path that
+the organizations follow to run their business.  \TODO{Again, this
+  statement is too general and thus useless. Please, remove.} From
+spark \TE and hadoop \TE \TODO{These are proper names, so need to be
+  capitalized} to noSQL, pentaho \TE transforms big data into big
+insights. \TODO{Another statement that is too general and needs to be
+  removed.}
+
+\section{Pentaho community}
+\TE \TODO{Community should be capitalized since it's part of the
+  name.}
+
+Pentaho provides two different editions, community \TE edition and \TE
+enterprise edition. As the name suggests, the enterprise edition comes
+with more packages to provide addition \GE support. The community \TE
+edition enables the developers or users to create complex solutions
+for the problems pertaining to their business \cite{pent2}. The
+pentaho \TE community has a group of intellectual \TE
+\TODO{"intellectual" is subjective, please don't use} people and helps
+the users in becoming a part of them and benefit \GE from the open
+source contributions. These open source projects are helpful in
+delivering reliable and faster products which are timely tested by the
+community. The community includes all users like developers, testers
+and managers. \TODO{The preceding two sentences are out of scope. You
+  don't need to explain what an open source community is; just focus
+  on Pentaho.} Generally, the community edition platform enables the
+developers to sketch their design and develop a rough version of their
+product after which they can upgrade to enterprise edition for final
+production. \TODO{Here, it would be useful to state more explicitly
+  what the difference between the Community and Enterprise versions
+  are. Why does the Community edition allows users to sketch a
+  solution, but not implement a working solution?}
+
+Pentaho provides an interactive console to its users. With a few
+clicks of the mouse, users are allowed to interact with new data
+models and data. The platform hides the database connections and
+underlying application server and provides access to various data
+sources \cite{pent3}. It provides metadata management capabilities and
+a dashboard to allow the administrators set security levels, monitor
+servers and set user access. There are many server plugins and desktop
+applications provided by pentaho \TE.
+
+\subsection{Server applications}
+
+\TODO{Why is this a subsection in the "Pentaho Community" section?
+  Please, improve the organization of your sections.}
+
+Business Intelligence platform is a basic service that provides
+reports, displays dashboards, reports business rules and performs OLAP
+analysis. The latest version \TODO{A paper like this should be
+  independent from a specific version or time, so avoid talking about
+  latest version} comes with RESTful services and re-written scheduler
+along with a migration system. It generally runs in Apache java \TE
+application server and can be embedded in any other java \TE
+application server \cite{pent1}. Pentaho analysis service is another
+server application that is written in java which primarily focuses on
+online analytical processing. It aggregates data into a memory cache
+by performing read operation from data sources like SQL. It comes with
+the pentaho platform in both the editions. These are some of the
+server applications provided by pentaho.
+
+\TODO{It's not immediately clear that these are Pentaho
+  services. Please, clarify this at the beginning of the paragraph or
+  as you introduce the BI platform and Analysis service.}
+
+\subsection{Desktop applications}
+
+Pentaho data mining is a desktop application that searches for
+patterns in data by performing knowledge analysis. All the techniques
+of data mining \TODO{It's better to be more specific here. No system
+  can be employed by a single system since they are constantly
+  changing. It's better to say something like "Common data mining
+  techniques like clustering, ..., are employed in ..."} such as
+classification, clustering, regression and visualization are employed
+by this application along with some machine learning algorithms. This
+helps the users in predicting the trends in future. Pentaho metadata
+editor is an application that is used as an abstraction layer from the
+underlying data sources and helps the users in creating effective
+\TODO{"effective" is subjective} business models which can be used by
+other applications in creating reports for the analytics. There are
+many more useful desktop applications. \TODO{Provide some examples.}
+ 
+\subsection{Server plugins}
+
+\TODO{Please, give more context. You immediately jump to introduce
+  certain plugins without explaining why the plugin system exists.}
+Some of the important server plugins are community data access and
+data browser. Community data access is a pentaho \TE server plugin
+that provides a common layer on the business analytics server for an
+easy data access. It runs the server by providing a REST interface and
+gets back the results in various forms such as xml, csv or
+json. Community data browser is a plugin that helps R in performing
+analytics on the data. It does the job of supplying queries to R by
+using online analytical processing browser.
+
+\section{Data Integration}
+
+Extract, transform and load (ETL) are the basic operations that act as
+a tool for transforming data from one database and placing in other
+database. These processes can be carried out in pentaho \TE with the
+help of a component called pentaho data integration \TE, which is also
+referred as kettle \cite{pent4}. The most useful functions of pentaho
+data integration include massive load of data into databases, data
+cleansing, migrating data between applications and integrating several
+applications. It is metadata oriented and can be used as a standalone
+application. The ability of transforming data is so high that the data
+can be manipulated with a very few limitations. \TODO{This sentence is
+  subjective. Perhaps, provide some examples of things you can do with
+  Pentaho that would be difficult to do with another tool.} Various
+input and output formats such as datasheets and text files are
+supported by pentaho data integration \TE.
+
+The transformation process undergoes three steps, input step,
+transformation step and output step. In the input step, data is
+ingested \cite{pent5} \TODO{What does it mean for data to be ingested?
+  Please, use a different term or provide more context.}. The data is
+then processed within pentaho data integration and the transformed
+data is given out in the output step. All these steps are carried out
+in parallel. The throughput of transformation process is restricted to
+speed of the step which is slowest. The slowest step is often referred
+as bottleneck. To improve the performance of transformation process,
+two steps are run in a loop which are, identification of the
+bottleneck and continued improvement of bottleneck until it is no
+longer a bottleneck. \TODO{Please, clarify how Pentaho helps in
+  correcting these bottlenecks. This is not clear from this
+  paragraph.}
+
+Pentaho data integration has a set of components that contribute to
+its functionalities. They are spoon, kitchen, pan and carte
+\cite{pent6}. \TODO{When introducing new terms, it's good to italicize
+  them or use some other formatting to show these are being introduced
+  for the first time. In addition, you need to capitalize all these.}
+Spoon can be considered as a desktop application that creates simple
+and even complex extract, transform and load (ETL) jobs without making
+the users write or read code. Spoon is the application that is used
+for transformations and jobs with the help of editor. So, \TE
+\TODO{"So" is too colloquial for a paper like this} it is the one that
+is used in most of the cases such as editing, debugging or running a
+transformation or a job. As the transformations are created in spoon
+\TE, they can be executed with the help of a standalone command line
+process called pan \TE. It is an engine that reads data, manipulates
+it and loads into various data sources. Kitchen is another standalone
+command line process that for executing jobs. It schedules different
+jobs to run at regular intervals. Carte provides remote execution
+capabilities and a medium for setting up a remote ETL server.
+
+\section{Architecture}
+
+\TODO{You should start with this section before you talk about desktop
+  applications, server plugins and so on.}  Pentaho architecture can
+be considered as a set of four components which are presentation
+layer, business intelligence platform, data and application
+integration and third party applications. Data can be provided to the
+presentation layer by reporting, analysis or process management. This
+data can then be accessed through a web service, portal or a browser
+\cite{pent7}. The security and repository issues are dealt by the
+business intelligence platform. Data integration and third party
+applications are respectively, the integration layer and applications
+with database from various sources.
+
+The architecture also includes a set of predefined layers such as data
+layer, server layer and client layer. \GE Data layer allows an application
+to connect to a data source. Server layer serves as a middle layer and
+several applications run on the server. Dashboards are provided to the
+end users by deploying them on the server along with the required
+reports. As mentioned above, a user console is provided that is used
+for security and configuration purposes. Client layer is of two forms,
+thin client and thick client. Thin client generally runs on a
+server. Analyzer and dashboard editor can be considered as the
+examples. Report designer and data integration come under thick client
+which act as a standalone.
+
+\section{Big Data Use cases}
+
+Big data refers to humongous \TODO{"humongous" is somewhat colloquial,
+  you can simply use "large"} volumes of data being taken from
+multiple data sources and put into data stores. A use case can be
+defined as a technology solution for business specific challenges. Big
+data use cases help in understanding the problems that big data
+addresses. \TODO{These two sentences are too general and can apply to
+  any technology. Please focus on Pentaho.}
+
+Cyber security analysis helps the end users such as data scientists
+and security analysts in quickly detecting the threats. Cyber security
+analytics allows the users to utilize most of the staff resources via
+automation \cite{pent8}. It empowers \TODO{"empowers" is subjective,
+  please don't use} the data scientists with predictive analytics with
+the help of machine learning tools. It also provides the automation of
+blending and reporting on a variety of data. Pentaho platform can be
+utilized for data processing, data ingestion and delivery of threat
+calls with minimal costs and complexity.
+
+Pentaho optimizes data warehouse and speeds up the development and
+deployment processes. It employs a simplified process for offloading
+to Hadoop. The offloaded data is usually less frequent data. Hand
+coding in MapReduce jobs and SQL can be avoided by the usage of visual
+integration tools. It provides access to data sources ranging from
+relational to operational to NoSQL technologies. Pentaho MapReduce
+helps in achieving high performance in a cluster environment. It
+provides a graphical and intuitive big data integration.
+
+Another use case identified by pentaho is the streamlined data
+refinery. Pentaho data integration processes and refines different
+data sets by using Hadoop as its data processing platform. It provides
+modelled, delivered and published data sets to the users for visual
+analytics just by a mouse click. It can be seen as an integration
+process that blends huge volumes of highly diversified data. It also
+supplies tools for in-cluster simplified data processing and is
+regarded as a highly practical approach.
+
+Pentaho’s big data support extends the 360-degree view to internal and
+external customer related data. Customer service teams are provided
+with time-sensitive and blended streams of data. This helps in making
+profitable \TODO{"profitable" is subjective} decisions. The presence
+of an adaptive big data layer relieves several organizations from
+evolving technologies. Customers are given access to customizable,
+intuitive \TODO{"intuitive" is subjective} and interactive
+dashboards. Data scientists are provided with predictive analytics and
+data mining tools.
+
+Monetizing the data is the final use case addressed by pentaho. It
+allows the users to capitalize on big data with the help of powerful
+data processing and embeddable data analytics \cite{pent9}. Pentaho’s
+big data analytics platform empowers easy big data ingestion and
+transformation as it works as a no-code data integration
+environment. It is a flexible platform that supports security and
+deployments specific to customers.
+
+\TODO{This paragraph reads like a press release. Doesn't describe an
+  actual use case. }
+\section{Comparison}
+
+
+Pentaho products compete with some big names \TODO{"big names" is
+  colloquial, please avoid} in current field such as SAP, IBM and
+oracle \TE. Pentaho provides open source solutions and is considered
+to be much cheaper than the proprietary equivalents. Jaspersoft is an
+established open source rival of pentaho. Though both pentaho and
+jaspersoft offer similar features with similar costs, pentaho has got
+wider online presence and more followers in social media
+\cite{pent10}.
+
+\section{Conclusion}
+
+Pentaho is an open source based platform for diverse big data
+deployments. It empowers \TE analytics in any environment by
+delivering governed data \TODO{What is governed data?}. It has unified
+data integration and analytics components which are comprehensive
+\TODO{"comprehensive" is subjective} and embeddable. The primary aim
+of pentaho is to enable organizations to find new revenue streams with
+extraordinary \TE service at minimum risk \TE. It helps them in
+harnessing the value from their data in order to make their operations
+efficient and consistent.
+
+\TODO{"extraordinary service", "minimum risk", "comprehensive
+  components", etc. These all belong in a press release or an
+  advertisement, but not a paper like this.}
+
+\bibliography{references}
+ 
+
+\newpage
+
+\appendix
+
+
+\end{document}

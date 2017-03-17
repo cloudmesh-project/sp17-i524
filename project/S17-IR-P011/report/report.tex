@@ -1,0 +1,56 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Head Count Detection Using a Docker Swarm Cluster}
+
+\author[1]{Anurag Kumar Jain}
+\author[1]{Pratik Sushil Jain}
+\author[1]{Ronak Parekh}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P011}}
+
+\begin{abstract}
+By deploying our face detection application on Docker cluster, we will
+try to achieve high throughput by parellalizing processing of images
+for head count task on multiple nodes each having thousand of
+pictures.
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Counting the number of people in a image has been a challenge in the
+field of computer vision \cite{www-face-detection-wikipedia}. Given a
+huge number of images, finding the number of people in each image can
+become a cumbersome task. We try to solve this issue using our
+distributed approach using a docker swarm cluster which is a cluster
+of Docker \cite{www-docker-wikipedia} engines, or nodes, where
+services have to be deployed. We run the OpenCV
+\cite{www-opencv-wikipedia} face detection algorithms on smaller data
+in multiple nodes and obtain the head count of the people in each
+picture.
+
+\section*{Acknowledgements}
+
+This project is undertaken as part of I524: Big Data And Open Source
+Software Projects at Indiana University, Bloomington. We would like to
+Prof. Gregor von Laszewski and Assosiate Instructors for their help.
+
+% Bibliography
+
+\bibliography{references}
+
+\end{document}
