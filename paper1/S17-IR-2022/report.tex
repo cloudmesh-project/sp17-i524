@@ -43,18 +43,30 @@ easy integration of custom analysis tools.  It thus focuses on
 supporting services from various environments, like peer-to-peer (P2P)
 and Grid.
 
-\section{Background}
-Triana has a graphical interactive environment that can be used by 
-the users to create their applications and specify their behavior \cite{TrianaDocumentation1}.  
-In this, it is similar to tools like draw.io and IBM's Rational Rose that 
-provide the user with a graphical user interface (GUI) to draw
-the UML diagrams \cite{DrawIO} \cite{IBM-Rational-Rose}.  The users can 
-model the work flow using the various units onto the workspace and then 
-depict the relationship between them with some interconnection.  
-The Triana PSE can also be extended to promote discovery of web services,
-their composition and decomposition.
-
 \section{Features}
+Triana has a graphical interactive environment that can be used by the
+users to create their applications and specify their behavior
+\cite{TrianaDocumentation1}.  In this, it is similar to tools like
+draw.io and IBM's Rational Rose that provide the user with a graphical
+user interface (GUI) to draw the UML diagrams \cite{DrawIO}
+\cite{IBM-Rational-Rose}.  Rational Rose and Draw.io are mainly used
+for modeling the control flow diagrams like the class diagram,
+sequence diagram, etc., while Triana can be used for modeling generic
+flows like an audio processing pipeline.  Thus, while conventional
+flows like the sequence diagram can be modeled using Triana, it is
+better suited for the creation of generic flows.  The users can model
+the work flow using the various units onto the workspace and then
+depict the relationship between them with some interconnection.  The
+Triana PSE can also be extended to promote discovery of web services,
+their composition and decomposition.  A sample Triana GUI image has
+been shown in Figure 1.
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/TrianaGUI}}
+  \caption{Sample Triana Screen \cite{TrianaDocumentation2}}
+\end{figure}
+
 The Triana framework that has been extended with the framework has the 
 following set of features: 
 
@@ -102,21 +114,14 @@ The Triana Distributed implementation makes use of Triana Group units.
 They have the same features of the normal units (like input/output,
 etc.) and so they can be connected to the other Triana Units using the
 standard connection mechanism.  The tools need to be group so that
-they can be distributed; and Triana has two distribution policies:
-
-\begin{itemize}
-
-\item Parallel: a 'farming-out' mechanism involving no communication
-  between the hosts.
-\item Pipeline: this involves distributing the group 'vertically'.
-
-\end{itemize}
-
-Groups can in turn contain groups and each group can in turn, have its
-own distribution policy to be followed.  The Triana distribution
-mechanisms are based upon the concept of GAT (Grid Application
-Toolkit).  The GAT aims to shield the applications from the
-implementation details using a standard Application Programming
+they can be distributed; and Triana has two distribution policies -
+(a) Parallel: a 'farming-out' mechanism involving no communication between
+the hosts; and (b) Pipeline: this involves distributing the group
+'vertically'.  Groups can in turn contain groups and each group can in
+turn, have its own distribution policy to be followed.  The Triana
+distribution mechanisms are based upon the concept of GAT (Grid
+Application Toolkit).  The GAT aims to shield the applications from
+the implementation details using a standard Application Programming
 Interface (GAT-API).  It also provides a set of Grid services for
 carrying out tasks such as resource and information management.
 
@@ -169,13 +174,21 @@ This Interface is basically used for communicating with the remote
 servers, which was one of the main functionalities to be developed as a 
 part of the GridLab GAT. JXTA currently has GAP interface bindings. 
 
-The GAP interface bindings implement the basic GAP functionality, which 
-is locating and communicating the JXTA services. Such a service has two 
-input nodes and may have multiple output nodes - either zero, one or 
-more. The input and the output nodes are delegated as the JXTA pipes and 
-a virtual communication channel is established between them. This 
-virtual communication channel adapts a particular communication protocol 
-depending upon the current operating environment. 
+The GAP interface bindings implement the basic GAP functionality,
+which is locating and communicating the JXTA services. Such a service
+has two input nodes and may have multiple output nodes - either zero,
+one or more. The input and the output nodes are delegated as the JXTA
+pipes and a virtual communication channel is established between
+them. This virtual communication channel adapts a particular
+communication protocol depending upon the current operating
+environment. The relationship between Triana and GAP is shown in
+Figure 2.
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/TrianaGAPRelationship}}
+  \caption{Relationship between Triana and GAP \cite{TrianaDocumentation1}}
+\end{figure}
 
 \section{Projects}
 
