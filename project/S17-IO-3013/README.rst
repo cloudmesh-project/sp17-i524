@@ -2,13 +2,15 @@
 
 submitted: "yyyy-mm-dd"
 
-author: "ENTER YOUR NAME HERE"
+author: "Leonard Mwangi"
 
-hid: "ENTER YOUR HID HERE"
+title: "Music Predictive Analysis Project based on Lyrics"
 
-pid: "ENTER YOUR PID HERE"
+hid: "S17-IO-3013"
 
-github: "YOUR GITHUB USERNAME"
+pid: "S17-IO-3013"
+
+github: "lmundia"
 
 report: "report.pdf"
 
