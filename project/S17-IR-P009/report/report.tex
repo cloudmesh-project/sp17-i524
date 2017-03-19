@@ -1,8 +1,14 @@
 \documentclass[9pt,twocolumn,twoside]{styles/osajnl}
 \usepackage{fancyvrb}
+\usepackage[colorinlistoftodos,prependcaption,textsize=normal]{todonotes}
+\newcommand{\TODO}[2][]{\todo[color=red!10,inline,#1]{#2}}
+\newcommand{\GE}{\TODO{Grammar}}
+\newcommand{\SE}{\TODO{Spelling}}
+\newcommand{\TE}{\TODO{Term}}
+\newcommand{\CE}{\TODO{Citation}}
 \journal{i524} 
 
-\title{Project Report:Integrate Docker  into cloudmesh and demonstrate its use}
+\title{Cloudmesh Docker Extension}
 
 \author[1]{Karthick Venkatesan}
 \author[1]{Ashok Vuppada}
@@ -11,10 +17,10 @@
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
 
-\dates{project-000, \today}
+\dates{S17-IR-P009, \today}
 
 \ociscodes{Cloud, I524}
-
+% \TODO{replace with your url on github taht points to the pdf}
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
 
@@ -28,7 +34,11 @@ This project will be to create a cmd5 based command line interface to docker wit
 
 \begin{document}
 
+
 \maketitle
+
+\TODO{replace the url with your URL on github}
+
 
 \section{Introduction}
 
@@ -79,25 +89,28 @@ Ansible scripts will be created for deployment of Docker into the virtual machin
 
 \section{Docopts Manual Page for Cloudmesh Docker}
 
-TBD
+\TODO{TBD}
 
 \section{Data Analysis Application to be deployed in Docker}
 
-TBD
+\TODO{TBD}
 
 \section{Benchmark Process}
 
-TBD
+\TODO{TBD}
 
 \section{Benchmark Results}
 
-TBD
+\TODO{TBD}
 
 \section{Steps to Execute}
 
-TBD
+\TODO{TBD}
 
 % Bibliography
+
+\TODO{Add a single reference at least to see if the refernce
+  management works}
 
 \bibliography{references}
  
