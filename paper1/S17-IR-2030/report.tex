@@ -20,7 +20,7 @@
 
 
 \begin{abstract}
-Azure Data Factory is a cloud based data integration service that handles and automates data movement and data integration services. The Data Factory stands out in its ability to ingest data from multiple sources, efficiently build pipelines to manage processes and visualize the results in a pragmatic manner. This paper discusses the data movement and data transformation activities supported by Azure Data Factory \newline
+Azure Data Factory is a cloud based data integration service that handles and automates data movement and data integration services. The Data Factory stands out in its ability to ingest data from multiple sources, efficiently build pipelines to manage processes and visualize the results in a pragmatic manner. The paper discusses the data movement and data transformation activities supported by Azure Data Factory \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -39,6 +39,7 @@ Data factory is a great tool to analyze web data, sensor data and geo-spatial da
 \label{fig:copy-local}
 \end{figure}
 
+ Fig. 1.  illustrates the flow of activities in Data Factory. Data can be ingested from several data sources that reside either on-premises or on cloud platforms. Pre-processing steps can be applied to the data after data ingestion. Once the data preparation is complete, scheduling, transformation and analysis is carried out using data pipelines. The results of data analysis is then published using the visual aids provided by Data factory\cite{www-microsoft-azure-main}.
 
 \section{Datasets in Azure Data Factory}
 
@@ -110,7 +111,7 @@ Data factory can be used for a wide range of applications such as Product recomm
 In this case, the customer information, product information and the behavioural data of the customer are stored in azure blobs. The combined data is fed to the recommendation system which is modelled using any of the algorithms available in the Azure Machine Learning suite. The final result contains customer specific product recommendations that can be written to relational database for the consumption by the store's website~\cite{www-microsoft-azure-reco}.
 
 \section{Conclusion}
-The paper talks about the data orchestration and management using Microsoft's Data Factory. It's ability to link diverse data stores makes it a versatile tool for data integration. In addition, the powerful pipeline based data transformation services embedded in it helps data scientists and developers to provide efficient and effective solutions using large datasets. 
+The paper talks about the data orchestration and management using Microsoft's Data Factory. Its ability to link diverse data stores makes it a versatile tool for data integration. In addition, the powerful pipeline based data transformation services embedded in it helps data scientists and developers to provide efficient and effective solutions using large datasets. 
 
 % Bibliography
 
