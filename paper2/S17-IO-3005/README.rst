@@ -2,13 +2,13 @@
 
 submitted: "2017-03-19"
 
-author: "Piyush Rai, Milind Suryawanshi"
+author: "Abhishek Gupta"
 
-hid: "S17-IO-3014, S17-IO-3020"
+hid: "S17-IO-3005"
 
-pid: "S17-IR-P006"
+pid: "ENTER YOUR PID HERE"
 
-github: "piyurai, MilindSuryawanshi"
+github: "abhishek8gupta"
 
 report: "report.pdf"
 
