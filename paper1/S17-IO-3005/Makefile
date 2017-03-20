@@ -1,10 +1,28 @@
 FILE=report
 
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Darwin)
+OPENCMD=open
+endif
+ifeq ($(UNAME), Linux)
+OPENCMD=xdg-open
+endif
+
 all:
 	pdflatex ${FILE}
 	bibtex ${FILE}
 	pdflatex ${FILE}
 	pdflatex ${FILE}
+
+review:
+	pdflatex ${FILE}-review
+	bibtex ${FILE}-review
+	pdflatex ${FILE}-review
+	pdflatex ${FILE}-review
+
+viewreview:
+	$(OPENCMD) $(FILE)-review.pdf
 
 real-clean: clean
 	rm -rf *.pdf

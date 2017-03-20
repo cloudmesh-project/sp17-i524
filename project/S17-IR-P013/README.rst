@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-13"
 
-author: "ENTER YOUR NAME HERE"
+author: "Sabyasachi Roy Choudhury, Abhijit Thakre, Vishwanath Kodre"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IO-3015, S17-IO-3021, S17-IO-3008"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P013"
 
-github: "YOUR GITHUB USERNAME"
+github: "sabyasachi087"
 
 report: "report.pdf"
 
