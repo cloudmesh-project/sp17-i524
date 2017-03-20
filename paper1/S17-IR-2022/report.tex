@@ -43,18 +43,30 @@ easy integration of custom analysis tools.  It thus focuses on
 supporting services from various environments, like peer-to-peer (P2P)
 and Grid.
 
-\section{Background}
-\cite{TrianaDocumentation1} Triana has a graphical interactive
-environment that can be used by the users to create their applications
-and specify their behavior.  In this, it is similar to tools like
-\cite{DrawIO} draw.io and \cite{IBM-Rational-Rose} IBM's Rational Rose
-that provide the user with a graphical user interface (GUI) to draw
-the UML diagrams.  The users can model the work flow using the various
-units onto the workspace and then depict the relationship between them
-with some interconnection.  The Triana PSE can also be extended to promote 
-discovery of web services, their composition and decomposition.
-
 \section{Features}
+Triana has a graphical interactive environment that can be used by the
+users to create their applications and specify their behavior
+\cite{TrianaDocumentation1}.  In this, it is similar to tools like
+draw.io and IBM's Rational Rose that provide the user with a graphical
+user interface (GUI) to draw the UML diagrams \cite{DrawIO}
+\cite{IBM-Rational-Rose}.  Rational Rose and Draw.io are mainly used
+for modeling the control flow diagrams like the class diagram,
+sequence diagram, etc., while Triana can be used for modeling generic
+flows like an audio processing pipeline.  Thus, while conventional
+flows like the sequence diagram can be modeled using Triana, it is
+better suited for the creation of generic flows.  The users can model
+the work flow using the various units onto the workspace and then
+depict the relationship between them with some interconnection.  The
+Triana PSE can also be extended to promote discovery of web services,
+their composition and decomposition.  A sample Triana GUI image has
+been shown in Figure 1.
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/TrianaGUI}}
+  \caption{Sample Triana Screen \cite{TrianaDocumentation2}}
+\end{figure}
+
 The Triana framework that has been extended with the framework has the 
 following set of features: 
 
@@ -76,47 +88,40 @@ use.
 
 \end{itemize}
 
-\cite{TrianaGEO600} Triana was originally developed for the GEO600
+Triana was originally developed for the GEO600
 gravitation project.  In this project, it is still being used for
 analysing the gravitational wave signals that emanate from the laser
-interferometer based out of Germany.  \cite{TrianaDocumentation2}
-Triana uses a pluggable architecture, that is it checks the inputs
+interferometer based out of Germany \cite{TrianaGEO600}.  Triana uses 
+a pluggable architecture, that is it checks the inputs
 coming to, and the outputs coming from various units in real time to
-perform data-type checking and conformation.  It can also be used to
-monitor the work flow and run the executables in standalone mode.
-\cite{RMBDP-Book} It has a custom work flow language, although it can
+perform data-type checking and conformation \cite{TrianaDocumentation2}.  
+It can also be used to monitor the work flow and run the executables in standalone mode.
+  It has a custom work flow language, although it can
 be integrated with others like the Business Process Execution Language
-(BPEL).  This helps it in analysing large data sets and makes it
+(BPEL) \cite{RMBDP-Book}.  This helps it in analysing large data sets and makes it
 particularly important in big data analysis.
 
 \section{Infrastructure}
 
-\cite{TrianaDocumentation2} The Triana infrastructure consists of the
+The Triana infrastructure consists of the
 Triana Controlling Service (TCS) that has a Triana Engine, implemented
-as a Triana service.  The Triana engines are free to carry out the
-execution either locally or on distributed servers, as per the
-implementation policies in force.  Communication in the later case can
+as a Triana service \cite{TrianaDocumentation2}.  The Triana engines 
+are free to carry out the execution either locally or on distributed servers,
+as per the implementation policies in force.  Communication in the later case can
 be carried out using pipelined work flow distributions.
 
 The Triana Distributed implementation makes use of Triana Group units.
 They have the same features of the normal units (like input/output,
 etc.) and so they can be connected to the other Triana Units using the
 standard connection mechanism.  The tools need to be group so that
-they can be distributed; and Triana has two distribution policies:
-
-\begin{itemize}
-
-\item Parallel: a 'farming-out' mechanism involving no communication
-  between the hosts.
-\item Pipeline: this involves distributing the group 'vertically'.
-
-\end{itemize}
-
-Groups can in turn contain groups and each group can in turn, have its
-own distribution policy to be followed.  The Triana distribution
-mechanisms are based upon the concept of GAT (Grid Application
-Toolkit).  The GAT aims to shield the applications from the
-implementation details using a standard Application Programming
+they can be distributed; and Triana has two distribution policies -
+(a) Parallel: a 'farming-out' mechanism involving no communication between
+the hosts; and (b) Pipeline: this involves distributing the group
+'vertically'.  Groups can in turn contain groups and each group can in
+turn, have its own distribution policy to be followed.  The Triana
+distribution mechanisms are based upon the concept of GAT (Grid
+Application Toolkit).  The GAT aims to shield the applications from
+the implementation details using a standard Application Programming
 Interface (GAT-API).  It also provides a set of Grid services for
 carrying out tasks such as resource and information management.
 
@@ -169,32 +174,40 @@ This Interface is basically used for communicating with the remote
 servers, which was one of the main functionalities to be developed as a 
 part of the GridLab GAT. JXTA currently has GAP interface bindings. 
 
-The GAP interface bindings implement the basic GAP functionality, which 
-is locating and communicating the JXTA services. Such a service has two 
-input nodes and may have multiple output nodes - either zero, one or 
-more. The input and the output nodes are delegated as the JXTA pipes and 
-a virtual communication channel is established between them. This 
-virtual communication channel adapts a particular communication protocol 
-depending upon the current operating environment. 
+The GAP interface bindings implement the basic GAP functionality,
+which is locating and communicating the JXTA services. Such a service
+has two input nodes and may have multiple output nodes - either zero,
+one or more. The input and the output nodes are delegated as the JXTA
+pipes and a virtual communication channel is established between
+them. This virtual communication channel adapts a particular
+communication protocol depending upon the current operating
+environment. The relationship between Triana and GAP is shown in
+Figure 2.
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/TrianaGAPRelationship}}
+  \caption{Relationship between Triana and GAP \cite{TrianaDocumentation1}}
+\end{figure}
 
 \section{Projects}
 
-\cite{Triana-projects} Triana has been involved in a lot of projects
-(including some Big Data projects) like the
-\cite{Triana-Data-Mining-Grid} Data-Mining Grid, \cite{Triana-SRSS}
-Scalable Robust Self-organizing Sensor Network Project (SRSS) and
-\cite{Triana-SHIWA} SHaring Interoperable Work flows for large-scale
-scientific simulations on Available DCIs (SHIWA), etc.  As a part of
+Triana has been involved in a lot of projects (including some Big Data projects) 
+like the Data-Mining Grid, 
+Scalable Robust Self-organizing Sensor Network Project (SRSS) and 
+SHaring Interoperable Work flows for large-scale
+scientific simulations on Available DCIs (SHIWA), etc \cite{Triana-projects} 
+\cite{Triana-Data-Mining-Grid} \cite{Triana-SRSS} \cite{Triana-SHIWA} .  As a part of
 the Data-Mining Grid, Triana was predominantly used to model and then
 manage the planning, development and the execution of data-mining work
-flows in grid computing environments.  \cite{Triana-SRSS} The SRSS
+flows in grid computing environments.  The SRSS
 project is carrying out a research about the various communication
 protocols that can be leveraged in distributed and self-organizing
 networks; and they are using Triana's P2P binding to simulate various
-P2P networks.  The European project, SHIWA, mainly focuses on the
+P2P networks \cite{Triana-SRSS}.  The European project, SHIWA, mainly focuses on the
 interoperability of myriad European Work flow Systems and has been
-intrinsically integrated with Triana to create \cite{Triana-SHIWA}
-SHIWA bundles.  Other than these, Triana is also being actively used
+intrinsically integrated with Triana to create SHIWA bundles \cite{Triana-SHIWA}.  
+Other than these, Triana is also being actively used
 in some other projects like EDGI, TRIACS, EDGES, WHIP (Work flows
 Hosted In Portals), DART (Distributed Audio Retrieval using Triana),
 GridOneD, GEO600, BiodiversityWorld, DIPSO, GEMMS, etc. many of which
