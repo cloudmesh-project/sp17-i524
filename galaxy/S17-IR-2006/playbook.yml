@@ -1,0 +1,5 @@
+---
+- hosts: emacs_host
+  become: yes
+  roles:
+    - snehal.emacs
