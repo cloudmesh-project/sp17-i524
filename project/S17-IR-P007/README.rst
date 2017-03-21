@@ -1,6 +1,8 @@
 :orphan:
 
-submitted: "2017-03-131"
+title : "Identifying Spam Messages Using R And Pandas Over Docker Swarm"   
+
+submitted: "2017-03-13"
 
 author: "Sagar Vora"
         "Rahul Singh"
