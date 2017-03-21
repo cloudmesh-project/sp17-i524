@@ -14,7 +14,8 @@
 
 \dates{project-000, \today}
 
-\ociscodes{CDAP, Hadoop}
+\ociscodes{CDAP, Hadoop, Name Node, Edge Node, Yarn, Apache Sqoop, Apache
+Fluem, Apache Flink, Apache Atlas, HDFS, Apache Kafka}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/avadhoot-agasti/sp17-i524/tree/master/paper1/S17-IO-3000/report.pdf}}
@@ -149,21 +150,22 @@ Alternatively it is available as a standalone virtual machine.
 For deployment in cluster mode, CDAP provides options which are specific to
 underlying Hadoop distribution as explained below:
 \begin{itemize}
-\item Cloudera Hadoop Distribution (CDH) - Cloudera Manager is tool to
- deploy CDH cluster. As per CDAP documentation
-\cite{www-cdap-cloudera-manager} CDAP provides CDAP-parcel which is plug in for
-Cloudera Manager. Once you add CDAP-parcel
-to your Cloudera Manager, CDAP can be deployed using Cloudera Manager and all
- CDAP services can be monitored using Cloudera Manager
+\item Cloudera Hadoop Distribution (CDH) - Cloudera Manager
+\cite{www-cdh-manager} is tool to deploy CDH cluster. CDAP provides
+CDAP-parcel \cite{www-cdap-cloudera-manager} which is plug in for
+Cloudera Manager. Once you add CDAP-parcel to your Cloudera Manager, CDAP can
+ be deployed using Cloudera Manager and all CDAP services can be monitored
+ using Cloudera Manager.
 \item Amazon EMR (Elastic Map Reduce) - EMR is Amazon's Hadoop distribution
-for the Amazon Web Services cloud. EMR provides 'Create Cluster Wizard' to
-create EMR cluster. According the CDAP documentation \cite{www-cdap-emr}, CDAP
-provides a bootstrap action which is executed when the EMR cluster is created
-. Using this mechanism, CDAP platform can be deployed on EMR when the EMR
-cluster is created.
-\end{itemize}
+for the Amazon Web Services cloud \cite{www-amazon-emr}.  EMR provides
+'Create Cluster Wizard' to create EMR cluster. According the CDAP
+documentation \cite{www-cdap-emr}, CDAP provides a bootstrap action which is
+executed when the EMR cluster is created. Using this mechanism, CDAP platform
+ can be deployed on EMR when the EMR cluster is created.
+\item
 CDAP can also be deployed on HortonWorks Hadoop Distribution, MapR Hadoop
 Distribution and Apache Hadoop.
+\end{itemize}
 
 
 
@@ -175,15 +177,6 @@ in same network as that of Hadoop. However, none of the CDAP components are
 required to be installed on Hadoop Namenode or Hadoop datanodes. CDAP
 documentation \cite{www-cdap-deployment} provide the CDAP deployment
 architecture.
-
-\section{Educational Material}
-
-\begin{itemize}
-\item CDPA Applications code repository in Github \cite{github-cdap-apps}
-provide sample applications which are built on top of CDAP Platform.
-\item CDAP Documentation \cite{www-cdap-getting-started} provides introduction
- to CDAP platform.
-\end{itemize}
 
 \section{Representative Use Cases which can leverage CDAP}
 
@@ -198,19 +191,31 @@ sources like traditional RDBMS, trasnform it,
 aggregate it and finally store the data into permanent storage like HDFS.
 CASK Hydrator provides UI drag-and-drop style abstraction to all of the above
  task.
-\item Customer 360 is another representative application which can be built
-using CDAP. Customer 360 applications analyzes
-customer behavior data on various interaction platforms like mobile apps,
-online communities, customer support portals,
-and social media. CDAP can be used to ingest the data from these sources and
-perform join, unification and aggregations to derive 360 degree view of
-customer.
+\item CASK Customer 360 \cite{www-cask-customer360} is another representative
+ application which is built using CDAP. Customer 360 applications analyzes
+ customer behavior data on various interaction platforms like mobile apps,
+ online communities, customer support portals, and social media. CDAP can be
+ used to ingest the data from these sources and perform join, unification and
+  aggregations to derive 360 degree view of customer.
 \end{itemize}
 
 \section{Licensing}
 CDAP is licensed \cite{www-cdap-license}under Apache License, Version2.0.
 
+\section{Educational Material}
+
+
+Below given is the list of educational material on CDAP:
+\begin{itemize}
+\item CDPA Applications code repository in Github \cite{github-cdap-apps}
+provide sample applications which are built on top of CDAP Platform.
+\item CDAP Documentation \cite{www-cdap-getting-started} provides introduction
+ to CDAP platform.
+\end{itemize}
+
 \section{Other Hadoop Application Development Platforms}
+Below given are the two other application development platforms on top of
+Apache Hadoop:
 \begin{itemize}
 \item Cascading \cite{www-cascading} is another application development
 platform on Apache Hadoop. Cascading has many similar features like CDAP.
@@ -227,10 +232,9 @@ Hadoop
 \end{itemize}
 
 \section{Conclusion}
-CDAP provides an application development platform over Apache Hadoop. Using
-CDAP developers can code multiple layers of thier data pipeline in one
-uniform language and tool. CDAP also can help to shield developers from
-different Hadoop deployment options like Cloudera, Hortonworks and EMR.
+CDAP provides a unified application development platform over Apache Hadoop.
+Using CDAP developers can implement multiple layers of their data pipeline in
+ one uniform language and tool.
 
 \section*{Acknowledgements}
 
