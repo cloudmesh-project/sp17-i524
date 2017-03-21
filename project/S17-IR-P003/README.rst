@@ -1,5 +1,7 @@
 :orphan:
 
+title: "Detecting Street Signs in Videos in a Robot Swarm"
+   
 submitted: "2017-03-13"
 
 author: "Rahul Raghatate, Snehal Chemburkar"

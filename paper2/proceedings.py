@@ -23,7 +23,7 @@ def read_readme(filename):
             if line.startswith(":orphan:"): 
                 pass
             elif ":" in line:
-                (attribute, value) = line.split(":")
+                (attribute, value) = line.split(":", 1)
                 value = value.replace('"', '').strip()
                 data[attribute] = value
                 

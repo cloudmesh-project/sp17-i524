@@ -6,7 +6,9 @@ author: "Leonard Mwangi"
 
 hid: "S17-IO-3013"
 
-pid: "ENTER YOUR PID HERE"
+title: "Music Predictive Analysis Project based on Lyrics"
+
+pid: "S17-IO-3013"
 
 github: "lmundia"
 

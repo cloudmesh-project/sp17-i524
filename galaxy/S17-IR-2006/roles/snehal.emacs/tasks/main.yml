@@ -1,0 +1,5 @@
+---
+- name: install Emacs on Ubuntu 16.04
+  become: yes
+  package: name=emacs state=present
+

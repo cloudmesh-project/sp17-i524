@@ -5,7 +5,7 @@ Report Format
 
 A directory with the sample report format is available on github at:
 
-* https://github.com/cloudmesh/classes/tree/master/webpage/source/format/report
+* https://github.com/cloudmesh/classes/blob/master/docs/source/format/report
 
 Please note that we may update this format and it will be in your responsibility to check if your report follows the format.
 
@@ -20,5 +20,5 @@ To view the report say::
   make view
 
 A sample PDF report can be seen at:
-  
-* https://github.com/cloudmesh/classes/blob/master/webpage/source/format/report/report.pdf
+ 
+* https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf
