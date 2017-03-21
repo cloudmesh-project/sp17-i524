@@ -1,17 +1,17 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-17"
 
-author: "ENTER YOUR NAME HERE"
+author: "Leonard Mwangi"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IO-3013"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "YOUR GITHUB USERNAME"
+github: "lmundia"
 
-report: "report.pdf"
+report: "report_proj.pdf"
 
-proposal: "proposal.pdf"
+proposal: "report.pdf"
 
 --------------------------------------------------------------------------------
