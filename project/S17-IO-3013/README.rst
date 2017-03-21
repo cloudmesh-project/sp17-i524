@@ -1,19 +1,19 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-17"
 
 author: "Leonard Mwangi"
 
-title: "Music Predictive Analysis Project based on Lyrics"
-
 hid: "S17-IO-3013"
+
+title: "Music Predictive Analysis Project based on Lyrics"
 
 pid: "S17-IO-3013"
 
 github: "lmundia"
 
-report: "report.pdf"
+report: "report_proj.pdf"
 
-proposal: "proposal.pdf"
+proposal: "report.pdf"
 
 --------------------------------------------------------------------------------
