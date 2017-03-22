@@ -4,9 +4,11 @@
 
 \title{Netty vs ZeroMQ in Realtime Analytics}
 
-\author[1]{Sunanda Unni}
+\author[1,*]{Sunanda Unni}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors:suunni@indiana.edu HID: S17-IO-3022} 
 
 \dates{project-000, \today}
 
@@ -18,8 +20,13 @@
 
 
 \begin{abstract}
-Comparison of Netty with other messaging and communication frameworks
-used in HPC-ABDS namely ZeroMQ for realtime analytics.
+
+Performance of realtime analytics on Big Data depends on efficiency of
+inter and intra process communication. There are many messaging
+frameworks supported by HPC-ABDS like Netty, ZeroMQ, Kyro, ActiveMQ,
+LMAX disruptor. Performance of messaging framework is measured by
+throughput of the messaging framework. We are comparing the throughput
+of Netty with ZeroMQ based on research done by IBM and Yahoo.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -131,12 +138,12 @@ performance of messaging layer. This can be done by pushing messages
 between different Spouts and Bolts.
 
 \subsection{Setup and Configuration of Cluster}
-In the cluster setup 38 nodes, 3 nodes were dedicated to Zookeeper, 1
-to Nimbus and the UI, and 34 for Supervisor and Logviewer processes.
-Each node had 2 x 2.4GHz Xenon processors each with 4 cores and
-Hyperthreading enabled for a total of 16 threads of execution.
+In the cluster setup 38 nodes, 3 nodes were dedicated to zookeeper, 1
+to nimbus and the UI, and 34 for supervisor and logviewer processes.
+Each node had 2 x 2.4GHz xenon processors each with 4 cores and
+hyperthreading enabled for a total of 16 threads of execution.
 
-\subsection{Netty Behavior with large Topology}
+\subsection{Netty Behavior with small Topology}
 The Netty behavior with Topology of 3 workers running on 3 nodes. In
 the below Fig \ref{fig:nettyvzmq-small}, the Y-axis represents number
 of messages sent and X-axis represent the size of messages. A 100\%
@@ -191,13 +198,13 @@ emails through data processing pipeline. The processing pipeline used
 IBM Infosphere Stream versus Apache Storm.
 
 \subsection{Setup and Configuration of Cluster}
-The cluster here consists of 6-nodes, 1 Nimbus node, 1 Zookeeper, 4
-Supervisory nodes. Each node with 3GHz dual-core Xeon cluster (HS21),
-2 CPUs per node, 8GB RAM, dual 146GB drives, RHEL 6.2 It is mentioned
+The cluster here consists of 6-nodes, 1 nimbus node, 1 zookeeper, 4
+supervisory nodes. Each node with 3GHz dual-core Xeon cluster (HS21),
+2 CPUs per node, 8GB RAM, dual 146GB drives, RHEL 6.2. It is mentioned
 in the paper that Storm with Netty is around 1.65 times faster (in
 terms of throughput) than Storm with ZeroMQ for a multinode setup and
 “Restricted Benchmark” which consists of a simple 3-stage pipeline:
-source, count, and sink on a 4-node configuration
+source, count, and sink on a 4-node configuration.
 
 \subsection{Report of Throughput}
 The below table shows the throughput number improvement for Storm with
