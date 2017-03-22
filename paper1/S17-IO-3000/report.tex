@@ -15,7 +15,8 @@
 \dates{project-000, \today}
 
 \ociscodes{CDAP, Hadoop, Name Node, Edge Node, Yarn, Apache Sqoop, Apache
-Fluem, Apache Flink, Apache Atlas, HDFS, Apache Kafka}
+Flume, Apache Flink, Apache Atlas, HDFS, Apache Kafka, Apache Spark,
+MapReduce, HBase}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/avadhoot-agasti/sp17-i524/tree/master/paper1/S17-IO-3000/report.pdf}}
@@ -48,9 +49,9 @@ application development platform that can help developers build, deploy and
  data analysis, and develop web services to expose the original and
  transformed dataset(s). He can also schedule and monitor the execution of
  the application. CDAP enables the developers to use single platform to
- develop the end to end application on Apache Hadoop.
+ develop the end-to-end application on Apache Hadoop.
 
-This technology paper is strucutred as follows:
+This technology paper is structured as follows:
 \begin{itemize}
 \item Section 2 explains commonly used application architecture on top of
 Apache Hadoop without using CDAP. It then explains the application
@@ -58,7 +59,7 @@ architecture using CDAP to ephasize the use of CDAP.
 \item Section 3 explains important CDAP concepts.
 \item Section 4 and Section 5 explain the CDAP deployment options and
 infrastructure requirements.
-\item Section 6 explain the representative use cases.
+\item Section 6 explains the representative use cases.
 \item Section 7 and 8 provide useful information about CDAP like licensing
 and educational material.
 \item Finally, in Section 9 and 10, we conclude by explaining the other similar
@@ -80,7 +81,7 @@ architecture on Hadoop (without CDAP).
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/hdp-application-arch.png}}
-\caption{Typical Application Architecture on Hadoop.}
+\caption{Application Architecture on Hadoop.}
 \label{fig:hadoop-arch}
 \end{figure}
 
@@ -90,25 +91,25 @@ There are following layers/components as depicted in the architecture diagram
 \begin{itemize}
 \item Data Governance and Integration: This layer is responsible for ingesting
 the data from data source into Hadoop. Data Ingestion tools like Apache
-Sqoop, Apache Flume, Apache Kafka are used for Data Ingestion while Apache
+Sqoop, Apache Flume and Apache Kafka are used for Data Ingestion while Apache
 Falcon and Apache Atlas are used for Data Lifecycle management.
 \item Data Storage: The data is stored in HDFS.
 \item Data Processing and Access: The data is transformed and aggregated in
 Data Processing layer. The processing can involve various steps like cleansing,
 joining, aggregation and running machine learning algorithms. Many different
-tools and technologies are used to perform data processing operations such as
-PIG, Hive, Spark are popular open source scripting technologies while
-Talend, Informatica are visual commercial products.
-\item Tools: Tools like Apache Zeppelin provide user inteface to visualize
-the data
+tools and technologies are used to perform data processing operations.
+PIG, Hive, Spark are open source scripting technologies which can perform
+Data Processing tasks.
+\item Tools: Tools like Apache Zeppelin provide user interface to visualize
+the data.
 \item Security and Operations: The data pipeline built using above tools can
  be secured using tools such as Ranger, Knox, and Atlas. The scheduling of
- the data pipeline is orchastrated using Oozie.
+ the data pipeline is orchestrated using Oozie.
 \end{itemize}
 
-This application architecture explains that a common application built on top
+This application architecture explains that an application built on top
  of Apache Hadoop involve multiple tools and technologies. Further it is
- tightly dependent on the underlying deployment architecuture and tools
+ tightly dependent on the underlying deployment architecture and tools
  availability. Using this mechanism, it is difficult to segregate the
  application business logic from infrastructure components.
 
@@ -116,9 +117,9 @@ This application architecture explains that a common application built on top
 Figure 2 \cite{www-cdap-architecture} explains how CDAP provides a common
 application development platform. CDAP provides abstractions to ingest data,
 store it in HDFS, process it using the application business logic, store the
-results in HDFS and expose web service APIs on the result data. User need not
- use different tools to code different layers. He can simply code all the
- layers in CDAP platform. Further, he can use Java as a common coding
+results in HDFS and expose web service APIs on the result data. Developers need
+ not use different tools to implement various layers. He can implement
+  all the layers in CDAP platform. Further, he can use Java as a common coding
  language to implement all the coding tasks across all the layers.
 
 \begin{figure}[htbp]
@@ -136,7 +137,7 @@ Hadoop. The data can be files in HDFS or tables in HBase. A dataset needs to
 be first declared in the CDAP. Any dataset declared in CDAP can be used in
 any CDAP applications or CDAP services.
 \item CDAP Applications provide containers to implement application business
-logic in open source processing frameworks like map reduce, Spark and real
+logic in open source processing frameworks like MapReduce, Spark and real
 time flow. CDAP applications also provide standardize way to deploy and
 manage the apps
 \item CDAP Services provide services for application management, metadata
@@ -178,7 +179,7 @@ required to be installed on Hadoop Namenode or Hadoop datanodes. CDAP
 documentation \cite{www-cdap-deployment} provide the CDAP deployment
 architecture.
 
-\section{Representative Use Cases which can leverage CDAP}
+\section{Representative Use Cases}
 
 CASK \cite{www-cask-io} is the company which provides commercial distribution
 for CDAP. CASK has developed several applications using CDAP.
@@ -187,7 +188,7 @@ Some of the applications developed using CDAP are explained below
 \item CASK Hydrator \cite{www-cask-hydrator} is interactive application for
 building, running and managing data pipelines for enterprise data lake.
 CASK Hydrator is UI driven tool using which users can ingest data from
-sources like traditional RDBMS, trasnform it,
+sources like traditional RDBMS, transform it,
 aggregate it and finally store the data into permanent storage like HDFS.
 CASK Hydrator provides UI drag-and-drop style abstraction to all of the above
  task.
