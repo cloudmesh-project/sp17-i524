@@ -1,0 +1,8 @@
+#inventory
+#localhost
+
+[emacs_host]
+129.114.33.149 ansible_ssh_user=cc
+
+[ansible-test]
+129.114.33.149 ansible_ssh_user=cc

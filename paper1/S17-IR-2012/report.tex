@@ -16,12 +16,12 @@
 \doi{\url{https://github.com/pratik11jain/sp17-i524/blob/master/paper1/S17-IR-2012/report.pdf}}
 
 \begin{abstract}
-This paper talks about the Lustre file system and gives a brief
-overview on its applications in the industry, its architecture, and
-the steps required for successfully installing and configuring the
-file system. Alongside its various applications in various fields like
-HPC and Big Bata, the paper also throws light on the areas in which
-the Lustre file system is not recommended. \newline
+We introduce the Lustre file system and gives a brief overview on its
+applications in the industry, its architecture, and the steps required
+for successfully installing and configuring the file system. Not only
+its applications in various fields like HPC and Big Data are explored,
+but also the areas in which this file system is not recommended are
+discussed. \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -32,12 +32,12 @@ the Lustre file system is not recommended. \newline
 
 \section{Introduction}
 
-Lustre is a type of parallel distributed file system, started as a
-research project in 1999 by Peter J. Braam, and is now, generally used
-for large-scale cluster computing. The name Lustre is a combination of
-Linux and cluster \cite{www-ungrid}. It is often used in
-supercomputers due to its high-performance capabilities and open
-licensing. Lustre file systems are scalable and can be part of
+Lustre is a type of parallel distributed file system. It was started
+as a research project in 1999 by Peter J. Braam. It is now generally
+used for large-scale cluster computing. The name Lustre is a
+combination of Linux and cluster \cite{www-ungrid}. It is often used
+in supercomputers due to its high-performance capabilities and open
+licensing. The Lustre file system is scalable and can be part of
 multiple computer clusters with tens of thousands of client nodes,
 tens of petabytes of storage on hundreds of servers, and more than a
 terabyte per second of aggregate I/O throughput.  A Lustre file system
@@ -46,7 +46,7 @@ largest supercomputers at the time, the MCR Linux Cluster at Lawrence
 Livermore National Laboratory. Lustre file system software is
 available under the GNU General Public License and can be utilized for
 computer clusters ranging in size from small workgroup clusters to
-large-scale, multi-site clusters. This makes Lustre file systems a
+large-scale, multi-site clusters. This makes this file system a
 popular choice for businesses with large data centers, including in
 various industries such as simulation, life science, meteorology, rich
 media, oil and gas, and finance.
@@ -57,7 +57,7 @@ The Lustre architecture is a storage architecture for clusters. Its
 central component, the Lustre file system, is supported on the Linux
 operating system and provides a POSIX standard-compliant UNIX file
 system interface. The architecture is used for many different kinds of
-clusters and is best known for powering many of the largest HPC
+clusters and it is best known for powering many of the largest HPC
 clusters worldwide \cite{www-manual}. Lustre file system is used by
 many HPC sites as a site-wide global file system, serving dozens of
 clusters. Its ability to scale capacity and performance for any need
@@ -77,16 +77,16 @@ namespace for all of the files and data in the file system and allows
 concurrent and coherent read and write access to the files in the
 filesystem \cite{www-getstart}.
 \newline
-Following are the principal foundations of Lustre: 
+Followings are the principal foundations of Lustre: 
 
 \subsection{Object-based storage devices}
 Unlike conventional storage devices, an Object Based Disk (OBD) or
 Object-Based Storage Device (OBSD) is one that works at the level of
-files, rather than at the level of individual blocks. The OBD keeps
-track of allocated objects, which blocks belong to each object, free
-space, etc. internally, rather than exposing these details to the
-operating system. This architecture looks at devices that can
-manipulate file objects. Typical commands executed as part of the
+files rather than at the level of individual blocks. The OBD
+internally keeps track of allocated objects, which blocks belong to
+each object, free space, etc. rather than exposing these details to
+the operating system. This architecture looks at devices that can
+manipulate file objects. Typical commands executed as a part of the
 object interface are create, destroy, read/write block X in object N
 and read/write attributes of objects \cite{www-obd-wikipedia}.
 
@@ -99,32 +99,32 @@ object driver that speaks with multiple direct drivers
 HSM, parallel I/O and cryptographic operations. Lustre’s logical
 object driver manages snapshots of file systems. Client drivers are
 responsible for packing up object requests and shipping them to
-targets and this can exploit SAN's such as Fibre Channel, InfiniBand
-and Gigabit Ethernet. Since the interface is uniform, logical drivers
-can be stacked on top of direct drivers or clients.
+targets. This can exploit SAN's such as Fibre Channel, InfiniBand and
+Gigabit Ethernet. Since the interface is uniform, logical drivers can
+be stacked on top of direct drivers or clients.
 
 \subsection{Object-based file systems}
 There are at least three types of file systems that can be imagined in
 the object storage model. OBDFS is an object-based file system that is
-meant for use with non-shared storage devices. An inode file system
-provides direct access to objects named by object id. Third are
-cluster file systems. The traditional cluster file system can become
-significantly simpler than those implemented with shared block storage
-devices.
+meant for the use with non-shared storage devices. An inode file
+system provides direct access to objects named by an object id. Third
+are cluster file systems. The traditional cluster file system can
+become significantly simpler than those implemented with shared block
+storage devices.
 
 \section{Lustre File System and Striping}
 The ability to stripe data across multiple OSTs in a round-robin
 fashion is one of the main factors leading to the high performance of
-Lustre file systems. Users can optionally configure for each file the
+Lustre file systems. Users can optionally configure each file the
 number of stripes, stripe size, and OSTs that are used. Striping can
-be used to improve performance when the aggregate bandwidth to a
+be used to improve performance when the aggregate the bandwidth to a
 single file exceeds the bandwidth of a single OST. The ability to
 stripe is also useful when a single OST does not have enough free
 space to hold an entire file.
 
 \section{Implementation}
 
-In a typical Lustre installation on a Linux client, the filesystem
+In a typical Lustre installation on a Linux client the filesystem
 driver module is loaded into the kernel and the filesystem is mounted
 like any other local or network filesystem. Even though it may be
 composed of tens to thousands of individual servers and filesystems,
@@ -133,13 +133,13 @@ massively parallel processor (MPP) installations, computational
 processors can access a Lustre file system by redirecting their I/O
 requests to a dedicated I/O node configured as a Lustre client
 \cite{www-bluegene-wikipedia}. Another approach used in the early
-years of Lustre is the user-level liblustre library which provided
+years of Lustre is the user-level liblustre library. This provided
 userspace applications with direct filesystem access. Liblustre allows
 computational processors to mount and use the Lustre file system as a
 client. Using liblustre, the computational processors could access a
 Lustre file system even if the service node on which the job was
 launched is not a Linux client. Liblustre allowed direct data movement
-between application space and the Lustre OSSs and did not require an
+between application space and the Lustre OSSs. It did not require an
 intervening data copy through the kernel, thus providing access from
 computational processors to the Lustre file system directly in a
 constrained operating environment.
@@ -180,16 +180,16 @@ Lustre client or target service.
 
 Although a Lustre file system can function in many work environments,
 it is not necessarily the best choice for all applications
-\cite{www-manual}. It is best suited for uses that exceed the capacity
-that a single server can provide, though in some use cases, a Lustre
-file system can perform better with a single server than other file
-systems due to its strong locking and data coherency. A Lustre file
-system is not particularly well suited for "peer-to-peer" usage models
-where clients and servers are running on the same node, each sharing a
-small amount of storage, due to the lack of data replication at the
-Lustre software level. In such uses, if one client or server fails,
-then the data stored on that node will not be accessible until the
-node is restarted.
+\cite{www-manual}. Although, it is best suited for uses that exceed
+the capacity that a single server can provide, in some use cases, a
+Lustre file system can perform better with a single server than other
+file systems due to its strong locking and data coherency. A Lustre
+file system is not particularly well suited for "peer-to-peer" usage
+models where clients and servers are running on the same node, each
+sharing a small amount of storage, due to the lack of data replication
+at the Lustre software level. In such uses, if one client or server
+fails, then the data stored on that node will not be accessible until
+the node is restarted.
 
 \section{Conclusion}
 
@@ -201,19 +201,19 @@ is often used in supercomputers. Lustre file systems are scalable and
 can be part of multiple computer clusters with tens of thousands of
 client nodes, tens of petabytes of storage on hundreds of servers, and
 more than a terabyte per second of aggregate I/O throughput. Lustre
-file systems a popular choice for businesses with large data centers,
-including those in industries such as meteorology, simulation, oil and
-gas, life science, rich media, and finance. Lustre provides a POSIX
-compliant interface and many of the largest and most powerful
-supercomputers on Earth today are powered by the Lustre file
-system. Its Architecture contains 3 main components - the Metadata
+file systems is a popular choice for businesses with large data
+centers, including those in industries such as meteorology,
+simulation, oil and gas, life science, rich media, and finance. Lustre
+provides a POSIX compliant interface and many of the largest and most
+powerful supercomputers on Earth today are powered by the Lustre file
+system. Its architecture contains 3 main components - the Metadata
 Server, the Object Storage Servers and the clients. There are a few
-fields in which use of Lustre file system is not recommended. This
-paper covers the basic components of Lustre File system and gives an
-overview about the installation steps of lustre file system. It also
-talks about scenarios in which the use of lustre file system is not
-recommended. Thus the paper tries to briefly introduce the paradigm of
-lustre file system.
+fields in which use of Lustre file system is not recommended. Here, we
+have covered the basic components of Lustre File system, the overview
+about the installation steps of lustre file system and also a few
+scenarios in which the use of lustre file system is not
+recommended. Thus the paradigm of lustre file system is briefly
+introduced.
 
 % Bibliography
 
