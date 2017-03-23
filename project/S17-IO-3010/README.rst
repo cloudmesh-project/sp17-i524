@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-11"
 
-author: "ENTER YOUR NAME HERE"
+author: "Matthw Lawson"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IO-3010"
 
 pid: "ENTER YOUR PID HERE"
 
-github: "YOUR GITHUB USERNAME"
+github: "eunosm3"
 
 report: "report.pdf"
 
