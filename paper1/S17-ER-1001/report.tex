@@ -1,372 +1,114 @@
-\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl} 
 \usepackage{fancyvrb}
-\journal{i524} 
+\journal{i524}  
 
-\title{\LaTeX\ Template for Preparing a Paper or Report for I524}
+\title{Globus Toolkit} 
 
-\author[1,2,3]{John Smith}
-\author[2]{Alice Smith}
-\author[1]{Bruce Wayne}
-\author[1,*]{Gregor von Laszewski}
+\author[1,*]{Saber Sheybani} 
 
-\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
-\affil[2]{School of Science, University of Technology, 2000 J St. NW, Washington DC, 20036}
-\affil[3]{School of Optics, University of Technology, 2000 J St. NW, Washington DC, 20036}
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.} 
 
-\affil[*]{Corresponding authors: laszewski@gmail.com}
+\affil[*]{Corresponding authors: sheybani@indiana.edu} 
 
-\dates{project-000, \today}
+\dates{paper-001, \today} 
 
-\ociscodes{Cloud, I524}
+\ociscodes{Globus Toolkit, grid computing, WSRF, OGSA, cluster resource management} 
 
-% replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/ssheybani/sp17-i524/tree/master/paper1/S17-ER-1001/report.pdf}} 
 
 
-\begin{abstract}
-This template can be used to prepare a research article for I524. Note
-that this template can be run from your own \TeX\ system or within the
-cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://www.sharelatex.com/}
-{Sharelatex} systems.\newline
-\end{abstract}
+\begin{abstract} 
+The Globus Toolkit is an open source software stack, developed to serve as the middleware for grid computing. It is organized as a collection of loosely coupled components consisting of services, programming libraries and development tools designed for building grid-based applications. GT components fall into five broad domain areas: Security, Data Management, Execution Management, Information Services, and Common Runtime.\newline
+\end{abstract} 
 
-\setboolean{displaycopyright}{true}
+\setboolean{displaycopyright}{true} 
 
-\begin{document}
+\begin{document} 
 
-\maketitle
+\maketitle 
 
-\section{Introduction}
+\section{Introduction} 
 
-This template is designed to assist with creating an article for
-I524. The page length is typically done without images. Thus if you
-have images in your report, please add additional content to offset
-the space captured by images. We do not check exactly, so there is no
-reason to contact us if you are a paragraph short, but if you are half
-a page short you may add quality content.
+Initially, work on Globus was motivated by the demands of "virtual organizations" in science. These organizations need access to resources and services which are not easily replicable locally. Examples of these needs include access and management of equipment and large amounts of data, located in various remote databases on a regular basis. Although each application may have different specific requirements, the demand for a few basic functions is shared between most applications. "They often need to discover available resources, configure a computing resource to run an application, move data reliably from one site to another, monitor system components, control who can do what, and manage user credentials". These functions can be well addressed in a grid computing framework \cite{foster2006globus}.
 
-\section{Chance for Publishing a Paper}
-
-If this work can lead to a publishable paper, you could engage with
-the course instructor as coauthor to work more closely with him/them.
-This however requires that the paper be worked on in a regular basis
-and that timely contributions from the instructor can be integrated.
-Hence this is going to be a significant effort and you need to decide
-if you like to conduct this. Naturally the project must be suitable
-for such an activity. It may even be that some projects may be
-combined.
-
-In such cases if the work is sufficient for publication submission, an
-A+ for the class could be considered. It will be however a lot of
-work. The length of such a paper is typically 10-12 high quality pages
-including figures and references. We may elect for the final
-submission to use a different LaTeX style. As Gregor is an expert in
-this, changing the format will be simple.
-
-\section{Examples of Article Components}
-\label{sec:examples}
-
-The sections below show examples of different article components.
-
-\section{Figures and Tables}
-
-It is not necessary to place figures and tables at the back of the
-manuscript. Figures and tables should be sized as they are to appear
-in the final article. Do not include a separate list of figure
-captions and table titles.
-
-Figures and Tables should be labelled and referenced in the standard
-way using the \verb|\label{}| and \verb|\ref{}| commands.
-
-\subsection{Sample Figure}
-
-Figure \ref{fig:false-color} shows an example figure.
-
+According to \cite{sotomayor2006globus}, ``\emph{a \textbf{grid} is a system that coordinates resources that are not subject to centralized control, using standard, open, general-purpose protocols and interfaces to deliver nontrivial qualities of service}''. The major difference between grids and other distributed systems is that grids have significantly larger extent of heterogeneity of resources. They also enable resource sharing among virtual organizations, whereas other distributed computing technologies only support a single organization \cite{magoules2009introduction}. The grid architecture consists of a number of layers that altogether serve the functions and purposes of the systems (See figure \ref{fig:grid-arch}). EGEE: Enabling Grids for E-Science in Europe \cite{egee-web}, NEESit: Network for Earthquake Engineering Simulation \cite{neesit-web}, TeraGrid \cite{teragrid-wiki} are examples of grid systems.
 \begin{figure}[htbp]
 \centering
-\fbox{\includegraphics[width=\linewidth]{images/sample}}
-\caption{False-color image, where each pixel is assigned to one of seven reference spectra.}
-\label{fig:false-color}
+\fbox{\includegraphics[width=\linewidth]{images/fig1}}
+\caption{Grid Architecture \cite{sotomayor2006globus}}
+\label{fig:grid-arch}
 \end{figure}
 
-\subsection{Sample Table}
+A grid system often comprises various services such as Job Management Service and Resource Discovery and Management Service, which constantly need to interact with each other. However, each of these services may have been implemented by different vendors, which is not necessarily compatible with other services. The \textbf{Open Grid Services Architecture (OGSA)} aims to standardize practically all the services that can commonly be found in a
+grid system (job management services, resource management services, security services, etc.) by specifying a set of standard interfaces for these services.
+In order to realize that goal, OGSA needs to choose some sort of distributed middleware on which to base the architecture. In other words, if OGSA (for example) defines that the JobSubmissionInterface has a submitJob operation, there has to be a common and standard way to invoke that operation. \textbf{Web Services} were chosen as the underlying technology. Web services are platform-independent and language-independent since they are message-oriented and rely on language-neutral XML dialects to send messages, to specify interfaces, etc. Hence, web services are well-suited for building loosely coupled systems such as grid systems.
 
-Table \ref{tab:shape-functions} shows an example table.
+However, although Web services can, in theory, be either stateless or stateful, they are usually stateless. This means that the Web service can’t "remember" information, or keep state, from one invocation to another. On the other hand, OGSA requires Stateful Services. 
+The \textbf{Web Services Resource Framework (WSRF)} specifies how we can make our Web Services stateful, along with adding other features. In other words, while OGSA is the architecture, WSRF is the infrastructure on which that architecture is built on.
 
-\begin{table}[htbp]
+With this background, we can define Globus Toolkit as an open source toolkit that provides an implementation of OGSA, WSRF and a number of other standards for grid computing. Figure \ref{fig:relation} displays the relationship between OGSA, Web service, WSRF, Globus Toolkit.
+\begin{figure}[htbp]
 \centering
-\caption{\bf Shape Functions for Quadratic Line Elements}
-\begin{tabular}{ccc}
-\hline
-local node & $\{N\}_m$ & $\{\Phi_i\}_m$ $(i=x,y,z)$ \\
-\hline
-$m = 1$ & $L_1(2L_1-1)$ & $\Phi_{i1}$ \\
-$m = 2$ & $L_2(2L_2-1)$ & $\Phi_{i2}$ \\
-$m = 3$ & $L_3=4L_1L_2$ & $\Phi_{i3}$ \\
-\hline
-\end{tabular}
-  \label{tab:shape-functions}
-\end{table}
+\fbox{\includegraphics[width=\linewidth]{images/fig2}}
+\caption{Relationship between OGSA, GT4, WSRF, and Web Services \cite{sotomayor2006globus}}
+\label{fig:relation}
+\end{figure}
 
-\section{Sample Equation}
+\section{Components} 
 
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and
-identically distributed random variables with $\text{E}[X_i] = \mu$
-and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
-
-\begin{equation}
-S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i
-\label{eq:refname1}
-\end{equation}
-
-denote their mean. Then as $n$ approaches infinity, the random
-variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal
-$\mathcal{N}(0, \sigma^2)$. 
-
-\section{Sample Algorithm}
-
-Algorithms can be included using the commands as shown in algorithm
-\ref{alg:euclid}.
-
-\begin{algorithm}
-\caption{Euclid’s algorithm}\label{alg:euclid}
-\begin{algorithmic}[1]
-\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
-\State $r\gets a\bmod b$
-\While{$r\not=0$}\Comment{We have the answer if r is 0}
-\State $a\gets b$
-\State $b\gets r$
-\State $r\gets a\bmod b$
-\EndWhile\label{euclidendwhile}
-\State \textbf{return} $b$\Comment{The gcd is b}
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}
-\caption{Python example}\label{alg:python}
-\begin{quote}
-\begin{Verbatim}[numbers=left]
-for i in range(0,100):
-  print i
-\end{Verbatim}
-\end{quote}
-\end{algorithm}
-
-\section{Reference Management}
-
-The best programs to manage your references is jabref or emacs. You
-can edit the references and verify them with them for format
-errors. To cite them use the citation key. You can add multiple bib
-files to the bibliography command separated by comma.
-
-\noindent Add citations with the cite command. See
-\cite{las14cloudmeshmultiple} for an example on how to use multiple
-clouds. In \cite{www-i524} we list the class content.
-
-Here a test of a citation with an underscore in the url \cite{www-underscore}.
-
-\section{Supplemental Material}
-
-You can include an appendix with important information and additional
-figures if needed. However they must be referenced and follow the same
-guidelines as in the main text.  All materials must be associated with
-a figure, table, or equation or be referenced in the results section
-of the manuscript.  (1) 2D and 3D image files and video must be
-labeled “Visualization,” not “Movie,” “Video,” “Figure,” etc.  (2)
-Machine-readable data (for example, csv files) must be labeled “Data
-File.”  Number data files and visualizations consecutively, e.g.,
-“Visualization 1, Visualization 2….”  (3) Large datasets or code files
-must be placed in github/gitlab.  Such items should be mentioned in
-the text as either “Dataset” or “Code,” as appropriate, and also be
-cited in the references list. Appropriate citations in jabref as Misc
-need to be created.
-
-\section*{Acknowledgements}
-
-Funding information should be listed in this section. Please evaluate
-if you like to list your employer that may have funded your activities
-here.  If you receive grants or project numbers, as shown in the
-example.  This work was in part supported by National Science
-Foundation (NSF) (1234567, 891012345) (These numbers are invented)
-
-The acknowledgments may also contain any information that is not
-related to funding:
-
-The authors thank H. Haase, C. Wiede, and J. Gabler for technical
-support.
-
-
-% Bibliography
-
-\bibliography{references}
- 
-\section*{Author Biographies}
-\begingroup
-\setlength\intextsep{0pt}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries John Smith} received his BSc (Mathematics) in 2000 from
-  The University of Maryland. His research interests include lasers
-  and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Alice Smith} received her BSc (Mathematics) in 2000 from
-  The University of Maryland. Her research interests also include
-  lasers and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Bruce Wayne} received his BSc (Aeronautics) in 2000 from
-  Indiana University. His research interests include lasers and optics.
-\end{minipage}
-\endgroup
-
-\newpage
-
-\appendix
-
-\section{Work Breakdown}
-
-The work on this project was distributed as follows between the
-authors:
-
+The libraries and services in Globus Toolkit can be classified into five broad domain areas, namely security, data management, execution management, information services, and common runtime. Components in each of these areas will be discussed further in this section \cite{sotomayor2006globus}.
 \begin{description}
 
-\item[John Smith.] Explored the deep mathematical knowledge needed for
-  this paper and taught it to the other authors.
+\item[Security]: Grid Security Infrastructure (GSI) is a collection of components in GT4 that facilitate secure communication in the system. These components include authentication and authorization (for controlling access to services and resources), delegation, community authorization, and credential management.
 
-\item[Alice Smith.] She explored the world of Oz and was instrumental
-  to work on the deployment of hadoop.
+\item[Data Management]: These components provide for the discovery, transfer, and access to large data. They include GridFTP (an implementation of a protocol optimized for transferring large amounts of data between hosts), Reliable File Transfer (adds several features to GridFTP), Replica Location Service(keeping track of different replicas of a dataset in a virtual organization), Data Replication (uses RLS, RFT to guarantee that local copies of replicas are available to the hosts), and OGSA Data Access and Integration (a framework to access and integrate datasets on a Grid).
 
-\item[Bruce Wayne.] He did not contribute at all to this paper and
-  flew around to safe the world.  
+\item[Execution Management]: These components handle the deployment, scheduling, and monitoring of executable programs, referred to as jobs. They include Grid Resource Allocation and Management (the heart of GT Execution Management, providing services to deploy and monitor jobs), Community Scheduler Framework (provides a single interface to different resource schedulers), Workspace Management (allows users to dynamically create and manage workspaces on remote hosts), and Grid Telecontrol Protocol (provides a WSRF-enabled service interface for control of remote instruments).  
+
+\item[Information Services]: Commonly referred to as the Monitoring and Discovery System (MDS), these services deal with monitoring and discovery of resources in a virtual organization. They include Index Service(for aggregation of resources of interest to a VO), Trigger Service (same as Index Service, but is configured to perform certain actions based on the data collected from resources), and WebMDS (provides a web browser-based view of data collected by GT4 aggregator services).
+
+\item[Common Runtime]: These components provide a set of fundamental libraries and tools for hosting existing services as well as developing new services, in languages of C, Java, and Python (C Runtime, Java Runtime, and Python Runtime).
 
 \end{description}
 
-\section{Report Checklist}
+\section{Applications}
+Globus Toolkit has been used in many scientific and industrial applications. Examples of large-scale e-science projects relying on the Globus Toolkit include the Network for Earthquake Engineering and Simulation (NEES), FusionGrid, the Earth System Grid (ESG), the NSF Middleware Initiative and its GRIDS Center, and the National Virtual Observatory. In the design of the Large Hadron Collider at CERN, Globus-based technologies have been developed through the European Data Grid, and the U.S. efforts like the Grid Physics Network (GriPhyN) and Particle Physics Data Grid \cite{www-about-globus}.
 
-\begin{itemize}
-\renewcommand{\labelitemi}{\scriptsize$\square$} 
-\item Have you written the report in word or LaTeX in the specified
-  format?
-\item Have you included the report in github/lab?
-\item Have you specified the names and e-mails of all team members in
-  your report. E.g. the username in Canvas?
-\item Have you included the HID of all team members?
-\item Does the report have the project number added to it?
-\item Have you included all images in native and PDF format in gitlab
-  in the images folder?
-\item Have you added the bibliography file in bibtex format?
-\item Have you submitted an additional page that describes who did
-  what in the project or report?
-\item Have you spellchecked the paper?
-\item Have you made sure you do not plagiarize?
-\item Have you made sure that the important directories are all lower
-  case and have no underscore or space in it?
-\item Have you made sure that all authors have a README.rst in their
-  HID github/lab repository?
-\item Have you made sure that there is a README.rst in the project
-  directory and that it is properly filled out?
-\item Have you put a work breakdown in the document if you worked in a
-  group?
-\end{itemize}
+Globus Toolkit is helping to bridge the gap for commercial applications of Grid computing. Thus, companies like Avaki, DataSynapse, Entropia, Fujitsu, Hewlett-Packard, IBM, NEC, Oracle, Platform, Sun, and United Devices have pursued Grid strategies based on the Globus Toolkit. 
+A company named Univa Corporation is devoted to providing commercial support for Globus software. In addition, the Globus Consortium was formed by a group of companies with an interest in supporting Globus Toolkit enhancements for enterprise use \cite{www-about-globus}.
 
-\section{Possible technology paper outline}
+\section{Ecosystem and support}
+Globus Toolkit is a part of the larger "Globus ecosystem", which provides a wide range of application-level functions in many domains. Other than the GT, the ecosystem includes a number of other tools, a resource provider and a community of users and developers \cite{foster2006globus}.
 
-The next sections are just some suggestions, your may want to add
-sections and subsections as you see fit. Images and references do not
-count towards the 2 page length. Please use the \verb|\section|,
-\verb|\subsection|, and \verb|\subsubsection| commands in your
-paper. do not introduce hardcoded numbers. Use the \verb|\ref| and
-\verb|\label| commands to refer
- to the sections.
+Support for Globus ecosystem includes documentation, software updates, mailing lists, and training. The documentation includes manuals, specific for general use, system administrators, developers, and end user. In addition, many tutorials, papers, and presentations are accessible on the website \cite{www-globus-tutorial}. Workshops and conferences for in-person learning are also available. For Java developers, \cite{sotomayor2006globus} is a specifically useful resource for learning how to implement a grid using GT from scratch.
+
+\section{Related Software}
+There is a number of software available for use with certain versions of GT, in order to extend the abilities of each of its components. Here are a few examples of each: GridShib and PERMIs for security, Weka4WS for data management, HandleSystem-GT Project for information services, Condor-G, GridWay and Sun Grid Engine for execution management, Grid Packaging Tools (GPT) for packaging, pyGridware, Java CoG Kit and WSRF.NET for programming, and Common TeraGrid Software Stack (CTSS) and LHC Computing Grid (LCG) for software distributions. The full list of software is available in [www-related-tools].
 
 
-\paragraph{Abstract}
+\section{Comparison}
+Currently, there are multiple versions of grid middleware stacks. In \cite{schwiegelshohn2010perspectives}, it is argued that none of the available stacks is generally accepted
+by all user communities. However, started in 1996, the Globus project is the first grid middleware created \cite{www-uchigago} and has managed to keep a large community of users. Figure \ref{fig:comp-table} shows a comparison of GT and three other grid middleware technologies, namely UNICORE, Legion, and Gridbus. Efforts have been made to combine GT and UNICORE, in order to get the best of both of them \cite{rambadt2002unicore}.
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/fig3}}
+\caption{Comparison of Grid Middleware Systems \cite{asadzadeh2005global}}
+\label{fig:comp-table}
+\end{figure}
 
-Put in the abstract a summary what this paper is about
+\section{Conclusion}
+Globus toolkit is a collection of tools for building grid computing networks, which is a suitable solution for distributed computing. 
+It provides APIs for languages of C, Python, and Java. It is the most widely used grid middleware, in comparison to its competitors 
+and has been used in many notable scientific and industrial projects. Extensive documentations and tutorials are available for beginners to start using Globus Toolkit.
 
-\paragraph{1. Introduction}
 
-Introduce the technology and provide general useful information.
+\section{Acknowledgement}
+The author would like to thank Professor Gregor von Laszewski and the
+teaching assistants for all the support and guidance. This paper is written during spring of 2017
+semester course {I524: Big Data and Open Source Software Projects} at
+Indiana University Bloomington.
 
-\paragraph{2. Architecture} 
-
-If applicable include a description about architectural details. This
-may include a figure. Make sure that if you copy a figure you put the
-\cite{?} in the caption also. Otherwise it is plagiarism.
-
-\paragraph{2.1. API}
-
-comment on the API which could include language bindings
-
-\paragraph{2.2. Shell Access}
-
-If applicable comment on how the tool can be used from the command line
-
-\paragraph{2.3.Graphical Interface}
-
-If applicable comment on if the technology has a GUI
-
-\paragraph{3. Licensing}
-
-Often tools may have different versions, some fre, some for
-pay. Comment on this. For example while a tool may offer a comercial
-version this version may be too costly for others. Identify especially
-the difference between features for free vs commercial tools.
-
-Sometimes you may need to introduce this also in the introduction as
-there may be a big difference and without the knowledge you do not
-provide the user an adequate introduction.
-
-\paragraph{4. Ecosystem}
-
-Some technologies have a large ecosystem developed around them with
-extensions plugins and other useful tools. Identify if they exists and
-comment on what they can achieve
-
-provide potentially a mindmap or a figure illustrating how the
-technology fits in with other technologies if applicable.
-
-\paragraph{4. Use Cases}
-
-\paragraph{4.1. Use Cases  for Big Data}
-
-Locate and describe major usecases that demonstrate the technology
-while focussing on big data related use cases. Make sure you do proper
-references with the \cite{?} command. Do not put URLs in the text.
-
-\paragraph {4.2. Other Use Cases}
-
-Some technologies may not just be used for big data, find other makor
-use cases from other areas if applicable.  Make sure you do proper
-references with the \cite{?} command. Do not put URLs in the text.
-
-\paragraph{5. Educational material}
-
-Put information here how someone would find out more about the
-technology. Use important material and do not list hundrets of web
-pages, be selective.
-
-\paragraph{6. Conclusion}
-
-Put in some conclusion based on what you have researched
-
-\paragraph{Acknowledgement}
-
-Put in the information for this class and who may sponsor
-you. Examples will be given later
+% Bibliography 
+\bibliography{references}
 
 \end{document}
