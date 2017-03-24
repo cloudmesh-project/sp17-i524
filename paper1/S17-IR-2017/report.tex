@@ -25,10 +25,11 @@
 
 
 \begin{abstract}
-This paper provides insight into how OpenNebula can provide the right 
-cloud services for unique needs of each organization by managing data 
-center's virtual infrastructure to build private, public and hybrid 
-implementations of infrastructure as a service. \newline
+OpenNebula orchestrates storage, network, virtualization, combining 
+both data center resources and remote cloud resources, according to  
+allocation policies. This paper provides insights into how OpenNebula 
+can provide the right cloud services for unique needs of each 
+organization. \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -39,48 +40,45 @@ implementations of infrastructure as a service. \newline
 
 \section{Introduction} 
 
-{OpenNebula}\cite{www-wiki-opennebula}is a open cloud platform 
+{OpenNebula}\cite{www-wiki-opennebula}is an open cloud platform 
 using which each organization setup the right cloud for its 
-organizational needs. This quite natural like it happened with the 
+organizational needs. This quite natural like it had happened with the 
 databases and web-servers. {As one cloud could not solve all the 
 needs of various work environments OpenNebula helps in setting up and 
 deploying cloud platform based on needs}\cite{www-about-opennebula}. 
-It is a simple feature rich and flexible solution for the management 
-of virtualized data centers.
+It is one of the solutions for the management of virtualized data centers
+with built-in features available for deployments in hybrid clouds.
 
-It's interoperability makes cloud progress in developments of new 
+Its interoperability makes cloud progress in developments of new 
 methodologies to take advantage of the IT assets in turn saving 
 investments and completely avoiding lock-in costs for the project. 
-It's platform manages a data center's virtual infrastructure to build 
+Its platform manages a data center's virtual infrastructure to build 
 private, public and hybrid implementations of infrastructure as a 
-service. It is a trunkey enterprise-ready solution that includes all 
-features need to provide private and public cloud services. It is a 
-open cloud architecture which is simple, open, reliable and 
-flexible. 
+service. Private cloud hosting, on the other hand, by definition is a single-tenant 
+environment where the hardware, storage and network are dedicated to a 
+single client or company. 
 
-The paper is organized as follows. First OpenNebula's Architecture is 
-discussed followed by Integration, API's and Language Binding. It is 
-then followed by OpenNebula ecosystem and licensing. Finally, use 
-cases are discussed with respect to its intended users which followed 
-by key features and educational resources. It is then concluded by 
-high lighting the major drawbacks that need attention in moving 
-forward.
-
+The public cloud is defined as a multi-tenant 
+environment, where consumers buy cloud services in a cloud computing environment 
+that is shared with a number of other clients or tenants. Private cloud hosting, 
+on the other hand, by definition is a single-tenant environment where the 
+hardware, storage and network are dedicated to a single client or company. Hybrid 
+cloud is mixture of both public and private clouds where one uses both public 
+and private clouds.OpenNebula is a cloud computing platform for managing heterogeneous
+distributed data center infrastructures.
 
 \section{Architecture of OpenNebula}
 
-OpenNebula is a cloud computing platform for managing heterogeneous 
-distributed data center  infrastructures. The OpenNebula platform 
-manages a data center's virtual infrastructure to build private, 
-public and hybrid implementations of infrastructure as a service. It 
-provides features at two main layers of Data Center Virtualization 
-and Cloud Infrastructure.
+The OpenNebula platform manages a data center's virtual infrastructure 
+to build private, public and hybrid implementations of infrastructure as 
+a service. It provides features at two main layers of Data Center 
+Virtualization and Cloud Infrastructure.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/functionality.png}}
-	\caption{The OpenNebula Engine for Data Center Virtualization and 
-		Cloud Solutions.}
+	\caption{{The OpenNebula Engine for Data Center Virtualization and 
+		Cloud Solutions}\cite{www-opennebula-image}.}
 	\label{fig:false-color}
 \end{figure}
 
@@ -90,16 +88,18 @@ Many users use OpenNebula to manage {data center
 virtualization}\cite{www-dcv-opennebula}, 
 consolidate servers, and integrate existing IT assets for computing, 
 storage, and networking. In this deployment model, OpenNebula 
-directly integrates with hyper-visors and has complete control over 
-virtual and physical resources, providing advanced features foe 
-capacity management, resource optimization, high availability and 
-business continuity.
+directly integrates with virtual machine monitor(VMM) or hyper-visor and
+ has complete control over virtual and physical resources, providing advanced features 
+for capacity management, resource optimization, high availability and 
+business continuity. 
 
 \subsection{Cloud Management}
 
-OpenNebula also provides a multi-tenant, cloud-like provisioning 
-layer on top of an existing infrastructure management solution (like 
-VMware vCenter). It helps in provisioning, elasticity and 
+OpenNebula also provides a multi-tenancy and cloud-like provisioning 
+layer on top of an existing infrastructure management solution where a single instance
+of a software application servers multiple customers. Each coustmer 
+is called a tenant and each tenant may be given ability to customize 
+some parts of the application. It helps in provisioning, elasticity and 
 multi-tenancy cloud features like virtual data centers provisioning, 
 data center federation or hybrid cloud computing to connect in-house 
 infrastructure is managed by already familiar tools for 
@@ -107,12 +107,15 @@ infrastructure management and operation.
 
 \section{Integration, API's and Language binding}
 
+OpenNebula has been designed to be adapted to most 
+infrastructures and be extended with new components. Its 
+interfaces hide most complexities of a cloud by and are suited to meet 
+end user needs.
+
 \subsection{System Interfaces}
-OpenNebula has been designed to be easily adapted to any 
-infrastructure and easily be extended with new components. The result 
-is a modular system that can implement a variety of cloud 
+It is a modular system that can implement a variety of cloud 
 architectures and can interface with multiple data center services. 
-It interfaces can be classified into e categories
+It interfaces can be classified into 2 categories
 
 \begin{enumerate}
 	\item end-user cloud interfaces
@@ -122,12 +125,11 @@ It interfaces can be classified into e categories
 Cloud interfaces are primarily used to develop tools to the end-user, 
 and they provide a high level abstraction of the functionality 
 provided by the cloud. They are designed to manage virtual machines, 
-networks and images through a simple and easy-to-use REST API. The 
-clod interfaces hide most of the complexity of a cloud and specially 
-suited for end-users. OpenNebula features a EC2 interface, 
-implementing the functionality offered by the Amazon's EC2 API, 
-mainly those related to virtual machine management. In this way, you 
-can use any EC2 Query tools to access your OpenNebula Cloud.
+networks and images through a simple and easy-to-use REST API. OpenNebula 
+features a EC2 interface, implementing the functionality offered by the 
+Amazon's EC2 API, mainly those related to virtual machine management. 
+In this way, you can use any EC2 Query tools to access your OpenNebula 
+Cloud.
 
 {System interfaces}\cite{www-opennebula-systeminterfaces} expose the 
 full functionality of OpenNebula and are 
@@ -147,7 +149,7 @@ The interactions between OpenNebula and the {Cloud
 infrastructure}\cite{www-opennebula-infraintegration} are 
 performed by specific drivers. Each one addresses a particular area:
 
-\textbf{Storage} The OpenNebula core issue abstracts storage 
+\textbf{Storage} The OpenNebula core abstracts storage 
 operations that are implemented by specific programs that can be 
 replaced or modified to interface special storage back-ends and file 
 systems.
@@ -174,7 +176,7 @@ configuration for each Virtual Machine.
 The {OpenNebula Ecosystem}\cite{www-opennebula-ecosystem} is formed 
 by external tools and extensions 
 that complement the functionality provided by the OpenNebula Cloud 
-Management Platform. In addition, the ecosystems built around the 
+Management Platform. In addition, the Ecosystems built around the 
 cloud interfaces implemented by OpenNebula, Amazon AWS and OGC OCCI, 
 can also be leveraged. 
 
@@ -182,7 +184,7 @@ can also be leveraged.
 
 \subsection{For the Infrastructure Manager}
 
-OpenNebula responds quickly to infrastructure needs for services with 
+OpenNebula responds to infrastructure needs for services with 
 dynamic resizing of the physical infrastructure by adding new hosts 
 and dynamic cluster partitioning to meet capacity requirement of 
 services. It has centralized management of all the virtual and 
@@ -212,6 +214,13 @@ type of cloud deployment. It is open sourced under Apache license and
 has seamless integration with any product and service in the 
 virtualization/cloud ecosystem and management tool in the data 
 center.
+
+\subsection{Usage in Industry}
+{BIT is a business to business internet service provider in the Netherlands 
+specialized in colocation and managed hosting. It has tested both OpenStack and
+OpenNebula in a lab environment where they found OpenNebula served them 
+better than Openstack}\cite{www-opennebula-bit}. {For more look into user testimonials on 
+OpenNebula webpage}\cite{www-opennebula-usertests}.
 
 \section{Key Features and Components OpenNebula}
 
@@ -247,32 +256,36 @@ extensively used are listed below:
 	
 \end{enumerate}
 
-\section{Educational Material}
+\section{Disadvantages}
 
-A great place to start is by reading the {OpenNebula 
-documentation}\cite{www-opennebula-documentation}. 
-{Future Systems has a tutorial on there 
-webpage}\cite{www-opennebula-tutorial} to get started with 
-OpenNebula. {Handbook of Research on High Performance and Cloud 
-Computing in Scientific Research and Education}\cite{book-hpc} by 
-Marijana Despotovic-Zrakic is great book to get started from the 
-basics of cloud computing and understanding the working of OpenNebula.
-
-\section{Conculsion}
-
-OpenNebula is made impact in the way cloud services are offered 
-before it was introduced by reducing costs of infrastructure, 
-increasing the utilization of available resources, increase the 
-computing power by integrating different machines and simplifying the 
-development and deployment in industry. However, there are some 
-disadvantages that needs attention. Some of them are Greater 
-dependency on service providers, Risk of being locked into 
-proprietary or vendor-recommended systems, Potential privacy and 
-security risks of putting valuable data on someone else's system. 
+There are also some drawbacks that needs attention before one choose to 
+use OpenNebula. Some of them are Greater dependency on service providers, 
+Risk of being locked into proprietary or vendor-recommended systems, 
+Potential privacy and security risks of putting valuable data on someone else's system. 
 Another important problem what happens if the supplier suddenly stops 
 services. Even with this disadvantages the technology is still used 
 greatly in various industries and many more are looking forward to 
 move into cloud.
+
+\section{Educational Material}
+
+A great place to start is by reading the {OpenNebula 
+documentation}\cite{www-opennebula-documentation}. 
+{Future Systems has a tutorial on their 
+webpage}\cite{www-opennebula-tutorial} to get started with 
+OpenNebula. {Handbook of Research on High Performance and Cloud 
+Computing in Scientific Research and Education}\cite{book-hpc} by 
+Marijana Despotovic-Zrakic is a book to get started from the 
+basics of cloud computing and understanding the working of OpenNebula.
+
+\section{Conculsion}
+
+The OpenNebula's architecture and its integration to adapt to most 
+infrastructures make OpenNebula's ability to handle public, private and hybrid
+clouds with ease. OpenNebula has reduced  efforts for handling cloud services 
+ by reducing costs of infrastructure, increasing the utilization of available resources, 
+increase the computing power by integrating different machines and simplifying the 
+development and deployment in industry. 
 
 \bibliography{references}
 
