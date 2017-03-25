@@ -9,7 +9,7 @@
 
 \dates{\today}
 
-\ociscodes{BigQuery, ETL, BigData, Google, Cloud, Database, SaaS, SQL}
+\ociscodes{BigQuery, BigData, Google, Cloud, Database, IaaS, PaaS, SaaS, SQL}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/vorasagar7/sp17-i524/paper2/S17-IR-2041/report.pdf}}
@@ -31,7 +31,8 @@ support large volumes of data arises Google's BigQuery platform. This
 solution runs in cloud, SQL-like queries against massive quantites of
 data, providing real time insights about the data. In this paper, we
 will analyze the main features of BigQuery that Google offers to
-manage large-scale data. \newline
+manage large-scale data along with its comparison with other data
+storage platforms. \newline
 \end{abstract}
 
 % \setboolean{displaycopyright}{true}
@@ -49,8 +50,8 @@ without the right hardware and infrastructure. Google BigQuery solves
 this problem by enabling super-fast, SQL-like queries against
 append-only tables, using the processing power of Google's
 infrastructure. Google BigQuery \cite{www-bigquery}
-\cite{bigquery-paper} is a cloud web service very attractive for its
-ease of use and functionality. It is ideal for businesses that cannot
+\cite{bigquery-paper} is a cloud web service datawarehouse used for
+large scale data processing. It is ideal for businesses that cannot
 invest in infrastructure to process a huge amount of information. This
 platform allows to store and retrieve large amounts of information in
 near real time with main focus on data analysis.
@@ -63,19 +64,18 @@ simpler because users need not to have knowledge, experience or
 management of the infrastructure. There are usually three types of
 cloud offerings:\begin{itemize} \item Infrastructure as a service
   (IaaS) which provides basic compute and storage resources including
-  servers, networking. \item Platform as a service (PaaS) which
+  servers, networking,etc. \item Platform as a service (PaaS) which
   provides a platform allowing users to develop, run and manage
   applications without the complexity of building and maintaning the
-  infrastructure typically associated with developing and launching
-  apps. \item Software as a Service (SaaS) which refers to one of the
-  most known cloud services, which consists of applications running
-  directly in the cloud provider. \end{itemize}
+  infrastructure. \item Software as a Service (SaaS) which refers to
+  one of the most known cloud services, which consists of applications
+  running directly in the cloud provider. \end{itemize}
 
 \noindent
 
 \section{Google BigQuery}
-To solve the problems faced by Hadoop \cite{www-apache-hadoop}
-MapReduce \cite{mapreduce-article}, Google developed Dremel
+To solve the problems faced by Hadoop\cite{www-apache-hadoop}
+MapReduce\cite{mapreduce-article}, Google developed Dremel
 application in order to process large volumes of data. Dremel was
 designed to deliver high performance on data which was distributed
 across multiple servers and SQL support. But in 2012 at Google I/O
@@ -90,8 +90,6 @@ google.
 \label{fig:architecture}
 \end{figure}
 
-Figure \ref{fig:architecture} shows the system architecture of BigQuery.
-
 \noindent
 Google BigQuery \cite{bigquery-paper} platform is a SaaS as a model in
 the cloud. It is not a reporting system and does not have an interface
@@ -103,28 +101,29 @@ information about billing and authorized users, and they contain
 BigQuery data. When we create a new project, it is identified by a
 name, authorized users and data \cite{www-bigquery-documentation}.
 
+\noindent
 Data which is generated from a variety of sources like event logs,
 relational databases, IoT devices like sensors, social media websites,
 etc is given as an input to BigQuery which processes it to generate
 some meaningful anaylsis according to the requirement. The final data
 could be represented and exported using Tableau, Qlikview and other BI
 tools. It can also be exported on Hadoop system for pararell
-processing \ref{fig:architecture}.
+processing as in Figure \ref{fig:architecture}.
 
 \section{Features of BigQuery}
 Google BigQuery \cite{www-bigquery} presents some characteristics like Velocity,
-Scalability, Security and multiple access methods.
+Scalability, Simplicity, Security and multiple access methods.
 
 \subsection{Velocity}
 
-BigQuery can process millions of information which is not indexed in seconds
+BigQuery can process millions of information which is not indexed, in seconds
 due to columnar storage, and tree architecture as explained below.
 
 \subsection{Columnar Storage}
-The data instead of being stored in terms of rows, the data is stored
-as columnsand thus storage will be oriented. This will result in
-scanning of only the required values, largely reducing latency. This
-storage also allows for a higher compression ratio. Google reports
+The data instead of being stored in terms of rows, is stored as
+columns and thus storage will be oriented. This will result in scanning
+of only the required values, largely reducing latency. This storage
+also allows for a higher compression ratio. Google reports
 \cite{www-rowvscolumnstorage} that they can achieve columnar
 compression ratios of 1:10 as opposed to 1:3 when storing data in a
 traditional row based format. The reason behind this is the similarity
@@ -134,37 +133,39 @@ than when the data is stored in rows.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/rowvscolumnstorage}}
-\caption{\cite{www-rowvscolumnstorage} Row vs Column Storage}
+\caption{\cite{www-rowvscolumnstorage} Row-oriented vs Column-oriented Storage}
 \label{fig:rowvscolumnarstorage}
 \end{figure}
 
-Figure \ref{fig:rowvscolumnarstorage} shows the rows and column
-oriented storage.
+
 
 \subsection{Tree Architecture}
 This is used for processing queries and aggregating results across
 different nodes. BigQuery is spread across thousands of servers. The
-data is sharded across multiple machines
+data is shared across multiple machines
 \ref{fig:rowvscolumnarstorage}. This helps retrieve data much
 faster. Let us see this with the help of 2 examples.
 
+\noindent
 Here, A is our root server, with B being an intermediate server and C,
-D, E being leaf servers having local disk storage.
+D, E being leaf servers having local disk storage.\newline
 
-Example 1: Speed
-Statement: List out all the customer names starting with ‘G’
-
+\noindent
+Example 1: Speed \newline
+Statement: List out all the customer names starting with ‘G’.\newline
+\noindent
 Let us assume Node C contains customer names.  Hence, it is as simple
 as traversing A -> B -> C and looking at the datasets Cr1 and Cr2 for
 names starting with G. One need not look at A -> B -> D and A ->
 E. Hence, in this simple scenario, we have already achieved a search
-time of 0.33x that of a typical RDBMS (assuming equal column sizes).
+time of 0.33x that of a typical RDBMS (assuming equal column sizes).\newline
 
-Example 2: Parallel Processing
+\noindent
+Example 2: Parallel Processing \newline
 Statement: Count all the customer names
-starting with ‘G’
+starting with ‘G’. \newline
 
-\begin{itemize}
+\begin{itemize}[noitemsep,topsep=0pt]
 \item Root A passes the query to intermediate B. \item B translates
   the query to Sum (Count all the customer names starting with
   ‘G’). \item Intermediate B passes this query to Leaf C. \item Leaf C
@@ -173,6 +174,7 @@ starting with ‘G’
   Cr1 and Cr2 to B. \item B sums Cr1 and Cr2 and passes it to the root
   A for output. \end{itemize}
 
+\noindent
 Now, if this architecture was scaled to thousands of leaf servers and
 hundreds of intermediate servers. This achieves enormous amounts of
 parallel processing by utilizing a small percentage of the CPU
@@ -190,11 +192,9 @@ through a query language similar to SQL as shown in figure \ref{fig:bigqueryinte
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/userinterface}}
-\caption{\cite{www-userinterface-bigquery} Big Query User Interface}
+\caption{\cite{www-userinterface-bigquery} Big Query Sample User Interface}
 \label{fig:bigqueryinterface}
 \end{figure}
-
-Figure \ref{fig:bigqueryinterface} shows the Big Query User Interface.
 
 \subsection{Multiple permissions}
 It is the capacity to manage different access permissions, read -
@@ -205,7 +205,7 @@ To ensure security, the solution makes use of SSL (Secure Sockets Layer)
 
 \subsection{Multiple access methods}
 We can access the service in different ways. We can use a BigQuery
-Browser tool, a bq Command-line tool or a REST-based
+browser tool, a bq command-line tool or a REST-based
 API. \begin{itemize}
 \item BigQuery Browser Tool: With this tool it is possible to easily browse,
 create tables, run queries, and export data to Google Cloud Storage.
@@ -218,14 +218,73 @@ create tables, run queries, and export data to Google Cloud Storage.
 \section{Experiment}
 
 \noindent
-In \cite{tajo-paper}, the performance of Tajo and Hive has been
-compared by using 1TB TPC-H benchmark set. Figure
-\ref{fig:experiments} shows the experimental results. For this
-experiment, they have used an in-house cluster of 32 nodes, each of
-which is equipped with 16GB RAM, 4TB HDD, and an Intel i5 quad core
-CPU. The x-axis means the TPC-H queries and the y-axis indicates the
-processing times. The results show that the time take by Tajo to
-execute SQL queries is less than Apache Hive on the top of MapReduce.
+In \cite{www-benchmarks-bigguery}, the performance of BigQuery is
+compared against Impala, Shark, Hive, Redshift and Tez by using
+following benchmark. The benchmark allows 3 different sizes of
+datasets - tiny, 1node and 5nodes. The largest dataset is 5nodes which
+has ‘rankings’ table with 90 million records and ‘uservisits’ table
+with 775 million records. The data is generated using Intel's Hadoop
+benchmark tools. The data itself are available at
+s3://big-data-benchmark/pavlo/[text|text-deflate|sequence|sequence-snappy]/[suffix]. The
+two tables have the following schemas:\newline \newline
+\noindent
+Ranking table schema: (lists websites and their page rank)
+\begin{itemize}[noitemsep,topsep=0pt] \item pageURL (String) \item pageRank (Integer) \item avgDuration (Integer) \newline
+\end{itemize}
+\noindent
+Uservisits table schema: (Stores server logs for each web page)
+\begin{itemize}[noitemsep,topsep=0pt] \item sourceIP (String) \item destURL (String) \item visitDate (String) \item adRevenue (Float) \item userAgent (String) \item countryCode (String) \item languageCode (String) \item searchWord (String) \item duration (Integer) \newline
+\end{itemize}
+
+\noindent
+The benchmark measures response time on a handful of relational
+queries: scans, aggregations and joins. Some of the query results are
+larger than 128MB.
+\begin{itemize}
+\item Scan Query
+
+This query has 3 permutations, when X is 1000, X is 100 and then X is 10:
+
+SELECT pageURL, pageRank FROM [benchmark.rankings] WHERE pageRank > X
+
+
+\item Aggregation Query
+
+This query has 3 permutations, when X is 8, X is 10 and then X is 12:
+
+SELECT SUBSTR(sourceIP, 1, X) AS srcIP, SUM(adRevenue)
+FROM [benchmark.uservisits]
+GROUP EACH BY srcIP
+
+
+\item Join Query
+
+Like other queries earlier, this one also has 3 permutations: X is ’1980-04-01’, X is ’1983-01-01’ and X is ’2010-01-01’:
+
+SELECT sourceIP, sum(adRevenue) AS totalRevenue, avg(pageRank) AS pageRank
+FROM [benchmark.rankings] R
+JOIN EACH(SELECT sourceIP, destURL, adRevenue
+FROM [benchmark.uservisits] UV WHERE UV.visitDate > "1980-01-01" AND UV.visitDate < X)
+NUV ON (R.pageURL = NUV.destURL)
+GROUP EACH BY sourceIP
+ORDER BY totalRevenue DESC LIMIT 1
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/experiments}}
+\caption{\cite{www-benchmarks-bigguery} Comparison of BigQuery with other storage platforms}
+\label{fig:experiments}
+\end{figure}
+
+\noindent
+Figure \ref{fig:experiments} shows the experimental results. For this
+experiment, each query was executed 10 times and the results are
+median response time in seconds. From \ref{fig:experiments}, it shows
+that only in Query A BigQuery took more time than others but while
+executing Query 2 and 3, it executed them faster than other
+platforms. This shows that BigQuery can produce amazing results when
+processing complex queries on large datasets.
 
 \section{COST}
 Many prices are practiced, existing free levels. It is charged to the
