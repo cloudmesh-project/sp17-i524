@@ -55,7 +55,7 @@
 
 % Set journal type
 \newcommand*{\journal}[1]{%
-  \RequirePackage{styles/#1}% Choose the corresponding style file
+  \RequirePackage{../../styles/#1}% Choose the corresponding style file
   \def\journalref{#1}}% Set a reference for the chosen journal type
   
 % Choose article type
