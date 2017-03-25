@@ -48,7 +48,7 @@ to support fault tolerance, load balancing, scalability, and
 transactional support. JMS provides an intersection of messaging
 system common to all products. The Java Message Service (JMS) provides
 a standardized API for sending and receiving messages that can be used
-with many different messaging systems. \cite{www-jms-fischli-article}\newline
+with many different messaging systems \cite{www-jms-fischli-article}. \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -69,14 +69,15 @@ common set of interfaces and associated semantics that allow programs
 written in the Java programming language to communicate with other
 messaging implementations. JMS is a part of the Java Platform,
 Enterprise Edition, and is defined by a specification developed under
-the Java Community Process as JSR 914. \cite{www-jms-javajsr}  It is a messaging standard
-that allows application components based on the Java Enterprise
-Edition (Java EE) to create, send, receive, and read messages. It
-allows the communication between different components of a distributed
-application to be loosely coupled, reliable, and asynchronous. \cite{www-jms-oracle} The
-JMS API minimizes the set of concepts a programmer must learn in order
-to use messaging products but provides enough features to support
-sophisticated messaging applications.
+the Java Community Process as JSR 914 \cite{www-jms-javajsr}.  It is a
+messaging standard that allows application components based on the
+Java Enterprise Edition (Java EE) to create, send, receive, and read
+messages. It allows the communication between different components of
+a distributed application to be loosely coupled, reliable, and
+asynchronous \cite{www-jms-oracle}. The JMS API minimizes the set of
+concepts a programmer must learn in order to use messaging products
+but provides enough features to support sophisticated messaging
+applications.
 
 \section{JMS API Architecture}
 
@@ -90,22 +91,24 @@ sophisticated messaging applications.
 A JMS application consists of the following major components.  A JMS
 provider is a messaging system that implements the JMS interfaces and
 provides administrative and control features. An implementation of the
-Java EE platform includes a JMS provider. \cite{www-jms-tutorialoracle} JMS Clients are the Java
-language programs that send and receive messages. Any Java EE
-application component can act as a JMS client.  Messages are the
-objects used to communicate information between its clients.
-Administered Objects are preconfigured JMS objects created by an
-administrator for the use of clients.  JMS administered objects are
-'destinations' and 'connection factories'. Destinations are the object
-that a client uses to specify the destination of messages it sends and
-the source from where it receives them.  A client uses a Connection
-Factory object to establish connection with a provider.
+Java EE platform includes a JMS provider
+\cite{www-jms-tutorialoracle}. JMS Clients are the Java language
+programs that send and receive messages. Any Java EE application
+component can act as a JMS client.  Messages are the objects used to
+communicate information between its clients.  Administered Objects are
+preconfigured JMS objects created by an administrator for the use of
+clients.  JMS administered objects are 'destinations' and 'connection
+factories'. Destinations are the object that a client uses to specify
+the destination of messages it sends and the source from where it
+receives them.  A client uses a Connection Factory object to establish
+connection with a provider.
 
 Administrative tools allow a user to bind destinations and connection
 factories into a JNDI (Java Naming and Directory Inteface)
 namespace. A JMS client can then use resource injection to access the
 administered objects in the namespace and then establish a logical
-connection to the same objects through the JMS provider. \cite{www-jms-tutorialoracle}
+connection to the same objects through the JMS provider
+\cite{www-jms-tutorialoracle}.
 
 
 \section{JMS Communication Models}
@@ -152,7 +155,7 @@ to distribute them to current subscribers.  Publishers and subscribers
 have a timing dependency. A client that subscribes to a topic can
 consume only messages published after the client has created a
 subscription, and the subscriber must continue to be active in order
-for it to consume messages. \cite{www-jms-tutorialoracle}
+for it to consume messages \cite{www-jms-tutorialoracle}.
 
 
 \section{JMS Programming model}
@@ -273,7 +276,7 @@ notification.  A JMS message has three parts - the message headers
 provide metadata and routing information, the message properties are
 defined by the JMS client, the message body carries the payload of the
 message When a message is delivered, the properties and the body of
-the message are made read-only. \cite{www-jms-fischli-article}
+the message are made read-only \cite{www-jms-fischli-article}.
 
 \subsection{Types Of Message}
 
@@ -290,9 +293,10 @@ Message types
 
 
 Message acknowledgment is part of the protocol between the client
-runtime library of the JMS provider and the message server. \cite{www-jms-fischli-article} The
-acknowledgment protocol allows the JMS provider to guarantee delivery
-of messages to its consumers/subscribers.
+runtime library of the JMS provider and the message server
+\cite{www-jms-fischli-article}. The acknowledgment protocol allows the
+JMS provider to guarantee delivery of messages to its
+consumers/subscribers.
 
 In the point-to-point domain messages are always guaranteed to be
 delivered whereas, in the publish/subscribe domain messages are only
@@ -309,10 +313,10 @@ receive() or the onMessage() method.
 \item CLIENT-ACKNOWLEGE - The client
 acknowledges a message by calling the message's acknowledge() method
 which gives the client a finer grained control.
-\item DUPS-OK-ACKNOWLEDGE -
-The session lazily acknowledges the delivery of messages which may
-result in the delivery of duplicate messages if the JMS provider fails.
-\cite{www-jms-fischli-article}
+\item DUPS-OK-ACKNOWLEDGE - The session lazily acknowledges the
+delivery of messages which may result in the delivery of duplicate
+messages if the JMS provider fails \cite{www-jms-fischli-article}.
+
 \end{itemize}
 
 
