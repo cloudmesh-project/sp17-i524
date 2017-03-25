@@ -331,3 +331,11 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \setboolean{displaycopyright}{true}
 \dates{Compiled \today}
 \doi{\url{http://dx.doi.org/10.1364/ao.XX.XXXXXX}}
+
+%% TODO
+\usepackage[colorinlistoftodos,prependcaption,textsize=normal]{todonotes}
+\newcommand{\TODO}[2][]{\todo[color=red!10,inline,#1]{#2}}
+\newcommand{\GE}{\TODO{Grammar}}
+\newcommand{\SE}{\TODO{Spelling}}
+\newcommand{\TE}{\TODO{Term}}
+\newcommand{\CE}{\TODO{Citation}}
