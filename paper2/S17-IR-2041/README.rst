@@ -1,14 +1,12 @@
-:orphan:
+submitted: "2017-03-25"
 
-submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): EG: 2017-01-01"
+author: "Sagar Rajesh Vora"
 
-author: "ENTER YOUR NAME HERE"
+hid: "S17-IR-2041"
 
-hid: "ENTER YOUR HID HERE"
+pid: "S17-IR-P007"
 
-pid: "ENTER YOUR PID HERE"
-
-github: "YOUR GITHUB USERNAME"
+github: "vorasagar7"
 
 report: "report.pdf"
 
