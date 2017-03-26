@@ -2,32 +2,29 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{\LaTeX\ Template for Preparing a Paper or Report for I524}
+\title{Triana}
 
-\author[1,2,3]{John Smith}
-\author[2]{Alice Smith}
-\author[1]{Bruce Wayne}
-\author[1,*]{Gregor von Laszewski}
+\author{Abhishek Naik}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
-\affil[2]{School of Science, University of Technology, 2000 J St. NW, Washington DC, 20036}
-\affil[3]{School of Optics, University of Technology, 2000 J St. NW, Washington DC, 20036}
 
-\affil[*]{Corresponding authors: laszewski@gmail.com}
+\affil[*]{Corresponding authors: ahnaik@indiana.edu}
 
-\dates{project-000, \today}
+\dates{paper-1, \today}
 
-\ociscodes{Cloud, I524}
+\ociscodes{Triana, Problem Solving Environment, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/absnaik810/sp17-i524/blob/master/paper1/S17-IR-2022/report.pdf}}
 
 
 \begin{abstract}
-This template can be used to prepare a research article for I524. Note
-that this template can be run from your own \TeX\ system or within the
-cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://www.sharelatex.com/}
-{Sharelatex} systems.\newline
+Triana is an open source problem solving environment (PSE).  It
+provides a powerful data analysis tool alongwith a intuitive visual
+interface.  It is mainly used in the areas of signal, text and image
+processing. It comes with a set of inbuilt data analysis tools and
+also provides easy mechanisms for the integration of custom built
+ones.\newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -38,335 +35,199 @@ cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://ww
 
 \section{Introduction}
 
-This template is designed to assist with creating an article for
-I524. The page length is typically done without images. Thus if you
-have images in your report, please add additional content to offset
-the space captured by images. We do not check exactly, so there is no
-reason to contact us if you are a paragraph short, but if you are half
-a page short you may add quality content.
+Triana is an open source Problem Solving Environment (PSE) that is
+supported with a powerful data analysis tool.  It is predominantly
+used for image, text and signal processing; and comes with a host of
+different tools for analysis.  Besides, it also provides features for
+easy integration of custom analysis tools.  It thus focuses on
+supporting services from various environments, like peer-to-peer (P2P)
+and Grid.
 
-\section{Chance for Publishing a Paper}
-
-If this work can lead to a publishable paper, you could engage with
-the course instructor as coauthor to work more closely with him/them.
-This however requires that the paper be worked on in a regular basis
-and that timely contributions from the instructor can be integrated.
-Hence this is going to be a significant effort and you need to decide
-if you like to conduct this. Naturally the project must be suitable
-for such an activity. It may even be that some projects may be
-combined.
-
-In such cases if the work is sufficient for publication submission, an
-A+ for the class could be considered. It will be however a lot of
-work. The length of such a paper is typically 10-12 high quality pages
-including figures and references. We may elect for the final
-submission to use a different LaTeX style. As Gregor is an expert in
-this, changing the format will be simple.
-
-\section{Examples of Article Components}
-\label{sec:examples}
-
-The sections below show examples of different article components.
-
-\section{Figures and Tables}
-
-It is not necessary to place figures and tables at the back of the
-manuscript. Figures and tables should be sized as they are to appear
-in the final article. Do not include a separate list of figure
-captions and table titles.
-
-Figures and Tables should be labelled and referenced in the standard
-way using the \verb|\label{}| and \verb|\ref{}| commands.
-
-\subsection{Sample Figure}
-
-Figure \ref{fig:false-color} shows an example figure.
+\section{Features}
+Triana has a graphical interactive environment that can be used by the
+users to create their applications and specify their behavior
+\cite{TrianaDocumentation1}.  In this, it is similar to tools like
+draw.io and IBM's Rational Rose that provide the user with a graphical
+user interface (GUI) to draw the UML diagrams \cite{DrawIO}
+\cite{IBM-Rational-Rose}.  Rational Rose and Draw.io are mainly used
+for modeling the control flow diagrams like the class diagram,
+sequence diagram, etc., while Triana can be used for modeling generic
+flows like an audio processing pipeline.  Thus, while conventional
+flows like the sequence diagram can be modeled using Triana, it is
+better suited for the creation of generic flows.  The users can model
+the work flow using the various units onto the workspace and then
+depict the relationship between them with some interconnection.  The
+Triana PSE can also be extended to promote discovery of web services,
+their composition and decomposition.  A sample Triana GUI image has
+been shown in Figure 1.
 
 \begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/sample}}
-\caption{False-color image, where each pixel is assigned to one of seven reference spectra.}
-\label{fig:false-color}
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/TrianaGUI}}
+  \caption{Sample Triana Screen \cite{TrianaDocumentation2}}
 \end{figure}
 
-\subsection{Sample Table}
+The Triana framework that has been extended with the framework has the 
+following set of features: 
 
-Table \ref{tab:shape-functions} shows an example table.
+\begin{itemize} 
 
-\begin{table}[htbp]
-\centering
-\caption{\bf Shape Functions for Quadratic Line Elements}
-\begin{tabular}{ccc}
-\hline
-local node & $\{N\}_m$ & $\{\Phi_i\}_m$ $(i=x,y,z)$ \\
-\hline
-$m = 1$ & $L_1(2L_1-1)$ & $\Phi_{i1}$ \\
-$m = 2$ & $L_2(2L_2-1)$ & $\Phi_{i2}$ \\
-$m = 3$ & $L_3=4L_1L_2$ & $\Phi_{i3}$ \\
-\hline
-\end{tabular}
-  \label{tab:shape-functions}
-\end{table}
+\item Simple creation of the Web services: In case of other frameworks, 
+the major challenge is that a composite service cannot be created 
+easily. However, by allowing the discovery, composition, invoking and 
+publishing of services in an atomic manner, Triana makes this easy. 
 
-\section{Sample Equation}
+\item Execution of services in a distributed fashion: Services can be 
+executed on a P2P or Grid middleware using Triana. 
 
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and
-identically distributed random variables with $\text{E}[X_i] = \mu$
-and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+\item 'What-if' analysis: 'What-if' analysis can be easily carried out 
+using Triana, by monitoring the different resulting work flows. 
 
-\begin{equation}
-S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i
-\label{eq:refname1}
-\end{equation}
+\item Annotation: Triana allows the work flows to be annotated for later 
+use. 
 
-denote their mean. Then as $n$ approaches infinity, the random
-variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal
-$\mathcal{N}(0, \sigma^2)$. 
+\end{itemize}
 
-\section{Sample Algorithm}
+Triana was originally developed for the GEO600
+gravitation project.  In this project, it is still being used for
+analysing the gravitational wave signals that emanate from the laser
+interferometer based out of Germany \cite{TrianaGEO600}.  Triana uses 
+a pluggable architecture, that is it checks the inputs
+coming to, and the outputs coming from various units in real time to
+perform data-type checking and conformation \cite{TrianaDocumentation2}.  
+It can also be used to monitor the work flow and run the executables in standalone mode.
+  It has a custom work flow language, although it can
+be integrated with others like the Business Process Execution Language
+(BPEL) \cite{RMBDP-Book}.  This helps it in analysing large data sets and makes it
+particularly important in big data analysis.
 
-Algorithms can be included using the commands as shown in algorithm
-\ref{alg:euclid}.
+\section{Infrastructure}
 
-\begin{algorithm}
-\caption{Euclid’s algorithm}\label{alg:euclid}
-\begin{algorithmic}[1]
-\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
-\State $r\gets a\bmod b$
-\While{$r\not=0$}\Comment{We have the answer if r is 0}
-\State $a\gets b$
-\State $b\gets r$
-\State $r\gets a\bmod b$
-\EndWhile\label{euclidendwhile}
-\State \textbf{return} $b$\Comment{The gcd is b}
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
+The Triana infrastructure consists of the
+Triana Controlling Service (TCS) that has a Triana Engine, implemented
+as a Triana service \cite{TrianaDocumentation2}.  The Triana engines 
+are free to carry out the execution either locally or on distributed servers,
+as per the implementation policies in force.  Communication in the later case can
+be carried out using pipelined work flow distributions.
 
-\begin{algorithm}
-\caption{Python example}\label{alg:python}
-\begin{quote}
-\begin{Verbatim}[numbers=left]
-for i in range(0,100):
-  print i
-\end{Verbatim}
-\end{quote}
-\end{algorithm}
+The Triana Distributed implementation makes use of Triana Group units.
+They have the same features of the normal units (like input/output,
+etc.) and so they can be connected to the other Triana Units using the
+standard connection mechanism.  The tools need to be group so that
+they can be distributed; and Triana has two distribution policies -
+(a) Parallel: a 'farming-out' mechanism involving no communication between
+the hosts; and (b) Pipeline: this involves distributing the group
+'vertically'.  Groups can in turn contain groups and each group can in
+turn, have its own distribution policy to be followed.  The Triana
+distribution mechanisms are based upon the concept of GAT (Grid
+Application Toolkit).  The GAT aims to shield the applications from
+the implementation details using a standard Application Programming
+Interface (GAT-API).  It also provides a set of Grid services for
+carrying out tasks such as resource and information management.
 
-\section{Reference Management}
+Triana is further divided into a set of pluggable components that can 
+actively interact with each other. The GUI connects to the engine either 
+locally or via a network. Thus, the clients can log in into TCS and view 
+the results onto their devices, although the unit in itself might be 
+remote. They also have the option to log off and then log in again using 
+a different device altogether. In this way, the Triana can be used as a 
+monitoring system. Furthermore, there are three ways in which Triana can 
+be used, namely: 
 
-The best programs to manage your references is jabref or emacs. You
-can edit the references and verify them with them for format
-errors. To cite them use the citation key. You can add multiple bib
-files to the bibliography command separated by comma.
+\begin{itemize} 
 
-\noindent Add citations with the cite command. See
-\cite{las14cloudmeshmultiple} for an example on how to use multiple
-clouds. In \cite{www-i524} we list the class content.
+\item Using the GUI on top of an existing application. The various 
+interfaces can be used to connect various applications with Triana. 
+There are the work flow writers as well as the command writers. 
 
-Here a test of a citation with an underscore in the url \cite{www-underscore}.
+\item Using the remote control facility of an existing application. The 
+Triana facility can be used in exactly the same way as highlighted 
+above, but in addition to it, the facility of logging in and off can 
+also be leveraged. Here, the scheduling would be implemented by a third 
+party system. 
 
-\section{Supplemental Material}
+\item Forming various Triana units. This is the best and the most 
+preferred way of usage since it becomes very easy to prototype and can 
+be easily distributed using the Triana distribution mechanisms. 
 
-You can include an appendix with important information and additional
-figures if needed. However they must be referenced and follow the same
-guidelines as in the main text.  All materials must be associated with
-a figure, table, or equation or be referenced in the results section
-of the manuscript.  (1) 2D and 3D image files and video must be
-labeled “Visualization,” not “Movie,” “Video,” “Figure,” etc.  (2)
-Machine-readable data (for example, csv files) must be labeled “Data
-File.”  Number data files and visualizations consecutively, e.g.,
-“Visualization 1, Visualization 2….”  (3) Large datasets or code files
-must be placed in github/gitlab.  Such items should be mentioned in
-the text as either “Dataset” or “Code,” as appropriate, and also be
-cited in the references list. Appropriate citations in jabref as Misc
-need to be created.
+\end{itemize} 
 
-\section*{Acknowledgements}
+Triana has a pluggable architecture that can be extended using the 
+Triana GUI as a front end to some standalone application. This can be 
+carried out using the inbuilt task-graph or command writers. Custom 
+writers can also be used. Similarly, it can also be extended by 
+implementing the same set of interfaces that the Triana Control Service 
+includes. Another way of extension is by implementing custom Triana 
+units to achieve the desired functionality. This would require the 
+building of a number of Triana components and their seamless integration 
+with inbuilt components.
 
-Funding information should be listed in this section. Please evaluate
-if you like to list your employer that may have funded your activities
-here.  If you receive grants or project numbers, as shown in the
-example.  This work was in part supported by National Science
-Foundation (NSF) (1234567, 891012345) (These numbers are invented)
+GAT provides simple communication mechanism with Triana. The calls are 
+independent of the GAT middleware binding. This decoupling enables easy 
+porting of Triana on different Grid middleware without any modification 
+to the core Triana code. Furthermore, the Triana project is concurrently 
+being developed with the GridLab project, that is developing the GridLab 
+GAT. The Triana is precisely being used as a test application to develop 
+requirements from the GridLab GAT. A prototype GAT API called the GAP 
+Interface (Grid Application Prototype Interface) has been developed. 
+This Interface is basically used for communicating with the remote 
+servers, which was one of the main functionalities to be developed as a 
+part of the GridLab GAT. JXTA currently has GAP interface bindings. 
 
-The acknowledgments may also contain any information that is not
-related to funding:
+The GAP interface bindings implement the basic GAP functionality,
+which is locating and communicating the JXTA services. Such a service
+has two input nodes and may have multiple output nodes - either zero,
+one or more. The input and the output nodes are delegated as the JXTA
+pipes and a virtual communication channel is established between
+them. This virtual communication channel adapts a particular
+communication protocol depending upon the current operating
+environment. The relationship between Triana and GAP is shown in
+Figure 2.
 
-The authors thank H. Haase, C. Wiede, and J. Gabler for technical
-support.
+\begin{figure}[htbp]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/TrianaGAPRelationship}}
+  \caption{Relationship between Triana and GAP \cite{TrianaDocumentation1}}
+\end{figure}
 
+\section{Projects}
+
+Triana has been involved in a lot of projects (including some Big Data projects) 
+like the Data-Mining Grid, 
+Scalable Robust Self-organizing Sensor Network Project (SRSS) and 
+SHaring Interoperable Work flows for large-scale
+scientific simulations on Available DCIs (SHIWA), etc \cite{Triana-projects} 
+\cite{Triana-Data-Mining-Grid} \cite{Triana-SRSS} \cite{Triana-SHIWA} .  As a part of
+the Data-Mining Grid, Triana was predominantly used to model and then
+manage the planning, development and the execution of data-mining work
+flows in grid computing environments.  The SRSS
+project is carrying out a research about the various communication
+protocols that can be leveraged in distributed and self-organizing
+networks; and they are using Triana's P2P binding to simulate various
+P2P networks \cite{Triana-SRSS}.  The European project, SHIWA, mainly focuses on the
+interoperability of myriad European Work flow Systems and has been
+intrinsically integrated with Triana to create SHIWA bundles \cite{Triana-SHIWA}.  
+Other than these, Triana is also being actively used
+in some other projects like EDGI, TRIACS, EDGES, WHIP (Work flows
+Hosted In Portals), DART (Distributed Audio Retrieval using Triana),
+GridOneD, GEO600, BiodiversityWorld, DIPSO, GEMMS, etc. many of which
+are related to Big Data.
+
+Triana was released as an open source project on 30th May 2003. It 
+included two GAT bindings - one that was implemented as the JXTA and the 
+other as the Java socket based on the P2P mechanism (P2PS). How to run 
+Triana, as JXTA or as a Java socket based on P2P mechanism is upto the 
+user and the choice he makes at the system start.
+
+\section{Conclusion}
+
+Thus, to conclude, we presented Triana and the Triana PSE.  We focused
+on the Triana infrastructure as well as its distributed
+implementation.  We also presented some Big Data projects that used
+Triana for their development.
 
 % Bibliography
 
 \bibliography{references}
- 
-\section*{Author Biographies}
-\begingroup
-\setlength\intextsep{0pt}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries John Smith} received his BSc (Mathematics) in 2000 from
-  The University of Maryland. His research interests include lasers
-  and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Alice Smith} received her BSc (Mathematics) in 2000 from
-  The University of Maryland. Her research interests also include
-  lasers and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Bruce Wayne} received his BSc (Aeronautics) in 2000 from
-  Indiana University. His research interests include lasers and optics.
-\end{minipage}
-\endgroup
-
-\newpage
-
-\appendix
-
-\section{Work Breakdown}
-
-The work on this project was distributed as follows between the
-authors:
-
-\begin{description}
-
-\item[John Smith.] Explored the deep mathematical knowledge needed for
-  this paper and taught it to the other authors.
-
-\item[Alice Smith.] She explored the world of Oz and was instrumental
-  to work on the deployment of hadoop.
-
-\item[Bruce Wayne.] He did not contribute at all to this paper and
-  flew around to safe the world.  
-
-\end{description}
-
-\section{Report Checklist}
-
-\begin{itemize}
-\renewcommand{\labelitemi}{\scriptsize$\square$} 
-\item Have you written the report in word or LaTeX in the specified
-  format?
-\item Have you included the report in github/lab?
-\item Have you specified the names and e-mails of all team members in
-  your report. E.g. the username in Canvas?
-\item Have you included the HID of all team members?
-\item Does the report have the project number added to it?
-\item Have you included all images in native and PDF format in gitlab
-  in the images folder?
-\item Have you added the bibliography file in bibtex format?
-\item Have you submitted an additional page that describes who did
-  what in the project or report?
-\item Have you spellchecked the paper?
-\item Have you made sure you do not plagiarize?
-\item Have you made sure that the important directories are all lower
-  case and have no underscore or space in it?
-\item Have you made sure that all authors have a README.rst in their
-  HID github/lab repository?
-\item Have you made sure that there is a README.rst in the project
-  directory and that it is properly filled out?
-\item Have you put a work breakdown in the document if you worked in a
-  group?
-\end{itemize}
-
-\section{Possible technology paper outline}
-
-The next sections are just some suggestions, your may want to add
-sections and subsections as you see fit. Images and references do not
-count towards the 2 page length. Please use the \verb|\section|,
-\verb|\subsection|, and \verb|\subsubsection| commands in your
-paper. do not introduce hardcoded numbers. Use the \verb|\ref| and
-\verb|\label| commands to refer
- to the sections.
-
-
-\paragraph{Abstract}
-
-Put in the abstract a summary what this paper is about
-
-\paragraph{1. Introduction}
-
-Introduce the technology and provide general useful information.
-
-\paragraph{2. Architecture} 
-
-If applicable include a description about architectural details. This
-may include a figure. Make sure that if you copy a figure you put the
-\cite{?} in the caption also. Otherwise it is plagiarism.
-
-\paragraph{2.1. API}
-
-comment on the API which could include language bindings
-
-\paragraph{2.2. Shell Access}
-
-If applicable comment on how the tool can be used from the command line
-
-\paragraph{2.3.Graphical Interface}
-
-If applicable comment on if the technology has a GUI
-
-\paragraph{3. Licensing}
-
-Often tools may have different versions, some fre, some for
-pay. Comment on this. For example while a tool may offer a comercial
-version this version may be too costly for others. Identify especially
-the difference between features for free vs commercial tools.
-
-Sometimes you may need to introduce this also in the introduction as
-there may be a big difference and without the knowledge you do not
-provide the user an adequate introduction.
-
-\paragraph{4. Ecosystem}
-
-Some technologies have a large ecosystem developed around them with
-extensions plugins and other useful tools. Identify if they exists and
-comment on what they can achieve
-
-provide potentially a mindmap or a figure illustrating how the
-technology fits in with other technologies if applicable.
-
-\paragraph{4. Use Cases}
-
-\paragraph{4.1. Use Cases  for Big Data}
-
-Locate and describe major usecases that demonstrate the technology
-while focussing on big data related use cases. Make sure you do proper
-references with the \cite{?} command. Do not put URLs in the text.
-
-\paragraph {4.2. Other Use Cases}
-
-Some technologies may not just be used for big data, find other makor
-use cases from other areas if applicable.  Make sure you do proper
-references with the \cite{?} command. Do not put URLs in the text.
-
-\paragraph{5. Educational material}
-
-Put information here how someone would find out more about the
-technology. Use important material and do not list hundrets of web
-pages, be selective.
-
-\paragraph{6. Conclusion}
-
-Put in some conclusion based on what you have researched
-
-\paragraph{Acknowledgement}
-
-Put in the information for this class and who may sponsor
-you. Examples will be given later
 
 \end{document}

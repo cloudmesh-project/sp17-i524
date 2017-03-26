@@ -12,12 +12,12 @@
 
 \affil[*]{Corresponding authors: bmerugur@umail.iu.edu}
 
-\dates{paper 1, \today}
+\dates{Paper 1, \today}
 
 \ociscodes{Pentaho, Data Integration, Big Data, Community, ETL, MapReduce, SQL, Hadoop, OLAP}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/bhavesh37/sp17-i524/blob/master/paper1/S17-IR-2018/report.pdf}}
 
 
 \begin{abstract}
