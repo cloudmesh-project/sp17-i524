@@ -4,7 +4,7 @@ submitted: "2017-02-28"
 
 author: "Rahul Raghatate, Snehal Chemburkar"
 
-hid: "S17-IR-2026, S17-IR-2006 "
+hid: "S17-IR-2026, S17-IR-2006"
 
 pid: "ENTER YOUR PID HERE"
 

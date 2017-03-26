@@ -1,13 +1,13 @@
-\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
-\usepackage{fancyvrb}
-\journal{i524} 
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\usepackage{fancyvrb} \journal{i524}
 
 \title{Ceph - Distributed Storage System}
 
-\author[1]{Rahul Raghatate}
+\author[1]{Rahul Raghatate} 
 \author[1]{Snehal Chemburkar}
 
-\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408,
+  U.S.A.}
 
 \affil[*]{Corresponding authors: rragahta@iu.edu, snehchem@iu.edu }
 
@@ -20,7 +20,17 @@
 
 
 \begin{abstract}
-Ceph  is a unique storage solution that delivers all critical storage system capabilities:open-source, software-defined, enterprise-class and unified storage (object, block, file). Ceph being highly reliable, easy to manage and free, possesses  power to transform company’s IT infrastructure and ability to manage vast amounts of data. Ceph's extraordinary scalability has provided clients with accessibility to  petabytes to exabytes of data. Moreover basic enterprise storage features including: replication (or erasure coding), snapshots, thin provisioning, auto-tiering (ability to shift data between flash and hard drives), self-healing capabilities has resulted in allowing it to be a reliable big data storage platform. This article explores these salient features Ceph as well as provides study of Ceph architecture and its uniqueness in comparison to few of the existing Large Scale Systems.  
+Ceph is a storage solution that delivers four critical storage system
+capabilities:open-source, software-defined, enterprise-class and
+unified storage (object, block, file). Ceph is reliable, easy to
+manage, free and its scalability, provides accessibility to petabytes
+to exabytes of data. Moreover basic enterprise storage features
+including: replication (or erasure coding), snapshots, thin
+provisioning, auto-tiering (ability to shift data between flash and
+hard drives), self-healing capabilities has allowed it to be a
+reliable big data storage platform. This article explores these
+salient features of Ceph as well as studies Ceph's architecture and
+its comparison to few of the existing Large Scale storage systems.
 \newline
 \end{abstract}
 
@@ -31,35 +41,48 @@ Ceph  is a unique storage solution that delivers all critical storage system cap
 \maketitle
 
 \section{Introduction}
+As the amount of data increases, the need to provide efficient, easy
+to use and reliable storage solutions has become one of the main issue
+for scientific computing.Even though widely used,the centralization
+inherent in the client/server model has proven a significant obstacle
+to scalable performance.
 
-Developing a distributed file system(DFS) in today's world of
-exponentially growing data is not a handy job. However, if the right issues
-are addressed and resolved, it becomes immensely valuable and
-foundation stone in any business success. Although most of the DFS
-offer a similar set of features, they also can provide unique features
-which allow them to stand distinct.
+New distributed file systems(DFS) have emerged with architectural
+foundation on object-based storage having intelligent object storage
+devices (OSDs) instead of conventional hard disks. These OSDs provides
+CPU, network interface, and local cache with an underlying disk or
+RAID as one integrated solution. OSDs,replacing the traditional
+block-level interface with one unified platform,allowing clients to
+access data ranging from byte to varying sized(petabytes,exabytes)
+named objects. Capability of client of communicating directly with
+OSDs to perform I/O operations along with interaction with a metadata
+server (MDS) to perform metadata operations,hence improving
+scalability. However, limited or no metadata workload distribution,
+principles like allocation lists and inode tables and a reluctance to
+delegate intelligence to the OSDs leds most of the systems to suffer
+from scalability limitations.
 
-For IT Decision Makers, inadequate storage infrastructure stand out to
-be the fourth out of the top ten pain points. It's interesting to know
-that 74\% of IT decision makers are worried about their organization’s
-ability to cope with an increasing volume of data, and 70\% believe
-that their current storage systems will not be able to handle next
-generation workloads \cite{ceph-redhat-datasheet}. Hence, Enterprises
-in due struggle to manage the explosive growth of data while remaining
-agile and cost competitive are turning to cloud technology to store
-their data.
-
-As a self-healing, self-managing platform with no single point of
-failure, Red Hat Ceph Storage significantly lowers the cost of storing
-enterprise data in the cloud and helps enterprises manage their
-exponential data growth in an automated fashion
-\cite{ceph-redhat-datasheet}.
+To overcome these limitations, Ceph, a unified, distributed storage
+system designed for high performance, reliability and scalability
+\cite{www-Ceph}, decouples data and metadata operations by replacing
+file allocation tables with generating functions allowing it to
+leverage the intelligence present in OSDs to distribute the complexity
+surrounding data access, update serialization and replication. Ceph
+utilizes a highly adaptive distributed metadata cluster architecture
+that dramatically improves the scalability of metadata access, and
+with it, the scalability of the entire system \cite{paper-Ceph}.
 
 Ceph is open-source storage platform providing highly scalable object,
-block as well as file-based storage. It is a unified, distributed storage system designed for excellent performance, reliability and scalability \cite{www-ceph}.
+block as well as file-based storage. As a self-healing, self-managing
+platform with no single point of failure, Red Hat Ceph Storage
+significantly lowers the cost of storing enterprise data in the cloud
+and helps enterprises manage their exponential data growth in an
+automated fashion \cite{ceph-redhat-datasheet}.
 
-Ceph has emerged as one of the best storage ecosystem which initially began as a PhD research project in storage systems by Sage Weil at the University of California, Santa Cruz (UCSC). The name Ceph comes from Cephalopod, a class of mollusks.
-
+Ceph initially began as a PhD research project in storage systems by
+Sage Weil at the University of California, Santa Cruz (UCSC). The name
+Ceph common nickname for pet octopuses, comes from Cephalopod, a class
+of mollusks. It suggests the highly parallel behavior of an octopus.
 
 \section{Architecture}
 
@@ -80,15 +103,20 @@ The Ceph architecture consists of four subsystems:
 \end{figure}
 
 \subsection{Client Operation} 
-Ceph depends upon Ceph Clients and Ceph OSD Daemons having knowledge
+Ceph architectural foundation depends relies mainly upon Ceph Clients
+and Ceph OSD Daemons(object storage daemon that runs on a cluster node
+and uses a local file system to store data objects) having knowledge
 of the cluster topology, which is inclusive of 5 maps collectively
-referred to as the “Cluster Map”.The Ceph Client is the user of the
-Ceph file system. The Ceph client runs on each host executing
-application code and exposes a file system interface to
-applications. Ceph has a user-level client as well as a kernel
-client. The user-level client is either linked directly to the
-application or used via FUSE. The kernel client allows the Ceph file
-system to be mounted. Each client maintains its own file data cache,
+referred to as the “Cluster Map” \cite{www-ceph-architecture}. The
+Ceph Client is the user of the Ceph file system which runs on top of
+object storage system that provides object storage and block device
+interfaces.
+
+The Ceph client runs on each host executing application code and
+exposes a file system interface to applications. Ceph has a user-level
+client as well as a kernel client. The user-level client is either
+linked directly to the application or used via FUSE(a user-space file
+system interface). Each client maintains its own file data cache,
 independent of the kernel page or buffer caches, making it accessible
 to applications that link to the client directly \cite{paper-Ceph}.
 \subsection{The Ceph metadata server(MDS)}
