@@ -1,0 +1,19 @@
+---
+# tasks file for r
+- name: install CouchDB on Ubuntu 16.04
+  become: yes
+  apt: name=couchdb update_cache=yes state=present
+  register: couchdbinstalled
+
+- name: start CouchDB
+  become: yes
+  command: /etc/init.d/couchdb start
+  when: couchdbinstalled|success
+  register: couchdbstarted
+
+- name: stop CouchDB
+  become: yes
+  command: /etc/init.d/couchdb stop
+  when: couchdbstarted|success
+  register: couchdbstopped
+
