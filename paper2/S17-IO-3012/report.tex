@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{MRQL - MapReduce Query Language}
+\title{Apache MRQL - MapReduce Query Language}
 
 \author[1,*]{Mark McCombe}
 
@@ -32,7 +32,7 @@ Apache Map Reduce Query Language (MRQL) is a project currently in the Apache Inc
 
 \section{Introduction}
 
-MapReduce Query Language (MRQL) "is a query processing and optimization system for large-scale, distributed data analysis" \cite{www-apacheincubator}. MRQL provides a SQL like language for use on Apache Hadoop, Hama, Spark, and Flink. MapReduce Query Language allows users to perform complex data analysis using only SQL like queries, which are translated by MRQL into efficient Java code, removing the burden of writing MapReduce code directly. MRQL can evaluate queries in Map-Reduce (using Hadoop), Bulk Synchronous Parallel (using Hama), Spark, and Flink modes \cite{www-apacheincubator}.
+Apache MapReduce Query Language (MRQL) "is a query processing and optimization system for large-scale, distributed data analysis" \cite{www-apacheincubator}. MRQL provides a SQL like language for use on Apache Hadoop, Hama, Spark, and Flink. MapReduce Query Language allows users to perform complex data analysis using only SQL like queries, which are translated by MRQL into efficient Java code, removing the burden of writing MapReduce code directly. MRQL can evaluate queries in Map-Reduce (using Hadoop), Bulk Synchronous Parallel (using Hama), Spark, and Flink modes \cite{www-apacheincubator}.
 
 MRQL was created in 2011 by Leaonidas Fegaras \cite{www-mrqlhadoop} and is currently in the Apache Incubator. All projects accepted by the Apache Software Foundation (ASF) undergo an incubation period until a review indicates that the project meets the standards of other ASF projects \cite{www-apachemrql}.  MRQL is pronounced "miracle" \cite{www-apacheincubator}.
 
@@ -179,46 +179,7 @@ There are several existing MapReduce Query Languages that are alternatives to MR
 
 Apache Hive allows the use of the use of SQL (via HiveQL) to access and modify datasets in distributed storage that integrates with Hadoop.  Hive also provides a procedural language, HPL-SQL \cite{www-apachehive}.
 
-Table 1 compares key features of MRQL and Hive.
-
-\begin{table}[ht]
-\begin{center}
- \begin{tabular} {| c | c | c |}
-
- \hline
-  & MRQL &  Hive \\ [0.5ex] 
- \hline
-
-    
-metadata     &    none & stored in RDBMS \\
- \hline
-data &  nested collections, trees,             &       relational \\
-&  custom complex types & \\
- \hline
-group by      &   on arbitrary queries           &               not on subqueries \\
- \hline
-aggregation   &     arbitrary queries            &               SQL aggregations \\
-   &     on grouped date            &     \\
-
- \hline
-platforms  &     Hadoop, Hama,           &     Hadoop, Tez, \\
-  &     Spark, Flink           &      (Spark) \\
- \hline
-file formats & text, sequence,  &  text, sequence, \\
- & XML, JSON  &  ORC, RCFile \\
- \hline
-iteration     &     yes         &  no \\ 
- \hline
-streaming     &     yes         &  no \\ 
-[1ex] 
- \hline
-\end{tabular}
-\end{center}
-  \caption{MRQL-Hive Comparison \cite{www-mrqpresent}}
-\end{table}
-
-% https://cwiki.apache.org/confluence/display/Hive/Home
-
+Comparing MRQL to Hive, we find several differences. Hive stores metadata in a Relational Database Management System while MRQL does not utilize metadata.  MRQL allows the use of Group By on arbitrary queries.  Hive does not allow the use of Group By on subqueries.  MRQL runs on Hadoop, Hama, Spark, and Flink while Hive works on Hadoop, Tez, and Spark.  MRQL is compatible with text, sequence, XML, and JSON file formats.  Hive is compatible with test, sequence, ORC, and RCFile formats.  MRQL allows iteration; Hive does not.  MRQL allows streaming; Hive does not \cite{www-mrqpresent}.
 
 
 %http://events.linuxfoundation.org/sites/events/files/slides/mrql-apachecon15.pdf
