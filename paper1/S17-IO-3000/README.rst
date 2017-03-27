@@ -12,4 +12,6 @@ report: "report.pdf"
 
 proposal: ""
 
+title: "CaskDataApplicationPlatform"
+
 --------------------------------------------------------------------------------
