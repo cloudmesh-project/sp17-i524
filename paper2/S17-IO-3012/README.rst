@@ -1,8 +1,7 @@
-:orphan:
 
 submitted: "2017-03-25"
 
-tittle: MRQL - MapReduce Query Language
+title: Apache MRQL - MapReduce Query Language
 
 author: "Mark McCombe"
 
