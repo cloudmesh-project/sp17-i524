@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-26"
 
-author: "ENTER YOUR NAME HERE"
+author: "Diksha Yadav"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2044"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-2034"
 
-github: "YOUR GITHUB USERNAME"
+github: "diksha2112"
 
 report: "report.pdf"
 
