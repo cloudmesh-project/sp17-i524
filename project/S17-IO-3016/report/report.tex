@@ -1,22 +1,23 @@
-\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
 
 \title{Deploying CouchDB Cluster}
 
-\author[1,*]{Ribka Rufael}
+\author[1,*,+]{Ribka Rufael}
 
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
 \affil[*]{Corresponding authors: rrufael@umail.iu.edu}
+\affil[+]{HID: S17-IO-3016}
 
 \dates{project-000, \today}
 
-\ociscodes{Cloud, I524}
+\ociscodes{CouchDB}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/classes/raw/master/docs/source/format/report/report.pdf}}
 
 
 \begin{abstract}
@@ -35,7 +36,7 @@
 
 CouchDB \cite{www-Couchdb} is a no sql database management system
 under Apache. Data is stored as documents in CouchDB. In this project
-CouchDB cluster of one or more Chameleon cloud VMS is deployed using
+CouchDB cluster of one or more Chameleon cloud VMs is deployed using
 Ansible playbook and benchmarking is done to measure the time it took
 for deployement using a TBD benchmarking tool.
 
@@ -45,7 +46,11 @@ This section depicts week by week execution plan for the project
 
 \subsection{Week 1}
 
-Develop Ansible script to deploy CouchDB on Ubuntu 16.04
+I was able to develop an initial Ansible script that will deploy
+CouchDB on Ubuntu 16.04 VM , upon successul installation the script
+will start CouchDB and then it will stop CouchDB on the remote VM. I
+booted Chameleon VM using Cloudmesh and then run Ansible playbook from
+my local machine. The tasks in my playbook run successfully.
 
 \subsection{Week 2}
 

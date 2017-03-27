@@ -14,7 +14,7 @@
 \ociscodes{MongoDB, Cloud Computing, Ansible, Python, Cloudmesh Client, Openstack, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IO-3012/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IO-3012/report/report.pdf}}
 
 
 \begin{abstract}
@@ -38,7 +38,6 @@ As part of the deployment, automated benchmarking tests are also run.  Tests wer
 
 A rough execution plan is shown below.  These steps are not necessarily sequential so many will be worked on concurrently.  All functionality mentioned may not be added to final project and additional features may be added during development.
 
-\vspace{-\topsep}
 \begin{enumerate}
 \item Convert my existing MongoDB deployment ksh prototype to Python cmd and Ansible
 \item Test and utilize cloudmesh clusters
@@ -52,8 +51,17 @@ A rough execution plan is shown below.  These steps are not necessarily sequenti
 \item Complete paper
 
 \end{enumerate}
-\vspace{-\topsep}
 
+\subsection{Update 3/26/2016}
+
+\begin{enumerate}
+\item Project approved by Professor based on proposal and execution plan.
+\item Successfully tested Chameleon and FutureSystems cloud and cloudmesh access and commands.
+\item Tested JetStream access, but unable to connect via cloudmesh.  Question to Professor on Piazza.
+\item Completed all Ansible lessons/assignements as preparation for project work.  Beginning to work on incorporating to project.
+\item Completed cloudmesh cluster tutorial.  Beginning to work on incorporating to project.
+\item Made modifitions to report.
+\end{enumerate}
 
 
 \section{Infrastructure}
@@ -137,7 +145,6 @@ The Cloudmesh Client toolkit is an open source client interface that standardize
 
 In the deployment, Cloudmesh Client is used to handle most interaction with the Virtual Machines in the clouds.  The following tasks are performed via Cloudmesh Client:
 
-\vspace{-\topsep}
 \begin{enumerate}
 \item Uploading a Public Key - Cloudmesh's key add and upload commands simplify key management.
 \item Uploading Security Rules - Cloudmesh's secgroup commands allow new security rules to be added and uploaded to the cloud.
@@ -145,7 +152,6 @@ In the deployment, Cloudmesh Client is used to handle most interaction with the 
 \item IP Address Management - Cloudmesh's functionality to assign and capture Floating IP Addresses is utilized
 \item Deleting Virtual Machines - Cloudmesh simplifies deletion of VMs created in the deployment.
 \end{enumerate}
-\vspace{-\topsep}
 
 Cloudmesh Client simplifies and standardized interaction with the cloud for these tasks.  This allows us to more easily port the deployment to additional clouds.  Furthermore, by encapsulating the logic necessary to perform these tasks we are shielded from changes in interfaces made by individual clouds.
 
@@ -159,13 +165,11 @@ MongoDB is a popular open source, document oriented noSQL database.  It stores d
 
 A sharded cluster in MongoDB has three main components, all of which will be implemented in our deployment:
 
-\vspace{-\topsep}
 \begin{itemize}
 \item Config Servers - hold configurations setting and metadata
 \item Mongos - a query routing interface between applications and the cluster
 \item Shards - subsets of data
 \end{itemize}
-\vspace{-\topsep}
 
 \begin{figure}[ht]
   \includegraphics[scale=0.5]{images/sharded-cluster-production-architecture.png}
@@ -206,12 +210,10 @@ In our deployment and benchmarking automation, Sharding is controlled by the -s 
 In databases, replication provides data redundancy leading to greater availability and fault tolerance.  Replication in MongoDB is achieved via Replica Sets. \cite{www-replication}  Replica Sets were implemented in our deployment for both Config Servers and Shards.
 
 Two key benefits provided by replication are redundancy and fault tolerance.
-\vspace{-\topsep}
 \begin{itemize}
 \item Redundancy - Each Replica in a Replica Set provides another copy of data.  Higher redundancy means more nodes can be lost without data being lost.
 \item Fault Tolerance - Higher numbers of Replicas in a set increase fault tolerance, which leads to increased availability.  As a general rule, a set will be able to tolerate faults while the majority of its nodes are still available
 \end{itemize}
-\vspace{-\topsep}
 
 \begin{figure}[ht]
 \begin{center}
@@ -254,13 +256,11 @@ In our deployment the various MongoDB components (config servers, mongos instanc
 
 For external authentication, the three users were created.
 
-\vspace{-\topsep}
 \begin{itemize}
 \item \emph{admin} - The user \emph{admin} is created with the role of \emph{userAdminAnyDatabase}.  This user performs administrative functions such as creating the other users.
 \item \emph{cluster\_admin\_user} - The user \emph{cluster\_admin\_user} is created with the role \emph{clusterAdmin}. This user performs sharding functions such as sharding the collection and checking its data distribution.
 \item \emph{user1} - This is a standard user with readWrite permissions.  This user performs the benchmarking tests and other functions not requiring administrative privileges.
 \end{itemize}
-\vspace{-\topsep}
 
 
 \section{Deployment}
@@ -277,30 +277,25 @@ The automated deployment is run by executing the top level script, mongo\_deploy
 
 THIS WILL DRASTICALLY CHANGE BUT LEAVING AS PLACEHOLDER TO MAKE SURE EVERYTHING IS INCLUDED AFTER CONVERSION TO ANSIBLE
 
-\vspace{-\topsep}
 \begin{itemize}
 \item -d - the Deployment Cloud (\emph{chameleon} or \emph{kilo})
 \item -c - a number, the size of Config Server Replica Set
 \item -s - number of Shards
 \item -r - a number, size of Shard Replica Set
 \end{itemize}
-\vspace{-\topsep}
 
 After validating the input parameters the deployment is run as follows.
 
 \textbf{Security}
-\vspace{-\topsep}
 \begin{enumerate}
 \item Add and upload the user's public key (this functionality is currently disabled to prevent throwing an error as it is assumed the user has already done this).
 \item Add security rules to the user's default security profile port opening ports 27107, 27018, 27019, and 28017 for communication.
 \item Upload the security group profile.
 \item Create a new random keyfile (described in more detail in the security section) for each deployment.
 \end{enumerate}
-\vspace{-\topsep}
 
 
 \textbf{Config Servers}
-\vspace{-\topsep}
 \begin{enumerate}
 \item Boot the appropriate number of Virtual Machines based on the -c parameter.
 \item Check if there are available Floating IP Addresses in the pool.  If not, create a new one.
@@ -312,11 +307,9 @@ After validating the input parameters the deployment is run as follows.
 \item Over ssh, stop the running mongod process on each server and start a new mongod processes using the configuration file sent in the previous step.
 \item Over ssh, on one Config Server, run an initiate command including the IP addresses of the others to start the Replica Set.
 \end{enumerate}
-\vspace{-\topsep}
 
 
 \textbf{Mongos Instances}
-\vspace{-\topsep}
 \begin{enumerate}
 \item Boot the appropriate number of Virtual Machines based on the -m parameter.
 \item Check if there are available Floating IP Addresses in the pool.  If not, create a new one.
@@ -328,10 +321,8 @@ After validating the input parameters the deployment is run as follows.
 \item Over ssh, stop the running mongod process on each server and start a new mongos processes using the configuration file sent in the previous step.
 \item Create several users (detailed in security section)
 \end{enumerate}
-\vspace{-\topsep}
 
 \textbf{Shards}
-\vspace{-\topsep}
 \begin{enumerate}
 \item For each -r Replica Set, boot the appropriate number of Virtual Machines based on the -s parameter.
 \item Check if there are available Floating IP Addresses in the pool.  If not, create a new one.
@@ -344,7 +335,6 @@ After validating the input parameters the deployment is run as follows.
 \item Over ssh, on one shard in the replica set, run an initiate command including the IP addresses of the other shards in the set to start the Replica Set.
 \item On a mongos instance, run a command to add the shard replica set.
 \end{enumerate}
-\vspace{-\topsep}
 
 
 
@@ -443,14 +433,12 @@ MAY ADD MAP REDUCE TEST SCENARIO
 https://docs.mongodb.com/manual/core/map-reduce/
 https://docs.mongodb.com/manual/core/map-reduce-sharded-collections/
 
-\vspace{-\topsep}
 \begin{enumerate}
 \item Impact of Sharding Configuration on Reads
 \item Impact of Sharding Configuration on Writes
 \item Impact of Replication Configuration on Reads
 \item Impact of Replication Configuration on Writes
 \end{enumerate}
-\vspace{-\topsep}
 
 To access the impact of different configurations on writes, we use MongoDB's mongoimport command.  Mongoimport is a command line tool capable of loading JSON, CSV, or TSV files. \cite{www-mongoimport} In this case, we load a CSV file to the pitches collections in the mlb database.
 
@@ -472,13 +460,11 @@ Before the benchmarking process can be run, a sharded collection must be created
 
 \textbf{Create Sharded Collection}
 
-\vspace{-\topsep}
 \begin{enumerate}
 \item Ssh to a mongos instance.  Authenticating as user1 via the mongo shell, create the pitches collection.
 \item Ssh to a mongos instance.  Authenticating as cluster\_admin\_user via the mongo shell, run a command to enable sharding in the mlb database the pitches table is located in.
 \item Ssh to a mongos instance.  Authenticating as cluster\_admin\_user via the mongo shell, run a command to shard the collection.  
 \end{enumerate}
-\vspace{-\topsep}
 
 The shard key is set to pitchID.  PitchID is a unique key to each pitch document.  Selecting pitchID as the shard key should cause the data to be reasonably evenly distributed amound the shards.  Data distribution will be analyzed in a subsequent section.
 
@@ -487,13 +473,11 @@ Once the sharded collection has been created, benchmarking test can be run.  The
 \textbf{Benchmarking}
 
 
-\vspace{-\topsep}
 \begin{enumerate}
 \item Ssh to a mongos instance.  Using wget retrieve the pitches file from a Amazon Web Services (AWS) Simple Storage Service (S3) folder and uncompress the file.
 \item Connect to a mongo shell on the mongos instance and run a mongoimport of the file to the sharded collection, capturing the run time.
 \item Connect to a mongo shell on the mongos instance and run a find command against the sharded collection, capturing the run time. 
 \end{enumerate}
-\vspace{-\topsep}
 
 
 \subsection{Data Distribution}
@@ -616,16 +600,7 @@ We have created, tested, and demonstrated a fully automated program to configure
 
 \section*{Acknowledgements}
 
-Funding information should be listed in this section. Please evaluate
-if you like to list your employer that may have funded your activities
-here.  If you receive grants or project numbers, as shown in the
-example.  This work was in part supported by National Science
-Foundation (NSF) (1234567, 891012345) (These numbers are invented)
-
-The acknowledgments may also contain any information that is not
-related to funding:
-
-The authors thank H. Haase, C. Wiede, and J. Gabler for technical
+The authors thank X, Y, Z for technical
 support.
 
 
@@ -657,7 +632,7 @@ authors:
 
 \begin{description}
 
-\item[Mark McCobme.] Completed all work.
+\item[Mark McCombe.] Completed all work.
 
 \end{description}
 

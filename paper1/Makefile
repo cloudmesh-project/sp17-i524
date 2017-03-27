@@ -11,3 +11,6 @@ view:
 review:
 	python reviews.py > reviews.tex
 	pdflatex reviews
+
+clean:
+	rm -f *.aux *.log *.out *.toc
