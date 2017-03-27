@@ -21,7 +21,7 @@
 \ociscodes{apache, avro, serialization}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/Anveling/sp17-i524/blob/master/paper2/S17-IR-2016/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper2/S17-IR-2016/report.pdf}}
 
 
 \begin{abstract}
@@ -39,25 +39,26 @@
 
 \section{Introduction} 
 
-Apache Avro is a data serialization system. Data serialization is a
+Apache Avro \cite{www-apache-avro} is a data serialization system. Data serialization is a
 mechanism to translate data in a computer environment, such as memory
 buffer, data structures, object state into binary or textual form.
 Java and Hadoop provides serialization APIs, which are java
 based. Apache Avro is a language independent system, that can be
-processed by multiple languages.
+processed by multiple languages \cite{www-doc-avro}.
 
 Avro is heavily dependent on schemas. These schemas are defined with
 JSON that simplifies its implementations with its libraries. Different
 schemas can be used for serialization and deserialization, and Avro
-will handle the missing fields or extra fields. When Avro data is
-stored in a file, its schema is also stored with it. Avro stores the
-data definition in JSON format, which makes it easier to interpret.
+will handle the missing fields or extra fields
+\cite{www-tutorialspoint-avro}. When Avro data is stored in a file,
+its schema is also stored with it. Avro stores the data definition in
+JSON format, which makes it easier to interpret.
 
 Apache Avro provides rich data structures, compact binary data format,
 a container file, facility for remote procedure calls (RPC) and
-integration with dynamic languages. In Remote procedure calls, the
+integration with dynamic languages \cite{www-apache-avro}. In Remote procedure calls, the
 client and server exchange schemas during the connection. This
-exchange helps when there are missing fields or extra fields.  Avro
+exchange helps when there are missing fields or extra fields. Avro
 works well with Hadoop MapReduce, which provides the large scale
 processing across many processors to do the calculations
 simultaneously and efficiently.
@@ -65,7 +66,7 @@ simultaneously and efficiently.
 \section{Components of Avro}
 
 Avro has two main components, data serialization and remote procedure
-call (RPC) support.
+call (RPC) support.\cite{www-using-avro}
 
 \subsection{Data Serialization}
 
@@ -77,7 +78,7 @@ data stored in the object. To serialize data using Avro,
 2) compile the schema using Avro utility.
 3) Java code corresponding to that schema is obtained.
 4) populate the schema with data.
-5) serialize the data using Avro library.
+5) serialize the data using Avro library\cite{www-avro-serialzation}.
 
 \subsection{Remote Procedure Call}
 
@@ -86,7 +87,7 @@ the connection handshake. (This can be optimized so that, for most
 calls, no schemas are actually transmitted.) Since both client and
 server both have the other's full schema, correspondence between same
 named fields, missing fields, extra fields, etc. can all be easily
-resolved.
+resolved\cite{www-avro-rpc}.
 
 \section{Specifications}
 \subsection{Encoding}
@@ -94,7 +95,7 @@ resolved.
 Avro specifies two serialization encodings, binary and JSON. Binary
 encoding is smaller and faster, but not efficient in the case of
 debugging and web-based applications, where JSON encoding is
-appropriate.
+appropriate\cite{www-avro-encoding}.
 
 \subsection{Object Container Files}
 
@@ -104,13 +105,13 @@ permit splitting of the files for MapReduce processing.  File consists
 of, a header followed by one or more data blocks.  Header consists of
 four bytes ‘O’, ‘b’, ‘j’, 1. It also consists of the file metadata,
 including the schema and a 16-byte, randomly generated sync
-marker. Currently used file metadata properties are, avro.schema which
+marker\cite{www-wiki-avro}. Currently used file metadata properties are, avro.schema which
 contains the schema of the objects stored in file avro.codec contains
 the name of the compression codec used to compress the blocks.
 
 A file data block consists of, count of the objects in the block, size
 of bytes of the serialized objects in current block, the serialized
-objects and a 16-byte sync marker.
+objects and a 16-byte sync marker\cite{www-wiki-avro}.
 
 Each block’s binary data can be efficiently extracted without
 deserializing the contents. The combination of the block size, object
@@ -131,7 +132,7 @@ possible in Apache Avro. Data is always accompanied by a schema that
 permits full processing of the data. This feature of the Avro, makes
 it possible to construct data-processing systems and languages. Avro
 creates binary structure format that is both compressible and
-splittable.
+splittable \cite{www-tutorialspoint-avro}.
 
 \subsection{Untagged Data}
 
@@ -149,16 +150,13 @@ can read new data.
 
 \section{Application}
 
-HAWQ uses {Hadoop ecosystem}\cite{www-about-hadoop} integration and 
-manageability and flexible data-store format support. HAWQ is 
-natively in hadoop and requires no connectors.Hadoop Common contains 
-libraries and utilities needed by other Hadoop modules. HDFS is a 
-distributed file-system that stores data on commodity machines, 
-providing very high aggregate bandwidth across the cluster. Hadoop 
-YARN is a resource-management platform responsible for managing 
-computing resources in clusters and using them for scheduling of 
-users applications. Hadoop MapReduce is an implementation of the 
-MapReduce programming model for large scale data processing.  
+Primary use of Apache Avro is in Apache Hadoop where it can provide
+both serialization format for persistent data, and a wire format for
+communication between Hadoop nodes.
+
+Avro was designed for Hadoop for making it interoperable across
+different languages.  With Avro serialization, Pig utilizes
+AvroStorage().
 
 \subsection{Using Avro with Eventlet}
 
@@ -178,10 +176,10 @@ handling is complex whn compared with Protocol buffers and Thrift.
 
 \section{Educational Material}
 
-Tutorialspoint.com for Apache Avro provides the resources to use Avro
-for deserialization and serialization of the data.  Apache Avro’s
-website provides documentation for understanding, deploying and
-managing the framework.
+Tutorialspoint.com \cite{www-tutorialspoint-avro}for Apache Avro
+provides the resources to use Avro for deserialization and
+serialization of the data.  Apache Avro’s \cite{www-apache-avro} website provides
+documentation for understanding, deploying and managing the framework.
 
 \section{Conculsion}
 
