@@ -1,0 +1,300 @@
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{An overview of Cisco Intelligent Automation for Cloud}
+
+\author[1,*]{Bhavesh Reddy Merugureddy}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: bmerugur@umail.iu.edu}
+
+\dates{Paper2, \today}
+
+\ociscodes{Automation, Multitenancy, Integration, Orchestration, Provisioner}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper2/S17-IR-2018/report.pdf}}
+
+
+\begin{abstract}
+Cisco Intelligent automation for cloud is a cloud platform that can deliver services across mixed environments. Its services range from underlying infrastructure to anything-as-a-service and allows the users to evaluate, transform and deploy various IT services. It provides a foundation for organizational transformation by expanding the uses of cloud technology beyond its infrastructure.\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Cisco Intelligent Automation for Cloud (IAC) provides a framework that
+allows users to make use of the cloud services effectively and manage
+the cloud beyond Infrastructure-as-a-service (IaaS)
+\cite{ciscolive-introduction}.  It can be considered as a unified
+cloud platform that can deliver any type of service across mixed
+environments \cite{cisco-wikibon}. This leads to an increase in cloud
+penetration across different businesses. Its services range from
+underlying infrastructure to anything-as-a-service by allowing its
+users to evaluate, transform and deploy the IT and business services
+in a way they desire. Cisco Intelligent Automation for Cloud automates
+sophisticated data center from a single self-service portal which is
+beyond the provision of virtual machines. It creates a catalog of
+standardized service offerings, thereby implementing policy-based
+controls. It also provides resource management across different
+aspects of IT infrastructure such as network, virtualization, storage,
+compute and applications.
+
+\section{Components}
+
+Cisco Intelligent Automation for Cloud consists of major interface and
+automation components. In other words, it provides an integrated stack
+of core elements namely Cisco Cloud Portal, Cisco Process
+Orchestrator, Cisco Process Orchestrator Integration Framework, Cisco
+Server Provisioner, and Cloud Automation Packs \cite{cisco-datasheet}.
+
+\subsection{Cisco Cloud Portal}
+
+Cisco Cloud Portal is a web-based service portal that helps users to
+order and manage services. It provides a configurable interface for
+different roles and departments which include managers, administrators
+and consumers \cite{cisco-datasheet}. This provides an access to a
+catalog of on-demand IT resources. Service requests for resources
+running on cross-platform infrastructure can be managed effectively by
+Cisco Cloud Portal. It tracks and manages lifecycle of each service
+from the initial request to withdrawal. The modules which constitute
+Cisco Cloud Portal are Cisco Portal Manager, Cisco Service Catalog,
+Cisco Request Center and Cisco Service Connector.
+
+Cisco Portal Manager combines data from multiple sources providing a
+highly flexible portal interface. It manages the interface and
+increases user satisfaction. It provides a drag-and-drop facility on
+the interface making it easier for the users to create their own
+portal views which ensures flexibility
+\cite{cloudportal-datasheet}. Depending on the user requests, Cisco
+Service Catalog provides a controlled access to IT resources through
+standardized service options. It makes use of reusable components and
+tools for publishing services in the portal. Cisco Request Center
+provides lifecycle management and request management for the
+infrastructure services. To ensure data center management, it
+maintains policy-based controls and reduces the cycle time for the
+ordering, approval and provisioning process. It uses advanced methods
+for simplifying the ordering process. It also helps in streamlining
+end-to-end service delivery cycle time. Cisco Service Connector is a
+platform that can be used for integrating with third-party
+systems. This supports a heterogeneous data center environment by
+providing adaptors for integrating with automated provisioning
+systems.
+
+\subsection{Cisco Process Orchestrator}
+
+Cisco Process Orchestrator is a component of Cisco IAC responsible for
+automation of service management and assurance instantiation. It is an
+orchestration engine that provides an automation design studio and a
+reporting and analytics module. It is useful in automating and
+standardizing IT processes in heterogeneous environments
+\cite{cisco-orchestrator}. It considers IT automation as a
+service-oriented approach and focuses more on services. It allows
+users to deploy services by defining new instances in real time. Cisco
+Process Orchestrator acts as a foundation for building application,
+network and data center oriented solutions. It includes auditing and
+extensive reporting and provides workspaces for developers and
+administrators making it easier for the stakeholders to manage
+services.
+
+The primary function of Cisco Process Orchestrator is to provide
+automation through integration with domain managers and tools in the
+environment \cite{orchestrator-datasheet}. Automation Packs and
+Adapters are the features used in the integration. Some of the
+services include event correlation, application provisioning and event
+application provisioning. It usually receives events requiring further
+analysis. It also includes security tools, configuration tools, change
+management systems, visualization management tools, provisioning
+systems and service desks.
+
+\subsection{Cisco Process Orchestrator Integration Framework}
+
+Cisco Process Orchestrator Integration Framework is responsible for
+integrating Cisco IAC with any data center element in the
+environment. It connects IT service management tools into streamlined
+and automated processes by making use of field-built
+integration. VMware, SAP, Oracle DB, Remedy and Windows are some of
+the available integrations. Field integration and automation are
+carried out by the design studio which provides web services, database
+access and command-line interface.
+
+\subsection{Cisco Server Provisioner}
+
+Cisco Server Provisioner is a software application used for deploying
+systems with Linux, Windows and Hypervisors from bare metal in IT
+organizations and data centers \cite{cisco-provisioner}. It acts as an
+application for native and remote installations on physical and
+virtual servers. It provides imaging component for OS and
+Hypervisor. The Cisco Server Provisioner can be considered as a server
+suite that consists of Bare Metal Provisioning Payloads and Bare Metal
+Imaging Payloads which provide GUI and API interfaces including remote
+file copying and remote troubleshooting. Provisioner runs on a
+dedicated system which does not run any other application. Some of the
+benefits of the Provisioner include reduced deployment time and
+increased utilization of systems.
+
+\subsection{Cloud Automation Packs}
+
+Cloud Automation Packs are the workflows useful for complex computing
+tasks. The tasks include automation of core activities that cover
+various domains, Cisco Server Provisioner task automation, VMware task
+automation and Cisco UCS Manager task automation. Automation Packs
+provide a set of target groups, variables, configurations and process
+definitions required for defining automated IT processes. Automation
+Packs combine with Adaptors to enable integrations. Integration with
+IT element is carried out through a combination of automation content
+from an Automation Pack and a set of Adaptors. Some of the integration
+scenarios include Command Line Interface invocations, Web Service
+integration, Messaging integration and Scripting support. Automation
+content can leverage Adaptors to enable these scenarios. Automation
+Packs can be used to build, pack, update and ship the integrations.
+
+\section{Functions}
+
+Cisco Intelligent Automation for Cloud provides a platform for
+designing, deploying and operating a cloud infrastructure in a public,
+private or a hybrid model. It supports various cloud management
+activities including setup and design, system operations, reporting
+and analytics.
+
+\subsection{Self-Service Interface}
+
+Self-Service Interface is a web-based interface which allows the users
+to view the service catalog according to their roles and other access
+controls. It provides dynamic forms by which users can provide
+configuration details and order services. It also allows the users to
+track order status, manage and modify placed orders and view the usage
+and consumption.
+
+\subsection{Service Delivery Automation}
+
+After the approval of the placed orders, Service Delivery Automation
+takes place to orchestrate the configuration and provision of
+resources like compute, network, storage and supporting services such
+as firewall, disaster recovery and load balancing
+\cite{cisco-datasheet}. The automated provisioning provides
+consumption tracking and integration into metering and billing
+systems. The automated processes then orchestrate the configuration
+updates and allows the service information updates to be sent back to
+the system management tools and web-based portal.
+
+\subsection{Operational Process Automation}
+
+Operational Process Automation coordinates the operational tasks for
+cloud management which include service-level management, alerting,
+reporting, capacity planning, performance management, user management
+and maintenance checks. It provides user administration capability to
+control user roles and identity, placing the users securely isolated
+from each other. Systems incidents can be managed by the users through
+alert management feature and all the processes and results can be
+tracked and reported by the reporting functionality. Operational
+Process Automation consists of an Automation Control Center which is a
+console for viewing and controlling automated processes.
+
+\subsection{Network Automation}
+
+Cisco IAC allows a manual pre-provisioning of network layer with the
+increasing amount of data being placed in cloud. This is carried out
+by Network Automation. Network Automation enables deployment of
+network services through the Self-Service Portal with a single order
+\cite{cisco-mondora}. It facilitates dynamic installation of virtual
+network devices with onboarding users and creates network topologies
+for the users based on the applications they use.
+
+\subsection{Cloud Governance}
+
+Through Cloud Governance, Cisco IAC delivers a set of measures for
+tracking business-oriented metrics. Cloud Governance provides
+portfolio management across different cloud environments. It allows
+organizations to establish limits ahead of time. Financial granularity
+is achieved by these consumption limits.
+
+\subsection{Advanced Multitenancy}
+
+Advanced Multitenancy allows multiple users to securely reside in a
+shared environment by providing isolated containers. User management
+work is offloaded from the cloud provider as the users are controlled
+by the cloud administrators. Multitenancy sets service pricing per
+user and accordingly, the services can be enabled or disabled per
+organization or user. It provides onboarding, modification and
+offboarding of users and enables secure containers by instantiating
+network devices.
+
+\subsection{Multicloud Management}
+
+By Multicloud Management, service providers can tailor their services
+to specific project needs and specific functions of the hypervisor
+platforms. For example, Cisco IAC supports two infrastructure layers
+namely Cisco UCS Director and OpenStack \cite{cisco-mondora}. It
+allows administrators to manage network services and virtual machines
+by integrating with Havana and Icehouse. This allows the Cisco UCS
+Director users to manage Microsoft System Center Virtual Machine
+Manager.
+
+\subsection{Resource Management}
+
+Cisco IAC Resource Management orchestrates resource-level operations
+across different hypervisors such as Hyper-V, Xen or VMware, compute
+resources such as Cisco UCS, network resources and storage resources
+such as NetApp. This is done by orchestrating the requests to domain
+resource managers. It provides maintenance and replacement of
+units. Capacity management is provided by automated capacity
+utilization checks, trending reports and alerts. The usage and user
+quota are managed by automated monitoring and metering of user
+accounts.
+
+\subsection{Lifecycle Management}
+
+Lifecycle Management is responsible for creation of service
+definitions which include selection parameters, business and technical
+processing flows, pricing options and design descriptions. It also
+involves management of a service model and underlying automation
+design for managing a service. Automation design is managed by
+creating workflows to automate service provisioning, modification,
+decommissioning and upgrades. The designs are modified by
+point-and-click-tools instead of custom programming. Lifecycle
+Management tracks all aspects of services that are running which
+includes business and project information.
+
+\section{Deployment}
+
+Cisco Intelligent Automation for Cloud is deployed as a software
+solution. For planning, preparation, design, implementation and
+optimization of cloud services, it is deployed along with services
+engagement. The services engagement involves creation of automation
+workflows and development of a cloud strategy. It focuses on service
+capabilities for the software deployment.
+
+\section{Conclusion}
+
+Cisco Intelligent Automation for Cloud is a framework useful in
+expanding cloud responsiveness and flexibility. It provides services
+beyond provisioning virtual machines. It delivers various services in
+a self-service manner across mixed environments. The cloud management
+in Cisco Intelligent Automation for Cloud allows users to evaluate,
+procure and deploy IT services according to the needs. Self-Service
+Portal, Service Delivery Automation, Network Automation, Resource
+Management, Provisioning, Advanced Multitenancy, Portfolio Management
+and Lifecycle Management are the elements responsible for the cloud
+management in Cisco Intelligent Automation for Cloud.
+
+\section{Acknowledgements}
+
+The author thanks Professor Gregor Von Lazewski and all the AIs of Big
+Data class for the guidance and technnical support.
+
+
+% Bibliography
+
+\bibliography{references}
+ 
+
+
+\end{document}
