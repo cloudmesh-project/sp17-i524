@@ -6,7 +6,7 @@ author: "Yatin Sharma"
 
 hid: "S17-IR-2034"
 
-pid: "S17-IR-2034"
+pid: "ENTER YOUR PID HERE"
 
 github: "yatinsharma7"
 
