@@ -1,0 +1,270 @@
+
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+\usepackage[final]{pdfpages}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\renewcommand\cftsecafterpnum{\vskip0pt}
+\renewcommand\cftsubsecafterpnum{\vskip0pt}
+
+% Adjust sectional unit title fonts in ToC
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{epigraph}
+\usepackage{lipsum}
+
+\renewcommand\epigraphflush{flushright}
+\renewcommand\epigraphsize{\normalsize}
+\setlength\epigraphwidth{0.7\textwidth}
+
+\definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
+
+\DeclareFixedFont{\titlefont}{T1}{ppl}{b}{it}{0.5in}
+
+\makeatletter                       
+\def\printauthor{%                  
+    {\large \@author}}              
+\makeatother
+\author{%
+    Editor: \\
+    Gregor von Laszewski\\
+    Department of Intelligent Systems Engeneering\\
+    Indiana University \\
+    \texttt{laszewski@gmail.com}\vspace{20pt} \\   
+    }
+
+% The following code is borrowed from: http://tex.stackexchange.com/a/86310/10898
+
+\newcommand\titlepagedecoration{%
+\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
+
+\coordinate (aux1) at ([yshift=-15pt]current page.north east);
+\coordinate (aux2) at ([yshift=-410pt]current page.north east);
+\coordinate (aux3) at ([xshift=-4.5cm]current page.north east);
+\coordinate (aux4) at ([yshift=-150pt]current page.north east);
+
+\begin{scope}[titlepagecolor!40,line width=12pt,rounded corners=12pt]
+\draw
+  (aux1) -- coordinate (a)
+  ++(225:5) --
+  ++(-45:5.1) coordinate (b);
+\draw[shorten <= -10pt]
+  (aux3) --
+  (a) --
+  (aux1);
+\draw[opacity=0.6,titlepagecolor,shorten <= -10pt]
+  (b) --
+  ++(225:2.2) --
+  ++(-45:2.2);
+\end{scope}
+\draw[titlepagecolor,line width=8pt,rounded corners=8pt,shorten <= -10pt]
+  (aux4) --
+  ++(225:0.8) --
+  ++(-45:0.8);
+\begin{scope}[titlepagecolor!70,line width=6pt,rounded corners=8pt]
+\draw[shorten <= -10pt]
+  (aux2) --
+  ++(225:3) coordinate[pos=0.45] (c) --
+  ++(-45:3.1);
+\draw
+  (aux2) --
+  (c) --
+  ++(135:2.5) --
+  ++(45:2.5) --
+  ++(-45:2.5) coordinate[pos=0.3] (d);   
+\draw 
+  (d) -- +(45:1);
+\end{scope}
+\end{tikzpicture}%
+}
+
+
+
+\begin{document}
+%\title{Big Data Technologies}
+
+%\author{Editor: Gregor von Laszewski}
+
+
+
+\begin{titlepage}
+
+\noindent
+\titlefont Big Data Software\par
+\epigraph{Spring 2017}%
+{\textit{Bloomington, Indiana}}
+\null\vfill
+\vspace*{1cm}
+\noindent
+\hfill
+\begin{minipage}{0.50\linewidth}
+    \begin{flushright}
+        \printauthor
+    \end{flushright}
+\end{minipage}
+%
+\begin{minipage}{0.02\linewidth}
+    \rule{1pt}{125pt}
+\end{minipage}
+\titlepagedecoration
+\end{titlepage}
+
+
+
+%\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+% \section{Contributors}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2024\newline Memcached \newline Ronak Parekh, Gregor von Laszewski }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2024/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2029\newline Apache Mahout \newline Naveenkumar Ramaraju }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2029/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3010\newline Robot Operating System (ROS) \newline Matthew Lawson }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3010/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3000\newline Apache Ranger \newline Avadhoot Agasti }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3000/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2016\newline An Overview of Apache Avro \newline Author Missing }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2016/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2012\newline Retainable Evaluator Execution Framework \newline Pratik Jain }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2012/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2026\newline Naiad \newline Rahul Raghatate, Snehal Chemburkar }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2026/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2022\newline ASKALON \newline Abhishek Naik }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2022/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2018\newline An overview of Cisco Intelligent Automation for Cloud \newline Bhavesh Reddy Merugureddy }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2018/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3005\newline Amazon Kinesis \newline Abhishek Gupta }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3005/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2002\newline Apache Flink: Stream and Batch Processing \newline Jimmy Ardiansyah }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2002/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2044\newline Hive \newline Diksha Yadav }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2044/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3023\newline AWS Lambda \newline Karthick Venkatesan }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3023/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2006\newline An Overview of Apache Spark \newline Snehal Chemburkar, Rahul Raghatate }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2006/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2037\newline Jupyter Notebook vs Apache Zeppelin - A comparative study \newline Sriram Sitharaman }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2037/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2028\newline A Report on Apache Apex \newline Srikanth Ramanam }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2028/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2041\newline Google BigQuery - A data warehouse for large-scale data analytics \newline Sagar Vora }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2041/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3024\newline Not Submitted \newline Ashok Vuppada }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3024/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2011\newline Hyper-V \newline Anurag Kumar Jain, Gregor von Laszewski }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2011/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3016\newline Apache Derby \newline Ribka Rufael }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3016/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2021\newline Amazon Elastic Beanstalk \newline Shree Govind Mishra }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2021/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2004\newline Jelastic \newline Ajit Balaga, S17-IR-2004 }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2004/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3011\newline Apache Crunch \newline Scott McClary }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3011/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2038\newline Introduction to Terraform \newline Sushmita Sivaprasad }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2038/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2001\newline HUBzero: A Platform For Scientific Collaboration \newline Niteesh Kumar Akurati }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2001/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2027\newline Dryad : Distributed Execution Engine \newline Shahidhya Ramachandran }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2027/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3012\newline Apache MRQL - MapReduce Query Language \newline Mark McCombe }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3012/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2008\newline An overview of Apache THRIFT and its architecture \newline Karthik Anbazhagan }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2008/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2031\newline OpenStack Nova: Compute Service of OpenStack Cloud \newline Kumar Satyam }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2031/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2036\newline An overview of the open source log management tool - Graylog \newline Rahul Singh }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2036/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2017\newline An Overview of Pivotal HD/HAWQ and its Applications \newline Author Missing }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2017/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3022\newline Deployment Model of Juju \newline Sunanda Unni }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3022/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IO-3017\newline Facebook Tao \newline Nandita Sathe }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IO-3017/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2034\newline Heroku \newline Yatin Sharma }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2034/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2030\newline Neo4J \newline Sowmya Ravi }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2030/report.pdf}
+
+\addtocounter{section}{1}
+\addcontentsline{toc}{section}{\arabic{section}  S17-IR-2035\newline D3.js \newline Piyush Shinde }
+\includepdf[pages=-,pagecommand=\thispagestyle{plain}]{S17-IR-2035/report.pdf}
+
+\end{document}
