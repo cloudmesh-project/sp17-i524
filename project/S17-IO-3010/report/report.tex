@@ -1,5 +1,6 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
+\usepackage{hyperref}
 \journal{i524} 
 
 \title{Prototyping a Virtual Robot Swarm with ROS and Gazebo}
@@ -19,7 +20,7 @@
 \doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IO-3010/report/report.pdf}}
 
 \begin{abstract}
-Our virtual robot swarm prototype accomplishes a \textit{TBD task} by allocating portions of the task to each virtual robot (VR).  As each VR works on its piece of the task, it communicates relevant information back to the master VR.  Upon completion, the master VR collates the results and creates a human-readable report.  The virtual swarm utilizes the \textit{Robot Operating System} to control the virtual robots, \textit{Gazebo} to simulate the task completion and \textit{RVIZ} to visualize the process.  We use \textit{Ansible} to deploy the software to a distributed computing environment.  Th importance of our effort centers on some super-special conclusion I do not yet grasp.
+Our virtual robot swarm prototype accomplishes a \textit{TBD task} by allocating portions of the task to each virtual robot (VR).  As each VR works on its piece of the task, it communicates relevant information back to the master VR.  Upon completion, the master VR collates the results and creates a human-readable report.  The virtual swarm utilizes the \textit{Robot Operating System} to control the virtual robots, \textit{Gazebo} to simulate the task completion and \textit{RVIZ} to visualize the process.  We use \textit{Ansible} to deploy the software to a distributed computing environment.  The importance of our effort centers on some super-special conclusion I do not yet grasp.
 \newline
 \end{abstract}
 
@@ -38,9 +39,9 @@ We create a cross-platform system to quickly and relatively easily deploy and ma
 Automate the deployment of a virtual robot swarm that will accomplish some arbitrary task; capture data from the swarm as it completes its task; report back the results in a human-readable format.
 
 \section{Virtual Robot Swarm Components}
-\subsection{Robot Operating System (ROS)}
+\subsection{Robot Operating System (ROS) \cite{www-ros-about}}
 TBD; will include a discussion of a) how to obtain and install ROS and b) ROS graph concepts.  The latter topic will introduce ROS' core components, namely a node, publications, suscriptions, topics and services.  This section should probably cover ROS packages and ROS client libraries (primarily C++ and Python)
-\subsection{Gazebo}
+\subsection{Gazebo \cite{www-software-categories}}
 TBD; again, introducing core Gazebo concepts.  In this case, will include a) world files, b) model files and c) its client-server model.  It should also include non-obvious limitation examples, e.g., a gripper arm driven by a single screw instead of multiple screws.  In addition, it should allude to any limitations that affect our simulation.
 \subsection{Ansible}
 TBD; briefly describe Ansible - what it is, salient features, etc.
@@ -68,110 +69,6 @@ TBD; discuss the methods used to implement software updates on each node; remain
 \section{VR Swarm Project Conclusions}
 TBD; present the data collected in some visualization format; discuss why this project advances robotics forward by utilizing distributed computing;
 
-\section{Examples of Article Components}
-\label{sec:examples}
-
-The sections below show examples of different article components.
-
-\section{Figures and Tables}
-
-It is not necessary to place figures and tables at the back of the
-manuscript. Figures and tables should be sized as they are to appear
-in the final article. Do not include a separate list of figure
-captions and table titles.
-
-Figures and Tables should be labelled and referenced in the standard
-way using the \verb|\label{}| and \verb|\ref{}| commands.
-
-\subsection{Sample Figure}
-
-Figure \ref{fig:false-color} shows an example figure.
-
-\begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/sample}}
-\caption{False-color image, where each pixel is assigned to one of seven reference spectra.}
-\label{fig:false-color}
-\end{figure}
-
-\subsection{Sample Table}
-
-Table \ref{tab:shape-functions} shows an example table.
-
-\begin{table}[htbp]
-\centering
-\caption{\bf Shape Functions for Quadratic Line Elements}
-\begin{tabular}{ccc}
-\hline
-local node & $\{N\}_m$ & $\{\Phi_i\}_m$ $(i=x,y,z)$ \\
-\hline
-$m = 1$ & $L_1(2L_1-1)$ & $\Phi_{i1}$ \\
-$m = 2$ & $L_2(2L_2-1)$ & $\Phi_{i2}$ \\
-$m = 3$ & $L_3=4L_1L_2$ & $\Phi_{i3}$ \\
-\hline
-\end{tabular}
-  \label{tab:shape-functions}
-\end{table}
-
-\section{Sample Equation}
-
-Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and
-identically distributed random variables with $\text{E}[X_i] = \mu$
-and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
-
-\begin{equation}
-S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
-      = \frac{1}{n}\sum_{i}^{n} X_i
-\label{eq:refname1}
-\end{equation}
-
-denote their mean. Then as $n$ approaches infinity, the random
-variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal
-$\mathcal{N}(0, \sigma^2)$. 
-
-\section{Sample Algorithm}
-
-Algorithms can be included using the commands as shown in algorithm
-\ref{alg:euclid}.
-
-\begin{algorithm}
-\caption{Euclid’s algorithm}\label{alg:euclid}
-\begin{algorithmic}[1]
-\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
-\State $r\gets a\bmod b$
-\While{$r\not=0$}\Comment{We have the answer if r is 0}
-\State $a\gets b$
-\State $b\gets r$
-\State $r\gets a\bmod b$
-\EndWhile\label{euclidendwhile}
-\State \textbf{return} $b$\Comment{The gcd is b}
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}
-\caption{Python example}\label{alg:python}
-\begin{quote}
-\begin{Verbatim}[numbers=left]
-for i in range(0,100):
-  print i
-\end{Verbatim}
-\end{quote}
-\end{algorithm}
-
-\section{Reference Management}
-
-The best programs to manage your references is jabref or emacs. You
-can edit the references and verify them with them for format
-errors. To cite them use the citation key. You can add multiple bib
-files to the bibliography command separated by comma.
-
-\noindent Add citations with the cite command. See
-\cite{las14cloudmeshmultiple} for an example on how to use multiple
-clouds. In \cite{www-i524} we list the class content.
-
-Here a test of a citation with an underscore in the url \cite{www-underscore}.
-
 \section{Supplemental Material}
 
 % Bibliography
@@ -182,34 +79,12 @@ Here a test of a citation with an underscore in the url \cite{www-underscore}.
 \begingroup
 \setlength\intextsep{0pt}
 \begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
-  \end{wrapfigure}
   \noindent
-  {\bfseries John Smith} received his BSc (Mathematics) in 2000 from
-  The University of Maryland. His research interests include lasers
-  and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Alice Smith} received her BSc (Mathematics) in 2000 from
-  The University of Maryland. Her research interests also include
-  lasers and optics. 
-\end{minipage}
-\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
-  \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
-  \end{wrapfigure}
-  \noindent
-  {\bfseries Bruce Wayne} received his BSc (Aeronautics) in 2000 from
-  Indiana University. His research interests include lasers and optics.
+  {\bfseries Matthew Lawson} received his BSBA, Finance in 1999 from
+  the University of Tennessee, Knoxville. His research interests include
+  data analysis, visualization and behavioral finance.
 \end{minipage}
 \endgroup
-
-\newpage
 
 \appendix
 
@@ -217,6 +92,7 @@ Here a test of a citation with an underscore in the url \cite{www-underscore}.
 
 The work on this project was distributed as follows between the
 authors:
+
 
 \begin{description}
 
@@ -226,31 +102,4 @@ authors:
 
 \end{description}
 
-\section{Report Checklist}
-
-\begin{itemize}
-\renewcommand{\labelitemi}{\scriptsize$\square$} 
-\item Have you written the report in word or LaTeX in the specified
-  format?
-\item Have you included the report in github/lab?
-\item Have you specified the names and e-mails of all team members in
-  your report. E.g. the username in Canvas?
-\item Have you included the HID of all team members?
-\item Does the report have the project number added to it?
-\item Have you included all images in native and PDF format in gitlab
-  in the images folder?
-\item Have you added the bibliography file in bibtex format?
-\item Have you submitted an additional page that describes who did
-  what in the project or report?
-\item Have you spellchecked the paper?
-\item Have you made sure you do not plagiarize?
-\item Have you made sure that the important directories are all lower
-  case and have no underscore or space in it?
-\item Have you made sure that all authors have a README.rst in their
-  HID github/lab repository?
-\item Have you made sure that there is a README.rst in the project
-  directory and that it is properly filled out?
-\item Have you put a work breakdown in the document if you worked in a
-  group?
-\end{itemize}
 \end{document}
