@@ -32,6 +32,12 @@ applications that utilize a MapReduce type approach.
 \begin{document}
 
 \maketitle
+\TODO{This review document is provided for you to achieve your
+  best. We have listed a number of obvious opportunities for
+  improvement. When improving it, please keep this copy untouched and
+  instead focus on improving report.tex. The review does not include
+  all possible improvement suggestions and if you sea comment you may
+  want to check if this comment applies elsewhere in the document.}
 \TODO{Please apply 80 character width for whatever editor you are using upon
 your paper.}
 \section{Introduction} \label{introduction}
@@ -52,7 +58,6 @@ way in the following section".}
 this Java API was developed by Josh Wills at Cloudera \CE and is based on Google's FlumeJava library \cite{FlumeJava-paper-2012, www-crunch-about}.
 
 Apache Crunch ``aims to make writing, testing, and running MapReduce pipelines easy, efficient, and even fun'' \cite{www-wills-crunch}. This open source Java API provides a ``small set of simple primitive operations and lightweight user-defined functions that can be combined to create complex, multi-stage pipelines'' \cite{www-wills-crunch}. Apache Crunch abstracts away much of the complexity from the user by compiling ``the pipeline into a sequence of MapReduce jobs and manages their execution'' \cite{www-wills-crunch}.
-\TODO{It's unnecessary to cite repeatedly.}
 \subsection{Advantages}
 As Hadoop continues to grow in popularity, the variation of data (i.e. satellite images, time series data, audio files, and seismograms) that is stored in HDFS \CE grows as well \cite{www-wills-crunch}. Many of these data ``formats are not a natural fit for the data schemas imposed by Pig \CE and Hive \CE;'' therefore, ``large, custom libraries of user-defined functions in Pig or Hive'' or ``MapReduces in Java'' have to be written, which significantly ``drain on developer productivity'' \cite{www-wills-crunch}. The Crunch API provides an alternative solution, which does not inhibit developer productivity. Apache crunch integrates seamlessly into Java and therefore, allow developers full access to Java to write functions. Thus, Apache Crunch is ``especially useful when processing data that does not fit naturally into relational model, such as time series, serialized object formats like protocol buffers or Avro records \CE , and HBase \CE rows and columns'' \cite{www-crunch-api}.
 
@@ -72,11 +77,11 @@ The major contributor to the ``initial source code of the Apache Crunch project 
 \TODO{What's the "[was] ..." about?}
 Up until May 2012 (i.e. version 0.2.4), the Apache Crunch project was open sourced at GitHub \CE \cite{www-crunch-about}.
 \TODO{
-GitHub here needs citation. The repeated one can be removed.
+GitHub here needs citation.
 } After May 2012, ``Cloudera donated the source code to Apache and the project entered the Apache Incubator, ... [a]fter 9 months at the Incubator, ...
 \TODO{I am not sure what's ... [a]fter 9 months at the Incubator, ... here}
 the Apache Board of Directors established the Apache Crunch project in February 2013 as a new top level project'' \cite{www-crunch-about}.
-\TODO{Repeated citation.} Since February 2013, the Apache Crunch project continues to be used, maintained and improved in an open source fashion, as explained in Section \ref{source}.
+Since February 2013, the Apache Crunch project continues to be used, maintained and improved in an open source fashion, as explained in Section \ref{source}.
 \TODO{Not appropriate}
 
 
@@ -152,7 +157,6 @@ Cerner to focus their time, effort and money on performance tuning
 and/or algorithm adjustments rather than spending a significant amount
 time simply translating the problem into runnable code
 \cite{www-crunch-cerner}.
-\TODO{No repeat citation.}
 
 \subsection{Spotify} \label{spotify}
 Spotify, the popular ``music, podcast, and video streaming service''
@@ -174,7 +178,6 @@ Crunch has given Spotify a ``huge boost for both [their] ... developer
 \TODO{Not right.}
 productivity and execution performance on Hadoop''
 \cite{www-crunch-spotify}.
-\TODO{Repeated citation}
 
 \section{Educational Material} \label{educational}
 Apache Crunch makes the process of developing applications that
