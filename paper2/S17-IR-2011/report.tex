@@ -11,7 +11,7 @@
 
 \affil[*]{Corresponding authors: laszewski@gmail.com}
 
-\dates{project-000, \today}
+\dates{Paper-2, \today}
 
 \ociscodes{Cloud, I524}
 
@@ -82,7 +82,8 @@ in terms of virtual devices. Any request to the virtual devices is
 redirected to the devices in the parent partition, which then manages
 the requests \cite{www-hyperv-architecture}. The VMBus is a logical
 channel which enables inter-partition communication. The request and
-response are redirected via the VMBus. If the devices in the parent
+response are redirected via the VMBus
+\cite{www-hyperv-architecture}. If the devices in the parent
 partition are also virtual devices, it will be redirected further
 until it reaches the parent partition, where it will gain access to
 the physical devices.
@@ -132,7 +133,7 @@ then install the operating system.
 \section{Advantages and Features}
 
 With Windows Server 2012, Hyper-V supports network virtualization,
-multi-tenancy, .vhdx disk format supporting virtual hard disks as
+multi-tenancy, vhdx disk format supporting virtual hard disks as
 large as 64TB, offloaded data transfer, cross-premises connectivity
 and Hyper-V replica. And with Windows Server 2012 R2 also supports
 shared virtual hard disk, storage quality of services, enhances
@@ -159,25 +160,28 @@ Hyper-V does not virtualize audio hardware. It does not support the
 host/root operating system's optical drives to pass-through guest VMs,
 as a result, burning to disks are not supported. In Windows Server
 2008, Hyper-V does not support live migration of guest VMs where live
-migration is maintaining network connections and uniterrupted services
-during VM migration between physical hosts. Although Hyper-V doesn't
-provide live migration but it tries to eliminate the limitation by
-having quick migration feature. Also, when Hyper-V is installed it
-uses VT-x x86 virtualization feature making it unavailable for other
-solutions due to which software which requires VT-x support can't be
-installed in parallel \cite{www-hyperv-wikipedia}. One of the major
-operating system that is still unsupported includes Fedora 8 and 9.
+migration is maintaining network connections and uninterrupted
+services during VM migration between physical hosts. Although Hyper-V
+doesn't provide live migration but it tries to eliminate the
+limitation by having quick migration feature. Also, when Hyper-V is
+installed it uses VT-x x86 virtualization feature making it
+unavailable for other solutions due to which software which requires
+VT-x support can't be installed in parallel
+\cite{www-hyperv-wikipedia}. One of the major operating system that is
+still unsupported includes Fedora 8 and 9 \cite{www-hyperv-wikipedia}.
 
 \section{Management}
 
 Hyper-V servers can be managed using Windows PowerShell either locally
 or remotely. By running server manager on a remote computer, a server
-running in server core mode can be connected. It can also be connected
-using Microsoft Management Console (MMC) snap-in or by using another
-computer running Windows, the user can use Remote Desktop Services to
-run scripts and tools on a server. Server can be switched to GUI mode
-to use the usual user interface tools to accomplish the tasks and then
-switch back to server core mode \cite{www-microsoft-technet}. 
+running in server core mode can be connected
+\cite{www-microsoft-technet}. It can also be connected using Microsoft
+Management Console (MMC) snap-in or by using another computer running
+Windows, the user can use Remote Desktop Services to run scripts and
+tools on a server \cite{www-microsoft-technet}. Server can be switched
+to graphical user interface mode to use the usual user interface tools
+to accomplish the tasks and then switch back to server core mode
+\cite{www-microsoft-technet}.
 
 Hype-V hosts can be managed using Hyper-V manager where the manager
 lets you manage a small number of Hyper-V hosts, both remote and
@@ -187,7 +191,7 @@ tools-only installation \cite{www-microsoft-technet}.
 
 \section{Comparision between Hyper-V and vSphere}
 
-Windows Serven 2012 R2, VMware vSphere Hypervisor and VMware vSphere
+Windows Server 2012 R2, VMware vSphere Hypervisor and VMware vSphere
 5.5 Enterprise Plus all support 320 logical processors, 4TB of
 physical memory, 1TB of memory per virtual machine. While Hyper-V and
 vSphere Enterprise edition both support 64 virtual CPUs per virtual
@@ -215,13 +219,13 @@ both the vSphere Hypervisor and vSphere 5.5 Enterprise Plus.
 
 Hyper-V is a powerful hypervisor introduced by Microsoft with features
 such as high availability, scalability, reliability, flexibility. It
-also supports resouce monitoring that helps user track historical data
-on the use of virtual machines and gain insight into the resouce use
-of specific servers. Hyper-V sees competition from many other
+also supports resource monitoring that helps user track historical
+data on the use of virtual machines and gain insight into the resource
+use of specific servers. Hyper-V sees competition from many other
 supervisors such as vSphere, Qemu, KVM, VirtualBox and provides a
 tough competition. Hyper-V requires hardware assisted virtualization
-support from processors and it can only be used wtih x86-64
-processors. In spite of it's limitations it's a popular choce because
+support from processors and it can only be used with x86-64
+processors. In spite of it's limitations it's a popular choice because
 of the features it provides. The customization options available in
 Hyper-V provides the user with lot of options to manage the virtual
 machines as he would like. Hyper-V and Hyper-V hosts can be easily
