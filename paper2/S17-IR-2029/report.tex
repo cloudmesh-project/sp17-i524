@@ -10,7 +10,7 @@
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 \affil[*]{Corresponding authors:naveenkumar2703@gmail.com}
 
-\dates{project-000, \today}
+\dates{Paper 2, \today}
 
 \ociscodes{Mahout, Samsara, Apache, Scalable, Machine learning}
 
@@ -43,29 +43,30 @@ implementations of clustering, classification, collaborative filtering
 and genetic algorithms in Java for usage in single machine as well as
 in clusters using map reduce.
 
-As the popularity of in memory softwares like Spark started gaining
+As the popularity of in-memory softwares like Spark started gaining
 popularity over disk based softwares like Hadoop, new features rolled
-out by Mahout did not support Map reduce. The module to do algebraic
-operations under the code "Samsara" is released in version 0.10 was
-compatible only with frameworks like Spark, H2O and Flink but not map
-reduce based frameworks. Samsara was mainly written in Scala and is
-optimized to operate well independent of the background. Another key
-feature of Samsara is that it supports R-like syntax for linear
-algebra operations.
+out by Mahout did not support MapReduce. "Samsara" is a module to do
+algebraic operations which was released in Mahout version 0.10 and is
+compatible only with frameworks like Spark\cite{www-Spark},
+H2O\cite{www-H20} and Flink\cite{www-Flink} but not MapReduce based
+frameworks. Samsara was mainly written in Scala and is optimized to
+operate well independent of the background. Another key feature of
+Samsara is that it supports R-like syntax for linear algebra
+operations.
 
-Some of the algorithms available in map reduce stack were introduced
-for memory based frameworks as well and many of the implementations
-available in map reduce is yet to be introduced to other engines. A
-full list of algorithms available in Mahout and supported frameworks
-is discussed in section 2.
+Mahout has many algorithms for MapReduce based frameworks like Hadoop.
+Only some of them are implemented for in-memory based frameworks like
+Spark. A full list of algorithms available in Mahout and the
+frameworks supported by them is discussed in section 2.
 
 
 \section{Features}
 Mahout supports wide range of machine learning algorithms like
 classification, collaborative filtering and clustering, dimensionality
-reduction techniques like SVD, PCA and QR decomposition. Mahout
-Samsara environment provides linear algebra and statistics
-operations. Each of these are described in this section.
+reduction techniques like SVD, PCA and QR
+decomposition\cite{www-mahoutFeatures}. Mahout Samsara environment
+provides linear algebra and statistics operations. Each of these are
+described in this section.
 
 \subsection{Samsara - Math Environment}
 Mahout Samsara\cite{www-samsara} is a math environment to create and
@@ -81,7 +82,7 @@ One of the main advantage of Samsara is it supports R and Matlab like
 syntax using Scala's DSL (domain specific language) feature. DSL's are
 syntactic sugars for easy interpretation. An example is provided in
 section 5. Mahout Samsara is supported on Spark, H2O and Flink
-engines. Samsara is not available in Hadoop and map reduce based
+engines. Samsara is not available in Hadoop and MapReduce based
 engines but has a different implementation that supports all these math
 operations.
 
@@ -89,33 +90,30 @@ operations.
 Mahout has logistic regression using stochastic gradient descent,
 naive Bayes, complementary naive Bayes, random forest and hidden
 markov algorithms for classification. Naive Bayes available in Spark
-and map reduce is the only distributed classification algorithm. Others
+and MapReduce is the only distributed classification algorithm. Others
 are supported only on single machines.
 
 \subsection{Clustering}
 Mahout supports clustering algorithms like K-means, fuzzy k-means,
 streaming k-means, spectral clustering and canopy clustering. These
-are available only for single machines and map reduce based
+are available only for single machines and MapReduce based
 environments.
 
 \subsection{Collaborative Filtering}
 Mahout has implementation for user based and item based collaborative
-filtering algorithms for single machine, map reduce and spark
+filtering algorithms for single machine, MapReduce and spark
 engines. It also has implementation of matrix factorization with ALS,
-weighted matrix factorization using SVD for single machine and map
-reduce.
+weighted matrix factorization using SVD for single machine and
+MapReduce.
 
 \subsection{Other}
 Mahout supports several other features like Latent Dirichlet
-Allocation, row similarity job, collocations, sparse TF-IDF vectors
-from text, XML Parsing, Email Archive Parsing for map reduce
-engines. It also has Evolutionary Processes/Genetic algorithms
-implementation that runs on single machine.
-
-\subsection{GPU Acceleration}
-Mahout has capability to take advantage of GPU to accelerate matrix
-and vector operators on the backend using Vienna CL, OpenCL/CUDA.
-
+Allocation, row similarity job, collocations, sparse TF-IDF (Term
+frequency - inverse document frequency, a common feature used in
+information retrival and document search) vectors from text, XML
+Parsing, Email Archive Parsing for MapReduce engines. It also has
+Evolutionary Processes/Genetic algorithms implementation that runs on
+single machine.
 
 \section{Licensing}
 Apache Mahout is an open source software available for free commercial
@@ -171,7 +169,7 @@ recommendation is illustrated in figure 2.
 \label{fig:false-color}
 \end{figure}
 
-Mahout's mapreduce version of item similarity takes a text file that is
+Mahout's MapReduce version of item similarity takes a text file that is
 expected to have user and item IDs and provide recommendations based
 on content.
 
@@ -184,19 +182,17 @@ G=B{B}' - C - {C}' + s_{q} {s_{q}}' {\xi}' \xi\
 \label{equation1}
 \end{equation}
 
+where G is the matrix representation of the result of SPCA, B is the
+input or feature matrix, C is correlation matrix of the inputs with B'
+and C' as their transpose matrix, $s_q$ is standard deviation of each
+feature and $\xi$ is covariance matrix and $s_q$', $\xi$' are their
+respective transpose matrices.  
 
-Mahout code to compute this using Scala DSL is illustrated in
-algorithm 1,
+One line Mahout code to compute this using Scala DSL is illustrated
+here,
 
-\begin{algorithm}
-\caption{Mahout DSL to compute SPCA}\label{alg:mahout}
-\begin{quote}
-\begin{Verbatim}[numbers=left]
-val g = bt.t %*% bt - c - c.t + (s_q cross s_q) 
-               * (xi dot xi)\
-\end{Verbatim}
-\end{quote}
-\end{algorithm}
+{val g = bt.t \%*\% bt - c - c.t + $(s_q cross s_q) 
+               * (xi \ dot \  xi)$ }
 
 
 
