@@ -24,7 +24,7 @@ report: report.pdf
 
 report_submission: mm/dd/2017 hh:mmam
 
-status: I am currently writing the project proposal and testing out Ansible on VM's in the Chameleon Cloud.
+status: I am currently working on connecting to IU's VPN in the Chameleon Cloud so that I can use IU's Intel license server (using ansible).
 
 dataset_url: https://github.com/scottmcclary1/CDMS-Data
 

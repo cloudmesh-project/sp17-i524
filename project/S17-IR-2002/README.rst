@@ -1,17 +1,17 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: 2017-04-01"
 
-author: "ENTER YOUR NAME HERE"
+author: "Jimmy Ardiansyah"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2002"
 
-pid: "ENTER YOUR PID HERE"
+pid: ""
 
-github: "YOUR GITHUB USERNAME"
+github: "jardians"
 
 report: "report.pdf"
 
-proposal: "proposal.pdf"
+proposal: "report.pdf"
 
 --------------------------------------------------------------------------------

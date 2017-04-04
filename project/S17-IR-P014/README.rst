@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-30"
 
-author: "ENTER YOUR NAME HERE"
+author: "Niteesh Kumar Akurati, Bhavesh Reddy Merugurreddy"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2001, S17-IR-2018"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P014"
 
-github: "YOUR GITHUB USERNAME"
+github: "Niteesh01, bhavesh37"
 
 report: "report.pdf"
 

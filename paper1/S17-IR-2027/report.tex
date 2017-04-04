@@ -1,4 +1,4 @@
-\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
 
@@ -19,7 +19,7 @@
 
 
 \begin{abstract}
-Twitter Heron is a real-time analytics platform that was developed at Twitter for distributed streaming processing. This paper summarizes the usage, architecture, features, performance and use cases of Twitter Heron. Comparison between the capabilities of Twitter Heron and its predecessor Twitter Storm has also been mentioned. Some of the other streaming technologies which are used for data streaming real-time data have been listed.\newline
+Twitter Heron is a real-time analytics platform that was developed at Twitter for distributed streaming processing. The usage, architecture, features, performance and use cases of Twitter Heron are described in detail. Comparison of the capabilities of Twitter Heron and its predecessor Twitter Storm is summarized. A list of the other streaming technologies, which are used for streaming real-time data are discussed.\newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -30,16 +30,16 @@ Twitter Heron is a real-time analytics platform that was developed at Twitter fo
 
 \section{Introduction}
 
-With the increase in the volume and diversity of data being generated in Twitter, the need to process these huge amounts of data in real-time along with an uprise in the number of use cases for real-time analytics, led to the necessity of having a real-time streaming system in place that could process large amounts of data per minute; have sub-second latency and predictable behavior at scale; have high data accuracy in case of failure, ability to handle temporary traffic spikes and pipeline congestions; be easy to debug; and simple to deploy in a shared infrastructure as mentioned in \cite{TwitterHeron1}.
+With the increase in the volume and diversity of data being generated in Twitter, the need to process these huge amounts of data in real-time along with an uprise in the number of use cases for real-time analytics, led to the necessity of having a real-time streaming system in place. This system should have the ability to process large amounts of data per minute; have sub-second latency and predictable behavior at scale; have high data accuracy in case of failure, ability to handle temporary traffic spikes and pipeline congestions; be easy to debug; and simple to deploy in a shared infrastructure as mentioned in \cite{TwitterHeron1}.
 
-Twitter initially introduced 'Storm' which served as the real-time data processing system and was later  replaced with Heron that had enhanced capabilities and was architecturally more advanced than Storm. Since extension of Storm would require redesigning and switching to a new platform may lead to prolonged migration periods,Twitter decided to reuse existing components of Storm and made Heron fully backward compatible with Storm. Twitter Heron is a real-time analytics platform that was developed at Twitter for distributed streaming processing \cite{www-openSourceHeron}. It was introduced at 'SIGMOD 2015' to overcome the shortcomings of Twitter Storm.Heron was open sourced under the permissive Apache v2.0 license. 
+Twitter Heron is a real-time analytics platform that was developed at Twitter for distributed streaming processing \cite{www-openSourceHeron}. It was introduced at 'SIGMOD 2015' to overcome the shortcomings of Twitter Storm. Heron was open sourced under the Apache v2.0 license \cite{www-FlyFasterHeron}. Twitter initially introduced 'Storm' which served as the real-time data processing system and was later  replaced with 'Heron' that had enhanced capabilities and was architecturally more advanced than Storm \cite{www-FlyFasterHeron}. Since extension of Storm would require redesigning and switching to a new platform may lead to prolonged migration periods,Twitter decided to reuse existing components of Storm and made Heron fully backward compatible with Storm.  
 
 \section{Architecture}
-Heron's architecture is a process-based system instead of the thread-based system used in Storm. It is implemented using standard languages like Java, C++ and Python for efficiency, maintainability, and easier community adoption since it is open sourced. Heron allows for deployment in clusters by integrating with open source schedulers like Apache Mesos, Apache Aurora, Apache REEF, Slurm.
+Heron's architecture is a process-based system instead of the thread-based system used in Storm. It is implemented using standard languages like Java, C++ and Python for efficiency, maintainability, and easier community adoption since it is open sourced. Heron allows for deployment in clusters by integrating with open source schedulers like Apache Mesos, Apache Aurora, Apache REEF, Slurm \cite{www-openSourceHeron}.
 
 \subsection{Data Model}
 
-The data model and API for Heron and Storm are same in order to maintain the backward compatibility. Heron contains topologies which is a directed acyclic graph of spouts and bolts. Spouts generate the tuples that are given as input to the topology. Bolts are used for the computation. In the Heron topology the number of tasks for every spout and bolt is specified. This decides the the degree of parallelism and grouping of the data as partitions when it moves through the spout and the bolt tasks. Heron’s tuple processing semantics are similar to that of Storm: At most once – A tuple is not processed more than once. Some tuples may not be processes even once by the topology.At least once – Every tuple is processed at least once. Some tuples may be processed more than once \cite{TwitterHeron2}.
+The data model and API for Heron and Storm are same in order to maintain the backward compatibility. As explained in \cite{TwitterHeron2}, Heron contains topologies, each of which is a directed acyclic graph of spouts and bolts. Spouts generate the tuples that are given as input to the topology. Bolts are used for the computation. In the Heron topology, the number of tasks for every spout and bolt is specified. This decides the the degree of parallelism and grouping of the data as partitions when it moves through the spout and the bolt tasks. Heron’s tuple processing semantics are similar to that of Storm: At most once – A tuple is not processed more than once. Some tuples may not be processes even once by the topology; At least once – Every tuple is processed at least once. Some tuples may be processed more than once \cite{TwitterHeron2}.
 \begin{figure}[htbp]
 \begin{center}
 \centering

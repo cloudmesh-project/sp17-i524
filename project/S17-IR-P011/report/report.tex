@@ -1,8 +1,8 @@
-\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{Head Count Detection Using a Docker Swarm Cluster}
+\title{Head Count Detection Using Apache Mesos}
 
 \author[1]{Anurag Kumar Jain}
 \author[1]{Pratik Sushil Jain}
@@ -18,7 +18,7 @@
 \doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P011}}
 
 \begin{abstract}
-By deploying our face detection application on Docker cluster, we will
+By deploying our face detection application utilizing Apache Mesos, we will
 try to achieve high throughput by parellalizing processing of images
 for head count task on multiple nodes each having thousand of
 pictures.
@@ -36,12 +36,19 @@ Counting the number of people in a image has been a challenge in the
 field of computer vision \cite{www-face-detection-wikipedia}. Given a
 huge number of images, finding the number of people in each image can
 become a cumbersome task. We try to solve this issue using our
-distributed approach using a docker swarm cluster which is a cluster
-of Docker \cite{www-docker-wikipedia} engines, or nodes, where
-services have to be deployed. We run the OpenCV
+distributed approach utilizing power of Apache Mesos \cite{www-mesos}
+, where services have to be deployed (TBD). We run the OpenCV
 \cite{www-opencv-wikipedia} face detection algorithms on smaller data
 in multiple nodes and obtain the head count of the people in each
 picture.
+
+\section{Why Mesos?}
+Mesos can be used to implement a decentralized scheduling approach. In
+this approach each framework decides which offers to accept or
+reject. There are many incentives that are provided by any
+decentralized system. The incentives provided by Apache Mesos system
+includes short tasks, no minimum allocation, scale down and not
+accepting unknown resources \cite{www-mesos-paper}.
 
 \section*{Acknowledgements}
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -x
 
 set -o errexit                  # exit on failure
 
@@ -171,7 +171,8 @@ do_paper() {
     declare -r DIRECTORY=docs/source/format/report
 
     git-clone-directory $CLASS ./$DIRECTORY $OUTDIR
-
+    CLONEDIR=`pwd`
+    rm -rf $CLONEDIR/styles
     echo "DONE: $OUTDIR"
 }
 
@@ -185,7 +186,7 @@ do_project() {
 
     mkdir -p $OUTDIR
     mkdir -p $OUTDIR/code
-    touch $OUTDIR/code/.gitkeep
+    # touch $OUTDIR/code/.gitkeep$OUTDIR/styles
     mkdir -p $OUTDIR/report
     touch $OUTDIR/code/.gitkeep
     declare -r OUTDIR=$OUTDIR/report

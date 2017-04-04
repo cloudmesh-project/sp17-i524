@@ -23,13 +23,13 @@
 \begin{abstract}
   
 Machine learning and data mining have been used everyday in all
-industries driven by data.H2O is a platform using for performing
+industries driven by data. H2O is a platform using for performing
 machine learning and predictive analytics for large scale date using
 cloud. When the data that is generated is large scale and is in
 terrabytes, H2O serves a very important purpose of being able to
 accurately predict using different algorithms using different
 programming languages through APIs. This paper introduces to H2O, how
-it has impacted various industries across several domains with
+this platform  has impacted various industries across several domains with
 improved accuracy and reduced processing time. Different use cases of
 the H2O platform has been explained as well.
   
@@ -43,19 +43,19 @@ the H2O platform has been explained as well.
 
 \section{Introduction}
 
-\cite{H2Odocumentation}H2O is an open source platform that is used
+\cite{www-h2o-webpage}H2O is an open source platform that is used
 to create machine learning and predictive analytics models on big
 datasets. It is mainly written in Javascript but have APIs for R ,
-Python, Excel , Tableau and Flow and works on the conventional
+Python, Excel, Tableau and Flow and works on the conventional
 operation systems. This platform allows the online scoring and
 modelling of data on a single algorithm. The main algorithms
-implemented on the datasets are deep learning , gradient boosting ,
-generalized linear models , distributed random forest , k-means
-etc. \cite{H2Odocumentation}The algorithms implemented on the big
+implemented on the datasets are deep learning, gradient boosting ,
+generalized linear model, distributed random forest, k-means
+etc. The algorithms implemented on the big
 datasets is read in a parallel manner and is then distributed and
 stored in memory in a compressed column format. H2O also has an
 inbuilt intelligence to detect and support the data ingest from
-various sources in different formats.\
+various sources in different formats.
 
 \section{How does H2O work?}
 
@@ -66,7 +66,7 @@ usually we choose a smaller sample dataset rather than the entire
 dataset to build model due to the large processing time involved. H2O
 has the advantage of being able to use the entire dataset to run the
 algorithm on as larger the dataset we are able to analyse better the
-predictions would be.  Suppose a business is trying to understand the
+predictions would be. Suppose a business is trying to understand the
 best product placement for optimal customer enagement, the model would
 be created based on the dataset formed collecting information about
 the interactions of the customer on the website. H20 is used to model
@@ -76,9 +76,9 @@ for performance. H2O is also used to score hundreds of models in nano
 seconds to reach better predictions.
 
 \section{Requirements}
-\cite{www-h2o-requirements}
 
 \subsection{Operating Systems}
+\cite{www-h2o-requirements}
 It works on the following operating systems 
 \newline Windows 7 or later
 \newline OSX 10.9 or later
@@ -108,29 +108,27 @@ It works on the following operating systems
 \cite{www-h2o-architecture}
 The H2O architecture consists of a different component which combine
 together to form the H2O software stack. We can divide the H2O
-architecture into 3 different components , top section includes all
-the REST API clients , middle includes the Network Cloud and the
+architecture into 3 different components, top section includes all
+the REST API clients, middle includes the Network Cloud and the
 bottom section contains the different components that run within an
-H20 JVM process.  The top section contains the programming languages
-that can be used on the big dataset here . The REST API clients
+H20 JVM process. The top section contains the programming languages
+that can be used on the big dataset here. The REST API clients
 communicate with the H2O with the help of a socket connection. The
 Network cloud consists of the different inbuilt algorithms to create
-the necessary model on the data , this can also contain a customized
+the necessary model on the data, this can also contain a customized
 customer algorithm to analyze the required dataset and produce the
 desired outputs.  The H2O cloud can consists of two or more nodes
 which can contain a single JVM process. Each JVM process consists of
-language , algorithm and infrastructure (manages the resources
+language, algorithm and infrastructure (manages the resources
 management such as memory and CPU).
 
-\section{Figures and Tables}
-
-Figure \ref{fig:Architecture of H2O} shows an example figure.
+\section{Figures}
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/Architecture(1)}}
-\caption{H2O Architecture}
-\label{fig:Architecture of H2O}
+\caption{H2O Architecture\cite{www-h2o-architecture}}
+\label{ fig:Architecture of H2O}
 \end{figure}
 
 
@@ -138,7 +136,7 @@ Figure \ref{fig:Architecture of H2O} shows an example figure.
 
 \subsection { CapitalOne}
 \cite{www-h2o-capitalone}
-CapitalOne , a fortune 500 bank with 960 banks and 2000 ATMs
+CapitalOne, a fortune 500 bank with 960 banks and 2000 ATMs
 accumulates terrabytes of information in real time on customer
 information and financial processing. H2O was used to reduce the
 iterative timing over the large data sets on applying various
@@ -155,38 +153,36 @@ predictive analytics under H2O was used to give a comparison on how
 the current state of the marketing budget is and how much is the
 predicted revenue, using H2O solutions were generated as to what are
 the changes that can be made to improve the current projection and
-what an improved projection will look like.  H2O can ingest large
+what an improved projection will look like. H2O can ingest large
 amount of data as its capability is not limited to using one machine ,
 since it is a cloud based system, multiple machines can be used at the
-same time.  MarketShare was able to go on the cloud and use as much
+same time. MarketShare was able to go on the cloud and use as much
 machines as required and get desired outputs on the large
-datasets.They use 25 machines for all of their clients to process the
+datasets. They use 25 machines for all of their clients to process the
 data and were able to expand the scalability of the dataset.If their
 datasize increases by x amount then they would add y more machines to
 solve the problem. Scaling across lot of nodes is critical to their
 business as the company deals with digital log data and irrespective
 of the complexity of the modelling and the huge size of the data. It
-has a distributed in- memory processing with the kind of data involved
+has a distributed in-memory processing with the kind of data involved
 and the algorithms implemented on the data.
 
-\section {Resources to learn H2O from}
+\section {Relevant Coursework}
 
-H2O has an open source platform and hence has a community for support.\newline
- Step by step instructions with documentation and videos have
-been provided for installation and to understand the work flow of H2O.\newline
- Free online training videos are provided at
-“http://learn.h2o.ai”\newline
-H2O documentation is avialable on their website
-“https://h20.ai”\newline
-h2ostream is an open source google group where H2O users can
-post questions and get answers.\newline
-They have built an online community at
-“https://community.h2o.ai/index.html” which is a discussion platform.\newline
-They also conduct conferences around the year in United
-States for users to interact among one another and update new releases
-and happenings in the big data community.
+H2O has an open source platform and hence has a community for
+support.\newline Step by step instructions with documentation and
+videos have been provided for installation and to understand the work
+flow of H2O.\newline Free online training videos are provided on the
+main webpage \cite{www-h2o-learn} \newline H2O documentation is
+available on their website.  \cite{www-h2o-webpage}\newline h2ostream
+is an open source google group where H2O users can post questions and
+get answers.\newline They have built an online community
+at\cite{www-h2o-community} which is a discussion platform.\newline
+They also conduct conferences around the year in United States for
+users to interact among one another and update new releases and
+happenings in the big data community.\cite{www-h2o-meetups}
 
-\section{Why H2O}
+\section{Conclusion}
 \cite{www-h2o-why}Being an open source platform it gives
 user the flexibility to solve the problems. It is easy to set up and
 has a smooth installation and usage feature due to its interface with
@@ -196,6 +192,14 @@ even connect to data from HDFS, S3 ,SQL and NoSQL data sources.It has
 a massive scalability, large datasets can be analyzed by using
 multiple machines. It also conducts a real time data scoring for
 accurate predictions.
+
+\section{Acknowledgement}
+A very special thanks to Professor Gregor von Laszewski and the
+teaching assistants Miao Zang and Dimitar Nikolov for all the support
+and guidance in getting this paper done and resolving all the
+technical issues faced. The paper is written during the spring 2017
+semester course {I524: Big Data and Open Source Software Projects} at
+Indiana University Bloomington.
 
 \bibliography{references}
 

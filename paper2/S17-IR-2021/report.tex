@@ -1,0 +1,241 @@
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Amazon Elastic Beanstalk}
+
+\author[1]{Shree Govind Mishra}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: shremish@indiana.edu}
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524, Amazon Web Services, AWS Elastic Beanstalk, Load Balancing, Cloud Watch, AWS Management Console, Auto Scaling}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/raw/master/paper2/S17-IR-2021/report.pdf}}
+
+
+\begin{abstract}
+Amazon Elastic Beanstalk is a service provided by the Amazon Web
+Services which allow developers and engineers to easily deploy and run
+web applications in the cloud, in such a way that these applications
+are highly available and scalable. Elastic Beanstalk manages the
+deployed application by reducing the management complexities as it
+automatically handles the capacity provisioning, load balancing,
+scaling, and application health monitoring. Elastic BeanStalk also
+provisions one or more AWS Resources such as Amazon EC2 instances when
+an application is deployed.
+\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Cloud Computing can be defined as an abstraction of services from
+infrastructures(i.e hardware), platforms and applications(i.e
+software) by virtualization of resources \cite{elastic-beanstalk}. The
+different form of cloud computing services include IaaS, PaaS, and
+SaaS which stands for (Infrastructure as a Service), Platform as a
+Service, and Software as a service respectively. With Cloud
+Computing, organizations can consume shared computing and storage
+resources rather than building, operating and improving infrastructure
+on their own and it can also enable organizations to obtain a
+flexible, secure and cost-effective Infrastructure.
+
+Amazon Web Services (AWS) is a subsidiary of Amazon.com, which offers
+a suite of cloud computing services such as compute power, database
+storage, content delivery and other functionalities that make up an
+on-demand computing platform. The scaling on IaaS level can be
+illustrated with an example of Amazon Elastic Compute
+Cloud(AmazonEC2), whereas scaling on PaaS level can be illustrated
+with Amazon Web Services Elastic Beanstalk(AWS Elastic Beanstalk). AWS
+Elastic Beanstalk is one of the many services provided by the AWS
+with its functionality to manage the Infrastructure.Elastic beanstalk
+provides a quick deployment and management of the applications on the
+Cloud as it automatically handles the details of capacity
+provisioning, load balancing, scaling, and application health
+monitoring. Elastic beanstalk uses highly reliable and scalable
+services \cite{elastic-beanstalk-2}.
+
+\section{Need for AWS Elastic Beanstalk}
+
+Cloud Computing shifts the location of resources to the cloud to
+reduce the cost associated with over-provisioning, under-provisioning,
+and under-utilization. When more than required resources are
+available, is called over-provisioning \cite{cloudcomputing}. When the
+resources are not used adequately, it is known as
+under-utilization. And when the resources available are not enough is
+called under-provisioning. Cloud Computing should also reduce the time
+required to provision the resources with the variable workload on the
+server so that the applications can be quickly scaled up and down with
+the variable workload \cite{elastic-beanstalk-book}. There scaling of
+applications can be achieved by:
+
+\subsection{Manual Scaling in Cloud Enviornment}
+
+In traditional applications, scalability is achieved by predicting the
+peak loads, then purchasing, setting up and configuring the
+infrastructure that could handle this peak load \cite{ManualScaling}. With Manual
+Scaling, the resources are provisioned at the deployment time and the
+application servers are added to infrastructure manually, thus there is
+high latency. Due to these issues, the average time the applications
+are provisioned is long. There is also an issue of Manual
+Monitoring of the resources allocated.
+
+\subsection{Semi-Manual Scaling in Cloud Enviornment}
+
+The resources provided for the Inftrastruare are virtualized in the cloud
+environment and thus this virtualization enables the elasticity. In
+particular, in cloud environments, resources are provisioned
+dynamically (i.e. at runtime), automatically (i.e. without user
+intervention), infinitely and almost immediately (i.e. within minutes
+and not hours, days, weeks or months like in traditional
+environments) \cite{elastic-beanstalk}. Thus, the mean time until when
+the resources are provisioned are short.  However, manual monitoring
+of resources is still necessary. In particular, users are forced to
+make a tradeoff between requesting more resources to avoid
+under-provisioning and requesting fewer resources to avoid
+over-provisioning and under-utilization. Since resources are
+provisioned by request, the problem of the unavailability of an
+application at peak loads is not completely eliminated.
+
+\subsection{Automatic Scaling in Cloud Enviornment}
+
+Automatic Scaling enables users to closely follow the workload curve
+of their application, by provisioning resources on demand. The user
+owns the choice that the number of resources these applications are
+using increases automatically during the time when the demand of
+resources are high to handle the peak load and also automatically
+decreases when the minimal resources are needed, to minimize the cost
+so that the user only pays for what they used. Automatic Scaling also
+predicts the peak load that the applications may require in the future
+and provisions these required resources in advance, proving the
+elasticity of the cloud  \cite{elastic-beanstalk}.
+
+
+\section{Elastic Beanstalk services}
+
+Elastic Beanstalk supports applications developed in Java, PHP, NET,
+Node.js, Python, and Ruby, and also in different container types for
+each language. A container defines the infrastructure and software
+stack to be used for a given environment. When an application is
+deployed, Elastic Beanstalk provisions one or moreAWS resources, such
+as Amazon EC2 Instances \cite{elastic-beanstalk-book}. The software
+stack that runs on the instances depends on the container type, where
+two container types are supported by the Elastic Beanstalk Node.js: a
+32-bit Amazon Linux Image and a 64-bit Amazon Linux Image. Where each
+of them runs the Software stack tailored to the hosted Node.js
+application. Amazon Elastic Beanstalk can be interacted using the AWS
+Management Console, the AWS Command Line Interface(AWS CLI), or a
+high-level CLI designed for Elastic BeanStalk
+\cite{elastic-beanstalk-book}.
+
+Amazon Elastic Beanstalk provides the Automatic Scaling in cloud
+Environments.  For Automatic Scaling, it uses the following Amazon Web
+Services:
+
+\subsection{AWS Management Console}
+
+AWS Management Console is a browser-based graphical user
+interface(GUI) for Amazon Web Services. It allows users to configure
+an automatic scaling mechanism of AWS Elastic Beanstalk as well as
+other services of AWS. From the Management console, the user can decide
+about how many instances does the application require. When the
+application must be scaled up and down \cite{elastic-beanstalk}.
+
+\subsection{Elastic Load Balancing}
+
+Elastic Load Balancing enables the load balancer which automatically
+distributes the incoming application traffic across all running
+instances in the auto-scaling group based on metrics like request count
+and latency tracked by Amazon Cloud Watch. If an instance is
+terminated, the load balancer will not route requests to this instance
+anymore. Rather, it will distribute the requests across the remaining
+instances.
+    
+Elastic Load Balancing also monitors the availability of an
+application, by checking its "health" periodically (e.g. every five
+minutes). If this check fails, AWS Elastic Beanstalk will execute
+further tests to detect the cause of the failure
+\cite{elastic-loadbalancing}. In particular, it checks if the load
+balancer and the auto-scaling group are existing.  In addition, it
+checks if at least one instance is running in the auto-scaling
+group. Depending on the test results, AWS Elastic Beanstalk changes
+the health status of the application.
+    
+The different colors respond to the status of the application. Green
+indicates that the application responded within a minute, Yellow
+indicates that the application has not responded in the last 5
+minutes, Red indicates that application has not responded in the last
+5 minutes or some other problem may have been detected by AWS Elastic
+Beanstalk. Gray indicates that the status of the application is
+unknown as of now \cite{elastic-loadbalancing}.
+
+\subsection{Auto Scaling}
+
+Auto Scaling automatically launches and terminates instances based on
+metrics like CPU and RAM utilization of the application and are
+tracked by Amazon CloudWatch and thresholds called triggers. Whenever
+a metric crosses a threshold, a trigger is fired to initiate automatic
+scaling.  For example, a new instance will be launched and registered
+at the load balancer if the average CPU utilization of all running
+instances exceeds an upper threshold
+    
+Auto Scaling also provides fault tolerance. If an instance reaches an
+unhealthy status or terminates unexpectedly, Auto Scaling will
+compensate this and launch a new instance instead, thus assuring that
+the specified minimum number of instances are running constantly.
+
+\subsection{Amazon Cloud Watch}
+
+Amazon CloudWatch is a component of Amazon Web Services (AWS) that
+provides monitoring for AWS resources and the customer applications
+running on the Amazon infrastructure \cite{elastic-cloudwatch}  It tracks and stores
+per-instance metrics, including request count and latency, CPU and RAM
+utilization.  Once stored, the metrics can be visualized an API,
+command-line tools, one of the AWS SDK (software development kits) or
+the AWS Management Console. With AWS Management Console, users can
+get real-time visibility into the utilization of each of the instances
+in an auto-scaling group via the graphs and chart provided, and can
+easily and quickly detect the over-provisioning, under-utilization or
+under-provisioning.
+
+\section{Conclusion}
+
+In traditional (i.e. non-cloud) environments, overprovisioning and
+under-utilization can hardly be avoided \cite{cloudcomuting}. There is
+an observation that in many companies the average utilization of
+application servers ranges from 5 to 20 percent, meaning that many
+resources like CPU and RAM are idle at peak times
+\cite{cloudcomputing-2}.  On the other hand, if the companies shrink
+their infrastructures to reduce over-provisioning and
+under-utilization, the risk of under-provisioning will increase. While
+the costs of over-provisioning and under-utilization can easily be
+calculated, the costs of under-provisioning are more difficult to
+calculate because under-provisioning can lead to a no peak times
+\cite{cloudcomputing-2}.
+
+Other platforms like Google App Engine \cite{google-appengine} also
+let users have their applications to automatically scale both up and
+down according to demand but with even more restrictions on how users
+should develop their applications. Wheras, with AWS Elastic Beanstalk
+there is more control with the user. A downside of AWS Elastic
+Beanstalk is that currently, it does not provide any web service to
+predict demand for the near future. Theoretically, the statistical
+usage data of the last few months or years could be used to predict
+time intervals during which more or fewer resources are needed.
+
+% Bibliography
+
+\bibliography{references}
+ 
+
+
+\end{document}

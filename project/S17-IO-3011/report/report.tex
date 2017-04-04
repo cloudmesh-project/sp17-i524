@@ -59,6 +59,8 @@ project up week-by-week in order to complete the entire project by the
 desired deadline. The project execution plan is simply a guide and was
 followed diligently; however, some items were pushed
 forwards/backwards as technological challenges were faced.
+\TODO{Scott McClary: need to update the plan as timing information
+  changes throughout the semester.}
 \subsection{March 6, 2017 - March 12, 2017}
 This week I installed Cloudmesh on my local machine, created my first
 Virtual Machine on the Chameleon Cloud and tested Ansible Galaxy on
@@ -69,6 +71,10 @@ This week I tested the deployment of the Intel Compiler on one or more
 Chameleon Cloud VM's using Ansible Galaxy. I did not expect
 significant progress to be made during this weeek given that I was out
 of town for Spring Break.
+\subsection{March 19, 2017 - March 26, 2017}
+This week I configured the Intel Compiler to use the Indiana
+University Intel license server. This required connecting to Indiana
+University's VPN from the command line.
 \subsection{March 27, 2017 - April 2, 2017}
 This week I deployed the Charge Detection Mass Spectrometry along with
 the required input data on one or more Chameleon Cloud VM's using
@@ -115,7 +121,8 @@ change occurs to the research application, a large batch of archived
 data requires reprocessing. In this case, terabytes of data may be
 processed. This is why the parallelization and therefore the
 scalability of the application is critical to the Martin F. Jarrold
-research group.
+research group.  \TODO{Working to figure out where I will store the
+  data and how to partition the data amongst available VMs.}
 
 \section{CDMS Research Pipeline} \label{cdms}
 \begin{figure}
@@ -125,7 +132,18 @@ research group.
 \end{figure}
 
 \section{Licensing} \label{licensing}
-\TODO{Scott McClary: need to detail licensing information for source code and Intel Compiler}
+The Intel Compiler requires a license in order to complete the
+installation. A student license is obtainable; however, the
+leveraginng the Indiana University Intel license would provide a more
+complete solution. In order to use the Indiana University Intel
+license, the Virtual Machines have be in the Indiana University IP
+address space or have to have to be connected to Indiana University's
+Virtual Private Network (i.e. VPN). In order to connect to the VPN,
+one must first connect via DUO Authentication (i.e. use a phone to
+validate as well). \TODO{Scott McClary: need to continue working to
+  connect to IU's VPN (and DUO) from the command line. So far this
+  solution is not yet complete. Need to figure out licensing
+  information for Jarrold Group code.}
 
 \section{Benchmark}
 As discussed in section \ref{code}, the application is parallelized
@@ -135,7 +153,9 @@ computational power available. Figure \ref{fig:scalability2} compares the perfor
 The time required to deploy and run the application in the cloud is
 shown in the figure (TBD). This benchmark includes the time required
 for the installation of the software subsystems as well as the time
-required to run the application. 
+required to run the application.  \TODO{Add timing information for one
+  or more clouds (i.e. Chameleon) to Figure \ref{fig:scalability2} and
+  compare the results (if possilbe).}
 
 \subsection{OpenMP Scalability} \label{scalability}
 \begin{figure}

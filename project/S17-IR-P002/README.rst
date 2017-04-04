@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2017-03-14"
 
-author: "ENTER YOUR NAME HERE"
+author: "Harshit Krishnakumar and Karthik Anbazhagan"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2014 and S17-IR-2008"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P002"
 
-github: "YOUR GITHUB USERNAME"
+github: "harkrish1 and karthik-anba"
 
 report: "report.pdf"
 

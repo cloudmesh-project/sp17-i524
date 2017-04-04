@@ -2,26 +2,32 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{Oracle PGX}
+\title{\LaTeX\ Template for Preparing a Paper or Report for I524}
 
-\author[1,*]{Piyush Shinde}
+\author[1,2,3]{John Smith}
+\author[2]{Alice Smith}
+\author[1]{Bruce Wayne}
+\author[1,*]{Gregor von Laszewski}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+\affil[2]{School of Science, University of Technology, 2000 J St. NW, Washington DC, 20036}
+\affil[3]{School of Optics, University of Technology, 2000 J St. NW, Washington DC, 20036}
 
+\affil[*]{Corresponding authors: laszewski@gmail.com}
 
-\affil[*]{Corresponding authors: piyushsshinde1992@gmail.com}
+\dates{project-000, \today}
 
-\dates{project-001, \today}
-
-\ociscodes{Graph Analysis, Algorithms, Shell}
+\ociscodes{Cloud, I524}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
 
 
 \begin{abstract}
-Graph analysis provides key insights that are normally overlooked when glancing through them. These insights play a vital role in business optimizations. Efficiency of graph analysis can be compromised due to factors like storage capacity and data set sizes. Oracle PGX is a graph analysis toolkit. This paper provides a brief introduction to Oracle PGX and its various features. It also discusses the real world applications, advantages and limitations.     
-\newline
+This template can be used to prepare a research article for I524. Note
+that this template can be run from your own \TeX\ system or within the
+cloud-based \href{https://www.overleaf.com}{Overleaf} system or \href{https://www.sharelatex.com/}
+{Sharelatex} systems.\newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -32,129 +38,335 @@ Graph analysis provides key insights that are normally overlooked when glancing 
 
 \section{Introduction}
 
-A graph is a fundamental data structure that defines links between different entities (data). Graphs represent data sets in a wide range of applications. In a social graph, for example, nodes correspond to people while friendship relationships between them are represented as edges \cite{hong2012green}.
+This template is designed to assist with creating an article for
+I524. The page length is typically done without images. Thus if you
+have images in your report, please add additional content to offset
+the space captured by images. We do not check exactly, so there is no
+reason to contact us if you are a paragraph short, but if you are half
+a page short you may add quality content.
 
-Graph analysis involves extracting information from a data-set, which is represented as a graph. Large amounts of data demands huge amounts of computational power to analyse. Challenges faced during graph analysis include storage capacity for large data sets, performance variation with varying data set sizes, and efficient implementation of graph analyses algorithms.
+\section{Chance for Publishing a Paper}
 
-Oracle PGX (Parallel Graph AnalytiX)  solves these challenges.  PGX is a fast, parallel, in-memory graph analytic framework. Its main features include loading graphs into memory, running built-in and user-defined graph analyses algorithms, running graph pattern matching queries and mutating graphs \cite{www-over}. We will glance through these features in this paper.
+If this work can lead to a publishable paper, you could engage with
+the course instructor as coauthor to work more closely with him/them.
+This however requires that the paper be worked on in a regular basis
+and that timely contributions from the instructor can be integrated.
+Hence this is going to be a significant effort and you need to decide
+if you like to conduct this. Naturally the project must be suitable
+for such an activity. It may even be that some projects may be
+combined.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.7]{images/1}
-    \centering
-    \caption{PGX Overview.}
-    \end{figure}
+In such cases if the work is sufficient for publication submission, an
+A+ for the class could be considered. It will be however a lot of
+work. The length of such a paper is typically 10-12 high quality pages
+including figures and references. We may elect for the final
+submission to use a different LaTeX style. As Gregor is an expert in
+this, changing the format will be simple.
 
-\section{Installation}
+\section{Examples of Article Components}
+\label{sec:examples}
 
-To install Oracle PGX the platform requirements include a Linux x86 system (kernel >= 2.6) or Mac OS X platform \cite{www-plat}. 
+The sections below show examples of different article components.
 
-Oracle PGX can be installed in the following steps. Download Java SE 8 Development Kit (JDK8). Make sure the JAVA$\_$HOME environment variable points to the JDK8 home directory, e.g. export JAVA$\_$HOME=/usr/lib/jvm/java-8-oracle. Unzip the downloaded zip file e.g. unzip pgx-2.3.1-server.zip -d /opt/pgx. Change directory (cd) into the installation directory. e.g. cd $\$$PGX$\_$HOME. Start the PGX shell using the command $./bin/pgx$.
+\section{Figures and Tables}
 
-Oracle PGX 2.3.1 is the latest version available as of $26^{th}$ February 2017 \cite{www-plat}. 
+It is not necessary to place figures and tables at the back of the
+manuscript. Figures and tables should be sized as they are to appear
+in the final article. Do not include a separate list of figure
+captions and table titles.
+
+Figures and Tables should be labelled and referenced in the standard
+way using the \verb|\label{}| and \verb|\ref{}| commands.
+
+\subsection{Sample Figure}
+
+Figure \ref{fig:false-color} shows an example figure.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/sample}}
+\caption{False-color image, where each pixel is assigned to one of seven reference spectra.}
+\label{fig:false-color}
+\end{figure}
+
+\subsection{Sample Table}
+
+Table \ref{tab:shape-functions} shows an example table.
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Shape Functions for Quadratic Line Elements}
+\begin{tabular}{ccc}
+\hline
+local node & $\{N\}_m$ & $\{\Phi_i\}_m$ $(i=x,y,z)$ \\
+\hline
+$m = 1$ & $L_1(2L_1-1)$ & $\Phi_{i1}$ \\
+$m = 2$ & $L_2(2L_2-1)$ & $\Phi_{i2}$ \\
+$m = 3$ & $L_3=4L_1L_2$ & $\Phi_{i3}$ \\
+\hline
+\end{tabular}
+  \label{tab:shape-functions}
+\end{table}
+
+\section{Sample Equation}
+
+Let $X_1, X_2, \ldots, X_n$ be a sequence of independent and
+identically distributed random variables with $\text{E}[X_i] = \mu$
+and $\text{Var}[X_i] = \sigma^2 < \infty$, and let
+
+\begin{equation}
+S_n = \frac{X_1 + X_2 + \cdots + X_n}{n}
+      = \frac{1}{n}\sum_{i}^{n} X_i
+\label{eq:refname1}
+\end{equation}
+
+denote their mean. Then as $n$ approaches infinity, the random
+variables $\sqrt{n}(S_n - \mu)$ converge in distribution to a normal
+$\mathcal{N}(0, \sigma^2)$. 
+
+\section{Sample Algorithm}
+
+Algorithms can be included using the commands as shown in algorithm
+\ref{alg:euclid}.
+
+\begin{algorithm}
+\caption{Euclid’s algorithm}\label{alg:euclid}
+\begin{algorithmic}[1]
+\Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
+\State $r\gets a\bmod b$
+\While{$r\not=0$}\Comment{We have the answer if r is 0}
+\State $a\gets b$
+\State $b\gets r$
+\State $r\gets a\bmod b$
+\EndWhile\label{euclidendwhile}
+\State \textbf{return} $b$\Comment{The gcd is b}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Python example}\label{alg:python}
+\begin{quote}
+\begin{Verbatim}[numbers=left]
+for i in range(0,100):
+  print i
+\end{Verbatim}
+\end{quote}
+\end{algorithm}
+
+\section{Reference Management}
+
+The best programs to manage your references is jabref or emacs. You
+can edit the references and verify them with them for format
+errors. To cite them use the citation key. You can add multiple bib
+files to the bibliography command separated by comma.
+
+\noindent Add citations with the cite command. See
+\cite{las14cloudmeshmultiple} for an example on how to use multiple
+clouds. In \cite{www-i524} we list the class content.
+
+Here a test of a citation with an underscore in the url \cite{www-underscore}.
+
+\section{Supplemental Material}
+
+You can include an appendix with important information and additional
+figures if needed. However they must be referenced and follow the same
+guidelines as in the main text.  All materials must be associated with
+a figure, table, or equation or be referenced in the results section
+of the manuscript.  (1) 2D and 3D image files and video must be
+labeled “Visualization,” not “Movie,” “Video,” “Figure,” etc.  (2)
+Machine-readable data (for example, csv files) must be labeled “Data
+File.”  Number data files and visualizations consecutively, e.g.,
+“Visualization 1, Visualization 2….”  (3) Large datasets or code files
+must be placed in github/gitlab.  Such items should be mentioned in
+the text as either “Dataset” or “Code,” as appropriate, and also be
+cited in the references list. Appropriate citations in jabref as Misc
+need to be created.
+
+\section*{Acknowledgements}
+
+Funding information should be listed in this section. Please evaluate
+if you like to list your employer that may have funded your activities
+here.  If you receive grants or project numbers, as shown in the
+example.  This work was in part supported by National Science
+Foundation (NSF) (1234567, 891012345) (These numbers are invented)
+
+The acknowledgments may also contain any information that is not
+related to funding:
+
+The authors thank H. Haase, C. Wiede, and J. Gabler for technical
+support.
 
 
-\section{Usage Modes}
-PGX provides four different usage modes, depending on different user requirements \cite{www-usage}.
-
-\subsection{Local Shell Mode}
-This mode enables the user to interact with a PGX shell on a local machine through a command-line shell interface. User commands are dynamically interpreted and executed by the PGX shell to invoke the PGX function. It can be used to run some quick graph analyses locally on small graph data. It can likewise be used to try different graph algorithms to explore the different interpretations of a data set.
-    \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.6]{images/2}
-    \centering
-    \caption{PGX Local Shell Mode.}
-    \end{figure}
-    
-\subsection{Remote Shell Mode}
-In the remote shell mode, the PGX execution engine is deployed as a RESTful application on a powerful PGX-Server which is remotely connected to the PGX-Shell from a client machine. This mode is useful for performing graph analysis on large data sets. This mode enables to connect multiple clients to the PGX-Server.
-    \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.7]{images/3}
-    \centering
-    \caption{PGX Remote Shell Mode.}
-    \end{figure}
-    
-\subsection{Local Java Application Mode}
-This modes allows embedding PGX into a Java application, and using graph analysis as a part of the application’s functionality.
-    \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.6]{images/4}
-    \centering
-    \caption{PGX Locally Embedded Mode.}
-    \end{figure}
-    
-\subsection{Remote Java Application Mode}
-This mode empowers the user to use the Java application to control the PGX-Server remotely, from a client machine. Similar to the remote shell model, this mode enables connections to the PGX-Server via multiple clients.
-    \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.6]{images/5}
-    \centering
-    \caption{PGX Remotely Embedded Mode.}
-    \end{figure}    
-
-\section{Graph Mutations}
-PGX helps users create mutated versions of the original graph, to perform algorithms for graph analyses. Since PGX does not allow mutation of the original graph, it always creates a new mutated version of the original graph.
-
-A graph can be simplified by removing self-edges, duplicated edges, and trivial vertices.
-    \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.7]{images/6}
-    \centering
-    \caption{Simplifying a graph. Source: Paper \cite{www-mut}}
-    \end{figure}
-    
-Graphs can also be simplified by undirecting it's edges. Subgraphs and bipartite subgraphs can also be created in PGX.
-
-\section{Running Graph Algorithms on PGX}
-PGX allows you to run graph algorithms in two ways. 
-
-\textit{Built-in graphs:} PGX provides a set of built-in graph algorithms that are ready to use. They include computing various centrality measures, finding shortest paths, finding/evaluating clusters and components, and predicting future edges, etc. The detailed and complete list of the built-in algorithms, with their time complexity, space requirement and implementation code is available on the official website of Oracle Labs PGX.
-
-\textit{Custom algorithms:} User-defined algorithms can be programmed in PGX (excluding the ones from the built-in package), using the Green-Marl language (a Domain Specific Language) \cite{www-graph}. The Domain Specific Language approach provides benefits like productivity, performance and portability.
-
-\section{Use Cases}
-PGX can be used to solve real world graph analyses problems. Here are two such applications \cite{www-use}.
-
-\subsection{Detect Potential Fraud in a Healthcare System}
-In this example, anomalies in medical transactions were detected using PGX.
-
-A public data set of medical transactions from CMS (United States Center for Medicare and Medicaid Services) for the year 2012 was used. It had transactions between over 880,000 medical providers and CMS, adding upto more than $\$$77B for 2012 \cite{www-hcs}.
-
-To analyse the data, the data set was converted to a bipartite graph, separating health care providers from health services. An edge in the bipartite graph linked a specific health service to a health care provider. A two-hop (undirected) path existed between two health care providers, for each common health service they both provided. The more common services between two health care providers, the closer they would be to each other in the graph. The data set also specified the ‘specialities’ of medical providers. Vertices of medical providers of the same speciality would be closer to each other, since they would provide similar services. In case, a medical provider was exceptionally close to other providers with different speciality, it would be considered an anomaly since the medical provider would be providing services unfitting to its speciality. 
-
-Personalized PageRanks (PPR) were used to compute closeness between vertices. For each speciality a PPR score was computed. These scores were then cross-checked to see if they belonged to the current speciality. If not, the provider was considered an anomaly. This graph analysis was implemented using the built in Personalized PageRank algorithm.
-
-The results were further investigated to identify potential frauds in the Healthcare System. 
-
-\subsection{Using PGX as a Recommendation Engine}
-This example helps us discover the information implied by relationships through graph analytics.
-
-A publicly available data set ‘MovieLens’ was used.  Recommendations were generated using matrix factorization algorithm. Matrix factorization is a simple process, in which you factorize a matrix into two matrices, such that the newly generated matrices when multiplied with each other would generate back the original matrix \cite{www-rec}.
-
-We had a matrix of movies and users, where the values were the ratings given by the user to a movie. The aim was to recommend a bunch of movies for each user.
-
-An array of features was synthesized, considering user information, the movies they rated and their ratings. The approach was to initialize each matrix with some values. Each user had an array of floating-point values that represented how strongly they were associated with that feature. To generate recommendations, the movie’s feature array was multiplied to the user’s feature array. The corresponding values were then sorted in a descending fashion and the top few items were the recommendations. This process was very fast using PGX. The results were then used for many recommendations, repeating the process periodically after new users or movies were added to the system.
-
-
-\section{Benefits and Limitations}
-PGX executes graph algorithms in a fast, parallel, in-memory fashion. It provides built-in algorithms and supports user-defined algorithms. It offers an interleaved usage of graph analysis algorithms and graph pattern-matching. In addition, it provides an interactive shell application to easily execute commands from the shell command line.
-
-PGX loads file-systems, exclusively in graph formats. It requires licensing, restricting its usage. Both of the above mentioned limitations can be removed by contacting Oracle Labs PGX \cite{www-limit}.  
-
-\section{Useful Resources}
-The complete documentation of Oracle PGX, including instructions to download and install and several tutorials, in a systematic method are available on the main website of Oracle Labs PGX \cite{www-wel}. 
-
-The paper titled “Graph Analysis – Do We Have to Reinvent the Wheel?”, discusses about the alternative database technologies that provide optimized performance with regards to the dedicated graph databases. \cite{welc2013graph}
-
-The paper on Green-Marl DSL approach tilted "Green-Marl: A DSL for Easy and Efficient Graph Analysis", provides insight on the methods of using the Green-Marl DSL technique for optimizing graph analyses using user-defined algorithms. \cite{hong2012green} 
-
-\section{Conclusion}
-Numerous information is revealed from graphs. The analysis of graphs can unveil significant insights. Oracle PGX (Parallel Graph AnalytiX) is a toolkit for graph analysis. It allows users to load up their graph data and run analytic algorithms on them. It provides different usage modes which can be used as per client requirements. It allows users to implement various built-in and user-defined graphs and mutate graphs. Some classes of the built-in algorithms are community detection, path finding, page ranking, recommendation, pattern matching and influencer identification. Oracle PGX is easy to use. It can be used for precise and efficient graph analysis, and is scalable to implement graph analysis algorithms for large data sets.
-
-\section{Acknowledgments}
-This project was a part of the Big Data and Software and Projects (INFO-I524) course. I would like to thank Professor Gregor von Laszewski and the associate instructors for their help and support during the course. 
+% Bibliography
 
 \bibliography{references}
+ 
+\section*{Author Biographies}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries John Smith} received his BSc (Mathematics) in 2000 from
+  The University of Maryland. His research interests include lasers
+  and optics. 
+\end{minipage}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Alice Smith} received her BSc (Mathematics) in 2000 from
+  The University of Maryland. Her research interests also include
+  lasers and optics. 
+\end{minipage}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Bruce Wayne} received his BSc (Aeronautics) in 2000 from
+  Indiana University. His research interests include lasers and optics.
+\end{minipage}
+\endgroup
+
+\newpage
+
+\appendix
+
+\section{Work Breakdown}
+
+The work on this project was distributed as follows between the
+authors:
+
+\begin{description}
+
+\item[John Smith.] Explored the deep mathematical knowledge needed for
+  this paper and taught it to the other authors.
+
+\item[Alice Smith.] She explored the world of Oz and was instrumental
+  to work on the deployment of hadoop.
+
+\item[Bruce Wayne.] He did not contribute at all to this paper and
+  flew around to safe the world.  
+
+\end{description}
+
+\section{Report Checklist}
+
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$} 
+\item Have you written the report in word or LaTeX in the specified
+  format?
+\item Have you included the report in github/lab?
+\item Have you specified the names and e-mails of all team members in
+  your report. E.g. the username in Canvas?
+\item Have you included the HID of all team members?
+\item Does the report have the project number added to it?
+\item Have you included all images in native and PDF format in gitlab
+  in the images folder?
+\item Have you added the bibliography file in bibtex format?
+\item Have you submitted an additional page that describes who did
+  what in the project or report?
+\item Have you spellchecked the paper?
+\item Have you made sure you do not plagiarize?
+\item Have you made sure that the important directories are all lower
+  case and have no underscore or space in it?
+\item Have you made sure that all authors have a README.rst in their
+  HID github/lab repository?
+\item Have you made sure that there is a README.rst in the project
+  directory and that it is properly filled out?
+\item Have you put a work breakdown in the document if you worked in a
+  group?
+\end{itemize}
+
+\section{Possible technology paper outline}
+
+The next sections are just some suggestions, your may want to add
+sections and subsections as you see fit. Images and references do not
+count towards the 2 page length. Please use the \verb|\section|,
+\verb|\subsection|, and \verb|\subsubsection| commands in your
+paper. do not introduce hardcoded numbers. Use the \verb|\ref| and
+\verb|\label| commands to refer
+ to the sections.
+
+
+\paragraph{Abstract}
+
+Put in the abstract a summary what this paper is about
+
+\paragraph{1. Introduction}
+
+Introduce the technology and provide general useful information.
+
+\paragraph{2. Architecture} 
+
+If applicable include a description about architectural details. This
+may include a figure. Make sure that if you copy a figure you put the
+\cite{?} in the caption also. Otherwise it is plagiarism.
+
+\paragraph{2.1. API}
+
+comment on the API which could include language bindings
+
+\paragraph{2.2. Shell Access}
+
+If applicable comment on how the tool can be used from the command line
+
+\paragraph{2.3.Graphical Interface}
+
+If applicable comment on if the technology has a GUI
+
+\paragraph{3. Licensing}
+
+Often tools may have different versions, some fre, some for
+pay. Comment on this. For example while a tool may offer a comercial
+version this version may be too costly for others. Identify especially
+the difference between features for free vs commercial tools.
+
+Sometimes you may need to introduce this also in the introduction as
+there may be a big difference and without the knowledge you do not
+provide the user an adequate introduction.
+
+\paragraph{4. Ecosystem}
+
+Some technologies have a large ecosystem developed around them with
+extensions plugins and other useful tools. Identify if they exists and
+comment on what they can achieve
+
+provide potentially a mindmap or a figure illustrating how the
+technology fits in with other technologies if applicable.
+
+\paragraph{4. Use Cases}
+
+\paragraph{4.1. Use Cases  for Big Data}
+
+Locate and describe major usecases that demonstrate the technology
+while focussing on big data related use cases. Make sure you do proper
+references with the \cite{?} command. Do not put URLs in the text.
+
+\paragraph {4.2. Other Use Cases}
+
+Some technologies may not just be used for big data, find other makor
+use cases from other areas if applicable.  Make sure you do proper
+references with the \cite{?} command. Do not put URLs in the text.
+
+\paragraph{5. Educational material}
+
+Put information here how someone would find out more about the
+technology. Use important material and do not list hundrets of web
+pages, be selective.
+
+\paragraph{6. Conclusion}
+
+Put in some conclusion based on what you have researched
+
+\paragraph{Acknowledgement}
+
+Put in the information for this class and who may sponsor
+you. Examples will be given later
 
 \end{document}
