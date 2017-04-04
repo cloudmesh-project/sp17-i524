@@ -15,6 +15,16 @@ all:
 	pdflatex ${FILE}
 	pdflatex ${FILE}
 
+review:
+	pdflatex ${FILE}-review
+	bibtex ${FILE}-review
+	pdflatex ${FILE}-review
+	pdflatex ${FILE}-review
+
+viewreview:
+	$(OPENCMD) $(FILE)-review.pdf
+
+
 real-clean: clean
 	rm -rf *.pdf
 

@@ -2,20 +2,18 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{Identifying spam messages using R and Pandas over
-  Docker Swarm}
+\title{Deploying a spam message detection application using R and Pandas over Docker and Kubernetes}
 
 \author[1,*]{Sagar Vora}
-\author[1,**]{Rahul Singh}
+\author[1]{Rahul Singh}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
-\affil[*]{Corresponding authors: vorasagar7@gmail.com}
-\affil[**]{Corresponding authors: rahul\textunderscore singh919@yahoo.com}
+\affil[*]{Corresponding authors: vorasagar7@gmail.com, rahul\textunderscore singh919@yahoo.com}
 
 \dates{project-1, \today}
 
-\ociscodes{Docker, Swarm, R, Pandas}
+\ociscodes{Docker, Ansible, Kubernetes, R, Pandas}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/cloudmesh/sp17-i524/raw/master/project/S17-IR-P007/report/report.pdf}}
@@ -26,8 +24,8 @@ A classification model shall be built by working on a training data
 set of 5574 text messages, each marked as a spam or a legitimate
 message. The model shall be used to correctly predict the class of any
 new incoming text message as a spam or a legitimate one. The
-application shall be deployed using \cite{www-docker-swarm} Docker
-Swarm while data manipulation and classification shall be done using
+application shall be deployed using Ansible scripts over Kubernetes
+cluster while data manipulation and classification shall be done using
 Pandas and R in conjunction.
 
 \end{abstract}
@@ -53,6 +51,66 @@ model consists of 5574 message records. Dataset taken from
 cross-validation feature provided by R to build the classification
 model and use Bayes theorem of conditional probability to predict the
 class of each incoming message.
+
+\section{Software Stack}
+
+\begin{figure}[ht]
+\begin{center}
+ \begin{tabular}{|c | c|} 
+ \hline
+Name of the Technology & Purpose in the Project \\ [0.5ex] 
+ \hline\hline
+    
+R and Pandas & data analytics\\
+ \hline
+Docker & container for the application \\ 
+ \hline
+Kubernetes & cluster creation and management \\[1ex]
+ \hline 
+\end{tabular}
+\end{center}
+  \caption{Technologies used in the Project}
+\end{figure}
+
+\subsection{Pandas}
+Pandas is an opensource Python library that provides data analysis
+functionality with Python. Python initially lacked data analysis and
+modeling capability. Pandas filled out this gap by providing essential
+analytic functions thus saving the need to switch to a more domain
+specific language for data analysis.
+
+\subsection{R}
+R is a language and environment for statistical computing and graphics
+\cite{www-about-rproject}. Pandas does not provide a significant
+statistical modeling environment as it is still a work in progress. R
+provides a variety of statistical model analysis, classification,
+clustering and graphical techniques to provide this
+environment. Integrating Python's efficiency with R's capability
+allows us to build a highly a desirable analysis model for our
+application.
+
+\subsection{Docker}
+Docker allows application developers to package their applications
+into isolated containers. A container comprises of only the libraries
+and settings that are required to make the software work.  Docker
+automates the repetitive tasks of setting up and configuring
+development environments thus allowing developers to focus only on
+building software \cite{www-docker-about}. A dockerized application
+can simply ship between platforms as the complexity of software
+depencies is handled by the container.
+
+\subsection{Kubernetes}
+Kubernetes\cite{www-kubernetes} is an open-source platform which helps
+in automating deployment, scaling, and operations of application
+containers across clusters of hosts. Kubernetes helps in faster
+deployment of application and scaling them on the fly. Moreover it
+optimizes the use of hardware by using the resources which are
+needed. A Kubernetes cluster can be deployed on either physical or
+virtual machines. We will be using Minikube which is a lightweight
+Kubernetes implementation which creates a VM on the local machine and
+deploys a simple cluster containing only one node. The Minikube CLI
+provides basic bootstrapping operations for working with the cluster,
+including start, stop, status, and delete commands.
 
 \section{Design}
 \subsection{Building the Classification model}
@@ -122,7 +180,7 @@ Our application will be deployed using Ansible \cite{www-ansible}
 playbook. Automated deployment should happen on two or more nodes
 clouds or on multiple clusters of a single cloud. Deployment script
 should install all necessary software along with the project code to
-the cluster nodes.
+Kubernetes cluster nodes using the Docker image.
 
 \section{Conclusion}
 

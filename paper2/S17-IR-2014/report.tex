@@ -1,0 +1,104 @@
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+
+\journal{i524} 
+
+\title{An Overview of Pivotal Web Services}
+
+
+\author[1,*]{Harshit Krishnakumar}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+\affil[*]{Corresponding authors: harkrish@iu.edu, S17-IR-2014}
+
+\dates{Project-02, \today}
+
+\ociscodes{Cloud, I524, Web Services}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/raw/master/paper2/S17-IR-2014/report.pdf}}
+
+
+\begin{abstract}
+Pivotal Web Services is a platform as a service (PAAS) provider which allows developers to deploy applications written in six different languages. It has options to automatically bind 21 integrated addons to applications, and allows vertical and horizontal scaling \cite{www-paasfinder}. This paper presents the different features of Pivotal Web Services and a basic overview of hands-on of application deployment in Pivotal Web Services.
+\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The current scenario for software product based companies is such, that coming up with ground breaking ideas to add extra functionality for an existing application is simply not enough. They need to be able to get it out to the users as quickly as possible, else they loose ground to competitors who might have already implemented it. This is where the concept of agile development, devops, container based deployment, abstraction from platforms come into focus. Pivotal Web Services comes in this line of thought, where it allows the application developer to focus on just the application development and getting the business requirements right, without worrying about platform compatibility, dependencies and differences between prod/dev/QA environment. PWS is built based on Cloud Foundry which is one of the leading open source PAAS services \cite{www-pivotal}. In order to comprehend the need for a service like PWS, one would require a basic knowledge of the entire process of agile, devops and PAAS.
+\subsection{Agile Development}
+Traditionally software companies used to roll out updates in large batches. A lot of bug fixes, updates and functionality changes were pushed at once, probably after months or in some cases a year after the previous update. This was mainly because in the pre-Internet age, updating a software would mean buying a new CD of the updated version. This method of software development is called Waterfall methodology.
+
+With the widespread use of Internet to push quick updates and the emergence of automation of methods used in software testing and deployment, software companies are now following agile development practices, which emphasizes on iterative development where there is high collaboration between self organizing and cross functional teams to evolve requirements and solutions. Agile methods encourage deployment of high quality and goal oriented software in quick successions, and any feedback and changes will be handled in the next update version. The difference between Agile and Waterfall development is shown in figure \ref{fig:agile}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{images/agile.png}
+\caption{Agile vs Waterfall Methodology \cite{www-youtube-cf}}
+\label{fig:agile}
+\end{figure}
+
+\subsection{DevOps}
+Devops is a set of practices for software testing and deployment which enables Agile development. Devops is a portmanteau of Development and Operations, signifying that the development and operations teams in a software company should coordinate to make quick releases possible. Typically after developing a software, developer sends it to the testing team, who then take another day or more to perform functional tests, get back with bugs. The developer has to fix them and send it back to the testing team. There is an inherent latency to this process that there are too many manual tasks involved. Devops kicks in here to set standards to automate testing and to ensure that production, QA and Development environments are in sync. It would also mean giving greater responsibility towards developers, and greater accesses to environments for easy testing and development. With automated processes for testing, developers would get their feedback within minutes, and they can fix them without waiting for another team to respond. The final aspect of devops is to automate deployment. Once development and testing is done, there are software to automatically deploy the software on a host of servers with the right configurations and connections, thus reducing manual effort and latency. 
+
+\subsection{Platform as a service}
+The concept of containers started gaining popularity considering the advantages of modularity in software development. Modularity implies that every piece of software is individual and self sufficient with capabilities to communicate with other modules. Containers in software development serve the purpose of building modular software. A container will have the actual software along with all its dependencies and methods. 
+
+Platform as a service (PaaS) or application platform as a service (aPaaS) is a category of cloud computing services that provides a platform allowing customers to develop, run, and manage applications without the complexity of building and maintaining the infrastructure typically associated with developing and launching an app \cite{www-paas-wiki}. PaaS providers generally provide a cloud environment to deploy the application on, the networks, servers, OS, storage, databases and other services to run applications. This removes the hassles of maintaining and running the servers and systems for an application from the developers, and also minimises the risk of server failures. 
+
+\subsection{Pivotal Web Services}
+PWS is built based on an open source PaaS Cloud Foundry along with some proprietary additions such as Pivotal's Developer Console, Billing Service and Marketplace \cite{www-pws-register}. PWS offers hosted cloud systems with a web interface for managing the environment, and a number of pre-provisioned services like relational databases and messaging queues \cite{www-pws-stackoverflow}. 
+
+\section{Features of PWS}
+
+PWS offers a lot of hassle free options to deploy and manage software \cite{www-pws-features}. 
+
+\subsection{Upload}
+cf push is a single command way to upload software developed on local to the cloud. The code is transformed into a running application on the cloud. The steps to follow for uploading an application with name <APP-NAME> is given in \cite{www-pws-push}.
+\subsection{Stage}
+Behind the scenes, the deployed application goes through staging scripts called buildpacks to create a ready-to-run droplet. Buildpacks are software packets that provide framework and runtime support for applications, and they are provided along with PWS cloud. Buildpacks typically examine user-provided artifacts to determine what dependencies to download and how to configure applications to communicate with bound services. Cloud Foundry automatically detects which buildpack is required and installs it on the Diego cell where the application needs to run \cite{www-pws-buildpacks}. 
+
+\subsection{Distribute}
+Deigo is the container management system for Cloud Foundry, which handles application scheduling and management. Each application VM has a Diego Cell that executes application start and stop actions locally, manages the VM’s containers, and reports app status and other data. Deigo Core has five main components, Brain, Cells, Database VMs, Access VMs, Consul \cite{www-pws-diego}.
+
+\subsection{Run}
+Applications receive entry in a dynamic routing tier, which load balances traffic across all app instances. 
+
+\section{Licensing}
+Though Cloud Foundry is open source, it is not easy to maintain a cloud and setup the architecture by a developer. PWS is charges for the use of its services, with a monthly cost depending upon the memory of application instance and number of instances \cite{www-pws-pricing}. 
+
+\section{Use Cases}
+PWS can be used for a range of applications, from running websites to maintaining mobile applications. For example, if we need to host a website which accesses data, we can write the base code and deploy to PWS cloud.
+
+\section{Conclusion}
+PWS offers easy to use and hassle free hosted cloud platform services, which offers a great alternative to AWS Elastic Beanstalk, Google cloud and Microsoft Azure. 
+Pivotal Web Services is one of the leading enterprise PaaS, powered by Cloud Foundry. It delivers a turnkey experience for scaling and updating PaaS on the private cloud, with no downtime. Pivotal Cloud Foundry enables developers to provision and bind web and mobile apps with leading platform and data services such as Jenkins, MongoDB, Hadoop, etc. on a unified platform. It empowers businesses to deliver applications and update them with new features at a velocity and scale previously only available to Internet giants, allowing enterprises to innovate with disruptive speed \cite{www-pws-adv}. 
+
+\section{Further Education}
+Further learning about Pivotal is encouraged and informative materials can be found at the Pivotal homepage \cite{www-pws-agile}.
+
+\section*{Acknowledgements}
+
+The author thanks Professor Gregor Von Lazewski for providing us with the guidance and topics for the paper. The author also thanks the AIs of Big Data Class for providing the technical support.
+
+
+% Bibliography
+
+\bibliography{references}
+ 
+\section*{Author Biographies}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+{\bfseries Harshit Krishnakumar} is pursuing his MSc in Data Science from
+Indiana University Bloomington
+\end{minipage}
+\endgroup
+
+\end{document}
