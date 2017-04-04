@@ -16,7 +16,7 @@
 \ociscodes{Cloud, Ansible, Playbook, Roles}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/anurag2301/sp17-i524}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper1/S17-IR-2011/report.pdf}}
 
 
 \begin{abstract}
@@ -37,16 +37,17 @@ overview of Ansible.
 
 Ansible is an open source automation engine which can be used to
 automate cloud provisioning, configuration management, and application
-deployment. It is designed to be minimal in nature, secure,
-consistent, and highly reliable \cite{www-ansible3}. In many respects,
-it is unique from other management tools and aims to provide large
-productivity gains. It has an extremely low learning curve and seeks
-to solve major unsolved IT challenges under a single banner.  Michael
-DeHaan developed the Ansible platform and Ansible, Inc. was the
-company set up to commercially support and sponsor Ansible. The
-company was later acquired by Red Hat Inc. It is available on Fedora,
-Red Hat Enterprise Linux, CentOS and other operating
-systems \cite{www-ansible-wikipedia}.
+deployment \cite{www-ansible-wikipedia}. It is designed to be minimal
+in nature, secure, consistent, and highly reliable
+\cite{www-ansible3}. In many respects, it is unique from other
+management tools and aims to provide large productivity gains. It has
+an extremely low learning curve and seeks to solve major unsolved IT
+challenges under a single banner.  Michael DeHaan developed the
+Ansible platform and Ansible, Inc. was the company set up to
+commercially support and sponsor Ansible. The company was later
+acquired by Red Hat Inc. It is available on Fedora, Red Hat Enterprise
+Linux, CentOS and other operating systems
+\cite{www-ansible-wikipedia}.
 
 \section{Architecture}
 
@@ -111,15 +112,15 @@ be utilized to sequence multi-tier rollouts which involves rolling
 updates, and can also be used to delegate actions to other hosts,
 interacting with monitoring servers and load balancers at the same time.
 
-Playbooks consists of series of ‘plays’ which are used to define
+Playbooks consists of series of ‘plays’, which are used to define
 automation across a set of hosts, known as the ‘inventory’. These
 ‘play’ generally consists of multiple ‘tasks,’ that can select one,
 many, or all of the hosts in the inventory where each task is a call
 to an Ansible module - a small piece of code for doing a specific
 task. The tasks may be complex, such as spinning up an entire cloud
 formation infrastructure in Amazon EC2. Ansible includes hundreds of
-modules which help it perform a vast range of
-tasks \cite{www-ansible}.
+modules which help it perform a vast range of tasks
+\cite{www-ansible}.
 
 Similar to many other languages Ansible supports encapsulating
 Playbook tasks into reusable units called ‘roles.’ These roles can be
@@ -167,7 +168,7 @@ support for new providers and new sources as needed.
 Ansible is designed to make IT configurations and processes both
 simple to read or write, the code is human readable and can be read
 even by those who are not trained in reading those
-configurations. Ansible is different from genrally used software
+configurations. Ansible is different from generally used software
 programming languages, it uses basic textual descriptions of desired
 states and processes, while being neutral to the types of processes
 described. Ansible’s simple, task-based nature makes it unique and it
