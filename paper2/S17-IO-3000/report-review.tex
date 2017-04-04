@@ -25,7 +25,7 @@ Data Lake, Apache Sentry}
 
 \begin{abstract}
 Apache Hadoop provides various data storage, data access and data processing
-services. Apache Ranger is part of the Hadoop eco-system\SE. Apache Ranger
+services. Apache Ranger is part of the Hadoop eco-system. Apache Ranger
 provides capability to perform security administration tasks for storage,
 access and processing of data in Hadoop. Using Ranger, Hadoop administrator
 can perform security administration tasks using a central UI or Restful web
@@ -48,8 +48,16 @@ specific action using Hadoop components and tools. Ranger provides role based
   instead focus on improving report.tex. The review does not include
   all possible improvement suggestions and if you sea comment you may
   want to check if this comment applies elsewhere in the document.}
-\TODO{Abstract: When writing you should be careful to be gender specific pronouns, such as HE. Also, please check spelling on ecosystem}
 
+\TODO{Abstract: The first sentence is unnecessary. In the abstract,
+  focus on Ranger. You can mention Hadoop in the intro. In addition,
+  when writing you should be careful to be gender specific
+  pronouns. For example, you can simply refer to "Hadoop
+  administrators" (plural) rather than a single male
+  administrator. Also, please check spelling on ecosystem}
+
+\TODO{Assessment: Revisions required. Please see below for more detail
+  and address reviewer comments.}
 
 \section{Introduction}
 
@@ -66,14 +74,24 @@ Apache Ranger is open source software project designed to provide centralized
    Hadoop at column and row level. Ranger also provides centralized auditing
    of user access and security related administrative actions.
 
-\TODO{Introduction: When writing you should be careful to be gender specific pronouns, such as HE.  Also, please provide a comma after which. Remove the backslash character users/user-groups }
+\TODO{Introduction: Like in the abstract, please use gender-neutral
+  pronouns when possible. Also, please provide a comma after
+  which. Remove the backslash character users/user-groups }
 
 \section{ARCHITECTURE OVERVIEW}
 
-\cite{www-ranger-architecture} describes the important components of Ranger as
- explained below:
+\TODO{Please don't use all caps. Leave the formatting to the style
+  definition.}
 
+\TODO{This section needs revision. Please provide more transition and
+  motivation between the different subsections. As it stands, the
+  subsections read like they've been inserted in this part of the
+  paper without any reference to the motivations for Ranger or the
+  challenges of implementing a system like it.}
 
+\cite{www-ranger-architecture} describes the important components of
+Ranger as explained below: \CE \TODO{Not the proper way to
+  cite. Please review the paper advice lecture on the website.}
 
 \subsection{Ranger Admin Portal}
 
@@ -82,7 +100,8 @@ Portal, [a] \GE user can define policies. The policies are stored in Policy Data
  The Policies are polled by various plugins. The Admin Portal\GE also collects
  the audit data from plugins and stores in HDFS or in a relational database.
 
-\TODO{Architecture Overview:Ranger Admin Portal: add an a before user. Use lowercase policy database and admin portal}
+ \TODO{Architecture Overview: Ranger Admin Portal: add an a before
+  user. Use lowercase policy database and admin portal}
 
 \subsection{Ranger Plugins}
 
@@ -106,6 +125,9 @@ component is responsible for this integration.
 
 \section{HADOOP COMPONENTS SUPPORTED BY RANGER}
 
+\TODO{Don't use all caps. This is a formatting decision that can be
+  made in the style file.}
+
 Ranger supports auditing and authorization for following Hadoop components
 \cite{www-ranger-faq}.
 
@@ -117,7 +139,10 @@ request to a file on HDFS is valid or not.
 
 \TODO{Ranger Plugins:  Use lowercase name node}
 
-
+\TODO{All of these are out of scope for this paper. Please focus on
+  Ranger rather than on Hive, HBase, Yarn... etc. You don't need to
+  explain what any of these technologies are here. This section can be
+  merged as a single sentence in other sections.}
 
 \subsection{Apache Hive}
 
@@ -157,10 +182,15 @@ can read from a Kafka topic.
 Yarn is resource management layer for Hadoop. Administrators can setup queues
  in Yarn and then allocate users and resources per queue basis. Policies can
  be defined in Ranger to define who can write to various Yarn queues.
+ 
+ \section{IMPORTANT FEATURES OF RANGER}
 
-\section{IMPORTANT FEATURES OF RANGER}
-The blog article \cite{www-ranger-key-features} explains the 2 important
-features of Apache Ranger.
+ \TODO{Fix all caps.}
+ 
+The blog article \cite{www-ranger-key-features} explains the 2
+important features of Apache Ranger. \TODO{Not the proper way to
+  cite. You need to paraphrase and summarize the relevant portions
+  rather than referring actively to the article.}
 
 \subsection{Dynamic Column Masking}
 Dynamic data masking at column level is an important feature of Apache Ranger
@@ -183,7 +213,10 @@ level. For example, in an organization which is geographically distributed in
   only his or her patients. Using Ranger, such row level access control can
   be specified and implemented.
 
-\section{HADOOP DISTRIBUTION SUPPORT}
+  \section{HADOOP DISTRIBUTION SUPPORT}
+
+  \TODO{Fix all caps.}
+  
 Ranger can be deployed on top of Apache Hadoop.
 \cite{www-ranger-on-apache-hadoop} provides detailed steps of building and
 deploying Ranger on top of Apache Hadoop.
