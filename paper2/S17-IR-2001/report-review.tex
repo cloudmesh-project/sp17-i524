@@ -1,0 +1,254 @@
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\usepackage[colorinlistoftodos,prependcaption,textsize=normal]{todonotes}
+
+\usepackage{fancyvrb}
+\journal{i524} 
+
+
+
+\dates{project-000, \today}
+
+\title{HUBzero: A Platform For Scientific Collaboration}
+
+\author[1,*]{Niteesh Kumar Akurati}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: akuratin@indiana.edu}
+
+\dates{paper2, \today}
+
+\ociscodes{cyberinfrastructure, BigData, Simulation Tools, Collaboration }
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper2/S17-IR-2001/report.pdf}}
+
+
+\begin{abstract}
+HUBzero is a cyberinfrastructure in a box that is used to create
+dynamic websites for educational activities as well as scientific
+research. HUBzero provides an platform where researchers can publish
+and share their research software and related material for
+educational purposes on the web. Other researchers will be able to
+access the tools as well as material using a Web browser and can also
+launch simulation runs on the national Grid infrastructure without
+having to download any code.\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+HUBzero is a platform created to support nanoHUB.org, an online
+community for the Network for Computational Nanatechnology(NCN), which
+is funded by the U.S.National Science Foundation since 2002 to connect
+the theorists across the academia who develop simulation tools with
+the educators and the experimentalists who might use them. HUBzero has
+been expanded to more than 30hubs since 2002 and the hubs are growing
+every year into various fields ranging from development of assistive
+technology to volcanlogy\cite{mclennan2010hubzero}.
+
+''HUBzero is now supported by a consortium including Purdue, Indiana,
+Clemson and Wisconsin. Researchers at Rice, the State University of
+New York system, the University of Connecticut and Notre Dame use
+hubs. Purdue offers a hub-building and -hosting service and the
+consortium also supports an open source release, allowing people to
+build and host their own''\cite{hpcwireacrticle2011}.
+
+A hub web 2.0 functionality with an unique middleware, thereby
+providing a platform that is more powerful than an ordinary website.
+In a hub users will able to create, publish, share information,
+network and also have access to interactive visualization tools. The
+users of the hub ultimately collaborate to develop the educational
+community and make it a powerful resource. A hub can direct jobs to
+national resources such as TeraGrid, Purdue's DiaGrid as well as other
+cloud systems\cite{hpcwirearticle2011}.
+
+
+\section{Middleware}
+HUBzero mix of social networking and simulation is only possible with
+the help of unique middleware. HUBzero's middleware hosts the live
+session tools and makes it easy to connect the cloud computing
+infrastructure and supercomputing clusters to solve the large
+computational problems. The simulation tools runs on clusters of
+executions hosts hosted near the Web server and will be accessed by
+user's browser via VNC(Virtual Network Connection)\cite{mclennan2010hubzero}.
+
+Each user has a home directory which is unique to that particular user
+with access control, quota limitations and conventional ownership
+privileges. Each tool runs on a lightweight restricted virtual
+environment, that controls access to the networking, file systems and
+server processes. Tools are run with the privileges of a particular
+user\cite{mclennan2010hubzero}.
+
+Tools running on the hub will have a XII Window System environment.
+Each container runs a special X server which also acts as a VNC server
+is used to create the graphical session. The middleware of HUBzero
+controls the tool container's network operations. The middleware also
+monitors the start time as well as the duration of each
+connection. The connections that are not being used for a considerable
+period after starting is terminated and marked as
+inactive\cite{hubzeropurduewebpage}.
+
+\section{Features}
+HUBzero unique blend of social networking and simulation power made it
+popular among research and scientific communities. HUBzero's platforms
+are sophisticated because of the various features it offers. HUBzero
+sites provides a lot of features for collaboration, development and
+deployment of tools, interactive user interfaces for simulation tools,
+online community groups, Wikis, Blogs, Provision for Feedback
+Mechanisms, Metrics for Usage, content management resources and
+everything that would be needed for a collaborative platform
+
+\subsection{Development and Deployment of Tools}
+Each hub comes with a companion site for developing source code based
+on open source package called Trac for project management. Uploading a
+tool is a little complicated. Tools must be uploaded, compiled,
+tested, fixed, compiled again, and tested again many times before
+being published.Each tool will have its own project area within the
+site, with a repository for source code control, a ticketing system
+for bug tracking as well as a wiki area for project documentation.
+
+A team member from development get access to workspace which is a
+Linux desktop running in a secured execution environment, accessed via
+a Web browser. The tools that are available on the hub dont come from
+the core development team rather they are developed by various
+collaborators across the world. Developers can use HUBzero's rapture
+toolkit to create a GUI with little effort\cite{hubzerofeatures}.
+
+\subsection{Online Presentations}
+HUBzero facilitates Online Presentations along with the tools. The
+PowerPoint slides are combined with voice and animation. The online
+presentations provide user a standard seminar experience. HUBzero uses
+MacroMedia Breeze to deliver the online presentations in a compact
+format using Flash, which is present on 98 percent of the world
+desktops. The online presentations provided by HUBzero can also be
+distributed as podcasts which be accessed by the users on-the-go via
+their personal device assistants\cite{hubzerofeatures}.
+
+\subsection{Interactive Simulation Tools}
+The underlying premise of HUBzero is its signature servicce to deliver
+live graphical simulation tools that are interactive and can be
+accessed using a normal web browser. The tools in a hub are
+interactive; you can zoom a molecule, analyze 3D volume interactively
+and need not even wait for the webpage to be refreshed. A user can
+visualize results in real-time and need for wait for processing. One
+can deploy new tools without having to write any special code for
+deploying on the web\cite{hubzerofeatures}.
+
+HUBzero's Rappture Toolkit helps to create GUI with little effort. The
+HUBzero infrastructure provides tool execution as well as delivery
+mechanism based on Virtual Network Computing(VNC). Using the
+architecture provided by HUBzero, the first ever developed hub,
+nanoHUB has brought about 50 simulation tools live in span of 2 years.
+
+\subsection{Collaboration and Support}
+HUBzero is a popular because it not only provides simulation tools,
+wikis etc., but also provides sophisticated mechanism for colleagues
+to collaborate among themselves and work together. HUBzero middleware
+hosts tool sessions, where a single session can be shared with among
+many number of people. Each session provides a textbox entry beneath
+it to allow the users to enter the colleagues names they wish to
+collaborate with.  A group of people can see the same session at the
+same time and discuss ideas over the phone or instant messaging\cite{hubzerofeatures}.
+
+HUBzero also provides community forum modeled after Amazon.com's
+Askville where users can post questions. Users can also tag the posts
+with the tool names and concepts so that users can find questions
+matching their interests and post answers accordingly. Users also can
+file trouble reports if something goes wrong which are sent directly
+to tool development team. Developers view the help requesrs \SE as tickets
+and investigate and resolve the issues. Users also can have access to
+wishlist where they can request new features for a particular
+tool. The developers cam determine a wish's relative priority and
+judges which are important and requires little effort are ordered
+accordingly. There is points and bounty system which enhances
+involvement of users in the hub by providing premium access to the
+resources based on the levels of bounties and points
+\TODO{Please correct spelling errors}
+\subsection{Content Tagging, Wikis abd Blogs}
+The resources available on a hub are categorized by a series of
+tags. Each tag has an associated page on the hub where its resources
+are listed and meaning is defined. Tags can be defined by anyone like
+the contributor, users of the page or the hub adminstrator\SE.
+
+Hubs support topic pages. Each topic is created using a standard wiki
+syntax by a specified list of authors. Users can comment on the
+content of the wiki or even suggest changes. The original moderators
+of the topic are notified about the suggestions which they will
+consider if apt. The page can also be given a ownership. Topic pages
+act as lightweight articles that help to describe various resources on
+the hub\cite{hubzerofeatures}.
+\TODO{Please correct spelling errors}
+\section{Applications}
+HUBzero platform has been very popular in sciece\SE and engineering
+fields. Many hubs have come into existence in various fields ranging
+from cancer to nanotechnology. More than 30 hubs have been spawned
+since HUBzero platform had come into existence. All these hubs serve
+more than 8,50,000 visitors from 172 countries worldwide during year
+2012 alone.
+\TODO{Please correct spelling errors}
+\subsection{NanoHUB}
+nanoHUB is the reason behind the HUBzero platform. HUBzero was
+initially created to support nanoHUB.org, an online community for the
+Network for Computational Nanotechnology, which is funded by US
+National Science Foundation in 2002 to connect theorists who develop
+simulation tools with the experimenters and engineers.
+
+nanoHUB is an online portal for nanotechnology where researchers,
+students and instructors collaborate to share scientific tools,
+simulation tools, educational material, research etc., It uses
+cyberinfrastructure to provide access to this tools and also the
+instructional materials. The users can run experiments, download
+lectures as well as review research\cite{klimeck2008nanohub}.
+
+\subsection{Big Data Analysis in Social Science Using HUBzero}
+Datasets from social media are infact large and can grow beyond a
+individual or institution analytical capability of common software
+tools. Institutions such as Non-STEM or undergraduate schools lack the
+compute infrastructure and personnel needed to allows researchers,
+students, instructors to create and analyze large datasets.
+
+The social science students are expected to be competent
+users. Therefore, in order to provide infrastructure necessary to
+expose undergraduates social science students to data intensive
+computing, State University of New York (SUNY) Oneonta teamed with
+University at Buffalo's Center for Computational Research (CCR) to
+establish a collaborative virtual community focusing on data intensive
+computing education\cite{BigDataApplication}.
+
+\section{License}
+HUBzero has been released as Open Source under the LGPL-3.0
+license. HUBzero is community code unlike the GNU General Public
+License it doesn't ``infect'' your code. Under HUBzero's license, one
+can treat HUBzero as a “library,” create your own unique components
+within our framework, and license your derivative works any way you
+like.
+
+\section{Conclusion}
+HUBzero has been a unique platform with social networking and
+simulation power has been able to resonate science and engineering
+communities. As hub keeps to grow the capabilities continues to grow,
+more tools and related content will be added. A hub lets various
+researchers, engineers collaborate to solve larger problems by
+connecting a series of models from independent authors.
+
+
+
+
+% Bibliography
+
+\bibliography{references}
+ 
+
+
+\newpage
+
+\appendix
+
+
+
+\end{document}
