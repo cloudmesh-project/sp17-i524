@@ -43,16 +43,18 @@ While Bigtable is a significant technology in Big Data due to its use in Google 
 
 Bigtable stores data in tables, which are sorted by key/value maps. Tables have rows, typically a single entity, and columns which contain values for the rows. Rows are index by a row key. Columns have both a family and a qualifier, which is unique within a family \cite{www-bigtabledocoverview}.
 
-Figure 1 shows the Bigtable Storage model. It contains four rows (row keys - gwashington, jadams, tjefferson, and wmckinley), one column family (follows), and four column identifiers (also gwashington, jadams, tjefferson, and wmckinley). Tables in Bigtable are sparse, meaning that a cell will not take up space if it does not contain data (as in the case of jadams/wmckinley).  Intersections may contain multiple cells with different timestamps (as in the case of tjefferson/gwashington and jadams/tjefferson) providing a historical record of data in Bigtable \cite{www-bigtabledocoverview}.
+Figure \ref{fig:bigtable-datamodel} shows the Bigtable Storage model. It contains four rows (row keys - gwashington, jadams, tjefferson, and wmckinley), one column family (follows), and four column identifiers (also gwashington, jadams, tjefferson, and wmckinley). Tables in Bigtable are sparse, meaning that a cell will not take up space if it does not contain data (as in the case of jadams/wmckinley).  Intersections may contain multiple cells with different timestamps (as in the case of tjefferson/gwashington and jadams/tjefferson) providing a historical record of data in Bigtable \cite{www-bigtabledocoverview}.
 
-\begin{figure}[ht]
-  \includegraphics[scale=0.45]{images/bigtable-example.jpg}
-  \caption{Bigtable Data Model \cite{www-bigtabledocoverview}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/bigtable-example.jpg}}
+\caption{Bigtable Data Model \cite{www-bigtabledocoverview}}
+\label{fig:bigtable-datamodel}
 \end{figure}
 
 \section{Architecture}
 
-The architecture of Cloud Bigtable is depicted in Figure 2.  As shown, client requests come through a front-end server pool and are directed to a Bigtable node (called tablet servers when Bigtable was introduced in 2006). Bigtable nodes are organized into Bigtable clusters, which in turn each belong to a Bigtable instance \cite{www-bigtabledocoverview}.
+The architecture of Cloud Bigtable is depicted in Figure \ref{fig:bigtable-architecture}.  As shown, client requests come through a front-end server pool and are directed to a Bigtable node (called tablet servers when Bigtable was introduced in 2006). Bigtable nodes are organized into Bigtable clusters, which in turn each belong to a Bigtable instance \cite{www-bigtabledocoverview}.
 
 Tables in Bigtable are sharded tablets, which contain blocks of contiguous rows, to balance query workload. Tablets are stored in SSTable format, which provides a map from keys to values, in Google's file system Colossus and housed in Google's data centers. Each tablet belongs to a specific node \cite{www-bigtabledocoverview}.
 
@@ -63,10 +65,11 @@ Bigtable balances data volume and workload across clusters automatically. Bigtab
 
 %\vspace{-\topsep}
 
-
-\begin{figure}[ht]
-  \includegraphics[scale=0.45]{images/bigtable-architecture.jpg}
-  \caption{Bigtable Architecture \cite{www-bigtabledocoverview}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/bigtable-architecture.jpg}}
+\caption{Bigtable Architecture \cite{www-bigtabledocoverview}}
+\label{fig:bigtable-architecture}
 \end{figure}
 
 \subsection{API}
@@ -78,7 +81,7 @@ Bigtable can also integrate with Google Cloud Dataflow, a cloud based, big data 
 \subsection{Shell Access}
 
 
-Shell access in Cloud Bigtable can be performed through the HBase Shell \cite{www-hbaseshell}. The HBase shell provides a Ruby environment that allows functions in BigTable to be executed on the command line and provides scripting capabilities. 
+Shell access in Cloud Bigtable can be performed through the HBase Shell \cite{www-hbaseshell}. The HBase shell provides a Ruby environment that allows functions in Bigtable to be executed on the command line and provides scripting capabilities. 
 
 HBase shell commands fall into four main categories \cite{www-hbaseshell2}.  First are general commands.  Examples of general commands are version and status.  Second are table management commands, which provide functionality to create, drop, and alter tables.  The third category is data management commands which include commands like count, get, and delete.  The final type of commands enabled by the shell are cluster replication commands, which enable stopping and starting replication and adding and removing peers.
 
@@ -86,21 +89,19 @@ In addition to HBase Shell, cbt, a command line tool written in Go, can be used 
 
 \subsection{Graphical Interface}
 
-BigQuery Web UI is a graphical interface, designed to run in Google's Chrome browser, that allows users to interact with BigTable. Functionality provided by BigQuery Web UI includes the ability to load and export data, to run queries, to create, delete, copy and append to tables, and to view, add, delete and share datasets \cite{www-bigquerywebui}.
+BigQuery Web UI is a graphical interface, designed to run in Google's Chrome browser, that allows users to interact with Bigtable. Functionality provided by BigQuery Web UI includes the ability to load and export data, to run queries, to create, delete, copy and append to tables, and to view, add, delete and share datasets \cite{www-bigquerywebui}.
 
 \section{Licensing}
 
-Bigtable is closed source software and is not available for free use outside of Google. Cloud Bigtable is available for public use on at a cost to the user. The current pricing structure in Figure 3.
+Bigtable is closed source software and is not available for free use outside of Google. Cloud Bigtable is available for public use on at a cost to the user. The current pricing structure in Table \ref{tab:bigtable-pricing}.
 
-\begin{figure}[ht]
-\begin{center}
+\begin{table}[htbp]
+\centering
+\caption{\bf Cloud Bigtable Cost Structure \cite{www-cloudbigtable}}
+
  \begin{tabular} {| c | c | c |}
 
  \hline
-%  Resource &  Cost \\ [0.5ex] 
-% \hline
-% \hline
-    
 Nodes     &    \$0.65 node/hr (minimum 3 nodes) \\
  \hline
 SSD Storage     &    \$0.17 (GB/Month)  \\
@@ -111,10 +112,10 @@ Network Ingress & Free \\
  \hline
 Network Egress & Cross-region and Internet egress rates apply \\
  \hline
+
 \end{tabular}
-\end{center}
-  \caption{Cloud Bigtable Cost Structure \cite{www-cloudbigtable}} 
-\end{figure}
+  \label{tab:bigtable-pricing}
+\end{table}
 
 Bigtable has inspired several open source projects which are based on the concepts of Bigtable, notably HBase, Hypertable, and Accumulo (all further discussed in \emph{Bigtable Alternates}). Hypertable is licensed under the GNU General Public License Version 3 while HBase and Accumulo are licensed under the Apache License Version 2.0.
 
