@@ -49,22 +49,23 @@ MRQL can run on top of Apache Hadoop, Apache Hama, Apache Spark, and Apache Flin
 
 Apache Hadoop is an open source framework written in Java that utilizes distributed storage and the MapReduce programming model for processing of big data. Hadoop utilizes commodity hardware to build fault tolerant clusters \cite{www-wikihadoop}. 
 
-As show in Figure 1, Hadoop consists of several building blocks: the Cluster, Storage, Hadoop Distributed File System (HDFS) Federation, Yarn Infrastructure, and the MapReduce Framework.  The Cluster is comprised of multiple machines, otherwise referred to as nodes.  Storage can be in the HDFS or an alternative storage medium such as Amazon Web Service's Simple Storage Service (S3).  HDFS federation is the framework responsible for this storage layer.  YARN Infrastructure provides computational resources such as CPU and memory. The MapReduce layer is responsible for implementing MapReduce \cite{www-hadooparch2}. Additionally, Hadoop includes the Hadoop Common Package (not shown in Figure 1), which includes operating and file system abstractions and JAR files needed to start Hadoop \cite{www-wikihadoop}.
+As show in Figure \ref{fig:hadoop-components}, Hadoop consists of several building blocks: the Cluster, Storage, Hadoop Distributed File System (HDFS) Federation, Yarn Infrastructure, and the MapReduce Framework.  The Cluster is comprised of multiple machines, otherwise referred to as nodes.  Storage can be in the HDFS or an alternative storage medium such as Amazon Web Service's Simple Storage Service (S3).  HDFS federation is the framework responsible for this storage layer.  YARN Infrastructure provides computational resources such as CPU and memory. The MapReduce layer is responsible for implementing MapReduce \cite{www-hadooparch2}. Additionally, Hadoop includes the Hadoop Common Package (not shown in Figure 1), which includes operating and file system abstractions and JAR files needed to start Hadoop \cite{www-wikihadoop}.
 
-
-\begin{figure}[ht]
-  \includegraphics[scale=1.00]{images/hadoop-architecture2.jpg}
-  \caption{Hadoop Components \cite{www-hadooparch2}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/hadoop-architecture2.jpg}}
+\caption{Hadoop Components \cite{www-hadooparch2}}
+\label{fig:hadoop-components}
 \end{figure}
 
-Figure 2 depicts a simple multi-node Hadoop cluster. The cluster contains master and slave nodes.  The master node contains a DataNode, a NameNode, a Job Tracker, and a Task Tracker. The slave node functions as both a Task Tracker and a Data Node \cite{www-hadooparch2}.
+Figure \ref{fig:hadoop-cluster} depicts a simple multi-node Hadoop cluster. The cluster contains master and slave nodes.  The master node contains a DataNode, a NameNode, a Job Tracker, and a Task Tracker. The slave node functions as both a Task Tracker and a Data Node \cite{www-hadooparch2}.
 
-
-\begin{figure}[ht]
-  \includegraphics[scale=0.45]{images/hadoop-architecture.png}
-  \caption{Hadoop Cluster \cite{www-wikihadoop}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/hadoop-architecture.png}}
+\caption{Hadoop Cluster \cite{www-wikihadoop}}
+\label{fig:hadoop-cluster}
 \end{figure}
-
 
 
 % https://en.wikipedia.org/wiki/Apache_Hadoop
@@ -73,14 +74,15 @@ Figure 2 depicts a simple multi-node Hadoop cluster. The cluster contains master
 
 Apache Hama is a top level project in the Apache Software stack developed by Edward J Yoon.  Hama utilizes  Bulk Synchronous Parallel (BSP) to allow massive scientific computation \cite{www-wikihama}. 
 
-Figure 3 details the architecture of Apache Hama.  Three key components are BSPMaster, ZooKeeper, and GroomServer. BSPMaster has several responsibilities including maintaining and scheduling jobs and communicating with the groom servers.  Groom Servers are processes that perform tasks assigned by BCPMaster.  Zookeeper efficiently manages synchronization of BSPPeers, instances started by groom servers \cite{www-wikihama}. 
+Figure \ref{fig:hama-arch} details the architecture of Apache Hama.  Three key components are BSPMaster, ZooKeeper, and GroomServer. BSPMaster has several responsibilities including maintaining and scheduling jobs and communicating with the groom servers.  Groom Servers are processes that perform tasks assigned by BCPMaster.  Zookeeper efficiently manages synchronization of BSPPeers, instances started by groom servers \cite{www-wikihama}. 
 
 
-\begin{figure}[ht]
-  \includegraphics[scale=0.35]{images/hama-architecture.jpg}
-  \caption{Hama Architecture \cite{apachehama}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/hama-architecture.jpg}}
+\caption{Hama Architecture \cite{apachehama}}
+\label{fig:hama-arch}
 \end{figure}
-
 
 % https://en.wikipedia.org/wiki/Apache_Hama
 
@@ -94,29 +96,30 @@ Figure 3 details the architecture of Apache Hama.  Three key components are BSPM
 
 Apache Spark is open source software, originally developed at the University of California at Berkeley and later donated to the Apache Software Foundation. Spark is a cluster computing framework providing parallelism and fault tolerance \cite{www-wikispark}.
 
-Figure 4 shows the various components of Apache Spark.  Spark Core is central to Spark's architecture and provides APIs, memory management, fault recovery, storage capabilities, and other features. On top of Spark core are several packages.  Spark SQL allows the use of SQL for working with structured data.  Spark Streaming provides real time streaming capabilities.  MLlib and GraphX allow the use of machine learning and graph algorithms \cite{www-techstory}.
+Figure \ref{fig:spark-arch} shows the various components of Apache Spark.  Spark Core is central to Spark's architecture and provides APIs, memory management, fault recovery, storage capabilities, and other features. On top of Spark core are several packages.  Spark SQL allows the use of SQL for working with structured data.  Spark Streaming provides real time streaming capabilities.  MLlib and GraphX allow the use of machine learning and graph algorithms \cite{www-techstory}.
 
 % http://spark.apache.org/docs/1.3.0/cluster-overview.html
 
 % https://en.wikipedia.org/wiki/Apache_Spark
-\begin{figure}[ht]
-  \includegraphics[scale=0.44]{images/spark-architecture.jpg}
-  \caption{Spark Architecture \cite{www-techstory}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/spark-architecture.jpg}}
+\caption{Spark Architecture \cite{www-techstory}}
+\label{fig:spark-arch}
 \end{figure}
-
 
 \subsection{Apache Flink}
 
-Apache Flink is open source software developed by the Apache Software Foundation.  Flink features a "distributed streaming dataflow engine written in Java and Scala" \cite{www-wikiflink}.  Both batch and streaming processing programs can be executed on Flink.  Programs in Flink can be written in Java, Scala, Python, and SQL which are compiled and optimized and then executed on a Flink cluster.  Flink does not have an internal storage system and instead provides connectors to use with external sources like Amazon S3, Apache Kafka, HDFS, or Apache Cassandra \cite{www-wikiflink}.  Flink's full architechure is shown in Figure 5.
+Apache Flink is open source software developed by the Apache Software Foundation.  Flink features a "distributed streaming dataflow engine written in Java and Scala" \cite{www-wikiflink}.  Both batch and streaming processing programs can be executed on Flink.  Programs in Flink can be written in Java, Scala, Python, and SQL which are compiled and optimized and then executed on a Flink cluster.  Flink does not have an internal storage system and instead provides connectors to use with external sources like Amazon S3, Apache Kafka, HDFS, or Apache Cassandra \cite{www-wikiflink}.  Flink's full architechure is shown in Figure \ref{fig:flink-arch}.
 
 % https://en.wikipedia.org/wiki/Apache_Flink
 
-\begin{figure}[ht]
-  \includegraphics[scale=0.45]{images/flink-architecture.jpg}
-  \caption{Flink Architecture \cite{www-flinkarch}}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/flink-architecture.jpg}}
+\caption{Flink Architecture \cite{www-flinkarch}}
+\label{fig:flink-arch}
 \end{figure}
-
-
 
 % https://ci.apache.org/projects/flink/flink-docs-release-0.7/internal_general_arch.html
 
