@@ -35,7 +35,7 @@
 \ociscodes{Cloud, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/rahpsing/sp17-i524/paper1/S17-IR-2036/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper1/S17-IR-2036/report.pdf}}
 
 
 \begin{abstract}
@@ -47,8 +47,8 @@ tracks the progress of the enterprise. Messaging systems are expected
 to support fault tolerance, load balancing, scalability, and
 transactional support. JMS provides an intersection of messaging
 system common to all products. The Java Message Service (JMS) provides
-a standardized API for sending and receiving messages that can be used
-with many different messaging systems \cite{www-jms-fischli-article}. \newline
+a standardized API that can be used for sending and receiving messages
+with many different messaging systems. \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -59,32 +59,33 @@ with many different messaging systems \cite{www-jms-fischli-article}. \newline
 
 \section{Introduction}
 
-RMI(Remote Method Invocation) and RPC (Remote Procedure Call) were the
-most widely used messaging systems in enterprise applications. With
-the advent of distributed systems, a need arised for a loosely coupled
-messaging API whose implementation wouldn't depend on knowing the
-details of the receiver components unlike RMI and RPC. Sun along with
-several partner companies, introduced the JMS API which defines a
-common set of interfaces and associated semantics that allow programs
-written in the Java programming language to communicate with other
-messaging implementations. JMS is a part of the Java Platform,
+\emph{RMI (Remote Method Invocation)} \cite{www-rmi-wiki} and
+\emph{RPC (Remote Procedure Call)} \cite{www-rpc-wiki} were widely
+used as messaging systems in enterprise applications. With the advent
+of distributed systems, a need arised for a loosely coupled messaging
+API whose implementation wouldn't depend on knowing the details of the
+receiver components unlike RMI and RPC. Sun along with several partner
+companies, introduced the \emph{JMS API} \cite{www-jms-wiki} which
+defines a common set of interfaces and associated semantics that allow
+programs written in the Java programming language to communicate with
+other messaging implementations. JMS is a part of the Java Platform,
 Enterprise Edition, and is defined by a specification developed under
-the Java Community Process as JSR 914 \cite{www-jms-javajsr}.  It is a
-messaging standard that allows application components based on the
-Java Enterprise Edition (Java EE) to create, send, receive, and read
-messages. It allows the communication between different components of
-a distributed application to be loosely coupled, reliable, and
-asynchronous \cite{www-jms-oracle}. The JMS API minimizes the set of
-concepts a programmer must learn in order to use messaging products
-but provides enough features to support sophisticated messaging
-applications.
+the Java Community Process as \emph{JSR 914} \cite{www-jms-javajsr}.
+It is a messaging standard that allows application components based on
+the Java Enterprise Edition (Java EE) to create, send, receive, and
+read messages. It allows the communication between different
+components of a distributed application to be loosely coupled,
+reliable, and asynchronous \cite{www-jms-oracle}. The JMS API
+minimizes the set of concepts a programmer must learn in order to use
+messaging products but provides enough features to support
+sophisticated messaging applications.
 
 \section{JMS API Architecture}
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/jmsarchitecture}}
-\caption{\cite{www-jms-tutorialoracle} Jms architecture}
+\caption{Jms architecture \cite{www-jms-tutorialoracle} }
 \label{fig:JMS Objects}
 \end{figure}
 
@@ -95,18 +96,20 @@ Java EE platform includes a JMS provider
 \cite{www-jms-tutorialoracle}. JMS Clients are the Java language
 programs that send and receive messages. Any Java EE application
 component can act as a JMS client.  Messages are the objects used to
-communicate information between its clients.  Administered Objects are
-preconfigured JMS objects created by an administrator for the use of
-clients.  JMS administered objects are 'destinations' and 'connection
-factories'. Destinations are the object that a client uses to specify
-the destination of messages it sends and the source from where it
-receives them.  A client uses a Connection Factory object to establish
-connection with a provider.
+communicate information between the JMS clients.  Administered Objects
+are preconfigured JMS objects created by an administrator for the use
+of clients.  JMS administered objects are 'destinations' and
+'connection factories'. Destinations are the object that a client uses
+to specify the destination of messages it sends and the source from
+where it receives them.  A client uses a Connection Factory object to
+establish connection with a provider.
 
 Administrative tools allow a user to bind destinations and connection
-factories into a JNDI (Java Naming and Directory Inteface)
-namespace. A JMS client can then use resource injection to access the
-administered objects in the namespace and then establish a logical
+factories into a \emph{JNDI (Java Naming and Directory Inteface)}
+\cite{www-jndi-wiki} namespace. The JNDI is a directory service that
+that allows Java clients to lookup services by a unique name bound to
+each service. A JMS client can then use resource injection to access
+the administered objects in the namespace and then establish a logical
 connection to the same objects through the JMS provider
 \cite{www-jms-tutorialoracle}.
 
@@ -125,13 +128,13 @@ domains. A Java EE provider must implement both domains.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/point-to-point}}
-\caption{\cite{www-jms-tutorialoracle} Point-to-Point model}
+\caption{Point-to-Point model \cite{www-jms-tutorialoracle}}
 \label{fig:Point-to-Point messaging}
 \end{figure}
 
-Point-to-point (PTP) domains are built around the concept of message
-queues.  Each message is addressed to a specific queue; clients
-extract messages from the queue(s) established to hold their
+\emph{Point-to-point (PTP)} domains are built around the concept of
+message queues.  Each message is addressed to a specific queue;
+clients extract messages from the queue(s) established to hold their
 messages. Queues retain all messages sent to them until the messages
 are consumed or expire.
 
@@ -140,81 +143,55 @@ are consumed or expire.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/publish-subscribe}}
-\caption{\cite{www-jms-tutorialoracle} Publish/Subscribe model}
+\caption{Publish/Subscribe model \cite{www-jms-tutorialoracle}}
 \label{fig: Publish/Subscribe messaging}
 \end{figure}
 
 In a publish/subscribe product or application, each message can have
 multiple consumers. Clients address messages to a topic, which is
-equivalent to a bulletin board. Publishers and subscribers are
-anonymous and can dynamically publish or subscribe to the content
-hierarchy. The system shall take care of distributing the messages
-arriving from a topic’s multiple publishers to its multiple
-subscribers. Topics shall retain messages only for the time it takes
-to distribute them to current subscribers.  Publishers and subscribers
-have a timing dependency. A client that subscribes to a topic can
-consume only messages published after the client has created a
-subscription, and the subscriber must continue to be active in order
-for it to consume messages \cite{www-jms-tutorialoracle}.
+equivalent to a bulletin board. \emph{Publishers} and
+\emph{subscribers} are anonymous and can dynamically publish or
+subscribe to the content hierarchy. The system shall take care of
+distributing the messages arriving from a topic’s multiple publishers
+to its multiple subscribers. Topics shall retain messages only for the
+time it takes to distribute them to current subscribers.  Publishers
+and subscribers have a timing dependency. A client that subscribes to
+a topic can consume only messages published after the client has
+created a subscription, and the subscriber must continue to be active
+in order for it to consume messages \cite{www-jms-tutorialoracle}.
 
 
-\section{JMS Programming model}
+\section{Implementing the JMS Programming model}
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/programming-model}}
-\caption{\cite{www-jms-fischli-article} Jms programming model}
+\caption{Jms programming model \cite{www-jms-fischli-article}}
 \label{fig:JMS Programming Objects}
 \end{figure}
 
-To implement the JMS specification, a series of objects shall be
-created and registered to the system follows.
+To implement the JMS specification, a series of objects must be
+created and registered to the system. The following steps comprise of
+developing a basic JMS system.
 
 \subsection{Creating administered objects and binding resources}
 
 Creating and configuring connection factories and destinations are
-responsibilities of the system administrator.
-
-\begin{lstlisting}
-Properties env = new Properties();
-env.put(Context.INITIAL_CONTEXT_FACTORY,
-"org.exolab.jms.jndi.InitialContextFactory");
-env.put(Context.PROVIDER\_URL, "tcp://localhost:3035/");
-Context context = new InitialContext(env);
-\end{lstlisting}
-
-Alternatively, these administered objects shall also be created from
-the server admin console available in Glassfish or any other
-application servers.  A JMS client can obtain access to connection
-factories and destinations by looking them up using JNDI.
-
-\begin{lstlisting}
-ConnectionFactory factory =
-(ConnectionFactory)context.lookup("ConnectionFactory"); 
-Destination destination = (Destination)context.lookup("Topic");
-\end{lstlisting}
-
+responsibilities of the system administrator. Alternatively, these
+administered objects shall also be created from the server admin
+console available in Glassfish or any other application servers.  A
+JMS client can obtain access to connection factories and destinations
+by looking them up using JNDI.
 A connection encapsulates a virtual connection with a JMS provider
 and is used to create one or more sessions.
-
-\begin{lstlisting}
-Connection connection = factory.createConnection();
-connection.start();
-
-Session session = connection.createSession(false,
-Session.AUTO_ACKNOWLEDGE );
-\end{lstlisting}
 
 \subsection{Creating a message object}
 
 The JMS API provides methods for creating messages of each type and
-for filling in their contents. For example, to create and send a
-TextMessage, the following syntax shall be used.
-
-\begin{lstlisting}
-TextMessage message = session.createTextMessage();
-message.setText(msg_text); // msg_text is a String
-\end{lstlisting}
+for filling in their contents. For example, to create a message object
+the primitive \emph{createMessage()} shall be used. Corespondingly, to
+set the content of a TextMessage, the primitive \emph{setText()} shall
+be used.
 
 \subsection{Creating a producer and sending the message}
 
@@ -223,18 +200,8 @@ for sending messages to a destination.  A Session object is used to
 create a MessageProducer for a destination. A Message producer can be
 created for a Destination object, a Queue object, or a Topic object.
 
-\begin{lstlisting}
-MessageProducer producer = session.createProducer(destination);
-MessageProducer producer = session.createProducer(queue);
-MessageProducer producer = session.createProducer(topic);
-\end{lstlisting}
-
 Once a message producer has been created, it shall be used to send
-messages by using the send method.
-
-\begin{lstlisting}
-producer.send(message);
-\end{lstlisting}
+messages by using the \emph{send()} method.
 
 \subsection{Consuming a message}
 
@@ -246,14 +213,6 @@ destination to the registered consumers of the destination.  Similar
 to a producer a Message Consumer can be created for a Destination
 object, a Queue object, or a Topic object.
 
-\begin{lstlisting}
-MessageConsumer consumer = session.createConsumer(destination);
-MessageConsumer consumer = session.createConsumer(queue);
-MessageConsumer consumer = session.createConsumer(topic);
-
-Message m = consumer.receive();
-\end{lstlisting}
-
 To support asynchronous operations, JMS defines the concept of a
 listener.  A message listener is an object that acts as an
 asynchronous event handler for messages. The listener defines an
@@ -261,12 +220,7 @@ onMessage method, where we shall define the actions that need to be
 taken once a message arrives.
 
 A message listener shall be registered with a specific MessageConsumer
-by using the setMessageListener method defined by the API.
-
-\begin{lstlisting}
-Listener myListener = new Listener();
-consumer.setMessageListener(myListener);
-\end{lstlisting}
+by using the \emph{setMessageListener()} method defined by the API.
 
 \section{Anatomy of the JMS Message}
 
@@ -319,6 +273,43 @@ messages if the JMS provider fails \cite{www-jms-fischli-article}.
 
 \end{itemize}
 
+\section{JMS Use Cases}
+
+\subsection{Multi client communication}
+
+The JMS API provides a standard API that can be implemented by any
+messaging system. JMS allows multiple clients, potentially written in
+different languages to access information and coordinate with with
+each other.
+
+\subsection{Event Oriented Applications}
+
+Highly event oriented applications like the stock market require
+immediate action when the stock prices go high or low. In financial
+markets, it is a must for the customers to be notified whenever
+something important happens. The JMS API serves this purpose by
+providing configuration capabilities to act quickly on the occurence
+of any important event.
+
+\subsection{Workflow of an entire web application}
+
+A fully functional web application has several components which at
+some point in time depend on each other's availability to perform
+their operations successfully. In a real-time environment, it wouldn't
+be ideal for a component to keep waiting on the result produced by
+another dependent component. Messaging attempts to fulfill this gap by
+notifying component say - A, about the status of another dependent
+component say - B on a timely basis, thus, allowing component A to
+proceed with other operations and notifying it once component B has
+produced a result.
+
+\subsection{Transactional Messaging}
+
+JMS API guarantees processing each message exactly once irrespective
+of system failures. When working with a system with multiple clusters
+of nodes, the API guarantees that "if any node goes offline then all
+the messages will be persisted for when the node comes back online"
+\cite{www-activemq-usecases}.
 
 \section{Conclusion}
 JMS provides a connection oriented approach to messaging in

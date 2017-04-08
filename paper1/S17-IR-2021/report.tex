@@ -16,11 +16,11 @@
   Containers, lightweight containers,LXC}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/Govind273/sp17-i524/blob/master/paper1/S17-IR-2021/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/raw/master/paper1/S17-IR-2021/report.pdf}}
 
 \begin{abstract}
   Docker is a container-based technology which helps in the packaging
-  and shipping of applications quickly and across networks.The usage
+  and shipping of applications quickly and across networks. The usage
   of Docker is improving in the Agile Software workforce and among the
   DevOps because of its attributes of Continous Integration and
   testing. To create a cluster of Docker Engines into a single docker
@@ -40,7 +40,7 @@ Docker is an open-source container-based technology. It is an
 extension of Linux Containers (LXC): which is a unique kind of
 lightweight, application-centric virtualization that reduces overhead
 and makes it easier to deploy software on
-servers\cite{www-docker-2}. A container allows a developer to package
+servers \cite{www-docker-2}. A container allows a developer to package
 up an application and all its part including its code, stack it runs
 on, dependencies it is associated with, system tools and everything
 the application requires running  within an isolated environment. This
@@ -70,7 +70,7 @@ large number of containers can be hosted on the same host OS in
 comparison to the Virtual Machines. A full virtualized system usually
 takes a time to start whereas the Docker container does take even less
 than seconds to upstart and running with a lower overhead than the
-VMs\cite{www-stackoverflow-docker}.  Containers are potentially much
+VMs \cite{www-stackoverflow-docker}.  Containers are potentially much
 more efficient than VMs because they are able to share a single kernel
 and share application libraries.
 
@@ -82,7 +82,7 @@ Another major use of Docker is its use in the DevOps
 community.``DevOps is the practice of operations and development
 engineers participating together in the entire service lifecycle, from
 design through the development process to production
-support\cite{www-devops}''. Docker is not there to replace other
+support \cite{www-devops}''. Docker is not there to replace other
 configuration management tools and instead can be incorporated with
 other configuration management tools like Chef, Puppet, Salt or
 ansible. The other major benefit of using Docker, Dockerfiles, the
@@ -90,11 +90,10 @@ registry and the whole Docker ecosystem is that the development teams
 don't have to learn domain specific language, tools or technologies
 which are suitable to a specific platform. Docker will
 not be domain specific as it can be integrated with other
-configuration tools and software as many times Docker can be
-made to work with the other configuration management tools. Docker can
+configuration tools and software. Docker can
 also the eliminate the need for a development team to have the same
 versions of everything installed on their local
-machine\cite{www-docker-1}. While working on to incorporate Docker to
+machine \cite{www-docker-1}. While working on to incorporate Docker to
 their development workflow, Spotify created Helios, an application that
 manages Docker deployments across multiple servers and that alerts the
 development teams when the server isn't running the correct version of
@@ -104,7 +103,7 @@ a container.
 Docker allows systems administrators and developers to build
 applications that can run on any Linux distribution or hardware in a
 virtualized sandbox without making custom builds for all the different
-environments\cite{www-docker-1}. It is easy to deploy Docker
+environments \cite{www-docker-1}. It is easy to deploy Docker
 containers in a cloud scenario. Which can easily integrate it with
 typical DevOps environments seamlessly (Ansible, Puppet, etc.) or use
 it as a standalone.
@@ -112,7 +111,7 @@ it as a standalone.
 \subsection{Docker for continuous integration}
 Docker can be used as git for continuous integration. Docker is
 similar as changes in the system as changes can be tracked just like
-changes in the git.  These collaboration features (docker push and
+changes in the git. These collaboration features (docker push and
 docker pull) are one of the features which are important.The Docker
 pull/push are features which help the DevOps teams to easily
 collaborate and in quickly building infrastructures together.The
@@ -137,7 +136,7 @@ Machine.
 \section{Docker SWARM}
 Docker Swarm provides native clustering capabilities to turn a group
 of Docker engines into a single, virtual Docker
-Engine\cite{www-docker-swarm}. These helps to scale up the
+Engine \cite{www-docker-swarm}. These helps to scale up the
 applications as if these are all running on a single, huge machine. It
 does so by providing a standard Docker API where if any tool which
 communicates with the Docker, the daemon can use Docker Swarm to
@@ -153,12 +152,12 @@ easily plugin the Mesos or Kubernetes backend while still using the
 Docker client for a consistent developer experience. To find nodes in
 the cluster, Docker Swarm can use either a hosted discovery service,
 static file, etcd, consul and zookeeper depending on what is best
-suited for the environment\cite{www-docker-machine}
+suited for the environment \cite{www-docker-machine}
 
 
 \section{Ecosystem Support to Docker}
-Finally, it is easy to deploy Docker containers in a cloud.
-\cite{www-docker-1}. It can be integrated in a typical DevOps
+Finally, it is easy to deploy Docker containers in a cloud
+ \cite{www-docker-1}. It can be integrated in a typical DevOps
 environments seamlessly (Ansible, Puppet, etc.) or use it as a
 standalone. You can do local development within a system that is
 identical to a live server, deploy various development environments
@@ -219,13 +218,13 @@ with the Linux namespace, control groups, capabilities, AppArmor
 security profiles, network interfaces and firewalling rules in a
 consistent and predictable way.  Libcontainers is receiving help from
 Google, RedHat, and Parallels to build the program as they will work
-with docker as core maintainers of the
-code\cite{www-docker-1}. Libconatiner which is written natively in
+with docker as core maintainers of the code
+\cite{www-docker-1}. Libconatiner which is written natively in
 Google's Go is also being ported to other languages. Parallels' libct,
 which includes libcontainer's functionality, has native C/C++ and
 Python bindings. Microsoft is bringing Docker to their Azure platform,
-a development which would integrate the Microsoft products with
-Linux applications.
+a development which would integrate the Microsoft products with Linux
+applications.
 
 
 
@@ -234,7 +233,7 @@ Linux applications.
 According to a survey by Docker community it is observed that there
 are more than 1200 Docker Contributors, 10,000 Dockerized Applications
 at index.docker.io, 300 Million Downloads, and 32,0000 Docker-related
-Projects\cite{www-docker-3}. At Docker Ecosystem there is a potential
+Projects \cite{www-docker-3}. At Docker Ecosystem there is a potential
 for some advanced deployment tools that combine containers,
 configuration management, continuous integration, continuous delivery,
 and service orchestration in the coming days.
