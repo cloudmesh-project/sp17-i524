@@ -17,22 +17,18 @@
 
 \begin{abstract}
 
-There has been an increase in the volume of relational data generated
-today through a large number of sources. The large volume of data
-forces us to find solutions which can cope with them. Recently several
-hybrid approaches like HadoopDB, Hive, etc have been introduced to
-handle this large data. Although these have been successful in
-handling large data, but their architecture makes them inefficient to
-handle suboptimal execution strategies. Moreover this data is the
-information that companies would like to explore and analyse quickly
-to identify strategic answers to business. Therefore, in order to
-solve the problem of traditional database management systems to
-support large volumes of data arises Google's BigQuery platform. This
-solution runs in cloud, SQL-like queries against massive quantities of
-data, providing real-time insights about the data. In this paper, we
-will analyze the main features of BigQuery that Google offers to
-manage large-scale data along with its comparison with other data
-storage platforms. \newline
+The amount of relational data generated is increasing rapidly since it
+is generated through a large number of sources. Moreover this data is
+the information which companies like to explore and analyse quickly to
+identify solutions to business. Therefore, the need to solve the
+problem of traditional database management systems in order to support
+large volumes of data arises Google's BigQuery platform. Google
+BigQuery is an enterprise data warehouse used for large scale data
+analytics. A user can store and query the massive datasets by storing
+data in BigQuery and quering the database. BigQuery runs in cloud
+using the processing power provided by Google's infrastructure and
+provides SQL-like queries to perform analysis on masssive quantities
+of data, providing real-time insights about the data.\newline
 \end{abstract}
 
 % \setboolean{displaycopyright}{true}
@@ -43,45 +39,37 @@ storage platforms. \newline
 
 \section{Introduction}
 Nowadays, the amount of data being collected, stored and processed
-continues to grow rapidly. Therefore high performance and scalability
-have become two essential requirements for data analytics
-systems. Querying massive datasets can be time consuming and expensive
-without the right hardware and infrastructure. BigQuery solves this
-problem by enabling super-fast, SQL-like queries against append-only
-tables, using the processing power of Google's infrastructure. Google
-BigQuery \cite{www-bigquery} \cite{bigquery-paper} is a cloud web
-service data warehouse used for large-scale data processing. It is
-ideal for businesses that cannot invest in infrastructure to process a
-huge amount of information. This platform allows to store and retrieve
-large amounts of information in near real time with main focus on data
-analysis.
-
-\section{Cloud Computing}
-Cloud computing \cite{www-cloudcomputing}
-\cite{benchmark-for-cloud-paper} allows access to computing resources
-easily scalable and virtualized via the Internet. The use becomes
-simpler because users need not to have knowledge, experience or
-management of the infrastructure. There are usually three types of
-cloud offerings:\begin{itemize} \item Infrastructure as a service
-  (IaaS) which provides basic compute and storage resources including
-  servers, networking,etc. \item Platform as a service (PaaS) which
-  provides a platform allowing users to develop, run and manage
-  applications without the complexity of building and maintaining the
-  infrastructure. \item Software as a Service (SaaS) which refers to
-  one of the most known cloud services, which consists of applications
-  running directly in the cloud provider. \end{itemize}
-
-\noindent
+continues to grow rapidly. Querying this massive datasets can be time
+consuming and expensive without the right hardware and
+infrastructure. BigQuery\cite{www-bigquery} solves this problem by
+providing super-fast, SQL-like queries, using the processing power of
+Google's infrastructure. Google BigQuery\cite{bigquery-paper} is a
+cloud web service data warehouse used for large-scale data
+processing. It is suitable for businesses that cannot afford to spend
+a huge amount of investment in infrastructure to process a huge amount
+of information. This platform allows to store and retrieve large
+amounts of information in near real time as well as providing some
+important analysis of the data which is stored.
 
 \section{Google BigQuery}
-To solve the problems faced by Hadoop\cite{www-apache-hadoop}
-MapReduce\cite{mapreduce-article}, Google developed Dremel application
-in order to process large volumes of data. Dremel was designed to
-deliver high performance on data which was distributed across multiple
+To solve the architectural problems faced by
+Hadoop\cite{www-apache-hadoop} MapReduce\cite{mapreduce-article},
+Google developed Dremel\cite{dremel-paper} application in order to
+process large volumes of data. Dremel was designed to deliver high
+performance on data which was spread across a huge range of multiple
 servers and SQL support. But in 2012 at Google I/O event, it was
 announced that they would no longer support Dremel and this led to the
 beginning of BigQuery which became then the high-performance cloud
-offering of google.
+offering of google. BigQuery makes use of SSL (Secure Sockets Layer) to take care of the security concerns related to cloud management.
+
+\subsection{System Architecture and Internal Structure}
+
+Google BigQuery platform is a Software As a Solution (SaaS) model in
+the cloud. As seen in figure \ref{fig:architecture} data which is
+generated from a variety of sources like event logs, relational
+databases, IoT devices like sensors, actuators, social media websites,
+Informatica\cite{www-informatica} applications, etc is loaded in the
+databases which are created in BigQuery.
 
 \begin{figure}[htbp]
 \centering
@@ -90,104 +78,91 @@ offering of google.
 \label{fig:architecture}
 \end{figure}
 
-\noindent
-Google BigQuery \cite{bigquery-paper} platform is a SaaS as a model in
-the cloud. It is not a reporting system and does not have an interface
-that allows the operation of the information but it is ideal to export
-results by Tableau, QlikView, Excel, among others including the tools
-of Business Intelligence (BI) as seen in figure
-\ref{fig:architecture}. Projects are top-level containers that store
-information about billing and authorized users, and they contain
-BigQuery data. When we create a new project, it is identified by a
-name, authorized users and data\cite{www-bigquery-documentation}.
+This data can then be processed and anaylsed using some algorthmic
+logic or applying some processing tool. Finally the data can then be
+represented and exported using Tableau\cite{www-tableau},
+Qlikview\cite{www-qlik}, MS Excel\cite{www-excel} and other BI
+tools. It can also be exported on Hadoop system for parallel
+processing.\newline Now to store data in BigQuery, you need to create
+Projects. Projects\cite{www-bigquery-documentation} in BigQuery act as
+top-level containers which store the BigQuery data. Each project is
+referenced by a name and unique ID. Tables in BigQuery store the
+actual data where each table has a schema which describes the field
+name, types and other information. In BigQuery each table must belong
+to a dataset.Datasets help to organise the tables and control the
+access to it.
 
 \noindent
-Data which is generated from a variety of sources like event logs,
-relational databases, IoT devices like sensors, social media websites,
-etc is given as an input to BigQuery which processes it to generate
-some meaningful analysis according to the requirement. The final data
-could be represented and exported using Tableau, Qlikview and other BI
-tools. It can also be exported on Hadoop system for parallel
-processing as in figure \ref{fig:architecture}.
 
 \section{Features of BigQuery}
-Google BigQuery\cite{www-bigquery} presents some characteristics like velocity,
-scalability, simplicity, security and multiple access methods.
+Google BigQuery presents some characteristics like
+velocity, scalability, simplicity, security and multiple access
+methods.
 
 \subsection{Velocity}
 
-BigQuery\cite{www-bigquery} can process millions of information which
-is not indexed, in seconds due to columnar storage, and tree
-architecture.
+BigQuery can process millions of information in seconds because of its columnar storage, and tree like architecture.
 
-\subsection{Columnar Storage}
-The data instead of being stored in terms of rows, is stored as
-columns and thus storage will be oriented. This will result in
-scanning of only the required values, largely reducing latency. This
-storage also allows for a higher compression ratio. Google reports
-\cite{www-rowvscolumnstorage} that they can achieve columnar
-compression ratios of 1:10 as opposed to 1:3 when storing data in a
-traditional row-based format. The reason behind this is the similarity
-of data stored in the columns as the variation is significantly lower
-than when the data is stored in rows.
+\subsection{Columnar Storage and Tree Architecture}
+The data instead of being stored in terms of rows like in standard
+SQL, is stored as columns and thus storage is oriented as shown in
+figure \ref{fig:rowvscolumnarstorage}. This not only results in fast
+access to data but also results in scanning only the required values,
+which largely reduces latency. This also results in a higher
+compression ratios. Google reports\cite{www-rowvscolumnstorage} that
+``BigQuery can achieve columnar compression ratios of 1:10 as opposed
+to 1:3 when storing data in a traditional row-based format''.
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/rowvscolumnstorage}}
-\caption{\cite{www-rowvscolumnstorage} Row-oriented vs Column-oriented Storage}
+\caption{\cite{www-rowvscolumnstorage} Row-oriented vs Column-oriented Storage in tree architecture}
 \label{fig:rowvscolumnarstorage}
 \end{figure}
 
-\subsection{Tree Architecture}
-This is used for processing queries and aggregating results across
-different nodes. BigQuery is spread across thousands of servers. The
-data is shared across multiple machines as in figure
-\ref{fig:rowvscolumnarstorage}. This helps retrieve data much
-faster. Let us see this with the help of 2
-examples\cite{www-rowvscolumnstorage}.
+\noindent
+Moreover the tree-like architecture is used for processing queries and
+aggregating results across variety of different nodes. The tree-like
+structure also helps in retrieving data faster. \newline Let us see
+this with the help of 2 examples.
 
 \noindent
-Here, A is our root server, with B being an intermediate server and C,
-D, E being leaf servers having local disk storage.\newline
+Considering the column-oriented storage in tree architecture format in
+the figure \ref{fig:rowvscolumnarstorage}, lets refer node A as our
+root server, node B being an intermediate server and C, D, E being
+leaf servers having local disk storage space.\newline
 
 \noindent
-Example 1: Speed \newline
-Statement: List out all the customer names starting with ‘G’.\newline
+Example 1: Fast-retrieval \newline
+Statement: Find out all the customer names whose name starts with ‘A’.\newline
 \noindent
-Let us assume Node C contains customer names.  Hence, it is as simple
-as traversing A -> B -> C and looking at the datasets Cr1 and Cr2 for
-names starting with G. One need not look at A -> B -> D and A ->
-E. Hence, in this simple scenario, we have already achieved a search
-time of 0.33x that of a typical RDBMS (assuming equal column sizes).\newline
+Assuming node C contains customer names.  Hence, it is as simple as
+traversing A -> B -> C and looking at the datasets Cr1 and Cr2 for
+names starting with 'A'. One need not look at the paths from A -> B ->
+D and A -> E. Hence, in this simple scenario, A query may not scan the entire storage structure of the BigQuery and hence speeds up retrieving the information. Here the reason why the query looks only in the path A -> B -> C because BigQuery knows that all the customer names starting with A have been placed in the local disk storage at node C itself. \newline
 
 \noindent
 Example 2: Parallel Processing \newline
-Statement: Count all the customer names
-starting with ‘G’. \newline
+Statement: Count all the customer whose names
+starting with ‘A’. \newline
 
-\begin{itemize}[noitemsep,topsep=0pt]
-\item Root A passes the query to intermediate B. \item B translates
-  the query to Sum (Count all the customer names starting with
-  ‘G’). \item Intermediate B passes this query to Leaf C. \item Leaf C
-  has tablets (Horizontal shared tables) r1 and r2. \item C accesses
-  these tablets in parallel, runs quick counts and passes the count of
-  Cr1 and Cr2 to B. \item B sums Cr1 and Cr2 and passes it to the root
-  A for output. \end{itemize}
+\begin{enumerate}[noitemsep,topsep=0pt]
+\item Root node A sends out the query to node B which in turn
+  translates the query to sum the names of all the customers starting
+  with ‘A’. \item Now after translating, node B passes this query to
+  leaf node C which has data stored in columnar format in the form of
+  r1 and r2 tables. \item node C accesses these tablets in parallel,
+  and counts the number of customers whose names start with ‘A’ and
+  passes the count of Cr1 and Cr2 to node B which sums the result and
+  passes it to the root Aas the output of the query. \end{enumerate}
 
 \noindent
-Now, if this architecture was scaled to thousands of leaf servers and
-hundreds of intermediate servers. This achieves enormous amounts of
-parallel processing by utilizing a small percentage of the CPU
-processing and disk I/O of each server as opposed to 100\% usage of
-fewer servers.
-
-\subsection{Scalability}
-It is the ability to manage huge data size with millions of records
-reaching terabytes of information, without space limits\cite{www-bigquery}.
+So this not only increases the speed of retriving the information but
+also the goal of parallel processing which is the need in quering huge
+datasets is also achieved.
 
 \subsection{Simplicity}
-BigQuery provides a simple interface to upload and execute browse
-through a query language similar to SQL as shown in figure \ref{fig:bigqueryinterface}.
+Figure \ref{fig:bigqueryinterface} shows the simple user interface provided by BigQuery. The dataset stored in BigQuery can be easily queried using SQL like queries.
 
 \begin{figure}[htbp]
 \centering
@@ -196,35 +171,37 @@ through a query language similar to SQL as shown in figure \ref{fig:bigqueryinte
 \label{fig:bigqueryinterface}
 \end{figure}
 
-\subsection{Multiple permissions}
-It is the capacity to manage different access permissions, read-only,
-editing or owner.
-
-\subsection{Security}
-To ensure security, the solution makes use of SSL (Secure Sockets Layer)
+\noindent
+You can enter your query in the text area provided and the results
+will be displayed below. At the left side of the interface, it lists
+all the tables related to a particular database which are referenced
+as projects in BigQuery. In figure \ref{fig:bigqueryinterface}, the
+left hand side consists a list of all the tables related to the
+'publicdata:samples' project. The query is fired in the text area
+below the 'Compose Query' text and its results are displayed below in tabluar foramt.
 
 \subsection{Multiple access methods}
-We can access the service in different ways. We can use a BigQuery
-browser tool, a bq command-line tool or a REST-based
-API. \begin{itemize}
-\item BigQuery Browser Tool: With this tool it is possible to easily browse,
-create tables, run queries, and export data to Google Cloud Storage.
-\item bq command-line Tool: This Python command - line tool permits to
-  manage and query the data. \item REST API: We can access BigQuery
-  making calls to the REST API using a variety of client libraries
-  such as Java, PHP or Python.  \end{itemize}
+We can access the BigQuery service in 3 different ways. We can either
+use a BigQuery browser tool, a bq command-line tool or a REST-based
+API. \begin{enumerate}
+\item BigQuery Browser Tool: It allows to easily browse, create
+  tables, run queries, and export data to Google Cloud Storage.
+\item bq command-line Tool: This is a Python command - line tool which
+  permits to manage and query the data. \item REST API: We can access
+  BigQueryeven by making calls to the REST API using a variety of client
+  libraries such as Java, PHP or Python.  \end{enumerate}
 
 
-\section{Experiment}
+\section{Comparison of BigQuery with Impala, Shark, Hive, Redshift and Tez}
 
 \noindent
 In \cite{www-benchmarks-bigguery}, the performance of BigQuery is
 compared against Impala, Shark, Hive, Redshift and Tez by using
-following benchmark. The benchmark allows 3 different sizes of
-datasets - tiny, 1node and 5nodes. The largest dataset is 5nodes which
-has ‘rankings’ table with 90 million records and ‘uservisits’ table
-with 775 million records. The data is generated using Intel's Hadoop
-benchmark tools. The data itself are available at
+Intel's Hadoop benchmark tools . The
+benchmark allows 3 different sizes of datasets - tiny, 1node and
+5nodes. The largest dataset is 5nodes which has ‘rankings’ table with
+90 million records and ‘uservisits’ table with 775 million
+records. The data is generated. The data itself are available at
 s3://big-data-benchmark/pavlo/[text|text-deflate|sequence|sequence-snappy]/[suffix]. The
 two tables have the following schemas:\newline \newline
 \noindent
