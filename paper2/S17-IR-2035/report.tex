@@ -1,8 +1,8 @@
-\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{D3.js}
+\title{D3}
 
 \author[1,*]{Piyush Shinde}
 
@@ -34,11 +34,11 @@ Data Driven Documents (D3) is a open source JavaScript library used to create dy
 
 Several graphical forms can be used to envision large quantitative data sets such as graphs, charts, maps and diagrams. These data sets are increasing exponentially since the advent of the World Wide Web, making the task of efficient data visualization more challenging. As a result, web browsers are considered as ideal platforms for visualizing large data sets.
 
-Designers often employ multiple tools simultaneously for building visualisations like HTML for page content, CSS for aesthetics, JavaScript for interaction, SVG for vector graphics \cite{paper-d3}. One of the most important advantages is the uninterrupted cooperation between most of the technologies using the web as a platform, which is enabled by a document object model (DOM). The DOM reveals the ordered structure of a web page, aiding it's manipulations.  
+Designers often employ multiple tools simultaneously for building visualizations like HTML for page content, CSS for aesthetics, JavaScript for interaction, SVG (Scalable Vector Graphics) for vector graphics \cite{paper-d3}. One of the most important advantages is the uninterrupted cooperation between most of the technologies using the web as a platform, which is enabled by a document object model (DOM). The DOM reveals the ordered structure of a web page, aiding it's manipulations.  
 
-Data Driven Documents (D3) is an open source JavaScript library, which helps in efficient manipulation of the document object models based on data. It was released in 2011 by Heer, Ogievetsky and Bostock, then part of Computer Science Department of Stanford University, Stanford, CA 94305. D3 provides a toolkit for visualizing data using web standards such as HTML, SVG, and CSS.\cite{www-git}. 
+Data Driven Documents (D3) is an open source JavaScript library, which helps in efficient manipulation of the document object models based on data. It was released in 2011 by Heer, Ogievetsky and Bostock, then part of Computer Science Department of Stanford University. D3 provides a toolkit for visualizing data using web standards such as HTML, SVG, and CSS.\cite{www-git}. 
 
-D3 resembles to document transformers such as jQuery that simplify the act of document transformation in web browsers. D3 uses the DOM’s standard SVG syntax, that shows similarities with the graphical abstractions used in graphics libraries such as Processing and Raphaël. D3 is a generalization of Protovis, and through helper modules more complex visualizations can be  achieved efficiently. 
+D3 resembles to document transformers such as jQuery \cite{www-jquery} that simplify the act of document transformation in web browsers. D3 uses the DOM’s standard SVG syntax, that shows similarities with the graphical abstractions used in graphics libraries such as Processing and Raphaël \cite{www-raphael}. D3 is a generalization of Protovis \cite{www-protovis}, and through helper modules more complex visualizations can be  achieved efficiently. 
 
 D3's main features include selections, transitions and update, enter and exit functions. We will glance through these features in the next section.
 
@@ -46,7 +46,7 @@ D3's main features include selections, transitions and update, enter and exit fu
 D3’s basic operand is the selection. Operators act on selections, modifying content. Data joins bind input data to elements, producing enter and exit sub-selections for the creation and destruction of elements with respect to data. Animated transitions interpolate attributes and styles smoothly over time \cite{paper-d3}.
  
 \subsection{Selections}
-Selections allow the user to select and manipulate HTML elements in a very simple way. D3 adopts the W3C Selectors API that contain predicates to select elements by tag, class, unique identifier, attribute, containment, or adjacency \cite{www-d3}. Unique selection methods like union and intersection can be used on these predicates. Multiple operations can be performed after selecting an element by chaining the operations. 
+Selections allow the user to select and manipulate HTML elements in a very simple way. D3 adopts the W3C Selectors API \cite{www-w3c} that contain predicates to select elements by tag, class, unique identifier, attribute, containment, or adjacency \cite{www-d3}. Unique selection methods like union and intersection can be used on these predicates. Multiple operations can be performed after selecting an element by chaining the operations. 
 
 D3 provides select and selectAll methods for single and multiple element selections. The former selects only the first element that matches the predicates, while the latter selects all matching elements in document traversal order \cite{paper-d3}.
 
@@ -62,7 +62,7 @@ The data operator binds input data to selected nodes. Data is specified as an ar
 \subsection{Enter, Update and Exit}
 D3’s Enter and Exit selections, aid users to create new nodes for incoming data and remove outgoing nodes that are no longer required.
 
-When data is bound to a selection, each element in the data array is paired with the corresponding node in the selection. In case of fewer nodes as compared to elements of the data array, the extra data elements form the enter selection, that can be instantiated by appending to the enter selection. 
+When data is bound to a selection, each element in the data array is paired with the corresponding node in the selection. In case of fewer nodes as compared to elements of the data array, the extra data elements form the enter selection, that can be instantiated by appending to the enter selection as shown in figure \ref{fig:enter,update & exit}. 
 
 Updating nodes are the default selection—the result of the data operator \cite{www-d3}. In case of skipped enter and exit selections, D3 automatically selects only the elements for which corresponding data exists. Properties that are constant for the life of the element are set once on enter, while dynamic properties are recomputed per update \cite{paper-d3}. The initial selection can be divided into three parts: the updating nodes to modify, the entering nodes to add, and the exiting nodes to remove. Handling these three cases separately, precisely define the operations that run on each node, thereby optimizing performance and offering greater control over transitions. 
 
@@ -72,6 +72,7 @@ Updating nodes are the default selection—the result of the data operator \cite
 \includegraphics[scale=0.8]{images/5}
 \centering
 \caption{New data (blue) joining old nodes (orange) results in three sub-selections: enter, update and exit \cite{www-d3}.}
+\label{fig:enter,update & exit}
 \end{figure}
    
     
@@ -93,42 +94,53 @@ This example displays a series of ten different
 data visualizations of the Wimbledon tennis tournament created by Peter Cook \cite{www-cook}. The original data was collected from British tennis data
 website \cite{www-tennis}.
 
-Amongst the 10 visualizations, 3 of them include a circular match tree, a bubble chart and a horizontal histogram. The circular match tree displays concentric circles labelled as the different rounds of the Wimbledon 2013. Each concentric circle displays the player names. The result was of each match in each round is displayed by hovering the mouse over the names. The winner's name is displayed in the center of the circle.
+Amongst the 10 visualizations, 3 of them include a circular match tree, a bubble chart and a horizontal histogram. The circular match tree displays concentric circles labelled as the different rounds of the Wimbledon 2013 as shown in figure \ref{fig:circular tree}. Each concentric circle displays the player names. The result was of each match in each round is displayed by hovering the mouse over the names. The winner's name is displayed in the center of the circle.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/1}
+\includegraphics[scale=0.4]{images/1}
 \centering
 \caption{Wimbledon 2013: Circular Match Tree \cite{www-cmt}.}
+\label{fig:circular tree}
 \end{figure}
 
-The bubble chart displays pair of bubbles connected by an arrow. Each arrow indicates a match where the winner had a lower ATP ranking than the loser. The size of each bubble is proportional to the ATP points of the player. Hovering the mouse over a bubble displays both the players and their ATP points with the result of the match. 
+The bubble chart displays pair of bubbles connected by an arrow as shown in figure \ref{fig:bubble chart}. Each arrow indicates a match where the winner had a lower ATP ranking than the loser. The size of each bubble is proportional to the ATP points of the player. Hovering the mouse over a bubble displays both the players and their ATP points with the result of the match. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/2}
+\includegraphics[scale=0.5]{images/2}
 \centering
 \caption{Wimbledon 2013: Bubble Chart \cite{www-bubble}.}
+\label{fig:bubble chart}
 \end{figure}
 
-The histogram displays the list of the top 32 players of Wimbledon 2013. It displays the number of matches won, sets won, games won and ATP ranking of all the 32 players by clicked on the respective tabs \cite{www-hist}.  
+The histogram displays the list of the top 32 players of Wimbledon 2013 as shown in figure \ref{fig:histogram}. It displays the number of matches won, sets won, games won and ATP ranking of all the 32 players by clicked on the respective tabs \cite{www-hist}.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{images/6}
+\centering
+\caption{Wimbledon 2013: Top 32 Players \cite{www-hist}.}
+\label{fig:histogram}
+\end{figure}
 
 \subsection{Earthquakes in Chile since 1900}
 This example helps us visualize the most important seismic events in Chile since 1900 \cite{www-map}. The earthquake data was retrieved from the ANSS Composite Catalog and joined with the Centennial Catalog from the USGS. 
 
- A seismic event is displayed as a circle with it's occurrence year. The radius and the color of the circles are a function of the earthquake magnitude. 
+ A seismic event is displayed as a circle with it's occurrence year as shown in figure \ref{fig:earthquake}. The radius and the color of the circles are a function of the earthquake magnitude. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{images/3}
+\includegraphics[scale=0.5]{images/3}
 \centering
 \caption{Earthquakes in Chile since 1900: Map \cite{www-map}.}
+\label{fig:earthquake}
 \end{figure}
 
 \subsection{Visualizing the Racial Divide}
 This example displays a visualization that highlights the impact of the segregation that exists in many US cities today based on race using d3 and force-directed maps \cite{www-fdm}. The cities include Milwaukee, Chicago, St. Louis, Syracuse, Dayton, Pittsburgh, Denver, Columbus, Kansas City, Oklahoma City, Wichita, Memphis, Baltimore and Charleston. Each city is made up of tracts from the 2010 Census.
 
-The Census tracts are pushed away from neighboring tracts based on the change in proportion of white and black populations between each neighboring tract.
+The Census tracts are pushed away from neighboring tracts based on the change in proportion of white and black populations between each neighboring tract as shown in figure \ref{fig:chicago}.
 
 Tracts having similar racial mix as their neighbors form groups. Spaces occur where there is a significant change in the racial makeup between neighboring tracts. The space is proportional to the change in racial composition between neighbors. 
 
@@ -137,6 +149,7 @@ Tracts having similar racial mix as their neighbors form groups. Spaces occur wh
 \includegraphics[scale=0.4]{images/4}
 \centering
 \caption{Visualizing The Racial Divide: Chicago \cite{www-chicago}.}
+\label{fig:chicago}
 \end{figure}
 
 
@@ -156,7 +169,7 @@ Unlike JavaScript libraries such as Google Charts, D3 does not offer in-built (s
 \section{Useful Resources}
 The complete documentation of D3.js, including instructions to download and install it's latest release, examples, and several tutorials, in a systematic method are available on the main website of D3.js \cite{www-d3}. It is also a useful resource to D3's core concepts, techniques, blogs, books, courses, talks, videos and meetups \cite{www-tut}. 
 
-The paper titled “$D^3$: Data-Driven Documents” authored by the creator of D3, compares D3 to existing web-based methods for visualization. The paper demonstrates how D3 is at least twice as fast as Protovis, through performance benchmarks. It also describes D3’s potential for dynamic visualization \cite{paper-d3}.
+The paper titled “$D^3$: Data-Driven Documents”, compares D3 to existing web-based methods for visualization. It demonstrates how D3 is at least twice as fast as Protovis, through performance benchmarks. It also describes D3’s potential for dynamic visualization \cite{paper-d3}.
 
 Another website provides a complete path to create interactive visualization using D3.js \cite{www-av}. It provides few real world examples and steps to create basic pie charts, animated bar charts and map.
 
