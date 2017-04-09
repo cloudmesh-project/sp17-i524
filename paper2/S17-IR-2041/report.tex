@@ -60,7 +60,8 @@ performance on data which was spread across a huge range of multiple
 servers and SQL support. But in 2012 at Google I/O event, it was
 announced that they would no longer support Dremel and this led to the
 beginning of BigQuery which became then the high-performance cloud
-offering of google. BigQuery makes use of SSL (Secure Sockets Layer) to take care of the security concerns related to cloud management.
+offering of google. BigQuery makes use of SSL (Secure Sockets Layer)
+to take care of the security concerns related to cloud management.
 
 \subsection{System Architecture and Internal Structure}
 
@@ -74,10 +75,12 @@ databases which are created in BigQuery.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/architecture}}
-\caption{\cite{www-bigquery-slideshare} System Architecture of BigQuery}
+\caption{\cite{www-bigquery-slideshare} System Architecture of
+  BigQuery}
 \label{fig:architecture}
 \end{figure}
 
+\noindent
 This data can then be processed and anaylsed using some algorthmic
 logic or applying some processing tool. Finally the data can then be
 represented and exported using Tableau\cite{www-tableau},
@@ -95,13 +98,13 @@ access to it.
 \noindent
 
 \section{Features of BigQuery}
-Google BigQuery presents some characteristics like
-velocity, scalability, simplicity, security and multiple access
-methods.
+Google BigQuery presents some characteristics like velocity,
+simplicity, and multiple access methods.
 
 \subsection{Velocity}
 
-BigQuery can process millions of information in seconds because of its columnar storage, and tree like architecture.
+BigQuery can process millions of information in seconds because of its
+columnar storage, and tree-like architecture.
 
 \subsection{Columnar Storage and Tree Architecture}
 The data instead of being stored in terms of rows like in standard
@@ -116,7 +119,8 @@ to 1:3 when storing data in a traditional row-based format''.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/rowvscolumnstorage}}
-\caption{\cite{www-rowvscolumnstorage} Row-oriented vs Column-oriented Storage in tree architecture}
+\caption{\cite{www-rowvscolumnstorage} Row-oriented vs Column-oriented
+  Storage in tree architecture}
 \label{fig:rowvscolumnarstorage}
 \end{figure}
 
@@ -133,18 +137,22 @@ root server, node B being an intermediate server and C, D, E being
 leaf servers having local disk storage space.\newline
 
 \noindent
-Example 1: Fast-retrieval \newline
-Statement: Find out all the customer names whose name starts with ‘A’.\newline
+Example 1: Fast-retrieval \newline Statement: Find out all the
+customer names whose name starts with ‘A’.\newline
 \noindent
 Assuming node C contains customer names.  Hence, it is as simple as
 traversing A -> B -> C and looking at the datasets Cr1 and Cr2 for
 names starting with 'A'. One need not look at the paths from A -> B ->
-D and A -> E. Hence, in this simple scenario, A query may not scan the entire storage structure of the BigQuery and hence speeds up retrieving the information. Here the reason why the query looks only in the path A -> B -> C because BigQuery knows that all the customer names starting with A have been placed in the local disk storage at node C itself. \newline
+D and A -> E. Hence, in this simple scenario, A query may not scan the
+entire storage structure of the BigQuery and hence speeds up
+retrieving the information. Here the reason why the query looks only
+in the path A -> B -> C because BigQuery knows that all the customer
+names starting with A have been placed in the local disk storage at
+node C itself. \newline
 
 \noindent
-Example 2: Parallel Processing \newline
-Statement: Count all the customer whose names
-starting with ‘A’. \newline
+Example 2: Parallel Processing \newline Statement: Count all the
+customer whose names starting with ‘A’. \newline
 
 \begin{enumerate}[noitemsep,topsep=0pt]
 \item Root node A sends out the query to node B which in turn
@@ -162,12 +170,15 @@ also the goal of parallel processing which is the need in quering huge
 datasets is also achieved.
 
 \subsection{Simplicity}
-Figure \ref{fig:bigqueryinterface} shows the simple user interface provided by BigQuery. The dataset stored in BigQuery can be easily queried using SQL like queries.
+Figure \ref{fig:bigqueryinterface} shows the simple user interface
+provided by BigQuery. The dataset stored in BigQuery can be easily
+queried using SQL-like queries.
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/userinterface}}
-\caption{\cite{www-userinterface-bigquery} Big Query Sample User Interface}
+\caption{\cite{www-userinterface-bigquery} Big Query Sample User
+  Interface}
 \label{fig:bigqueryinterface}
 \end{figure}
 
@@ -176,36 +187,38 @@ You can enter your query in the text area provided and the results
 will be displayed below. At the left side of the interface, it lists
 all the tables related to a particular database which are referenced
 as projects in BigQuery. In figure \ref{fig:bigqueryinterface}, the
-left hand side consists a list of all the tables related to the
+left-hand side consists a list of all the tables related to the
 'publicdata:samples' project. The query is fired in the text area
-below the 'Compose Query' text and its results are displayed below in tabluar foramt.
+below the 'Compose Query' text and its results are displayed below in
+tabluar foramt.
 
 \subsection{Multiple access methods}
-We can access the BigQuery service in 3 different ways. We can either
+You can access the BigQuery service in 3 different ways. We can either
 use a BigQuery browser tool, a bq command-line tool or a REST-based
 API. \begin{enumerate}
 \item BigQuery Browser Tool: It allows to easily browse, create
   tables, run queries, and export data to Google Cloud Storage.
 \item bq command-line Tool: This is a Python command - line tool which
   permits to manage and query the data. \item REST API: We can access
-  BigQueryeven by making calls to the REST API using a variety of client
-  libraries such as Java, PHP or Python.  \end{enumerate}
-
+  BigQueryeven by making calls to the REST API using a variety of
+  client libraries such as Java, PHP or Python.  \end{enumerate}
 
 \section{Comparison of BigQuery with Impala, Shark, Hive, Redshift and Tez}
 
 \noindent
-In \cite{www-benchmarks-bigguery}, the performance of BigQuery is
-compared against Impala, Shark, Hive, Redshift and Tez by using
-Intel's Hadoop benchmark tools . The
-benchmark allows 3 different sizes of datasets - tiny, 1node and
-5nodes. The largest dataset is 5nodes which has ‘rankings’ table with
-90 million records and ‘uservisits’ table with 775 million
-records. The data is generated. The data itself are available at
-s3://big-data-benchmark/pavlo/[text|text-deflate|sequence|sequence-snappy]/[suffix]. The
-two tables have the following schemas:\newline \newline
+In \cite{www-benchmarks-bigguery}, the
+performance\cite{www-benchmarks-amplab} of BigQuery is compared
+against Impala\cite{www-impala}, Shark\cite{www-apache-spark},
+Hive\cite{www-apache-hive}, Redshift\cite{www-amazon-redshift} and
+Tez\cite{www-apache-tez} by using Intel's Hadoop
+benchmark\cite{www-benchmarks-intel} tools . This benchmark has 3
+different sizes of datasets - tiny, 1node and 5nodes. The ‘rankings’
+table has 90 million records and ‘uservisits’ table has 775 million
+records. The data is taken using Common Crawl\cite{www-commoncrawl}
+document corpus. The two tables have the following
+schemas:\newline \newline
 \noindent
-Ranking table schema: (lists websites and their page rank)
+Rankings table schema: (lists websites and their page rank)
 \begin{itemize}[noitemsep,topsep=0pt] \item pageURL (String) \item pageRank (Integer) \item avgDuration (Integer) \newline
 \end{itemize}
 \noindent
@@ -214,64 +227,114 @@ Uservisits table schema: (Stores server logs for each web page)
 \end{itemize}
 
 \noindent
-The benchmark measures response time on a handful of relational
-queries: scans, aggregations, and joins. Some of the query results are
-larger than 128MB.
-\begin{itemize}
+The benchmark measures response time on 3 different types of
+queries. One being a basic scan query, one being an aggregation query,
+and one join query.
+\begin{enumerate}
+  
 \item Scan Query
 
-This query has 3 permutations, when X is 1000, X is 100 and then X is 10:
+Figure \ref{fig:scanquery} shows a general scan query on the rankings
+table.
+ 
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/Query1}}
+\caption{\cite{www-benchmarks-bigguery} Scan Query}
+\label{fig:scanquery}
+\end{figure}
 
-SELECT pageURL, pageRank FROM [benchmark.rankings] WHERE pageRank > X
-
+This query has been fired using different values for 'X'. Query 1A
+means X's value is 1000, query 1B means X's value is 100 and 1C means
+X's value is 10.
 
 \item Aggregation Query
 
-This query has 3 permutations, when X is 8, X is 10 and then X is 12:
+Figure \ref{fig:aggregationquery} shows an aggregation query on the
+uservisits table. The aggregation is performed using the sum function
+along with the substr function.
+ 
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/Query2}}
+\caption{\cite{www-benchmarks-bigguery} Aggregation Query}
+\label{fig:aggregationquery}
+\end{figure}
 
-SELECT SUBSTR(sourceIP, 1, X) AS srcIP, SUM(adRevenue)
-FROM [benchmark.uservisits]
-GROUP EACH BY srcIP
-
+This query has been fired using different values for 'X'. Query 2A
+means X's value is 8, query 2B means X's value is 10 and 2C means X's
+value is 12.
 
 \item Join Query
 
-Like other queries earlier, this one also has 3 permutations: X is ’1980-04-01’, X is ’1983-01-01’ and X is ’2010-01-01’:
+Figure \ref{fig:joinquery} shows a join query between the rankings
+table and uservisits table on some given condition.
 
-SELECT sourceIP, sum(adRevenue) AS totalRevenue, avg(pageRank) AS pageRank
-FROM [benchmark.rankings] R
-JOIN EACH(SELECT sourceIP, destURL, adRevenue
-FROM [benchmark.uservisits] UV WHERE UV.visitDate > "1980-01-01" AND UV.visitDate < X)
-NUV ON (R.pageURL = NUV.destURL)
-GROUP EACH BY sourceIP
-ORDER BY totalRevenue DESC LIMIT 1
-\end{itemize}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/Query3}}
+\caption{\cite{www-benchmarks-bigguery} Join Query}
+\label{fig:joinquery}
+\end{figure}
+
+Like other queries earlier, this one also has different values for
+'X'. Query 3A means X's value is ’1980-04-01’, query 3B means X is
+’1983-01-01’ and 3C means X is ’2010-01-01’.
+
+\end{enumerate}
+
+\subsection{Comparison results}
+\noindent
+Figure \ref{fig:experiments} shows the results.
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/experiments}}
-\caption{\cite{www-benchmarks-bigguery} Comparison of BigQuery with other storage platforms}
+\caption{\cite{www-benchmarks-bigguery} Comparison of BigQuery with
+  other storage platforms}
 \label{fig:experiments}
 \end{figure}
 
 \noindent
-Figure \ref{fig:experiments} shows the experimental results. For this
-experiment, each query was executed 10 times and the results are
-median response time in seconds. From \ref{fig:experiments}, it shows
-that only in Query A BigQuery took more time than others but while
-executing Query 2 and 3, it executed them faster than other
-platforms. This shows that BigQuery can produce amazing results when
-processing complex queries on large datasets.
+In this comparison experiment, each query was executed atleast 10
+times and the results which are displayed are the average values of
+the response time in seconds. From \ref{fig:experiments}, it shows
+that only in Query 1A, 1B and 1C BigQuery took more time than
+Redshift, Impala (on memory) and Shark (on memory) but the results
+related to query 2 and 3 are much better. For all the different values
+of X in query 2 and 3 (A,B and C), BigQuery executed them faster than
+other platforms. This shows that BigQuery can produce amazing results
+when processing complex queries on large datasets. As the number of
+processing records grew, BigQuery's response time was less as compared
+to the other storage platforms.
+
+\section{Use cases of BigQuery}
+\subsection{Safari Books Online}
+Safari Books Online\cite{www-usecase-safari} uses BigQuery to find
+trends in customer purchase, manage its negative feedback related to
+customer service, improve the sales team's effectiveness etc. They
+chose BigQuery over other technologies because of its retrieval speed
+by quering the datasets using a familiar SQL-like language, and the
+lack of additional required maintenance.
+
+\subsection{RedBus}
+Online travel agency RedBus\cite{www-usecase-redbus} introduced
+internet bus ticketing in India incorporating thousands of bus
+schedules into a single booking operation. Using BigQuery, redBus was
+able to manage the terabytes of booking and inventory data quickly and
+at a lower cost than other big-data services. BigQuery also helped its
+engineers fix glitches quickly, minimize lost sales and improve
+customer service as well.
 
 \section{Conclusion}
-Google BigQuery is a cloud-based database service that is able to
+Google BigQuery is a cloud-based database service which enables to
 process large data sets quickly. BigQuery allows to run SQL-like
-queries against multiple terabytes of data in a matter of seconds. It
-is suitable for ad-hoc OLAP/BI queries that require results as fast as
-possible. As a cloud-powered massively parallel query database it
-provides extremely high full-scan query performance and cost
-effectiveness compared to traditional data warehouse solutions and
-appliances.
+queries against multiple gigabytes to terabytes of data in a matter of
+seconds. It is suitable for ad-hoc OLAP/BI\cite{www-olap} queries that
+require results as fast as possible. As a cloud-powered parallel query
+database it provides extremely high full-scan query performance and
+cost effectiveness compared to other traditional data warehouse
+solutions and appliances.
 
 \section*{Acknowledgements}
 
