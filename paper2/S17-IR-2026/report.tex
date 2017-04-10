@@ -27,11 +27,11 @@ dataflow programs. It provides an in-memory distributed dataflow
 framework which exposes control over data partitioning and enables
 features like the high throughput of batch processors, the low latency
 of stream processors, and the ability to perform iterative and
-incremental computations \cite{paper1-Naiad}. These features allow the
-efficient implementation of many dataflow patterns, from bulk and
-streaming computation to iterative graph processing and machine
-learning.  This paper explaines the Naiad Framework, its abstractions,
-and the reasoning behind it.
+incremental computations. These features allow the efficient
+implementation of many dataflow patterns, from bulk and streaming
+computation to iterative graph processing and machine learning.  This
+paper explains the Naiad Framework, its abstractions, and the
+reasoning behind it.
 \newline
 \end{abstract}
 
@@ -46,50 +46,52 @@ and the reasoning behind it.
 Abundance of distributed dataflow systems around the big data
 ecosystem has resulted in achieving many goals like high throughput,
 incremental updating, low latency stream processing, iterative
-computation. Many graph analytics procedures involves incremental as
-well as iterative processing. However, most data-parallel systems
-support either incremental update or iteration, but not both.
+computation. An iterative computation can be think of as some function
+being looped on its output iteratively until there are no changes
+between the input and the output and the function converges to a fixed
+point. On the other hand, in incremental processing, we start with
+initial input $A_{0}$ and produce some output $B_0$. At some later
+point, a change $\delta A_1$ to the original input $A_0$, leads to new
+input $A_1 = A_0 + \delta A_1$. Incremental model produces an
+incremental update to the output, so $\delta B_1 = F(\delta A_1)$ and
+$B_1 = \delta B_1 + B_0$. Next state computation in incremental model
+is based on only previous state (i.e. A0 and B0)
+\cite{www-blog-naiad-summary}.
 
-Frameworks like descendants of MapReduce
-\cite{paper-incoop,paper-nectar},stream processing systems
-\cite{eventstream,paper-spade}, materialized view-maintenance engines
-\cite{paper-maintainance}, provide efficient support for incremental
-input, but do not support iterative processing. On the other hand,
-iterative data-parallel frameworks like Datalog \cite{paper-datalog},
-recursive SQL databases \cite{paper-SQL} and systems adding iteration
-over MapReduce like model
+Many data processing tasks require low-latency interactive access to
+results, iterative sub-computations, and consistent intermediate
+outputs so that sub-computations can be nested and composed. Most
+data-parallel systems support either iterative or incremental
+computations with the dataflow model, but not both. Frameworks like
+descendants of MapReduce \cite{paper-incoop,paper-nectar},stream
+processing systems \cite{eventstream,paper-spade}, materialized
+view-maintenance engines \cite{paper-maintainance}, provide efficient
+support for incremental input, but do not support iterative
+processing. On the other hand, iterative data-parallel frameworks like
+Datalog \cite{paper-datalog}, recursive SQL databases \cite{paper-SQL}
+and systems adding iteration over MapReduce like model
 \cite{paper-haloop,paper-twister,paper-ceil,paper-RDD} provide a
 constrained programming model (e.g. stratified negation in Datalog)
 and none supports incremental input processing \cite{paper2-Naiad}.
 
-Map Reduce, being functional language,requires passing the entire
-state of the graph from one stage to the next, which is
-inefficient. In real-time applications batch processing delays of
-MapReduce may prove unacceptable
-\cite{www-informationage-blog-wordpress-naiad}.
+With a goal to find common low-level abstraction and design general
+purpose system which resolves above mentioned issues in computation
+workloads, Naiad, a timely dataflow system was developed at Microsoft
+by Derek G. Murray \textit{et al.}.
 
-With a goal to find common low-level abstraction and system design
-that could be re-used for all of these computational workloads and to
-reduce the engineering cost of domain-specific distributed systems by
-allowing them to share a single highly optimized core codebase, Naiad,
-a timely dataflow system was developed at Microsoft by Derek G. Murray
-\textit{et al.} \cite{paper3-Naiad}.
+Naiad provides a distributed platform for executing data parallel
+cyclic dataflow programs. It offers high throughput batch processing,
+low latency stream processing and the ability to perform iterative and
+incremental computations all in one framework
+\cite{www-blog-huula-review-naiad}.
 
-Naiad extends standard batch data-parallel processing models like
-MapReduce, Hadoop, and Dryad/DryadLINQ, to support efficient
-incremental updates to the inputs in the manner of a stream processing
-system, while at the same time enabling arbitrarily nested fixed-point
-iteration \cite{paper1-Naiad}.
-
-Naiad, a distributed system for executing data parallel cyclic
-dataflow programs offers high throughput batch processing, low latency
-stream processing and the ability to perform iterative and incremental
-computations all in one framework \cite{www--blog-huula-review-naiad}.
-
-In Naiad, the underlying computation framework provides a mechanism
-for iteration and incremental update, while the language provides a
-structured means of expressing these computations. This yields both an
-expressive programming model and an efficient implementation
+In Naiad, the underlying timely dataflow computation framework
+provides a mechanism for iteration and incremental updates. Moreover,
+the high-level language support provides a structured means of
+expressing these computations. This framework can be utilized to build
+many expressive programming model on top of Naiad’s low-level
+primitives enabling such diverse tasks as streaming data analysis,
+iterative machine learning, and interactive graph mining
 \cite{paper2-Naiad}.
 
 
@@ -101,54 +103,30 @@ real-time querying of the application state.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/Naiad_application.JPG}}
-\caption{Naiad Application that support real time querries on
+\caption{Naiad Application that support real time queries on
   continually updated data \cite{paper1-Naiad}.}
 \label{Naiad-arch}
 \end{figure}
 
-Many data processing tasks require low-latency interactive access to
-results, iterative sub-computations, and consistent intermediate
-outputs so that sub-computations can be nested and composed.Figure
-\ref{Naiad-arch} shows a Naiad application that supports realtime
-queries on continually updated data. The dashed rectangle represents
-iterative processing that incrementally updates as new data arrive
-\cite{paper1-Naiad}.
+Figure \ref{Naiad-arch} shows a Naiad application that supports
+real-time queries on continually updated data. The dashed rectangle
+represents iterative processing that incrementally updates as new data
+arrive \cite{paper1-Naiad}.
 
-From Figure \ref{Naiad-arch}, it can be seen that query path is
-clearly separated from the update path. This results in query
-processing separately on a slightly stale version of the current
-application state and the query path does not get blocked or incur
-delays due to the update processing. This also resolves complex
-situations: If queries shared the same path with updates, the queries
-could be accessing partially processed/incomplete/inconsistent states,
-which would have to be taken care out separately.
+From Figure \ref{Naiad-arch}, query path is clearly separated from the
+update path. This results in query processing separately on a slightly
+stale version of the current application state and the query path does
+not get blocked or incur delays due to the update processing. This
+also resolves complex situations: If queries shared the same path with
+updates, the queries could be accessing partially
+processed/incomplete/inconsistent states, which would have to be taken
+care out separately.
 
 Even though hybrid approach to assemble the application in Figure
 \ref{Naiad-arch} by combining multiple existing systems have been
 widely deployed, applications built on a single platform as in Figure
 \ref{Naiad-arch} are typically more efficient, succinct, and
 maintainable \cite{paper1-Naiad}.
-
-\subsection{Features} 
-Naiad being a timely dataflow computational model, enriches dataflow
-computation with timestamps that represent logical points in the
-computation and provide the basis for an efficient, lightweight
-coordination mechanism.Timely dataflow supports the following three
-features:
-
-\begin{enumerate}
-\item Structured loops allowing feedback in the dataflow
-\item Stateful dataflow vertices capable of consuming and producing
-  records without global coordination, and
-\item Notifications for vertices once they have received all records
-  for a given round of input or loop iteration.
-\end{enumerate}
-
-Structured loops and Stateful dataflow vertices allows iterative and
-incremental computations with low latency.Notifications makes Naiad
-possible to produce consistent results, at both outputs and
-intermediate stages of computations, in the presence of streaming or
-iteration \cite{paper1-Naiad}.
 
 \section{Timely dataflow}
 Applications should produce consistent results, and consistency
@@ -160,11 +138,49 @@ asynchronous message processing while efficiently tracking global
 progress and synchronizing only where necessary to enforce
 consistency. Naiad model simply checkpoints its state periodically,
 restoring the entire system state to the most recent checkpoint on
-failure. Even if its not a sophisticated design,it was chosen in part
-for its low overhead. Faster common-case processing allows more
+failure. Even if it is not a sophisticated design, it was chosen in
+part for its low overhead. Faster common-case processing allows more
 computation to take place in the intervals between checkpointing, and
-thus often decreases the total time to job completion
+thus, often decreases the total time to job completion
 \cite{paper3-Naiad}.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/timely-dataflow-graph.jpg}}
+\caption{A simple timely dataflow graph \cite{paper1-Naiad}.}
+\label{timely-dataflow-graph}
+\end{figure}
+
+Consider a simple timely dataflow graph shown in Figure
+\ref{timely-dataflow-graph} showing a loop context nested in the
+top-level streaming context. Vertices A and D are not in any loop
+context resulting in no loop counters for their timestamps. Whereas,
+vertices B, C, and F are nested in a single loop context, so their
+timestamps have a single loop counter. The Ingress (I) and Egress (E)
+vertices sit on the boundary of a loop context. They monitor the loop
+by adding and removing loop counters to and from timestamps as
+messages pass through them.
+
+Naiad being a timely dataflow computational model, utilizes similar to
+above mentioned computational process and provide the basis for an
+efficient, lightweight coordination mechanism. Timely dataflow
+supports the following three features:
+
+\begin{enumerate}
+\item Structured loops allowing feedback in the dataflow
+\item Stateful dataflow vertices capable of consuming and producing
+  records without global coordination, and
+\item Notifications for vertices once they have received all records
+  for a given round of input or loop iteration.
+\end{enumerate}
+
+Structured loops and Stateful dataflow vertices allows iterative and
+incremental computations with low latency. Notifications makes Naiad
+possible to produce consistent results, at both outputs and
+intermediate stages of computations, in the presence of streaming or
+iteration \cite{paper1-Naiad}. The timely dataflow in Naiad is
+achieved by optimization in services like asynchronous messaging,
+iterative dataflow, progress tracking and consistency improvisation.
 
 \subsection{Asynchronous messaging}
 All dataflow models require some communication means for message
@@ -197,33 +213,33 @@ innermost coordinate of the timestamp.  The system enforced rule
 restricts event handler from sending a message with a time earlier
 than the timestamp for the event it is handling ensuring a
 \textit{partial order} on all of the pending events (undelivered
-messages and notifications) in the system,thus enabling efficient
+messages and notifications) in the system, thus enabling efficient
 progress tracking \cite{paper1-Naiad}.
 
-
 \subsection{Progress Tracking}
-The ability to deliver notifications(an event that fires when all
+The ability to deliver notifications (an event that fires when all
 messages at or before a particular logical timestamp have been
-delivered to a particular node) promptly and safely is critical to a
-timely dataflow system's ability to support low-latency incremental
-and iterative computation with consistent results.Naiad can implements
-progress trackers to establish the guarantee that no more messages
-with a particular timestamp can be sent to a node \cite{paper1-Naiad}.
+delivered to a particular node) promptly and safely is critical. This
+provides timely dataflow system an ability to support low-latency
+incremental and iterative computation with consistent results. Naiad
+can implement progress trackers to establish the guarantee that no
+more messages with a particular timestamp can be sent to a node
+\cite{paper1-Naiad}.
 
-\subsection{Achieving Timely dataflow}
+\section{Achieving Timely dataflow}
 Each event has a timestamp and a location (either a vertex or edge),
-and are referred as pointstamp. The timely dataflow graphs structure
-ensures that, for any locations $l_1$ and $l_2$ connected by two paths
+and are referred as pointstamp. The timely dataflow graph structure
+ensures that for any locations $l_1$ and $l_2$ connected by two paths
 with different summaries, one of the path summaries always yields
 adjusted timestamps earlier than the other. For each pair $l_1$ and
 $l_2$, we find the minimal path summary over all paths from $l_1$ to
 $l_2$ using a straightforward graph propagation algorithm, and record
-it as $\Psi[l_1, l_2]$. To efficiently evaluate the couldresult-in
-relation for two pointstamps $(t_1, l_1)$ and $(t_2, l_2)$, we test
-whether $\Psi[l_1, l_2](t_1) \le t_2$ \cite{paper1-Naiad}.
+it as $\Psi[l_1, l_2]$. To efficiently evaluate the possible relation
+for two pointstamps $(t_1, l_1)$ and $(t_2, l_2)$, we test whether
+$\Psi[l_1, l_2](t_1) \le t_2$ \cite{paper1-Naiad}.
 
 Informally, Timely Dataflow supports directed dataflow graphs with
-structured cycles, analogous to structured loops in a standard
+structured cycles which is analogous to structured loops in a standard
 imperative programming language. This structure provides information
 about where records might possibly flow in the computation, allowing
 an implementation like Naiad to efficiently track and inform dataflow
@@ -251,11 +267,11 @@ sense to move computation (dataflow graph stages) to the data (the
 partitioned input
 graph)\cite{www-informationage-blog-wordpress-naiad}. Each process
 participates in a distributed progress tracking protocol, in order to
-coordinate the delivery of notifications.  All of the features of
-C$\#$, including classes, structs, and lambda functions, to build a
-timely dataflow graph from a system-provided library of generic Stream
+coordinate the delivery of notifications.  All the features of C$\#$,
+including classes, structs, and lambda functions, to build a timely
+dataflow graph from a system-provided library of generic Stream
 objects can be implemented. Naiad model uses deferred execution
-method: like adding a node to internla data flow graph at runtime
+method: like adding a node to internal data flow graph at runtime
 while executing a method like Max on a Stream \cite{paper1-Naiad}.
 
 Naiad's distributed implementation also exhibits features like
@@ -269,9 +285,85 @@ for low-latency workloads \cite{paper1-Naiad}.
 \section{Performance Evaluation}
 Naiad's performance over supporting high-throughput, low latency,
 data-parallelism, batch processing, iterative graph data processing
-have been examined using several notable micro-benchmarks by Murray
+have been examined using several notable microbenchmarks by Murray
 \textit{et al.} \cite{paper1-Naiad} such as Throughput, Latency,
 Protocol Optimizations, Scaling.
+
+The hardware configuration consists of two racks of 32 computers, each
+with two quad-core 2.1 GHz AMD Opteron processors, 16 GB of memory,
+and an Nvidia NForce Gigabit Ethernet NIC. Also rack switches have 40
+Gbps uplink to the core switch. Average across five trials are
+plotted, with error bars showing minimum and maximum values
+\cite{paper1-Naiad}.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/throughput.jpg}}
+\caption{ Evaluation of Naiad system throughput rate on synthetic
+  dataset \cite{paper1-Naiad}.}
+\label{throughput}
+\end{figure}
+
+\subsection{Throughput}
+The Naiad program constructs a cyclic dataflow that repeatedly
+performs the all-to-all data exchange of a fixed number of records.
+Figure \ref{throughput} plots the aggregate throughput against the
+number of computers with uppermost line as Ideal throughput, middle
+one depicting achievable throughput given network topology, TCP
+overheads, and .NET API costs. The final line shows the throughput
+that Naiad achieves for a large number of 8-byte records (50M per
+computer) exchanges between all processes in the cluster.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/latency.jpg}}
+\caption{ Evaluation of Naiad system global barrier latency for
+  synthetic dataset \cite{paper1-Naiad}.}
+\label{latency}
+\end{figure}
+
+\subsection{Latency}
+Latency microbenchmark evaluates the minimal time required for global
+coordination. Figure \ref{latency} plots the distribution of times for
+100K iterations using median, quartiles, and $95^{th}$ percentile
+values indicating low median time per iteration and adverse impact at
+$95^{th}$ percentile mark due to increased number of computers.
+
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/scaling1.jpg}}
+\caption{ Strong Scaling microbenchmark evaluation for Naiad system
+  over synthetic dataset \cite{paper1-Naiad}.}
+\label{strong scaling}
+\end{figure}
+
+\subsection{Scaling}
+Based on input size and resource availability, strong and weak scaling
+microbenchmarks are achieved. Keeping input fixed and increased
+compute resources, running time as shown in Figure \ref{strong
+  scaling} has been plotted for two applications, WordCount and Weakly
+connected components(WCC) . For WordCount, dataset used is Twitter
+corpus of size 128 GB uncompressed and for WCC, a random graph of 200M
+edges. Weak Scaling evaluation measured the effect of increasing both
+the number of computers and the size of the input.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/scaling2.jpg}}
+\caption{ Weak Scaling microbenchmark evaluation for Naiad system over
+  synthetic dataset \cite{paper1-Naiad}.}
+\label{weak scaling}
+\end{figure}
+
+Figure \ref{weak scaling} shows the performance of WCC on random input
+graph with constant number of edges (18.2M) and nodes (9.1M) per
+computer. The running time degrades significantly to 29.4s compared to
+20.4s for 1.1B edge graph run on 64 computers cluster, relative to
+execution in single computer. Also the WordCount application, with 2
+GB compressed input per computer, doesn't achieved perfect weak
+scaling, but compared to WCC, it improved.
+
 
 \section{Use Cases}
 Naiad framework has been majorly deployed for batch, streaming and
@@ -287,11 +379,11 @@ and provides dominant difference in running times compared to PDW
 \cite{www-PDW}, DryadLINQ \cite{paper-DryadLINQ},SHS \cite{paper-SHS}
 for Category A web graph
 \cite{dataset-clueweb09,paper1-Naiad,paper-Largegraphs}.
-\subsection{Batch iterative machine learning} Naiad provides competitive platform for custom implementation of distributed machine learning. Also it is straightforward to build communication libraries for existing applications using Naiad’s API. For Eg., modified version of Vowpal Wabbit (VW), an open-source distributed machine learning library which performs iterative linear regression \cite{github-vowpalwabbit}. AllReduce (processes jointly performing global averaging) implementation requires 300 lines of code, around half as many as VW’s AllReduce, and the Naiad code is at a much higher level, abstracting the network sockets and threads being used \cite{paper1-Naiad}.
+\subsection{Batch iterative machine learning} Naiad provides competitive platform for custom implementation of distributed machine learning. Also it is straightforward to build communication libraries for existing applications using Naiad’s API. For E.g., modified version of Vowpal Wabbit (VW), an open-source distributed machine learning library which performs iterative linear regression \cite{github-vowpalwabbit}. AllReduce (processes jointly performing global averaging) implementation requires 300 lines of code, around half as many as VW’s AllReduce, and the Naiad code is at a much higher level, abstracting the network sockets and threads being used \cite{paper1-Naiad}.
 \subsection{Streaming acyclic computation}
 Latency reduction while computing the k-exposure metric for
 identifying controversial topics on Twitter using Kineograph, which
-takes snapshots of continuosly ingesting graph data for data parallel
+takes snapshots of continuously ingesting graph data for data parallel
 computations \cite{paper-Kineograph}.
 \subsection{Streaming iterative graph analytics}
 Twitter Analysis: To compute the most popular hashtag in each
@@ -309,15 +401,15 @@ frameworks. Moreover, \cite{github-Naiad}, \cite{www-Nuget},
 programming in Naiad Framework.
 
 \section{Conclusion}
-Naiad model enriches dataflow computation with timestamps that
-represent logical points in the computation and provide the basis for
+Naiad enrich dataflow computations with timestamps that represent
+logical points in the computational process and provide the basis for
 an efficient, lightweight coordination mechanism. All the above
 capabilities in one package allows development of High-level
 programming models on Naiad which can perform tasks as streaming data
 analysis, iterative machine learning, and interactive graph
-mining. Moreover, it’s public reusable low-level programming
-abstractions leads Naiad to outperforms many other data parallel
-systems that enforce a single high-level programming model.
+mining. Moreover, public reusable low-level programming abstractions
+of Naiad allow it to outperform many other data parallel systems that
+enforce a single high-level programming model.
 
 \section*{Acknowledgements}
 
