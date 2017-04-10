@@ -150,9 +150,7 @@ group based on metrics like request count and latency tracked by
 Amazon Cloud Watch. If an instance is terminated, the load balancer
 will not route requests to this instance anymore. Rather, it will
 distribute the requests across the remaining instances
-\cite{elastic-loadbalancing} .It checks if at least one instance is
-running in the auto-scaling group. Depending on the test results, AWS
-Elastic Beanstalk changes the health status of the application.
+\cite{elastic-loadbalancing}.
 
 \subsection{Auto Scaling}
 
@@ -172,12 +170,12 @@ the data obtained from the metrics to make operational and business
 decisions. Elastic Beanstalk automatically monitors and scales the
 application using the CloudWatch.
 
-\section{Amazon Elastic Beanstalk Architecture}
+\section{Amazon Elastic Beanstalk Description}
 
 An Elastic Beanstalk Application is a collection of Elastic Beanstalk
 components which include the application versions, environments, and
 the environment configurations. Application Version is a deployable
-code for the web application. Application Version implements the
+code for the web application and it alson implements the
 deployable code via Amazon Simple Storage Service (Amazon S3) which
 contains the code. An application may have many different application
 versions \cite{elastic-component}.
@@ -203,7 +201,50 @@ web server, and Apache Tomcat software. In addition, a software
 component called the host manager. HM runs on each Amazon EC2 server
 instance. The host manager reports metrics, errors and events, and
 server instance status, which are available via the AWS Management
-Console, APIs, and CLIs \cite{elastic-architecture}.
+Console, APIs, and CLIs \cite{elastic-architecture}. The important
+aspects of Elastic Beanstalk such as security, management version
+updates, and database and storage are discussed below:
+
+\subsection{Security}
+
+The application on the Elastic Beanstalk cloud is available publically
+at myapp.elasticbeanstalk.com for anyone to access. The user can
+control what other incoming traffic, such as SSH, is delivered or not
+to your application servers by changing the EC2 security group
+settings \cite{elastic-faq}.. The IAM (Identity and Access Management)
+allows the user to manage users and groups in a centralized manner,
+such as the user can control which IAM users have access to AWS
+Elastic Beanstalk, and limit permissions to read-only access to
+Elastic Beanstalk for operators who should not be able to perform
+actions against Elastic Beanstalk resources \cite{elastic-faq}..
+
+\subsection{Management Version Updates}
+
+The user can opt to update the AWS Elastic Beanstalk environment
+automatically to the latest version of the underlying platform running
+the application during a specified maintenance window
+\cite{elastic-faq}..  The managed platform updates use an immutable
+deployment mechanism to perform these updates, where the applications
+will be available during the maintenance window and consumers will not
+be impacted by the update.
+
+\subsection{Database and Storage}
+
+AWS Elastic Beanstalk stores the application files, deployable codes,
+and server log files in Amazon S3. If the user is using the AWS
+Management Console, the AWS Toolkit for Visual Studio, or AWS Toolkit
+for Eclipse, an Amazon S3 bucket will be created in the user's account
+for the user, and the files uploaded by the user will be automatically
+copied from your local client to Amazon S3 \cite{elastic-faq}. AWS
+Elastic Beanstalk does not restrict the user to use any particular
+data persistence technology. The user can choose to use Amazon
+Relational Database Service (Amazon RDS) or Amazon DynamoDB, or use
+Microsoft SQL Server, Oracle, or other relational databases running on
+Amazon EC2. The user can configure AWS Elastic Beanstalk environments
+to use different databases by specifying the connection information in
+the environment configuration. The connection string will be extracted
+from the application code and thus Elastic Beanstalk can configure
+different databases to work together \cite{elastic-faq}.
 
 \section{Conclusion}
 
