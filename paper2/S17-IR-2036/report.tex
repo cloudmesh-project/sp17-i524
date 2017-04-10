@@ -16,18 +16,18 @@
 \ociscodes{Cloud, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/rahpsing/sp17-i524/paper2/S17-IR-2036/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper2/S17-IR-2036/report.pdf}}
 
 
 \begin{abstract}
-Graylog is an open source log management tool that allows an
-organization to collect, organize and analyze large amounts of data
-from its network activity. It enhances the basic log management
-functionality by providing network traffic analysis, lucene syntax
-based search, drill-down analysis of data using field statistics and
-generates trigger actions based alert notifications. It integrates
-with other open source technologies to address a larger distributed
-system.
+Graylog is an open source log management tool
+that allows an organization to collect, organize and analyze large
+amounts of data from its network activity. It enhances the basic log
+management functionality by providing network traffic analysis, lucene
+syntax based search, drill-down analysis of data using field
+statistics and generates trigger actions based alert notifications. It
+integrates with other open source technologies to address a larger
+distributed system.
 \newline
 \end{abstract}
 
@@ -38,25 +38,29 @@ system.
 \maketitle
 
 \section{Introduction}
-Graylog allows management of an organization's computing resources in
-a consistent way. It allows us to centrally collect and manage log
-messages of an organization’s complete infrastructure. A user can
-perform search on terrabytes of log data to discover number of failed
-logins,find application errors across all servers or monitor the
-acivity of a suspicious user id. Graylog works on top of ElasticSearch
-and MongoDB to facilitate this high availability searching. It
-provides a lucene like query language, a processing pipeline for data
-transformation, alerting abilities and much more. Graylog enables
-organizations, at a fraction of the cost, to improve IT operations
-efficiency, security, and reduce the cost of IT \cite{www-graylog-crunchbase}.
+\emph{Graylog} \cite{www-graylog-org} allows management of an
+organization's computing resources in a consistent way. It allows us
+to centrally collect and manage log messages of an organization’s
+complete infrastructure. A user can perform search on terabytes of log
+data to discover number of failed logins, find application errors
+across all servers or monitor the activity of a suspicious user
+id. Graylog works on top of \emph{ElasticSearch}
+\cite{www-elasticsearch-wiki} and \emph{MongoDB}
+\cite{www-mongodb-wiki} to facilitate this high availability
+searching. It provides a \emph{Lucene} \cite{www-apachelucene-org}
+like query language, a processing pipeline for data transformation,
+alerting abilities and much more. Graylog enables organizations, at a
+fraction of the cost, to improve IT operations efficiency, security,
+and reduce the cost of IT \cite{www-graylog-hightech}.
 
 
 \section{Architecture}
 
 Graylog is written in Java and uses a few key open source technologies
 like Elasticsearch and MongoDB. Additionally, for a larger setup
-Apache Kafka or Rabbit MQ could be integrated to implement queueing.
-A basic Graylog cluster consists of the following components:
+\emph{Apache Kafka} \cite{www-apachekafka-org} or \emph{RabbitMQ}
+\cite{www-rabbitmq-com} could be integrated to implement queueing.  A
+basic Graylog cluster consists of the following components:
 \newline
 \newline
 Graylog server - It is the actual log processor system also
@@ -83,7 +87,7 @@ created backups of the indices.
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=40mm,height=40mm]{images/min_architecture_graylog}}
-\caption{\cite{www-graylog-docs} Graylog minimum architecture}
+\caption{Graylog minimum architecture \cite{www-graylog-docs}}
 \label{fig:Graylog Minimum Architecture}
 \end{figure}
 
@@ -94,9 +98,10 @@ created backups of the indices.
 The best way for intrusion detection is to monitor activity of all the
 devices in the network.  Graylog allows a user to keep track of all
 failed logins, rejected network connections or exceptions in the flow
-of the application. It also allows a user to integrate other Intrusion
-Detection Systems (IDS) to correlate detected activity with logs from
-all across the infrastructure \cite{www-graylog-org}.
+of the application. It also allows a user to integrate other
+\emph{Intrusion Detection Systems (IDS)} \cite{www-ids-wiki} to
+correlate detected activity with logs from all across the
+infrastructure \cite{www-graylog-org}.
 
 \subsection{Centralized IT management}
 
@@ -112,7 +117,7 @@ for any trigger actions like performance degradation or exceptions.
 Graylog allows on demand monitoring of distributed applications by
 giving tiered access to any developer in the organization to view
 system and application logs. It works on top of elastic search nodes
-to facilitate search operation on terrabytes of log data in a metter
+to facilitate search operation on terabytes of log data in a matter
 of milliseconds. In case of a customer operation resulting in an
 error, a developer shall need to search the logs with the customer id
 and locate the relevant logs to find the root cause of the problem.
@@ -123,20 +128,22 @@ and locate the relevant logs to find the root cause of the problem.
 \subsection{Sending in log data}
 
 Graylog needs a log source to serve its purpose. The message input
-section is launched from the System -> Inputs section from the web
-interface (or the REST API) and can be configured without the need to
-restart any part of the system \cite{www-graylog-sending_data}.
+section is launched from the System - Inputs section from the web
+interface (or the \emph{REST API} \cite{www-rest-wiki}) and can be
+configured without the need to restart any part of the system
+\cite{www-graylog-sending_data}.
 
-Graylog is able to accept and parse RFC 5424 and RFC 3164 compliant
-syslog messages and the Graylog Extended Log Format (GELF)
+Graylog is able to accept and parse \emph{RFC 5424}
+\cite{www-rfc5424-ietf} and \emph{RFC 3164} \cite{www-rfc3164-ietf}
+compliant syslog messages and the Graylog Extended Log Format (GELF)
 \cite{www-graylog-sending_data}. For any devices on the network that
 do not publish RFC compliant syslog messages we need to make use of
-the plaintext messages.  The Graylog Extended Log Format (GELF) is a
-log format that avoids the shortcomings of classic plain syslog by
-providing optional compression, fixed structure and a limits to
-payload length to 1024 bytes. Syslog is prefered for direct logging by
-machines in the network while GELF is suitable for logging from within
-the applications.
+the plaintext messages.  The GELF is a log format that avoids the
+shortcomings of classic plain syslog by providing optional
+compression, fixed structure and a limits to payload length to 1024
+bytes. Syslog is preferred for direct logging by machines in the
+network while GELF is suitable for logging from within the
+applications.
 
 \subsection{Search}
 
@@ -148,7 +155,7 @@ search query. Search features like fuzzy, wildcard, range searches
 provided by Elastic Search API can be used to gain deeper insight to
 data.  Graylog also provides a time frame selector which defines the
 time range over which the search shall be performed. The time selector
-could be relative, absolute or keyword based.<could extend this>
+could be relative, absolute or keyword based.
 Graylog also allows a user to save his searches to view it later. A
 user needs to save his search by a unique name and could load it later
 from the system under the saved search selector.
@@ -194,7 +201,7 @@ count, statistical values, field value charts and stack charts to the
 dashboard. These dashboards can also be shared with other users in the
 organization.
 
-\subsection{Full control and access through a REST API}
+\subsection{Graylog REST API}
 
 Both configuration settings and log data are available through the
 Graylog REST API.  The Graylog web interface uses Graylog Rest API
@@ -207,26 +214,25 @@ analysis.
 
 \subsection{Filtering messages}
 
-Graylog can use Drools to evaluate all incoming messages against a
-user defined rules file. To discard any message before its written to
-elastic search or to forward it to another system one can use Drools
-rules to perform custom filtering \cite{www-graylog-blacklisting}.
-
-\begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/blacklisting_message}}
-\caption{\cite{www-graylog-blacklisting} Message filtering rule }
-\label{fig:Sample filtering rule}
-\end{figure}
-
+Graylog can use \emph{Drools} \cite{www-drools-org} to evaluate all
+incoming messages against a user defined rules file. To discard any
+message before its written to elastic search or to forward it to
+another system one can use Drools rules to perform custom filtering
+\cite{www-graylog-blacklisting}.
 
 \section{Comparision with Splunk}
-Splunk is remarked as one of the best log management tools available
-and is Graylog's biggest competitor.
-\newline
+\emph{Splunk} \cite{www-splunk} is remarked as one of the best log
+management tools available and is Graylog's biggest competitor. Splunk
+started as a log analysis tool but has now grown into a full machine
+generated data processing platform. Splunk works on almost every
+format of log data unlike graylog, but has a higher setup cost. To
+deploy Splunk in a high scale environment, a user needs to install and
+configure a dedicated cluster. Table below represents a comparision of
+Graylog and Splunk for a few basic factors.
+
 \begin{table}[htbp]
 \centering
-\caption{\bf Comparision of Graylog and Splunk}
+\caption{\bf Comparision of Graylog and Splunk}\cite{www-logmanagementtools-blog} \cite{www-graylogvssplunk-article}
 \begin{tabular}{ccc}
 \hline
 Parameter & Graylog & Splunk \\
@@ -244,20 +250,45 @@ Apps Supported & Low & Very high\\
 
 
 \section{Conclusion}
-Graylog provides an effective set of features to be adapted by any
-small to medium size organization. Alert notifications, sharing of
-dashboards and message filtering provide most features that any
-network administrator desires from a log management system. Being an
-open source tool it is cost effective compared to other log
-systems. However, it needs an environment to be setup before it can be
-operational. It has a steep learning curve with the responsibility of
-managing the MongoDB and ElasticSearch instances being completely
+Graylog makes big data analytics affordable by providing an open
+source solution that allows organizations to realize the benefits of
+collecting and analyzing log data and thus improving operational
+efficiency at a reduced cost of IT. It provides an effective set of
+features to be adapted by any small to medium size organization. Alert
+notifications, sharing of dashboards and message filtering provide
+most features that any network administrator desires from a log
+management system. Being an open source tool it is cost effective
+compared to other log systems. Graylog provides centralized monitoring
+and management of large scale distributed systems from a single point
+of control. However, it needs an environment to be setup before it can
+be operational. It has a steep learning curve with the responsibility
+of managing the MongoDB and ElasticSearch instances being completely
 managed by the user.  Hence, the choice to choose Graylog as an
-organization's log management tool directly relies on the resources
-in terms of either time or money that it chooses to employ.
+organization's log management tool directly relies on the resources in
+terms of either time or money that it chooses to employ.
 
 
 % Bibliography
 
 \bibliography{references}
+
+ 
+\section*{Author Biographies}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm]
+                                               % as required for
+                                               % separation of bio
+                                               % photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/rahul_singh.jpg}
+  \end{wrapfigure}
+  \noindent
+{\bfseries Rahul Singh} received his B.E. (Computer Engineering) from
+University of Mumbai, India.  He is currently pursuing his Masters in
+Computer Science at Indiana University Bloomington.
+
+\end{minipage}
+\endgroup
+
 \end{document}
