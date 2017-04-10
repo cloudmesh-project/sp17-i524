@@ -24,9 +24,9 @@ report: report.pdf
 
 report_submission: mm/dd/2017 hh:mmam
 
-status: I am currently working on connecting to IU's VPN in the Chameleon Cloud so that I can use IU's Intel license server (using ansible).
+status: I am currently working on porting the CDMS application from OpenMP to Hadoop. 
 
-dataset_url: https://github.com/scottmcclary1/CDMS-Data
+dataset_url: https://github.com/cloudmesh/cloudmesh.cdms
 
 deployment: I am currently deploying an Intel Compiler, unzip and a Charge Detection Mass Spectrometry research application using Ansible.
 

@@ -23,19 +23,14 @@
 
 InCommon is a federated security service that is responsible for the
 management of identity verification solutions serving U.S. education
-and research\cite{www-incommonppt}.  All users within this federation
+and research.  All users within this federation
 allow partners to share identity information in order easily recognize
 the user. This federation provides numerous benefits for users and
 service providers through the convenience of single sign on
 capabilities for the user.  Privacy is enhanced by limiting the
 distribution of personal information amongst numerous service
 providers.  Scalability is easily facilitated due to the unified
-policies and management procedures.  InCommon utilizes the single sign
-on software Shibboleth which is an open source project that enables
-federated organizations to connect users to various applications
-through a convenient secure method.  The backbone of this software is
-built on the language SAML or security assertion markup language that
-creates the basis for its application.  Programs such as InCommon
+policies and management procedures.  Programs such as InCommon
 assurance and university case studies are examined.
 \end{abstract}
 
@@ -53,15 +48,15 @@ successful, identity management requires an organization to keep user
 information up to date, providing the trust needed for secure
 transactions, and determine user access of online applications.  The
 major issues with identity management is the increasing number of
-cloud services or applications that are web hosted all of which have
+cloud services or applications that are web hosted, all of which have
 different policies for implementing identity verification.  The
-solution is to establish a federation which is defined ''an association
+solution is to establish a federation which is defined as ''an association
 of organizations that come together to exchange information, as
 appropriate, about their users and resources in order to enable
 collaborations and transaction'' \cite{www-incommonppt}.
 Within this federation the parties come into an accordance on the
 policies associated with identity management.  A great example of a
-federation that encompasses this definition is InCommon
+federation that encompasses this definition is InCommon.
 
 \section{InCommon}
 
@@ -72,8 +67,8 @@ their location.  Their network encompasses over 90,000 institutions,
 305 universities, 70 government agencies with network operations
 center powered by Indiana University \cite{www-internet2}
 
-Through the InCommon service, users will no longer have to remember a
-plethora of usernames and passwords for each web service.  Instead
+Through the InCommon service, users will not have to remember a
+plethora of usernames and passwords for each web service.  Instead,
 they will be able to have single sign on (SSO) conveniences.  Giving
 time back to faculty, staff and students for education, research and
 other contributions to the University.  Any service provider within
@@ -81,8 +76,20 @@ this federation no longer needs to manage databases of username and
 passwords, the users are verified and then administered security
 tokens to then engage with service providers within the federation.
 By limiting the amount of identity information required of the service
-provider, the users privacy is safe in the event of a security breach
+provider, the users privacy is safer in the event of a security breach
 of the service provider.
+
+\section{Architecture}
+
+The architecture of the InCommon framework is comprised of several key
+components such as SAML, Shibboleth, certificate service offerings and
+Duo.  While different from one another these components all help
+assist the federation with user authentication.  SAML is the language
+used in the transfer of data, Shibboleth is a service that assists in
+the implementation of SAML.  The certificate service mainly comprised
+of SSL assist in the privacy of data passed, and Duo provides an extra
+layer of security with two factor authentication.  Each component will
+be discussed in the following sections.
 
 \section{SAML}
 
@@ -90,8 +97,8 @@ The language used by InCommon is referred to as security assertion
 markup language or SAML.  This language is based in XML which allows
 for the exchange of authentication information between a user and a
 provider \cite{www-wiki}.  It is the industry accepted standard
-language for identity verification by government, businesses and
-service providers.  The general user verification is done by an
+language for identity verification by numerous  government, businesses and
+service providers\cite{www-ping}.  The general user verification is done by an
 identity provider(IdP) which is responsible for user authentication
 through the use of security tokens with SAML 2.0
 \cite{www-empower}. Service providers (SP) are defined as entities
@@ -151,48 +158,44 @@ ruby, classic ASP, ASP.net, Java, PHP, Node.js, ColdFusion, and Perl.
 
 \section{Assurance Program}
 
-Incommon offers an assurance program that will examine and the
-practices of an organization and will rank them based on a number of
-criteria.  Areas of examination include ''...identity proofing(such as
-checking government issued ID before accepting that people are who
-they say they are), password handling (including making sure that
-passwords are not sent or stored in the clear), and
-authentication(such as ensuring the resistance of an authentication
-method to session hijacking)'' \cite{www-harvard}.  There are two
-levels of assurance in the InCommon program, bronze and silver.
-Bronze is comparable to NIST level of Assurance 1, which is for common
-usage of internet identity management.  Silver is comparable to NIST
-level of Assurance 2, which defines the institute as having sufficent
-requirements provide a security at the level for a financial
-transaction \cite{www-levels}.  Compliance with a bronze level only
-requires a level of self certification of the requirements, where as a
-silver level is more difficult to achieve.  A third party or evaluator
-that has been verified by InCommon is required to peform an audit
-ensuring the identity provider is meeting all the rules and
-requirements.  Many organizations and government agencies such as a
-national institute of health and public universities are requiring
-identity providers to become certified in this program.
+Many organizations and government agencies such as a national
+institute of health and public universities are requiring identity
+providers to become certified in this program.  Incommon offers an
+assurance program that will examine and the practices of an
+organization and will rank them based on a number of criteria.  Areas
+of examination include ''...identity proofing(such as checking
+government issued ID before accepting that people are who they say
+they are), password handling (including making sure that passwords are
+not sent or stored in the clear), and authentication(such as ensuring
+the resistance of an authentication method to session hijacking)''
+\cite{www-harvard}.
 
-\section{Cost}
-
-The current rate for Universities to subscribe to the InCommon service
-varies based on a couple of factors such as highest level of degree
-offered (Doctoral, master’s etc.) and Carnegie classification.  The
-range in price will vary from 20,000 to 2,000 dollars annually
-\cite{www-price}.  If the organization is an internet2 member, a 25
-percent discount applied to the annual fee.
+There are two levels of assurance in the InCommon program, bronze and
+silver.  Bronze is comparable to NIST level of Assurance 1, which is
+for common usage of internet identity management.  Silver is
+comparable to NIST level of Assurance 2, which defines the institute
+as having sufficent requirements provide a security at the level for a
+financial transaction \cite{www-levels}.  NIST levels of security are
+set by the National Institute of Standards and Technology, a
+government body within the U.S. Department of Commerce\cite{www-nist}.
+Compliance with a bronze level only requires a level of self
+certification of the requirements, where as a silver level is more
+difficult to achieve.  A third party or evaluator that has been
+verified by InCommon is required to peform an audit ensuring the
+identity provider is meeting all the rules and requirements.
 
 \section{University of Minnesota}
 
-The University of Minnesota adopted into the InCommon federation on
+One example where InCommon was successfully deployed was at the
+University of Minnesota.  They joined the InCommon federation on
 September 2010 \cite{www-casestudy1}.  The university contains 51,000
 students, and over 300 institutes.  Their previous identity management
 vendor charged on a per certificate basis.  This differs from InCommon
 which offers an annual fee with unlimited certificates.  This
 simplifies the ability for IT departments within Universities to
-properly budget.  Additionally the university saw a tremendous cost
-savings of 38,000 dollars.  This model also encourages enhancing
-security because cost does not influence which servers to secure.
+properly budget.  Additionally the university saw a cost savings of
+38,000 dollars.  This model also encourages enhancing security because
+cost does not influence which servers to secure.
 
 \section{Students Only}
 
@@ -201,7 +204,7 @@ benefits of InCommon \cite{www-casestudy2}.  Student verification
 provider known as students only is a way for students to enroll to
 verify their status as a student.  This verification is then passed to
 businesses that would like to offer discounts to students.  To prevent
-nonstudents from taking advantage of generous offerings of companies
+nonstudents from taking advantage of offerings of companies
 it can be cumbersome for a student to properly verify their status.
 With the help of InCommon Students Only helped streamline the process
 for students to verify their identity in a single sign on.  This

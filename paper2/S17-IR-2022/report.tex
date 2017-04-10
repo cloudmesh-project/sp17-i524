@@ -38,16 +38,18 @@ Prediction \cite{RMBDP-Book}.\newline
 \section{Introduction}
 
 A Grid is basically a combination of hardware and software that
-provides reliable and pervasive computation abilities.  Grid based
-development methodologies are used for application development.  These
-Grid-based development methodologies emphasize providing the
-application developer with a non-transparent grid.  ASKALON provides
-such invisible grid to the application developers.  While using
-ASKALON, the Grid work flow applications are made using Unified
-Modeling Language (UML) based services \cite{Workflow-book}.  Besides
-this, it also enables integration of the workflows that have been
-created programmatically using languages such as XML.  ASKALON
-typically requires some middleware for this.
+provides seamless, reliable, pervasive as well as high-end computation
+abilities \cite{Workflow-book}.  Grid based development methodologies
+are used for application development.  These Grid-based development
+methodologies emphasize providing the application developer with a
+non-transparent (i.e., opaque) grid.  ASKALON provides such invisible
+(i.e., opaque) grid to the application developers.  While
+using ASKALON, the Grid work flow applications are made using Unified
+Modeling Language (UML) based services \cite{Workflow-book}.
+Similarly even XML can be used here.  Besides this, it also enables
+integration of the workflows that have been created programmatically
+using languages such as XML.  ASKALON typically requires some
+middleware for this.
 
 \section{Description}
 
@@ -213,20 +215,22 @@ of the SvalClac project \cite{ASKALON-Big-data-project}.
 
 ASKALON supports workflow integration using UML and also provides an
 XML based programming interface.  This effectively abstracts the end
-user from the low level middleware technologies.  The Resource Manager
-handles the logical and physical resources and the workflow activities
-to provide features such as authorization, Grid resource discovery,
-selection, allocation and interaction.  Scheduler makes use of some
-algorithms like HEFT or other genetic algorithms which deliver high
-performance.  It highly benefits from the Performance Prediction
-service which in turn depend upon the training phase and the
-statistical methods used.  The Execution Engine handles data
-dependencies and also working on high volume data - something that is
-highly useful in Big Data related applications and projects.  The
-Performance Analyser analysis the performance benchmarks.  Typically,
-the overhead of ASKALON middleware services which consist of the
-Resource Manager, Scheduler and Performance prediction are usually
-constant, thereby requiring less execution time holistically.
+user from the low level middleware technologies.  These low level
+middleware technologies are indeed the ones in charge of scheduling
+and executing ASKALON applications.  The Resource Manager handles the
+logical and physical resources and the workflow activities to provide
+features such as authorization, Grid resource discovery, selection,
+allocation and interaction.  Scheduler makes use of some algorithms
+like HEFT or other genetic algorithms which deliver high performance.
+It highly benefits from the Performance Prediction service which in
+turn depend upon the training phase and the statistical methods used.
+The Execution Engine handles data dependencies and also working on
+high volume data - something that is highly useful in Big Data related
+applications and projects.  The Performance Analyser analysis the
+performance benchmarks.  Typically, the overhead of ASKALON middleware
+services which consist of the Resource Manager, Scheduler and
+Performance prediction are usually constant, thereby requiring less
+execution time holistically.
 
 Thus, to conclude, we focused on ASKALON as a Grid application
 development environment.  We also saw the various architectural

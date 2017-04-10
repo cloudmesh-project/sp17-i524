@@ -1,4 +1,4 @@
-\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
 
@@ -15,7 +15,7 @@
 \ociscodes{Cloud, I524, LMDB, BDB, B+tree}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/paper2/S17-IO-3012/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/paper2/S17-IO-3013/report.pdf}}
 
 \begin{abstract}
 LMDB is one of the most recent in-memory key-value databases, it has
@@ -69,7 +69,7 @@ the technologies involved.
 LMDB is written in C but the API supports multiple programming
 languages with C and C++ supported directly while other languages like
 Python, Ruby, Erlang amongst others supported using
-wrappers\cite{www-lmdbwrap}.
+wrappers \cite{www-lmdbwrap}.
 
 \subsection{B+tree}
 
@@ -134,22 +134,33 @@ pip install lmdb
 #or
 easyinstall lmdb
 #Create and open and environment   
- mdb_env_create() mdb_env_open() #defines the directory path and must
- exist before being used.  #mdb_nosubdir option can be used if no
+ mdb_env_create() mdb_env_open() 
+ #defines the directory path and must
+ exist before being used.  
+ #mdb_nosubdir option can be used if no
  directory path needs to be passed. 
-#Create transactions after opening the environment
- mdb_env_create() mdb_env_open() #defines the directory path and must
- exist before being used.  #mdb_nosubdir option can be used if no
+#Create transactions after opening the 
+# environment
+ mdb_env_create() mdb_env_open() 
+ #defines the directory path and must
+ exist before being used.  
+ #mdb_nosubdir option can be used if no
  directory path needs to be passed. 
 #Open database for the transaction
-#mdb_dbi_open() #NULL value can be passed if only a single database
+#mdb_dbi_open() #NULL value can be passed 
+    if only a single database
     will be used in the environment. 
-#mds_create flag must be specified to create a named database. 
-#mdb_env_set_maxdbs() defines the maximum number of databases the
+#mds_create flag must be specified to
+     create a named database. 
+#mdb_env_set_maxdbs() defines the maximum 
+    number of databases the
     environment will support.
-#mdb_get() and #mdb_put() can be used to store a single key/value pairs,
-    if more transactions are needed then cursors are required. 
-#mdb_txn_commit() is required to commit the data in the environment
+#mdb_get() and #mdb_put() can be 
+    used to store a single key/value pairs,
+    if more transactions are needed 
+    then cursors are required. 
+#mdb_txn_commit() is required to 
+    commit the data in the environment
 
 \end{Verbatim}
 \end{quote}

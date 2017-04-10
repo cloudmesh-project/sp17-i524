@@ -191,6 +191,8 @@ print(titlepagemacro)
 
 print("""
 
+\\textheight=23.5cm
+
 \\begin{document}
 %\\title{Big Data Technologies}
 

@@ -1,5 +1,6 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
+\usepackage{csquotes}
 \journal{i524} 
 
 \title{Amazon Kinesis}
@@ -19,11 +20,11 @@
 
 \begin{abstract}
 Amazon Kinesis \cite{www-kinesis} provides a software-as-a-service(SAAS)
-platform for application developers working on Amazon Web Services(AWS)
+platform for application developers working on Amazon Web Services(AWS) \cite{www-aws} 
 platform. Kinesis is capable of processing streaming data at in real time. This
 is a key challenge application developers face when they have to process huge
 amounts of data in real time. It can scale up or scale down based on data needs
-of the system. As volume of data grows with advent IOT devices and sensors,
+of the system. As volume of data grows with advent IOT \cite{hwang2013distributed} devices and sensors,
 Kinesis will play a key role in developing applications which require insights
 in real time with this growing volume of data.  \newline
 \end{abstract}
@@ -46,18 +47,16 @@ get replicated when new nodes come up. Multiple applications can consume data
 from one or more streams for variety of use cases for example, one application
 computes moving average and another application counts the number of users
 clicks. These applications can work in parallel and independently. Kinesis
-provides streaming in realtime with sub second delays between producer and
-consumer. Kinesis has two types of processing engines 
-\begin{itemize}
-	\item Kinesis streams - reads data from producers
-	\item Kinesis firehose - pushes data to consumers
-\end{itemize}
+provides streaming in realtime with sub-second delays between producer and
+consumer. Kinesis has two types of processing engines:  Kinesis streams - reads data from producers
+and Kinesis firehose - pushes data to consumers.
 
 Kinesis streams can be used to process incoming data from multiple sources.
 Kinesis firehose is used to load streaming data into AWS like Kinesis analytics,
-S3, Redshift, Elasticsearch etc.
+S3 \cite{www-aws-s3}, Redshift \cite{www-aws-redshift}, Elasticsearch  \cite{www-aws-es} etc.
 
 \section{Architecture} 
+\subsection{Introduction}
 Amazon Kinesis reads data from variety of sources. The data coming into streams
 is in a record format. Each record is composed on a partition key, sequence
 number and data blob which is raw serialized byte array. The data further is
@@ -70,9 +69,10 @@ partitioned into multiple shards(or workers) using the partition key.
 \label{fig:false-color}
 \end{figure}
 
+\subsection{Building blocks}
 Following are key components in streams architecture \cite{www-kinesis-arch} :
 
-\subsection{Data Record}
+\subsubsection{Data Record}
 Its one unit of data that flows through Kinesis stream. Data records is made up
 of sequence number, partition key, and blob of actual data. Size of data blob is
 max 1 MB. During aggregation one or more records are aggregated in to a single
@@ -86,58 +86,59 @@ aggregation collection.
 \label{fig:false-color}
 \end{figure}
 
-\subsection{Producer}
+\subsubsection{Producer}
 Producers write the data to Kinesis stream. Producer can be any system producing
 data. For example, ad server, social media stream, log server etc.
 
-\subsection{Consumer}
+\subsubsection{Consumer}
 Consumers subscribe to one or more streams.  Consumer can be one of the
-applications  running on AWS or hosted on EC2 instance(virtual machines).
+applications  running on AWS or hosted on EC2\cite{www-aws-ec2} instance(virtual machines).
  
-\subsection{Consumer}
-A stream can have one or more shards. Records are processed by each shard based
-on the partition key. Each shard can process upto 2MB/s data for reads and upto
-1MB/s for writes. Total capacity of a stream is sum of capacities of its shards.
+\subsubsection{Shard}
+A shard is an instance of kinesis stream engine. A stream can have one or more shards. 
+Records are processed by each shard based on the partition key. Each shard can 
+process up to 2MB/s data for reads and up to 1MB/s for writes. Total capacity of a 
+stream is sum of capacities of its shards.
 
-\subsection{Partition Keys} 
-Partition key is 256 bytes long. A MD5 hash function is used to map partition
+\subsubsection{Partition Key} 
+Partition key is 256 bytes long. A MD5 \cite{rivest1992md5} hash function is used to map partition
 keys to 128 bit integer value which is further used to map to appropriate shard.
 
-\subsection{Sequence Number}
+\subsubsection{Sequence Number}
 Sequence number is assigned to a record when a record get written to the stream. 
 
-\subsection{Amazon Kinesis Client Library}
+\subsubsection{Amazon Kinesis Client Library}
 Amazon Kinesis Client Library is bundled into your application built on AWS. It
 makes sure that for each record there is a shard available to process that
 record.  Client library uses dynamo db to store control data records being
 processed by shards.
 
-\subsection{Application Name}
-Name of application is stored in the control table in dynamodb where kinesis
+\subsubsection{Application Name}
+Name of application is stored in the control table in DynamoDB \cite{www-aws-dynamodb} where kinesis
 streams will write the data to. This name is unique.
 
-\section{Creating Streams}
-You can create a stream using following ways:
-\begin{itemize}
-	\item kinesis console
-	\item Streams API
-	\item AWS CLI
-\end{itemize}
+\section{Kinesis Development}
+AWS provides a java SDK. Java SDK \cite{www-kinesis-javasdk} can be used to
+complete all workflows on stream. Workflow like create, listing, retrieving
+shards from stream, deleting stream, re-sharding stream and changing data
+retention period. SDK provide rich documentation and developer blogs to support
+development on streams.
+
+You can create and deploy Kinesis components using following:
+Kinesis console, Streams API, and AWS CLI.
 
 Before creating stream you should determine initial size of the stream
 \cite{www-kinesis-size} and number of shards required to create your stream.
-Number of shards can be calculated using the following formulae
-\begin{multline*} 
-number_of_shards = \\
-   max ( 
-   incomingWriteBandwidthInKB/1000, \\
-   outgoingReadBandwidthInKB/2000
-   )
-\end{multline*}
+Number of shards can be calculated using the formulae:
+\[ Number Of Shards = max( \frac{A}{1000}, \frac{B}{2000} ) \]
+\newline
+A = Incoming Write Bandwidth In KB
+\newline
+B = Outgoing Read Bandwidth In KB
+\newline
 
-Here, the attributes used in the calculation are self explanatory.
-
-Producer for streams writes data records into Kinesis streams. This data is
+Here, the attributes used in the calculation are self explanatory. 
+  Producer for streams writes data records into Kinesis streams. This data is
 available for 24 hours within streams. The default retention interval can be
 changed. To write records to stream, you must specify partition key, name of
 stream and data blob. Consumer on the other hand read data from streams using
@@ -146,84 +147,77 @@ where the consumer can start reading the data.
 
 \section{Stream Limits}
 \subsection{Shard}
-By default there can 25 shards in a region except US east, EU and US west have
-limit of 50 shards. Each shard can support up to 5 transactions per second for
-reads and at maximum data rate of 2 MB per second. Each shard can support 1000
-records per second for writes and maximum data rate of 1MB per second.
+Kinesis streams has certain limits \cite{www-kinesis-limits} : by default there can 25 shards in 
+a region except US east, EU and US west have limit of 50 shards. Each shard can support 
+up to 5 transactions per second for reads and at maximum data rate of 2 MB per second. 
+Each shard can support 1000 records per second for writes and maximum data 
+rate of 1MB per second.
 
 \subsection{Data retention}
 By default the data is available for 24 hours which can be configured up to 168
 hours with 1 hour increments.
 
 \subsection{Data Blob}
-Maximum size of data blob is 1MB before base64 encoding.
+Maximum size of data blob is 1MB before base64 encoding \cite{www-kinesis-limits}.
 
 \section{Management}
-Kinesis provides all management using:
-\begin{itemize}
-	\item  AWS console
-	\item Java SDK \cite{www-kinesis-javasdk} 
-\end{itemize}
-
-\subsection{Java SDK}
-AWS provides a java SDK. Java SDK \cite{www-kinesis-javasdk} can be used to
-complete all workflows on stream. Workflow like create, listing, retrieving
-shards from stream, deleting stream, resharding stream and changing data
-retention period. SDK provide rich documentation and developer blogs to support
-development on streams.
-
-\subsection{AWS console}
-AWS provides a web console to manage all AWS services including kinesis.  Using
-console web user interface user can perform all operations to manage stream.
+Kinesis provides all management using AWS console or you can build a 
+custom management application using Java SDK \cite{www-kinesis-javasdk} 
+provided by AWS. AWS provides a  web console to manage all AWS services 
+including kinesis.  Using console web user interface user can perform all 
+operations to manage stream.
 
 \section{Monitoring}
-AWS provides several ways to monitor streams. These are:
-\begin{itemize}
-	\item CloudWatch metrics
-	\item Kinesis Agent 
-	\item API logging
-	\item Client library
-	\item Producer Library 
-\end{itemize}
+AWS provides several ways to monitor its services. Kinesis can  use these services
+for monitoring purpose:
+CloudWatch metrics, Kinesis Agent, API logging, Client library, and Producer Library 
 
 CloudWatch metrics allows you can monitor the data and usage at shard level.  It
-can collect metrics like: latency, coming bytes, incoming records, success count
+can collect metrics like: latency, incoming bytes, incoming records, success count
 etc.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[scale=0.4]{images/firehose-delivery-stream-metrics}}
+\caption{Kinesis Metrics\cite{Liston2016amazonkinesis}}
+\label{fig:false-color}
+\end{figure}
 
 \section{Licensing}
 Kinesis is software as a service(SAAS) from Amazon AWS infrastructure. Hence it
-can only run as a service within AWS. It comes with pay as you go pricing.
+can only run as a service within AWS. It comes with pay-as-you-go pricing.
 
 \section{Use Cases}
 Kinesis streams \cite{www-kinesis} and firehose can be useful in variety of use
-cases
-\begin{itemize}
-	\item log data processing
-	\item log mining
-	\item realtime metrics and reporting
-	\item realtime analytics
-	\item complex stream processing
-\end{itemize}
+cases: log data processing, log mining,realtime metrics, reporting realtime analytics,
+and complex stream processing
+
+For example, Kinesis can be used in serving advertisements based on user click events. 
+Where clients send the clickstream data to Kinesis streams. Stream further generates
+records which are processed by spark streaming. Further, the algorithms running on 
+spark streaming can be used to generate insights based on user's interest. 
+
+\begin{displayquote}
+We send clickstream data containing content and audience information from 
+250+ digital properties to Kinesis Streams to feed our real-time content recommendations 
+engine so we can maximize audience engagement on our sites - Hearst Corporation \cite{www-kinesis}
+\end{displayquote}
 
 Kinesis solves variety of these business problems by doing a real time analysis
 and aggregation. This aggregated data can further be stored or available to
 query. Since it runs on amazon, it becomes easy for users to integrate and use
-other AWS components.
+other AWS components. 
 
 \section{Conclusion}
 Kinesis can process huge amounts of data in realtime. Application developers can
-then focus on business logic. Kinesis \cite{varia2014overview} can help build
-realtime dashboards, capture anomalies, generate alerts, provide recommendations
-which can help take business and operation decisions in real time. It can also
-send data to other AWS services like S3, dynamodb, redshift etc. You can scale
-up or scale down as application demand increases or decreases and only pay based
-on your usage. Only downside of Kinesis it that it cannot run on a private or
-hybrid cloud, rather can only run on AWS public cloud or Amazon VPC(Virtual
-Private Cloud).  Customers who want to use Kinesis but don't want to be on
-Amazon platform cannot use it. A comparable alternative is open source Apache
-Kafka \cite{deyhim2016kafka} .  However, Kafka lacks in high availability and
-monitoring in case of cloud deployments. 
-
+then focus on business logic. Kinesis can help build realtime dashboards, capture 
+anomalies, generate alerts, provide recommendations which can help take business 
+and operation decisions in real time. It can also send data to other AWS services. 
+You can scale up or scale down as application  demand increases or decreases 
+and only pay based on your usage. Only downside  of Kinesis it that it cannot run 
+on a private or hybrid cloud, rather can only run on  AWS public cloud or 
+Amazon VPC(Virtual Private Cloud)\cite{www-aws-vpc}.  Customers who want to use 
+Kinesis but don't want to be on Amazon platform cannot use it.
 \section*{Acknowledgements}
 Special thanks to Professor Gregor von Laszewski, Dimitar Nikolov and all
 associate instructors for all help and guidance related to latex and bibtex,
