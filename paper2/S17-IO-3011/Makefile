@@ -22,6 +22,9 @@ review:
 	pdflatex ${FILE}-review
 
 
+viewreview:
+	$(OPENCMD) $(FILE)-review.pdf
+
 real-clean: clean
 	rm -rf *.pdf
 
