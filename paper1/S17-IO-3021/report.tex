@@ -16,7 +16,7 @@
 \ociscodes{Cloud, I524}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/docs/source/format/report/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper1/S17-IO-3021/report.pdf}}
 
 \begin{abstract}
 
@@ -104,7 +104,7 @@ concurrency control. The execution of triggers or methods specified by
 users or applications is also performed in the client module.
 
 References: \cite{www-cubrid.org}
-\newpage
+
 
 \section{Module Configuration}
 
@@ -130,7 +130,8 @@ login user need to set the admin credentials.
 
 User needs to login to each database in the host server to access the
 individual database.
-Reference : \cite{www-authentication}
+
+References: \cite{www-authentication}
 
 
 \section{Key Features}
@@ -154,6 +155,10 @@ all the shards.
 CUBRID provides high performance to the users with feature like query
 caching, optimized algorithm for indexing, fast object access.
 
+CUBRID performance for hotspot read and special character for web service using 
+logging technique have applied to disk have resulted in increase in the overall 
+performance. 
+
 Function based indexing, filtering indexing and index skip scan
 provides various features to user for increasing the performance
 
@@ -161,7 +166,8 @@ provides various features to user for increasing the performance
 
 CUBRID is highly reliable with features like online incremental backup
 and restore.  It provides the access restriction based on userip and
-databaseid.
+databaseid. Naver is one of the top web portal in Korea rely on 
+cubrid database.
 
 \subsection{Language Support}
 It provides 90 percent support to sql language support. 
@@ -176,6 +182,50 @@ user it needs to pass key information about the shard in the
 query. Parsing the query and finding the shard both things are taken
 care by the broker and does not needs the additional layer. This helps
 in increasing the performance for big data. 
+
+
+\section{Performance Benchmarking}
+
+\subsection{CUBRID Vs MySQL}
+
+Test was performed by one of the social networking site on new 8.4.0 
+version of cubrid database to understand the time taken by cubrid database 
+for managing the queries of 6 million active users. The queries mostly involved 
+the IN and UNION operator.  
+
+For executing the test both Mysql and CUBRID database was made to store 3 user
+group table with 1520000 rows each. Each of the db had given 40 thread load for 
+10 min. The systems used for both the database are of same configuration.The 
+test was conducted for five different scenarios.
+
+
+\subsection{Analysis Results}
+
+In most realistic scenario CUBRID IN query have performed twice as fast as Mysql
+UNION query and 8 times as fast as the Mysql IN query. 
+
+It also came out from the test that the effect of Key limit have considerably decreased
+the IO operations.
+
+
+\subsection{NBD BenchMark}
+The NBD (NHN Internet Bulletin Board Application Database) Benchmark is important benchmark to 
+measure of performance of a DBMS used for a Bulletin Board System (BBS) type of web services.
+
+This benchmark test was conducted to compare the performance of CUBRID R1.1 DBMS with  OSS DBMS 
+D1, Commercial DBMS D1, and Commercial DBMS D2. Factors considered for the benchmark includes 
+database size, workload increase and cache functionality.
+
+
+\subsection{Conclusion of NBD Benchmark}
+
+In the small and medium-sized database benchmarking, CUBRID is at second place after commercial DBMS D1. 
+In the small database benchmarking, CUBRID performance can be improved if provided more work load. For the 
+given workload it showed the usage of 30\% CPU.
+
+For medium size however it showed 80\% of CPU usage.
+DBMS D2 shows the highest CPU usage of 100\% in both small and medium-sized databases. References: \cite{www-benchmark}
+
 
 \newpage
 
