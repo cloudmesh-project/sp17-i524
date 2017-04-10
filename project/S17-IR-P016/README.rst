@@ -1,17 +1,16 @@
 :orphan:
 
-submitted: "ENTER DATE SUBMITTED IN ISO 8601 FORMAT (YYYY-MM-DD): EG: 2017-01-01"
+submitted: "2017-03-25"
 
-author: "ENTER YOUR NAME HERE"
+author: "Yatin Sharma, Diksha Yadav"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2034, S17-IR-2044"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-P016"
 
-github: "YOUR GITHUB USERNAME"
+github: "yatinsharma7, diksha2112"
 
 report: "report.pdf"
 
 proposal: "proposal.pdf"
-
 --------------------------------------------------------------------------------
