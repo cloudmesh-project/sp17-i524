@@ -28,9 +28,11 @@ U.S.A.}
 
 
 \begin{abstract}
- Pivotal HD/HAWQ is a Hadoop native SQL query engine that combines 
- the key technological advantages of MPP database with the 
- scalability and convenience of Hadoop. \newline
+ Pivotal HDB is the Apache Hadoop native SQL database powered by 
+ Apache HAWQ  for data science and machine learning workloads. It can 
+ be used to gain deeper and actionable insights into data with out 
+ the need from moving data to another platform to perfrom advanced 
+ analytics. \newline
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -64,7 +66,7 @@ relational operations - such as table scans, joins, aggregations, and
 sorts - simultaneously execute in parallel across the segments. Data 
 from upstream components in the dynamic pipeline are transmitted to 
 downstream components through the scalable User Datagram Protocol 
-(UDP) interconnect.
+{(UDP)}\cite{www-udp} interconnect.
 
 Based on Hadoop’s distributed storage, HAWQ has no single point of 
 failure and supports fully-automatic online recovery. System states 
@@ -75,8 +77,9 @@ added back to the system when necessary.
 
 \section{Architecture of HAWQ}
 
-{In a typical HAWQ deployment, each slave node has one physical HAWQ 
-segment, an HDFS DataNode and a NodeManager installed. Masters for 
+In a typical HAWQ deployment, each slave node has one physical HAWQ 
+segment, an HDFS DataNode and a {NodeManager}\cite{www-node-manager} 
+installed. {Masters for 
 HAWQ, HDFS and YARN are hosted on separate 
 nodes.}\cite{www-hawq-architecture}. HAWQ is tightly integrated with 
 YARN, the Hadoop resource management 
@@ -102,7 +105,8 @@ commands issued. The HAWQ master parses queries, optimizes queries,
 dispatches queries to segments and coordinates the query execution.
 End-users interact with HAWQ through the master and can connect to 
 the database using client programs such as psql or application 
-programming interfaces (APIs) such as JDBC or ODBC.The master is 
+programming interfaces (APIs) such as {JDBC}\cite{www-jdbc} or 
+{ODBC}\cite{www-odbc}.The master is 
 where the global system catalog resides. The global system catalog is 
 the set of system tables that contain metadata about the HAWQ system 
 itself. The master does not contain any user data; data resides only 
@@ -165,7 +169,8 @@ dynamic pipelining technology for efficient performance operation.
 \subsection{Robust ANSI SQL Compliance}
 
 Pivotal HDB complies with ANSI SQL-92, -99, and -2003 standards, plus 
-OLAP extensions. Leverage existing SQL expertise and existing 
+{OLAP}\cite{www-olap} extensions. Leverage existing SQL expertise and 
+existing 
 SQL-based applications and BI/data visualization tools. Execute 
 complex queries and joins, including roll-ups and nested queries.
 
@@ -185,7 +190,8 @@ which enables you to query an even broader range of data formats.
 
 \subsection{Tight Integration with Hadoop Ecosystem}
 
-Pivotal HDB plugs into the Apache Ambari installation, management and 
+Pivotal HDB plugs into the {Apache Ambari}\cite{www-apache-ambari} 
+installation, management and 
 configuration framework. This provides a Hadoop-native mechanism for 
 installation and deployment of Pivotal HDB and for monitoring cluster 
 resources across Pivotal HDB and the rest of the Hadoop ecosystem.
