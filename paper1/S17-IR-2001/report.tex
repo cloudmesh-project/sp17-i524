@@ -92,7 +92,6 @@ job. Sandbox creates a safe environment to run the job
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/Condor_Kernel.eps}}
 \caption{The HTCondor Kernel}
-\label{fig:condor-practice}
 \end{figure}
 
 \section{The HTCondor Software}
@@ -135,14 +134,14 @@ requires several powerful as well as unique tools:
   in the form of powerful expressions thus resulting in HTCondor's
   adoption mostly any desired policy\cite{condor-practice}
   
-\item {\bf Job Checkpoint and Migration.} A Job checkpoint is a
-  snapshot of the complete state of the
+\item {\bf Job Checkpoint and Migration.} Job checkpoint is a snapshot
+  of the complete state of the
   job\cite{Checkpoint_Migration_techreport_1997}. With certain types
   of jobs HTCondor can take a checkpoint of the job and later resume
-  it. Job can continue its execution later exactly from it left off at
-  the time of checkpointing. HTCondor also allows job migration from
-  one pool of resources to an other pool of resources with the help of
-  checkpointing\cite{beowulfbook-condor}
+  it. Job can continue its execution later exactly from where it left
+  off at the time of checkpointing. HTCondor also allow job migration
+  from one pool of resources to an other pool of resources with the
+  help of checkpointing\cite{beowulfbook-condor}
 
 \item {\bf Remote System Calls.} HTCondor preserves the local
   execution enviroment using remote system calls despite running jobs
@@ -230,7 +229,7 @@ Challenge
   Graphics machines at C.O.R.E Digital Pictures. On a average day
   15000 jobs are submitted by the C.O.R.E animators to
   HTCondor. HTCondor has been successfully used by C.O.R.E for major
-  productions such as X-Men, Blade II nd The Time Machine
+  productions such as X-Men, Blade II and The Time Machine.
 
 \item{\bf NUG30 Optimization Challenge.} NUG30 is quadratic assignment
   problem first proposed in 1968 as one of the most difficult
@@ -248,12 +247,12 @@ Challenge
   Calls, part ofCondor’s standard universe, was used as the I/O
   service between the master and the workers. Checkpointing was
   performed every 15 minutes for fault
-  tolerance''\cite{condor-practice}
+  tolerance''\cite{condor-practice} .
 
- As a result a solution to NUG30 was discovered by utilizing Condor-G
+ As a result, a solution to NUG30 was discovered by utilizing Condor-G
  in a run of less than one week. Condor-G allowed the mathematicians
  to manage 2400 systems at 10 different sites seamlessly. Over 95,000
- CPU hours are consumed in that week\cite{condor-practice}
+ CPU hours are consumed in that week \cite{condor-practice}.
  
 \end{itemize}
 
