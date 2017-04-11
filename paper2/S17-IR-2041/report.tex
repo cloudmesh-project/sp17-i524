@@ -41,9 +41,9 @@ of data, providing real-time insights about the data.\newline
 Nowadays, the amount of data being collected, stored and processed
 continues to grow rapidly. Querying this massive datasets can be time
 consuming and expensive without the right hardware and
-infrastructure. BigQuery\cite{www-bigquery} solves this problem by
+infrastructure. BigQuery \cite{www-bigquery} solves this problem by
 providing super-fast, SQL-like queries, using the processing power of
-Google's infrastructure. Google BigQuery\cite{bigquery-paper} is a
+Google's infrastructure. Google BigQuery \cite{bigquery-paper} is a
 cloud web service data warehouse used for large-scale data
 processing. It is suitable for businesses that cannot afford to spend
 a huge amount of investment in infrastructure to process a huge amount
@@ -52,24 +52,24 @@ amounts of information in near real time as well as providing some
 important analysis of the data which is stored.
 
 \section{Google BigQuery}
-To solve the architectural problems faced by
-Hadoop\cite{www-apache-hadoop} MapReduce\cite{mapreduce-article},
-Google developed Dremel\cite{dremel-paper} application in order to
-process large volumes of data. Dremel was designed to deliver high
-performance on data which was spread across a huge range of multiple
-servers and SQL support. But in 2012 at Google I/O event, it was
-announced that they would no longer support Dremel and this led to the
-beginning of BigQuery which became then the high-performance cloud
-offering of google. BigQuery makes use of SSL (Secure Sockets Layer)
-to take care of the security concerns related to cloud management.
+To solve the architectural problems faced by Hadoop
+\cite{www-apache-hadoop} MapReduce \cite{mapreduce-article}, Google
+developed Dremel \cite{dremel-paper} application in order to process
+large volumes of data. Dremel was designed to deliver high performance
+on data which was spread across a huge range of multiple servers and
+SQL support. But in 2012 at Google I/O event, it was announced that
+they would no longer support Dremel and this led to the beginning of
+BigQuery which became then the high-performance cloud offering of
+google. BigQuery makes use of SSL (Secure Sockets Layer) as well to
+take care of the security concerns related to cloud management.
 
 \subsection{System Architecture and Internal Structure}
 
 Google BigQuery platform is a Software As a Solution (SaaS) model in
-the cloud. As seen in figure \ref{fig:architecture} data which is
+the cloud. As seen in figure \ref{fig:architecture}, data which is
 generated from a variety of sources like event logs, relational
 databases, IoT devices like sensors, actuators, social media websites,
-Informatica\cite{www-informatica} applications, etc is loaded in the
+Informatica \cite{www-informatica} applications, etc is loaded in the
 databases which are created in BigQuery.
 
 \begin{figure}[htbp]
@@ -82,17 +82,17 @@ databases which are created in BigQuery.
 
 \noindent
 This data can then be processed and anaylsed using some algorthmic
-logic or applying some processing tool. Finally the data can then be
-represented and exported using Tableau\cite{www-tableau},
-Qlikview\cite{www-qlik}, MS Excel\cite{www-excel} and other BI
+logic or using some processing tool. Finally the data can then be
+represented and exported using Tableau \cite{www-tableau},
+Qlikview \cite{www-qlik}, MS Excel \cite{www-excel} and other BI
 tools. It can also be exported on Hadoop system for parallel
 processing.\newline Now to store data in BigQuery, you need to create
-Projects. Projects\cite{www-bigquery-documentation} in BigQuery act as
+Projects. Projects \cite{www-bigquery-documentation} in BigQuery act as
 top-level containers which store the BigQuery data. Each project is
 referenced by a name and unique ID. Tables in BigQuery store the
 actual data where each table has a schema which describes the field
 name, types and other information. In BigQuery each table must belong
-to a dataset.Datasets help to organise the tables and control the
+to a dataset. Datasets help to organise the tables and control the
 access to it.
 
 \noindent
@@ -112,7 +112,7 @@ SQL, is stored as columns and thus storage is oriented as shown in
 figure \ref{fig:rowvscolumnarstorage}. This not only results in fast
 access to data but also results in scanning only the required values,
 which largely reduces latency. This also results in a higher
-compression ratios. Google reports\cite{www-rowvscolumnstorage} that
+compression ratios. Google reports \cite{www-rowvscolumnstorage} that
 ``BigQuery can achieve columnar compression ratios of 1:10 as opposed
 to 1:3 when storing data in a traditional row-based format''.
 
@@ -190,7 +190,7 @@ as projects in BigQuery. In figure \ref{fig:bigqueryinterface}, the
 left-hand side consists a list of all the tables related to the
 'publicdata:samples' project. The query is fired in the text area
 below the 'Compose Query' text and its results are displayed below in
-tabluar foramt.
+tabluar format.
 
 \subsection{Multiple access methods}
 You can access the BigQuery service in 3 different ways. We can either
@@ -206,15 +206,15 @@ API. \begin{enumerate}
 \section{Comparison of BigQuery with Impala, Shark, Hive, Redshift and Tez}
 
 \noindent
-In \cite{www-benchmarks-bigguery}, the
-performance\cite{www-benchmarks-amplab} of BigQuery is compared
-against Impala\cite{www-impala}, Shark\cite{www-apache-spark},
-Hive\cite{www-apache-hive}, Redshift\cite{www-amazon-redshift} and
-Tez\cite{www-apache-tez} by using Intel's Hadoop
-benchmark\cite{www-benchmarks-intel} tools . This benchmark has 3
-different sizes of datasets - tiny, 1node and 5nodes. The ‘rankings’
-table has 90 million records and ‘uservisits’ table has 775 million
-records. The data is taken using Common Crawl\cite{www-commoncrawl}
+In \cite{www-benchmarks-bigguery}, the performance
+\cite{www-benchmarks-amplab} of BigQuery is compared against Impala
+\cite{www-impala}, Shark \cite{www-apache-spark}, Hive
+\cite{www-apache-hive}, Redshift \cite{www-amazon-redshift} and Tez
+\cite{www-apache-tez} by using Intel's Hadoop benchmark
+\cite{www-benchmarks-intel} tools . This benchmark has 3 different
+sizes of datasets - tiny, 1node and 5nodes. The \textit{‘rankings’}
+table has 90 million records and \textit{‘uservisits’} table has 775 million
+records. The data is taken using Common Crawl \cite{www-commoncrawl}
 document corpus. The two tables have the following
 schemas:\newline \newline
 \noindent
@@ -303,14 +303,14 @@ that only in Query 1A, 1B and 1C BigQuery took more time than
 Redshift, Impala (on memory) and Shark (on memory) but the results
 related to query 2 and 3 are much better. For all the different values
 of X in query 2 and 3 (A,B and C), BigQuery executed them faster than
-other platforms. This shows that BigQuery can produce amazing results
+other platforms. This shows that BigQuery can produce better results
 when processing complex queries on large datasets. As the number of
 processing records grew, BigQuery's response time was less as compared
 to the other storage platforms.
 
 \section{Use cases of BigQuery}
 \subsection{Safari Books Online}
-Safari Books Online\cite{www-usecase-safari} uses BigQuery to find
+Safari Books Online \cite{www-usecase-safari} uses BigQuery to find
 trends in customer purchase, manage its negative feedback related to
 customer service, improve the sales team's effectiveness etc. They
 chose BigQuery over other technologies because of its retrieval speed
@@ -318,19 +318,18 @@ by quering the datasets using a familiar SQL-like language, and the
 lack of additional required maintenance.
 
 \subsection{RedBus}
-Online travel agency RedBus\cite{www-usecase-redbus} introduced
+Online travel agency RedBus \cite{www-usecase-redbus} introduced
 internet bus ticketing in India incorporating thousands of bus
 schedules into a single booking operation. Using BigQuery, redBus was
 able to manage the terabytes of booking and inventory data quickly and
 at a lower cost than other big-data services. BigQuery also helped its
-engineers fix glitches quickly, minimize lost sales and improve
-customer service as well.
+engineers fix the software bugs quickly, minimize the lost sales and improve its customer service as well.
 
 \section{Conclusion}
 Google BigQuery is a cloud-based database service which enables to
 process large data sets quickly. BigQuery allows to run SQL-like
 queries against multiple gigabytes to terabytes of data in a matter of
-seconds. It is suitable for ad-hoc OLAP/BI\cite{www-olap} queries that
+seconds. It is suitable for ad-hoc OLAP/BI \cite{www-olap} queries that
 require results as fast as possible. As a cloud-powered parallel query
 database it provides extremely high full-scan query performance and
 cost effectiveness compared to other traditional data warehouse
