@@ -64,7 +64,7 @@ with many different messaging systems. \newline
 used as messaging systems in enterprise applications. With the advent
 of distributed systems, a need arised for a loosely coupled messaging
 API whose implementation wouldn't depend on knowing the details of the
-receiver components unlike RMI and RPC. Sun along with several partner
+receiver components unlike RMI and RPC. Sun, along with several partner
 companies, introduced the \emph{JMS API} \cite{www-jms-wiki} which
 defines a common set of interfaces and associated semantics that allow
 programs written in the Java programming language to communicate with
@@ -96,10 +96,10 @@ Java EE platform includes a JMS provider
 \cite{www-jms-tutorialoracle}. JMS Clients are the Java language
 programs that send and receive messages. Any Java EE application
 component can act as a JMS client.  Messages are the objects used to
-communicate information between the JMS clients.  Administered Objects
+communicate information between the JMS clients.  Administered objects
 are preconfigured JMS objects created by an administrator for the use
 of clients.  JMS administered objects are 'destinations' and
-'connection factories'. Destinations are the object that a client uses
+'connection factories'. Destinations are the objects that a client uses
 to specify the destination of messages it sends and the source from
 where it receives them.  A client uses a Connection Factory object to
 establish connection with a provider.
@@ -136,7 +136,7 @@ domains. A Java EE provider must implement both domains.
 message queues.  Each message is addressed to a specific queue;
 clients extract messages from the queue(s) established to hold their
 messages. Queues retain all messages sent to them until the messages
-are consumed or expire.
+are consumed or expired.
 
 \subsection{Publish/Subscribe model}
 
@@ -189,7 +189,7 @@ and is used to create one or more sessions.
 
 The JMS API provides methods for creating messages of each type and
 for filling in their contents. For example, to create a message object
-the primitive \emph{createMessage()} shall be used. Corespondingly, to
+the primitive \emph{createMessage()} shall be used. Correspondingly, to
 set the content of a TextMessage, the primitive \emph{setText()} shall
 be used.
 
@@ -210,7 +210,7 @@ for receiving messages sent to a destination.  A message consumer
 allows a JMS client to register itself in a destination with a JMS
 provider. The JMS provider manages the delivery of messages from a
 destination to the registered consumers of the destination.  Similar
-to a producer a Message Consumer can be created for a Destination
+to a producer, a Message Consumer can be created for a Destination
 object, a Queue object, or a Topic object.
 
 To support asynchronous operations, JMS defines the concept of a
@@ -219,17 +219,17 @@ asynchronous event handler for messages. The listener defines an
 onMessage method, where we shall define the actions that need to be
 taken once a message arrives.
 
-A message listener shall be registered with a specific MessageConsumer
+A message listener shall be registered with a specific message consumer
 by using the \emph{setMessageListener()} method defined by the API.
 
 \section{Anatomy of the JMS Message}
 
 
 A JMS message carries application data and provides event
-notification.  A JMS message has three parts - the message headers
+notifications.  A JMS message has three parts - the message headers
 provide metadata and routing information, the message properties are
 defined by the JMS client, the message body carries the payload of the
-message When a message is delivered, the properties and the body of
+message. When a message is delivered, the properties and the body of
 the message are made read-only \cite{www-jms-fischli-article}.
 
 \subsection{Types Of Message}
