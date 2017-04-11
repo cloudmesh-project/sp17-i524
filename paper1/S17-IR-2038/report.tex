@@ -77,50 +77,7 @@ sample the data\cite{www-h2oyoutubevideo}. H2O is also used to score
 hundreds of models in nano seconds to check which algorithm works
 better for that dataset.
 
-
-\section{Requirements}
-
-\subsection{Operating Systems}
-
-It works on the following operating systems 
-\newline Windows 7 or later
-\newline OSX 10.9 or later
-\newline Ubuntu 12.04
-\newline RHEL/CentOS6 or later\cite{www-h2o-requirements}
-
-\subsection{Languages}
-
- Java 7 or later
-\newline Scala 2.10 or later
-\newline R version 3 or later
-\newline Python 2.7x or 3.5x\cite{www-h2o-requirements}
- 
-\subsection{Browser}
-
- Chrome
-\newline Safari
-\newline Internet Explorer
-\newline Firefox\cite{www-h2o-requirements}
-
-\subsection{ Hadoop}
- Optional Cloudera CDH 5.2 or later
-\newline MapR 3.1.1 or later
-\newline Hortonworks HDP 2.1 or later\cite{www-h2o-requirements}
-
-
-\subsection{Supported File Formats}
-
-H2O supports the following file types
-\newline CSV files
-\newline ORC
-\newline ARFF
-\newline XLSX
-\newline XLS
-\newline Avro
-\newline Parquet\cite{www-h2o-requirements}
-
-More information can be obtained from the documentation provided on
-the H2O website\cite{www-h2o-requirements}.
+The requirements for running H2O on a server can be obtained from the documentation provided on the H2O website\cite{www-h2o-requirements}.
 
 \section{Architecture}
 
@@ -163,6 +120,16 @@ management such as memory and CPU)\cite{www-h2o-architecture}.
 \label{ fig:Architecture of H2O}
 \end{figure}
 
+\section{Supporting Products of H2O}
+
+\subsection{Sparkling Water}
+It is a spark application which is launched inside a Spark executor. It allows to initialize H2O service on every node inside a spark cluster resulting in the access of data which is stored in the data structure of Spark and H2O\cite{www-h2o-spark}.
+
+\subsection{Steam}
+It is a platform that does the entire process of building and deploying predictive applications on a large scale dataset.It also provides an interface to monitor the memory usage and the cluster performance\cite{www-h2o-steamgithub}. Thus Steam acts as an AI engine that adds cluster management, model management and model deloyment to the H2O stack\cite{www-h2o-steam}.
+
+\subsection{Deep Water}
+Deep Water integrates GPU deep learning frameworks such as TensorFlow , MXNet and Caffe and accelerates the deep learnings on the GPUs by 10-75x. It supports hyper-parameter optimization, cross validation and automatic model tuning\cite{www-h2o-deepwater}.
 
 \section {Used Cases}
 
