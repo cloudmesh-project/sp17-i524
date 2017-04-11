@@ -27,10 +27,14 @@ def insert_station(results):
 ###############################################################
 
 def load_weather_data():
-    st_list = stations.get_station_data(start_row='')
-    for key, value in st_list.items():
-        get_weather_data(startDate=value['min_date'], endDate=value['max_date'], stationId=key, station_details=value) 
-
+    start_row = ''
+    st_list = stations.get_station_data(start_row=start_row)
+    while st_list != {}:
+        for key, value in st_list.items():
+            get_weather_data(startDate=value['min_date'], endDate=value['max_date'], stationId=key, station_details=value) 
+            start_row = key
+        print 'Weather Data loaded till station id = ' + key
+        st_list = stations.get_station_data(start_row=start_row)    
 ###############################################################
 def get_weather_data(station_details, startDate='1968-01-01', endDate='1970-01-01', stationId='GHCND:IN001011001'):
     date_range_list = AppUtil.get_year_list(start_date=startDate, end_date=endDate)
@@ -39,7 +43,7 @@ def get_weather_data(station_details, startDate='1968-01-01', endDate='1970-01-0
         offset = 0
         result = Services.get_weather_data(startDate=date_range['min_date'], endDate=date_range['max_date'], stationId=stationId, offset=offset)   
         while(result != {}):        
-            #print result['results']
+            # print result['results']
             insert_result(result['results'], station_details)
             offset = offset + limit
             result = Services.get_weather_data(startDate=date_range['min_date'], endDate=date_range['max_date'], stationId=stationId, offset=offset)
@@ -51,8 +55,7 @@ def insert_result(result_list, station_details):
     grouped_weather_data = groub_weather_data(result_list)
     for key, value in grouped_weather_data.items():
         cell = weather.get_cell(value, station_id, latitude, longitude)
-        if(cell != {}):            
-            print 'Inserting record -> '+str(cell)
+        if(cell != {}):
             weather.insert(key, cell)            
 ###############################################################            
 def groub_weather_data(result_list):

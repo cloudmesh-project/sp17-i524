@@ -31,5 +31,12 @@ def get_weather_data(startDate, endDate, stationId, country='FIPS:IN', offset=0)
      '&stationid=' + stationId + '&startdate=' + startDate + '&enddate=' + 
       endDate + '&locationid=' + country + '&offset=' + str(offset))
     response = requests.get(url, headers=HEADERS) 
-    return response.json()
-
+    result = {}
+    count = 0;
+    while result == {} and count <= 5 :
+        try:
+            count = count + 1
+            result = response.json()
+        except :        
+            print 'Errror in parsing ' + response.text
+    return result    
