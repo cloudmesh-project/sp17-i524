@@ -1,6 +1,8 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
-\journal{i524} 
+\journal{i524}
+
+\renewcommand{\textrightarrow}{$\rightarrow$}
 
 \title{Facebook Tao}
 
@@ -16,9 +18,10 @@
 
 \doi{\url{https://github.com/cloudmesh/sp17-i524/raw/master/paper2/S17-IO-3017/report.pdf}}
 
+\DeclareUnicodeCharacter{2010}{-}
 
 \begin{abstract}
-Facebook Tao is a graph database currently serving Facebook Inc. to manage data of its billions of users. Graph database stores data in a graph structure and establishes relationships between data using nodes and edges. Main aim of Tao system is to achieve lowest read latency, timeliness in writes and efficiently scaling the data.
+Facebook Tao is a graph database currently serving Facebook Inc. to manage data of its billions of users. Graph database stores data in a graph structure and establishes relationships between data using nodes and edges. Graph databases are ideal for systems that require data to be represented as a graph or hierarchical structure and need to establish connections between data points. Storing relationships between data points as a first class entity helps to draw insights from the data. For example, real time recommendation engine is possible because of the ability of graph database to connect to the masses of buyers to product data, thereby enabling insights on customer needs and product trends. A graph database system like Tao is apt for relationship driven data requirements of Facebook. Main aim of Tao system is to achieve lowest read latency, timeliness in writes and efficiently scaling the data.
 \newline
 \end{abstract}
 
@@ -30,9 +33,9 @@ Facebook Tao is a graph database currently serving Facebook Inc. to manage data 
 
 \section{Introduction}
 
-As early as 2005, Facebook started using MySQL, a relational database coupled with large distributed cache called memcache. Facebook soon realized however efficient relational database it would use, it is not sufficient to manage the enormous data challenge Facebook had. The data was a social graph. Another mismatch, which relational database or block cache had was, most of the data that would be read into cache did not belong to any relation. For example, 'If user likes that picture". In most records the answer would be 'No' or 'False'. Storing and reading this unwanted data was a burden. Meanwhile Facebook users' base was increasing daily. Ultimately Facebook came up with Facebook Tao, a distributed social graph data store.
+Graph databases like Facebook Tao are a response to data needs that traditional RDBMSs like MySQL do not meet. For example, Facebook realized however efficient relational database it would use, it is not sufficient to manage the enormous data challenge Facebook had. The data was a social graph. Another mismatch, which relational database or block cache had was, most of the data that would be read into cache did not belong to any relation. For example, 'If user likes that picture". In most records the answer would be 'No' or 'False'. Storing and reading this unwanted data was a burden. Meanwhile Facebook users' base was increasing daily. Ultimately Facebook came up with Facebook Tao, a distributed social graph data store.
 
-In the paper published in USENIX annual technical conference, Facebook Inc describes TAO (The Association and Objects) as \cite{book-tao1} a geographically distributed data store that provides timely access to the social graph for Facebook’s demanding workload using a fixed set of queries. It is deployed at Facebook for many data types that fit its model. The system runs on thousands of machines, is widely distributed, and provides access to many petabytes of data. TAO represents social data items as Objects (user) and relationship between them as Associations (liked by, friend of). TAO cleanly separates the caching tiers from the persistent data store allowing each of them to be scaled independently. To any user of the system it presents a single unified API that makes the entire system appear like 1 giant graph database \cite{www-tao1}.
+Facebook TAO (The Association and Objects) is a geographically distributed data store that provides timely access to the social graph for Facebook’s demanding workload using a fixed set of queries \cite{book-tao1}. It is deployed at Facebook for many data types that fit its model. The system runs on thousands of machines, is widely distributed, and provides access to many petabytes of data. TAO represents social data items as Objects (user) and relationship between them as Associations (liked by, friend of). TAO cleanly separates the caching tiers from the persistent data store allowing each of them to be scaled independently. To any user of the system it presents a single unified API that makes the entire system appear like 1 giant graph database \cite{www-tao1}.
 Key advantages of the system include \cite{www-tao1}:
 \begin{itemize}
 \item Provides a clean separation of application/product logic from data access by providing a graph API and data model to store and fetch data.
@@ -49,7 +52,7 @@ Efficiency in Scaling and low Read latency is achieved by (i) separating cache a
 
 Third goal is to achieve timeliness of writes. If a web server has written something and it sends a read request, it should be able to read the post. Write timeliness is achieved by (i) Write through cache and (ii) Asynchronous replication \cite{www-tao4}.
 
-Lastly high read availability for the same reasons mentioned above, which is achieved by using alternate data sources.
+Lastly, the goal is also to have high read availability which is achieved by using alternate data sources.
 
 \section{Tao Data Model and API}
 Facebook Inc. explains TAO data model and API associated with using an example \cite{www-tao2}. Figure \ref{fig:figure1} depicts TAO data model.
@@ -63,19 +66,17 @@ Facebook Inc. explains TAO data model and API associated with using an example \
 
 This example shows a subgraph of objects and associations that is created in TAO after Alice checks in at the Golden Gate Bridge and tags Bob there, while Cathy comments on the check-in and David likes it. Every data item, such as a user, check-in, or comment, is represented by a typed object containing a dictionary of named fields. Relationships between objects, such as “liked by" or “friend of," are represented by typed edges (associations) grouped in association lists by their origin. Multiple associations may connect the same pair of objects as long as the types of all those associations are distinct. Together objects and associations form a labeled directed multigraph.
 
-For every association type a so-called inverse type can be specified. Whenever an edge of the direct type is created or deleted between objects with unique IDs id1 and id2, TAO will automatically create or delete an edge of the corresponding inverse type in the opposite direction (id2 to id1). The intent is to help the application programmer maintain referential integrity for relationships that are naturally mutual, like friendship, or where support for graph traversal in both directions is performance critical, as for example in “likes” and “liked by."
+For every association type a so-called inverse type can be specified. Whenever an edge of the direct type is created or deleted between objects with unique IDs \emph id1 and \emph id2, TAO will automatically create or delete an edge of the corresponding inverse type in the opposite direction (\emph id2 to \emph id1). The intent is to help the application programmer maintain referential integrity for relationships that are naturally mutual, like friendship, or where support for graph traversal in both directions is performance critical, as for example in “likes” and “liked by."
 
 \subsection{Objects and Associations}
-TAO objects are typed nodes, and TAO associations are typed directed edges between objects. Objects are identified by a 64-bit integer (id) that is unique across all objects, regardless of object type (otype). Associations are identified by the source object (id1), association type (atype) and destination object (id2). At most one association of a given type can exist between any two objects. Both objects and associations may contain data as key$->$value pairs. A per-type schema lists the possible keys, the value type, and a default value. Each association has a 32-bit time field, which plays a central
+TAO objects are typed nodes, and TAO associations are typed directed edges between objects. Objects are identified by a 64-bit integer (id) that is unique across all objects, regardless of object type (otype). Associations are identified by the source object (\emph id1), association type (atype) and destination object (\emph id2). At most one association of a given type can exist between any two objects. Both objects and associations may contain data as key→value pairs. A per-type schema lists the possible keys, the value type, and a default value. Each association has a 32-bit time field, which plays a central
 role in queries \cite{book-tao1}.
 
+Object: (id) -> (otype, (key -> value)$\star$)
 
-Object: (id) -> (otype, (key -> value)*)
+Assoc.: (id1, atype, id2) -> (time, (key -> value)$\star$)
 
-Assoc.: (id1, atype, id2) -> (time, (key -> value)*)
-
-
-Figure 1 shows how TAO objects and associations might encode the example, with some data and times omitted for clarity. The example’s users are represented by objects, as are the checkin, the landmark, and Cathy’s comment. Associations capture the users’ friendships, authorship of the checkin and comment, and the binding between the checkin and its location and comments.
+Figure 'Tao Data Model' shows how TAO objects and associations might encode the example, with some data and times omitted for clarity. The example’s users are represented by objects, as are the checkin, the landmark, and Cathy’s comment. Associations capture the users’ friendships, authorship of the checkin and comment, and the binding between the checkin and its location and comments.
 
 The set of operations on objects is of the fairly common create/set-fields/get/delete variety. All objects of a given type have the same set of fields. New fields can be registered for an object type at any time and existing fields can be marked deprecated by editing that type’s schema. 
 
@@ -83,13 +84,13 @@ Associations are created and deleted as individual edges. If the association typ
 
 \section{TAO Architecture}
 
-This section describes the architecture of TAO. TAO is separated into layers: two caching layers and a storage layer.
+TAO is separated into layers: two caching layers and a storage layer.
 \subsection{Storage Layer}
 
-The data is persisted using MySQL. The API is mapped to a small number of SQL queries. Data is divided into logical shards. By default all object types are stored in one table and association in others. Every 'object-id' has a corresponding 'shard-id'. Objects are bounded to a single shard throughout their lifetime. An association is stored on the shard of its id1, so that every association query can be served from a single server \cite{www-tao4}.
+The data is persisted using MySQL. The API is mapped to a small number of SQL queries. TAO needs to handle a far larger volume of data than can be stored on a single MySQL server and so, the data is divided into logical shards. Each shard is contained in a logical database. Database servers are responsible for one or more shards. The number of shards far exceeds the number of servers. The shard to server mapping is tuned in to balance load across different hosts. By default all object types are stored in one table, and all association types in another. Every 'object-id' has a corresponding 'shard-id'. Objects are bounded to a single shard throughout their lifetime. An association is stored on the shard of its \emph id1, so that every association query can be served from a single server. \cite{www-tao4}.
 
 \subsection{Caching Layer}
-TAO’s cache implements the API for clients, handling all communication with databases. A region/tier is made of multiple closely located Data centers. Multiple Cache Servers make up a tier (set of databases in a region are also called a tier) that can collectively capable of answering any TAO Request. Each cache request maps to a server based on sharding. Write operations on an association with an inverse may involve two shards, since the forward edge is stored on the shard for id1 and the inverse edge is on the shard for id2. Handling writes with multiple shards involve: Issuing an RPC (Remote Procedure Call) call to the member hosting id2, which will contact the database to create the inverse association. Once the inverse write is complete, the caching server issues a write to the database for id1. TAO does not provide atomicity between the two updates. If a failure occurs the forward may exist without an inverse, these hanging associations are scheduled for repair by an asynchronous job \cite{www-tao4}.
+TAO’s cache implements the API for clients, handling all communication with databases. A region/tier is made of multiple closely located Data centers. Multiple Cache Servers make up a tier (set of databases in a region are also called a tier) that can collectively capable of answering any TAO Request. Each cache request maps to a server based on sharding. Write operations on an association with an inverse may involve two shards, since the forward edge is stored on the shard for \emph id1 and the inverse edge is on the shard for \emph id2. Handling writes with multiple shards involve: Issuing an RPC (Remote Procedure Call) call to the member hosting \emph id2, which will contact the database to create the inverse association. Once the inverse write is complete, the caching server issues a write to the database for \emph id1. TAO does not provide atomicity between the two updates. If a failure occurs the forward may exist without an inverse, these hanging associations are scheduled for repair by an asynchronous job \cite{www-tao4}.
 
 \subsection {Leaders and Followers}
 There are two tiers of caching clusters in each geographical region. Clients talk to the first tier, called followers. If a cache miss occurs on the follower, the follower attempts to fill its cache from a second tier, called a leader. Leaders talk directly to a MySQL cluster in that region. All TAO writes go through followers to leaders. Caches are updated as the reply to a successful write propagates back down the chain of clusters. Leaders are responsible for maintaining cache consistency within a region. They also act as secondary caches \cite{www-tao2}.
@@ -104,13 +105,27 @@ Since each cache hosts multiple shards, a server may be both a master and a slav
 To get started on learning Facebook TAO, following resources can prove helpful.
 
 \begin{itemize}
-\item \cite{book-tao1} - Technical paper on Facebook TAO.
+\item Technical paper on Facebook TAO \cite{book-tao1}.
 
-\item \cite{www-tao2} - Background, Architecture and Implementation from Facebook itself.
+\item Background, Architecture and Implementation from Facebook itself \cite{www-tao2}.
 
-\item \cite{www-tao3} - TAO summary in a video on USENIX website.
+\item TAO summary in a video on USENIX website \cite{www-tao3}.
 
 \end{itemize}
+
+\section{Related Work}
+
+TAO is a geographically distributed, eventually consistent graph store optimized for reads, thus combining all three techniques into one system. Eventually consistency model is based on BASE (Basically Available, Soft state, Eventual consistency) semantics. These systems typically provide weaker guarantees than the traditional ACID (Atomicity, Consistency, Isolation, Durability) semantics. Google’s BigTable, Yahoo!’s PNUTS, Amazon’s SimpleDB, and Apache’s HBase are examples of this more scalable approach. These systems all provide consistency and transactions at the per-record or row level similar to TAO’s semantics for objects and associations, but do not provide TAO’s read efficiency or graph semantics \cite{book-tao1}. 
+
+The Coda file system uses data replication to improve performance and availability in case of unreliable networks. Unlike Coda, TAO does not allow writes in portions of the system that are disconnected. Google Megastore is a storage system that uses Paxos (protocol for distributed consensus) across geographically distributed data centers to provide strong consistency guarantees and high availability. TAO provides no consistency guarantees but handles comparatively many more requests \cite{book-tao1}.
+
+Since TAO was designed specifically to serve the social graph, its features are inherited from the graph databases. Neo4j is a open-source graph database that provides ACID semantics and the ability to shard data across several machines. Twitter uses its FlockDB to store parts of its social graph, as well \cite{book-tao1}. 
+
+Instead of using existing graph systems Facebook has customised Tao to fulfill its specific needs and workload requirements.
+
+\section{Conclusion}
+
+Overall, this paper explains characteristics and challenges of Facebook's workload, the objects and associations data model and lastly, it details out TAO, the geographically distributed system that implements the API to work with social graph. TAO is deployed at scale inside Facebook. Its separation of cache and persistent store has allowed those layers to be independently designed, scaled, and operated, and maximizes the reuse of components across the organization \cite{book-tao1}.
 
 \section {Acknowledgements}
 The author would like to thank Prof. Gregor von Laszewski and his associates from the School of Informatics and Computing for providing all the technical support and assistance.
