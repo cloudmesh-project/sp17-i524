@@ -278,7 +278,8 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \RequirePackage[resetlabels]{multibib}
 \newcites{fullrefs}{Full References}  %% Or whatever the heading might be
 % \bibliographystylefullrefs{osajnl}    %% The full style
-\bibliographystylefullrefs{IEEEtran}    %% The full style
+%\bibliographystylefullrefs{IEEEtran}    %% The full style
+\bibliographystylefullrefs{IEEEtrantr}    %% The full style
 %\bibliographystyle{IEEEtran}    %% The full style
 
 % Patching \cite to automatically add cite
