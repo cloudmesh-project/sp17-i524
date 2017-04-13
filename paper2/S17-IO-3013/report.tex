@@ -125,9 +125,7 @@ the moment 32-bit and 64-bit binaries are provided for Python
 
 Installation and configuration process for LMDB.
 
-\begin{figure}[htb]
-\begin{quote}
-\begin{Verbatim}
+\begin{verbatim}
 
 #Unix based Systems
 pip install lmdb
@@ -157,15 +155,12 @@ easyinstall lmdb
     environment will support.
 #mdb_get() and #mdb_put() can be 
     used to store a single key/value pairs,
-    if more transactions are needed 
+    if more transactions are needed ver
     then cursors are required. 
 #mdb_txn_commit() is required to 
     commit the data in the environment
 
-\end{Verbatim}
-\end{quote}
-\caption{LMDB Implementation Code}\label{alg:python}
-\end{figure}
+\end{verbatim}
 
 \section{Features}
 
@@ -239,7 +234,7 @@ has been identified as an issue for Kyoto Cabinet
 
 \section{Use Case}
 
-\subsection{NoSQL data Stores}
+\subsection{NoSQL Data Stores}
 
 Due to its small footprint and great performance, LMDB is an ideal
 candidate for NoSQL data stores. The data store is widely used for
@@ -248,7 +243,7 @@ performance. Being an in-memory database, LMDB is a great candidate
 for these stores and is currently being used as Redis data store
 \cite{www-kyoto}.
 
-\subsection{Mobile Phone database}
+\subsection{Mobile Phone Database}
 
 In the wake of smart phones, the need for mobile
 applications to collect and store data has grown exponentially. Most
@@ -260,7 +255,7 @@ effectiveness. LMDB fills in this gap due to its small footprint,
 performance and ability to reuse storage thus making it a favorable
 mobile phone database.
 
-\subsection{Postfix Mail Transfer Agent (MTA) database}
+\subsection{Postfix Mail Transfer Agent (MTA) Database}
 
 Postfix is an SMTP Server that provides first layer of spambots and
 malware defense to the end users. Having the ability to track and keep
