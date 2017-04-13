@@ -51,7 +51,7 @@ Nova is responsible for spawning vm instances in openstack environment. It is bu
 \section{Nova Framework}
 
 
-Nova is comprised of multiple server processes, each performing different functions. The OpenStack provided user interface for Nova which is a REST API. During invocation of the API, the Nova communicates via  RPC (Remote procedure call) passing mechanism.
+Nova is comprised of multiple server processes, each performing different functions. The OpenStack provided user interface for Nova which is a REST API. During invocation of the API, the Nova communicates via  RPC (Remote procedure call) passing mechanism.As shown in Fig.1, it interacts with other OpenStack components like Keystone , Glance, Cinder etc.
 
 The API servers process REST requests, which typically involve database reads/writes. RPC messaging is done via the 'oslo.message' library. Most of the nova components can run on different servers and have a manager that is listening for RPC messages. One of the components is Nova Compute where a single process runs on the hypervisor it is managing.
 
@@ -120,24 +120,9 @@ Conductor: It handles requests that need coordination, acts as a database proxy,
 
 \section{Major Task Performed by OpenStack Nova service}
 
-Below are the major tasks performed by Nova Service\cite{www-nova-ibm}
-\begin{itemize}
+Nova service performs some major task.\cite{www-nova-ibm}.Some of them are authenticating against the nova-api endpoint, listing instances, retrieving an instance by name and shutting it down, booting an instance and checking status, attaching Floating IP address,changing a security group, and Retrieving console login
 
-\item Authenticating against the nova-api endpoint
 
-\item Listing instances
-
-\item Retrieving an instance by name and shutting it down
-
-\item Booting an instance and checking status
-
-\item Attaching Floating IP address
-
-\item Changing a security group 
-
-\item Retrieving console login
-
-\end{itemize}
 
 \section{Nova and other Openstack service}
 
@@ -150,15 +135,7 @@ AMQP is the messaging technology chosen by the OpenStack cloud.The AMQP sits bet
 \section{Orchestration Task in Nova}
 Nova-Conductor service plays an important role to manage the execution of workflows which involve the scheduler. Rebuild, resize, and building the instance are managed here. This was done in order to have better separation of responsibilities between what compute nodes should handle and what schedular should handle and to clean up the path of execution. In order to query the schedular in a synchronous manner it needed to happen after the API had returned a response otherwise API response times would increase and thats why conductor was chosen. And changing the schedular call from asynchronous to synchronous helped to clean up the code\cite{www-nova-orchestrator}.
 
-The earlier logic was complicated and the scheduling logic was distributed across the code.The earlier process was changed to the following:
-
-\begin{itemize}
-\item API receives request to build an instance.
-\item API sends an RPC cast to conductor to build an instance.
-\item Conductor sends an RPC call to schedular to pick a compute and waits for the response. If there is a schedular fail, it stops the build at the conductor.
-\item Conductor sends an RPC cast to the compute to build the instance. If the build succeeds, stop here. If it fails then the compute sends an RPC cast to conductor to build an instance. This is the same RPC message that was sent by the API.
-
-\end{itemize}
+The earlier logic was complicated and the scheduling logic was distributed across the code.The earlier process was changed to the new sequence. Firstly, API receives request to build an instance. The, the API sends an RPC cast to conductor to build an instance.Next,the conductor sends an RPC call to schedular to pick a compute and waits for the response. If there is a Scheduler fail, it stops the build at the conductor. Lastly, the conductor sends an RPC cast to the compute to build the instance. If the build succeeds, stop here. If it fails then the compute sends an RPC cast to conductor to build an instance. This is the same RPC message that was sent by the API.
 
 
 
@@ -175,7 +152,7 @@ A use case has been developed to leverage OpenStack to perform big data analytic
 
 \section{conclusion}
 
-We discussed about the main components of OpenStack Nova and how it is interacting with different other Openstack services.We also showed use case of running big data problem on Openstack. We also discussed the compute service offerings provided by cloud vendors other than OpenStack.
+Here, we discussed about the main components of OpenStack compute layer-Nova and how it is interacting with different other Openstack services like Swift, Horizon etc. We also showed use case of running big data problem on Openstack. We also discussed the compute service offerings provided by cloud vendors other than OpenStack.This helped us to understand the the overall picture of Nova and how it fits to offer a unique enterprise level IAAS cloud solution.
 
 \bibliography{references}
 
