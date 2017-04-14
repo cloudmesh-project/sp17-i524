@@ -21,7 +21,11 @@
 
 
 \begin{abstract}
-This paper gives an overview of Apache Lucene. We will go through the basic architecture and functionality of the library. We will see the advantages and downfalls of Lucene and conclude on its implementation.
+Apache Lucene is an information retrieval or text searching library, written 
+entirely in Java. The purpose is to add boilerplate codes of any search engine,
+ready for use and configurable , so that the application can focus on the core
+business. On this paper we will walk through the architecture and see the pros
+and cons of the library.
 \newline
 \end{abstract}
 
@@ -33,16 +37,35 @@ This paper gives an overview of Apache Lucene. We will go through the basic arch
 
 \section{Introduction}
 
-Apache Lucene is a search library that enables search facility to any application. Although it was initially written in Java but has been ported to many languages chiefly C-Sharp, c/c++ , Python etc. It is an active open source project and under Apache License. Its latest release is \href{http://lucene.apache.org/core/6_4_1/index.html}{6.4.1}. It is important that we must understand that Lucene is just a search library and cannot handle other related stuffs like crawling, document filtering , administration etc.
+Apache Lucene is a search library that enables search facility to any 
+application. Although it was initially written in Java but is now available
+in other languages too chiefly C-Sharp, c/c++ , Python etc. It is an active
+open source project and under Apache License. Lucene is just a search library 
+and cannot handle other related stuffs like crawling, document filtering , 
+administration etc. We will get to them individually later in this document.
 
-\section{Concepts}
-To understand the purpose of Lucene we have to be familiar with two terms, one is "Information Overload" and "Information Retrieval"\cite{wiki-ir}. The term information overload means, difficulty that one can have in making decisions, because of the presence of too much of information. In another words, "Information Overload" can occur if the rate of feed/input into a system exceeds its processing capabilities. Imagine the situation of current world. We are living in the world where data has reached volume of zeta bytes. To extract some insight , first step is to collect all related data. This is known as information retrieval(IR). IR is the task of collecting relevant information from collection of data resources scattered across devices. Now with the above understanding we can say Lucene is a scalable Information Retrieval library.
+\subsection{General Concepts}
+\emph{Information Overload}  means, difficulty that one can have in making decisions, because of the presence of too much of information. In another words, "Information Overload" can occur if the rate of feed/input into a system exceeds its processing capabilities. Imagine the situation of current world. We are living in the world where data has reached volume of zeta bytes. To extract some insight , first step is to collect all related data. This is known as \emph{Information Retrieval (IR)} \cite{wiki-ir}. IR is the task of collecting relevant information from collection of data resources scattered across devices. 
 
-\subsection{Lucene and Search Engine}
-Google has set some base expectations for search engines, which if not available can cause dissatisfaction for the users. For example spell checker and response time of <= 1 second. Lucene should be able to met those expectations or else its not worth. But Lucene is not a full fledged search engine rather its a tool kit to achieve so. So lets jot down the steps for any search engine 
+\section{Search Engine}
+Google has set some base expectations for search engines, which if not available can cause dissatisfaction for the users. For example spell checker and response time of <= 1 second. Lucene should be able to met those expectations or else its not worth. But Lucene is not a full fledged search engine rather its a tool kit to achieve so. We will be using Web search engine as an use case to explain the idea. Of course, it can be extended for document searching and other type searching as well.
 
-Module  : Raw Content -> Gather Data -> Analyze -> Index ->  Query Support 
+Module  : Raw Content -> Gather Data -> Analyse -> Index ->  Query Support 
 UseCase : User query -> Search Engine -> Build Query -> Extract Information from indexed data
+\subsection{Module}
+\begin{itemize}
+\item Raw Content : For Google, contents are web pages and their urls. Google uses crawler to download these information. Crawler is bot or a program that systematically searches World Wide Web for the purpose of web indexing.
+\item Gather Data : The information from the crawler will be persisted. Databases are preferred options to store the information. Plain text file can be used as well for this step.
+\item Analyse : In this step meta information from the existing data is extracted. For an example , say we have a page from url "http://www.worldwildlife.org/species/tiger". By analysing the content within the page we found it contains world tiger population, their habitats and mating seasons, so on and so forth. These information can be compiled and kept separately to identify them on aforesaid information. These are known as keywords or tags.
+\item Index : The meta information extracted from the document has to be mapped and should be readily available on query. These tags or keywords are generally mapped to one or more documents or web page. For example the keyword \textit {`tiger count`} can map to both \textit{WorldWildLife} and \textit{NatGeo}. 
+\item Query Support : This is where queries are parsed and executed to fetch the matching results. It includes a parser to make the query which are mostly human readable format are converted to a format which can be used by the program to fetch results.
+\end{itemize}
+
+\subsection{UseCase}
+\begin{itemize}
+\item User Query : From Google perspective this where user enters its search query. This is the entry point for any search application to initiate a search.
+\item Search Engine :  
+\end{itemize}
 
 \section{Architecture}
 Figure 1 explains a basic architecture of Lucene
@@ -54,7 +77,7 @@ Figure 1 explains a basic architecture of Lucene
 \label{fig:lucene-data-flow}
 \end{figure}
 
-Lucene library is compact and does not have any external dependencies. But it can be plugged with other libraries for building a search engine. Fig 1\cite{lucene-book} shows process flow of Lucene. On a high level , data collected from different sources are analyzed and converted into smaller chunks. These are known as documents. Documents are text entries and from these text entries Lucene performs indexing and store it in local disk for future reference. The next step is to handle the search query from users. Lucene has a query parser to understand the query and search the index for the correct or relevant match. If found, returns the document back. We will elaborate the flow beneath.
+Lucene library is compact and does not have any external dependencies. But it can be plugged with other libraries for building a search engine. Fig 1\cite{lucene-book} shows process flow of Lucene. On a high level , data collected from different sources are analysed and converted into smaller chunks. These are known as documents. Documents are text entries and from these text entries Lucene performs indexing and store it in local disk for future reference. The next step is to handle the search query from users. Lucene has a query parser to understand the query and search the index for the correct or relevant match. If found, returns the document back. We will elaborate the flow beneath.
 
 \section{Lucene Components}
 
