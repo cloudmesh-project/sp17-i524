@@ -104,16 +104,81 @@ image features will be fed to the neural network and they will be
 compared with stored glyph features and the nearest match will be
 chosen, after multiple iterations of classification by the network.
 
+\section{5.Pre processing the data}
 
+
+\textbf{Preprocessing Techniques} :
+
+Preprocessing is required on the raw images that we are using to
+filter out the required subject and distinguish from any other
+unwanted objects from the image such as watermarks, background
+subjects etc. We have conducted different preprocessing techniques in
+order to remove noise and convert the image into a grey scale format
+as color images requires more complex methods of processing
+
+\subsection{5.1 Binarization}
+
+Otsu’s method \cite{otsu1975threshold} Otsu’s method concludes finding
+the best intensity threshold to separate two classes, often background
+vs foreground but not always. The algorithm tries to find a separation
+point that has the minimum weighted within class variance.  If the
+input images are grayscale, the algorithm will simply find a threshold
+that any intensity below that will be considered as the background and
+the intensity of the corresponding pixels will be rounded to
+zero. Similarly, the intensities above the threshold will be rounded
+to 1. The resulting image (array) will be binary.  .
+ 
+\subsection{5.2 Noise Reduction Techniques}
+
+Noise reduction is done for extracting out any unwanted bit-pattern,
+there are linear as well as non-linear techniques for this.  Linear :
+In this method is used to remove any isolated pixel noise from the
+image. Here the required output filter is taken as a linear
+combination of the neighborhood pixels Non- Linear : These kind of
+filters are used to replace the value of a particular pixel in order
+to remove any kind of impulse noise
+
+\subsection{5.3 Histogram Based Method}
+
+It gives a value to the intensity of the pixel and plot it on a
+histogram , where darker the image , more the data points would be on
+the left and center of the histogram . Lighter the image , more the
+data points would be on the right side of the histogram. Using a
+histogram equalization method the contrast on the image can be
+improved in this case. In the histogram equalization method , an image
+is divided into blocks of pixels and an histogram equalization is
+done.  This allows us to distinguish the images we actually require
+from the other background images . It allows us to enhance the
+visibility of the characters’ present on the image.
+
+\subsection{5.4 Median Filter}
+It is a non-linear noise reduction technique , it is a low pass
+filter. In this case the pixel values are taken for an area on the
+image and an average of the pixel value is taken and assigned to the
+center pixel in that area. It is an effective means for removing the
+salt and pepper noise which are random lines occurring on the image
+due to poor quality of the picture or if the image wasn’t scanned
+well.\cite{medianfilterpreprocessing}Figure 2 shows the result of
+applying a median filter on a scanned image, we can see the reduction
+in dots and other marks on the image, making it more smooth and
+usable.
+ 
 
 \begin{figure}
 \centering
-\fbox{\includegraphics[width=\linewidth]{images/image}}
-\caption{Illustration of an OCR system \cite{www-ocr-image}}
+\fbox{\includegraphics[width=\linewidth]{images/pasted}}
+\caption{Averaging of a pixel in median filter}\cite{medianfilterpreprocessing}
 \label{fig:Illustration of an OCR system}
 \end{figure}
 
-\section{5.Application}
+\begin{figure}
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/medianfilter}}
+\caption{After applying median filter on a scanned image}
+\label{fig:Illustration of an OCR system}
+\end{figure}
+
+\section{6.Application}
 
 OCR converts images to machine-readable text. That will make it the
 initial tool that needs to be used for processing any documents or
