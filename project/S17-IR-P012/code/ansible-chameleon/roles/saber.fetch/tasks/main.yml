@@ -1,0 +1,6 @@
+---
+- name: Get project codes from the git repository
+  git:
+    repo: https://github.com/cloudmesh/cloudmesh.ocr.git
+    dest: /tmp/GitRep
+
