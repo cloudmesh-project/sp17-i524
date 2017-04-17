@@ -1,0 +1,5 @@
+---
+- hosts: weatherCluster 
+  remote_user: root
+  roles:
+    - master
