@@ -1,15 +1,15 @@
-- name: Step 1 of 11 -> apt-get update
+- name: Step 1 of 4 -> apt-get update
   become: yes
   apt: update_cache=yes
 
-- name: Step 2 of 11 -> apt-get upgrade
+- name: Step 2 of 4 -> apt-get upgrade
   become: yes
   apt: upgrade=full
 
-- name: Step 3 of 11 -> Install unzip
+- name: Step 3 of 4 -> Install unzip
   become: yes
   apt: name=unzip update_cache=yes state=latest
 
-- name: Step 4 of 11 -> Install build-essential
+- name: Step 4 of 4 -> Install build-essential
   become: yes
   apt: name=build-essential update_cache=yes state=latest

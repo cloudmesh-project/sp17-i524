@@ -26,6 +26,9 @@ install:
 run:
 	scripts/run.sh
 
+delete:
+	scripts/delete.sh
+
 view:
 	$(OPENCMD) ${FILE}.pdf
 
