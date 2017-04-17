@@ -92,7 +92,24 @@ OpenCV is an open source software, and OpenCV allows redistribution in terms of 
 
 \section{Use Case}
 OpenCV library can be used for image recognition technology. There are numerous applications of image recognition, like facial recognition for security purposes, facial tagging in cameras, image and video processing in self driving cars. For instance, take a data set containing pictures taken from a forest surveillance cameras, we can process the images to find out the number of animals at any given point of time. This will be helpful in keeping track of endangered animals and to keep a check on animal poaching. 
-
+\newline A sample code of loading an image of a watch for the purpose of image recognition using OpenCV in Python is demonstrated below:
+\newline Here, we use numpy and matplotlib libraries which we installed earlier \cite{www-opencv-pythonprgm-tut}.
+\begin{Verbatim}
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+img = cv2.imread('watch.jpg',cv2.IMREAD_GRAYSCALE)
+cv2.imshow('image',img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+\end{Verbatim}
+Images can also be displayed for which sample code is shown below \cite{www-opencv-pythonprgm-tut}:
+\begin{Verbatim}
+plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
+plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+plt.plot([200,300,400],[100,200,300],'c', linewidth=5)
+plt.show()
+\end{Verbatim}
 \section{Useful Resources}
 The OpenCV website has detailed and structured documentation for its modules, for all operating systems and platforms. Further reading is suggested based on the requirements of OS, platform and language by clicking on the version of OpenCV that is currently in use \cite{www-opencv-docs}. 
 
