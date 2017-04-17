@@ -1,0 +1,4 @@
+---
+- name: Run a python code
+  shell: python /tmp/GitRep/code/binarize.py
+  become: yes
