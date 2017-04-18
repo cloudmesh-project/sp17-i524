@@ -11,6 +11,9 @@ endif
 
 all: deploy install run view delete
 
+benchmark:
+	scripts/benchmark.sh $(num_nodes)
+
 real-clean: clean
 	echo '' > ansible/inventory
 
@@ -18,7 +21,7 @@ clean:
 	rm -rf *~ output
 
 deploy:
-	scripts/deploy.sh
+	scripts/deploy.sh $(num_nodes)
 
 install:
 	scripts/install.sh

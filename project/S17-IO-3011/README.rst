@@ -24,11 +24,11 @@ report: report.pdf
 
 report_submission: mm/dd/2017 hh:mmam
 
-status: I am currently working on porting the CDMS application from OpenMP to Hadoop. 
+status: I am currently running final benchmarks on Chameleon and writing the final report. 
 
 dataset_url: https://github.com/cloudmesh/cloudmesh.cdms
 
-deployment: I am currently deploying an Intel Compiler, unzip and a Charge Detection Mass Spectrometry research application using Ansible.
+deployment: Deploys Hadoop Cluster, Intel Compiler, Charge Detection Mass Spectrometry research application using Cloudmesh and Ansible.
 
 abstract: a copy of the abstract, make sure to use proper indentation in RST format
 

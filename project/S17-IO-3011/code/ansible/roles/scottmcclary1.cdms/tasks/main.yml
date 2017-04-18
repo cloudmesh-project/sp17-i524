@@ -1,32 +1,37 @@
-- name: Step 1 of 6 -> Run CDMS OpenMP Applicaton
+- name: Step 1 of 7 -> Run CDMS Serial Applicaton
+  shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && cd /home/cc/cloudmesh.cdms-master/data && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!/home/cc/cloudmesh.cdms-master/code/trap_analysis/trap >> /home/cc/output.txt
+  args:
+     executable: /bin/bash
+
+- name: Step 2 of 7 -> Run CDMS OpenMP Applicaton
   shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && export OMP_STACKSIZE=100M && cd /home/cc/cloudmesh.cdms-master/data && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!/home/cc/cloudmesh.cdms-master/code/trap_analysis/trap_omp >> /home/cc/output.txt
   args:
      executable: /bin/bash
 
-- name: Step 2 of 6 -> Convert CDMS Data
+- name: Step 3 of 7 -> Convert CDMS Data
   shell: |
      /home/cc/.venv/bin/cms var timer=on
      /home/cc/.venv/bin/cms \!/home/cc/cloudmesh.cdms-master/code/scripts/binary_to_text.sh >> /home/cc/output.txt
   args:
      executable: /bin/bash
 
-- name: Step 3 of 6 -> Put CDMS Data in HDFS
+- name: Step 4 of 7 -> Put CDMS Data in HDFS
   sudo: yes
   shell: su - hadoop -c "hadoop fs -mkdir /cdms" >> /home/cc/scott.txt && su - hadoop -c "hadoop fs -mkdir /cdms/input" && su - hadoop -c "hadoop fs -put /home/cc/cloudmesh.cdms-master/data/chA*.txt /cdms/input/"
   args:
      executable: /bin/bash
 
-- name: Step 4 of 6 -> Run CDMS Hadoop Application
+- name: Step 5 of 7 -> Run CDMS Hadoop Application
   sudo: yes
   shell: |
      su - hadoop -c "hadoop jar /opt/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -D mapreduce.input.fileinputformat.split.minsize=7090910 -input /cdms/input -output /cdms/output -mapper /home/cc/cloudmesh.cdms-master/code/trap_analysis/trap_hadoop -reducer /bin/cat"
 
-- name: Step 5 of 6 -> Get CDMS Hadoop Output
+- name: Step 6 of 7 -> Get CDMS Hadoop Output
   sudo: yes
   shell: |
      su - hadoop -c "hadoop fs -get /cdms/output/part-00000"
 
-- name: Step 6 of 6 -> Clean HDFS
+- name: Step 7 of 7 -> Clean HDFS
   sudo: yes
   shell: |
      su - hadoop -c "hadoop fs -rm /cdms/output/*"

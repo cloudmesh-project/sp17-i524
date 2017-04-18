@@ -2,8 +2,15 @@
 #Move to correct directory:
 cd ansible
 
+#Parse input (if exists) otherwise default to 3 nodes
+if [ "$#" -eq 0 ]; then
+    num_nodes=3
+else 
+    num_nodes=$1
+fi
+
 #Run ansible playbook:
-ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=3"
+ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=$num_nodes"
 
 #Configure Default VM Image
 #cm default image=Ubuntu-Server-14.04-LTS

@@ -16,6 +16,16 @@ Run Everything (i.e. make deploy && make install && make run && make view)
 $ make all
 ```
 
+Run Benchmark for 1-3 nodes
+```
+$ make benchmark 
+```
+
+Run Benchmark for 1-$num_nodes nodes
+```
+$ make benchmark num_nodes=4
+```
+
 Deploy Hadoop Cluster
 ```
 $ make deploy
