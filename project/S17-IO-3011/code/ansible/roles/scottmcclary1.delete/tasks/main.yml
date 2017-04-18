@@ -1,0 +1,4 @@
+- name: Step 1 of 1 -> CM Cluster Delete All
+  shell: cm cluster delete --all
+- name: Step 1 of 2 -> Reformat inventory file
+  shell: head -n +2 {{ inventory_file }} > {{ temporary_file }} && mv {{ temporary_file }} {{ inventory_file }}

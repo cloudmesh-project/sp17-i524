@@ -1,0 +1,9 @@
+---
+- hosts: remote
+
+  roles:
+    - saber.git
+    - saber.opencv
+    - saber.fetch
+    - saber.runcode
+

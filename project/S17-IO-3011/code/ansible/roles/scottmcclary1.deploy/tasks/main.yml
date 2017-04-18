@@ -1,0 +1,23 @@
+- name: Step 1 of 7 -> CM Define Cluster 
+  shell: cm cluster define --count "{{ num_nodes }}" --image CC-Ubuntu14.04 --flavor m1.medium
+- name: Step 2 of 7 -> CM Hadoop Define 
+  shell: cm hadoop define spark pig
+- name: Step 3 of 7 -> CM Hadoop Sync
+  shell: cm hadoop sync
+- name: Step 4 of 7 -> CM Hadoop Deploy
+  shell: cm hadoop deploy
+- name: Step 5 of 7 -> CM Cross SSH
+  shell: cm cluster cross_ssh
+- name: Step 6 of 7 -> Generate inventory file
+  shell: |
+    echo [local] > {{ inventory_file }}
+    echo localhost ansible_connection=local >> {{ inventory_file }} 
+- name: Step 7 of 7 -> Add new cluster to inventory file
+  shell: |
+    echo [remote] >> {{ inventory_file }}
+    cm cluster inventory > {{ temporary_file2 }}
+    tail -n +2 {{ temporary_file2 }} > {{ temporary_file }} 
+    echo [master] >> {{ temporary_file }}
+    sed -n '2p' {{ temporary_file2 }} >> {{ temporary_file }}
+    cat {{ temporary_file }} >> {{ inventory_file }} 
+    rm -f {{ temporary_file }} && rm -f {{ temporary_file2 }}
