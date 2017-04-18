@@ -3,7 +3,7 @@
 cd ansible
 
 #Run ansible playbook:
-ansible-playbook deploy.yml -i inventory
+ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=3"
 
 #Configure Default VM Image
 #cm default image=Ubuntu-Server-14.04-LTS

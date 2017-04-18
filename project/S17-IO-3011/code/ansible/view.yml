@@ -2,4 +2,4 @@
 - hosts: master
 
   roles:
-    - scottmcclary1.intel
+    - scottmcclary1.view

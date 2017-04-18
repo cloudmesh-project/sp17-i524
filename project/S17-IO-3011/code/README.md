@@ -11,6 +11,39 @@ Please see LICENSE.txt
 How to use
 ================
 
+Run Everything (i.e. make deploy && make install && make run && make view)
+```
+$ make all
+```
+
+Deploy Hadoop Cluster
+```
+$ make deploy
+```
+
+Install Required Software
+```
+$ make install
+```
+
+Run OpenMP and Hadoop CDMS Applications
+```
+$ make run
+```
+
+View Output Results
+```
+$ make view
+```
+
+
+
+Configure Default VM Image
+```
+$ cm default image=Ubuntu-Server-14.04-LTS
+```
+
+
 Configure Default VM Image
 ```
 $ cm default image=Ubuntu-Server-14.04-LTS

@@ -1,5 +1,0 @@
----
-- hosts: remote
-
-  roles:
-    - scottmcclary1.upgrade
