@@ -1,8 +1,8 @@
-- name: Step 1 of 4 -> apt-get update
+- name: Step 1 of 4 -> Install update
   become: yes
   apt: update_cache=yes
 
-- name: Step 2 of 4 -> apt-get upgrade
+- name: Step 2 of 4 -> Install upgrade
   become: yes
   apt: upgrade=full
 

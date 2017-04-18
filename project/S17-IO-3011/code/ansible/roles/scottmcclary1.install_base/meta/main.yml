@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Scott McClary
-  description: emacs installation on Ubuntu 16.04
+  description: base installation on Ubuntu 16.04
   company: Indiana University
   license:
     - MIT

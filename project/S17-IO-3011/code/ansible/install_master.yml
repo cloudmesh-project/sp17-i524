@@ -1,0 +1,6 @@
+---
+- hosts: master
+
+  roles:
+    - scottmcclary1.intel
+    - scottmcclary1.install_master

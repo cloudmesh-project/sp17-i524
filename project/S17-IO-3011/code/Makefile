@@ -1,4 +1,4 @@
-FILE=report
+FILE=output/plots/plot*.png
 
 UNAME := $(shell uname)
 
@@ -9,13 +9,13 @@ ifeq ($(UNAME), Linux)
 OPENCMD=xdg-open
 endif
 
-all: install run view
+all: deploy install run view delete
 
 real-clean: clean
 	echo '' > ansible/inventory
 
 clean:
-	rm -rf *~
+	rm -rf *~ output
 
 deploy:
 	scripts/deploy.sh
@@ -30,6 +30,7 @@ delete:
 	scripts/delete.sh
 
 view:
-	$(OPENCMD) ${FILE}.pdf
+	scripts/view.sh
+	$(OPENCMD) ${FILE}
 
 .PHONY: all clean view fast watch
