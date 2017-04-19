@@ -1,0 +1,17 @@
+---
+- hosts: ansible-test
+  remote_user: root
+  become: yes
+  tasks:
+  - name: Import the public key used by the package management system
+    apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=7F0CEB10 state=present
+  - name: Add MongoDB repository
+    apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' state=present
+  - name: install mongodb
+    apt: pkg=mongodb-org state=latest update_cache=yes
+    notify:
+    - start mongodb
+  handlers:
+    - name: start mongodb
+      service: name=mongod state=started
+      

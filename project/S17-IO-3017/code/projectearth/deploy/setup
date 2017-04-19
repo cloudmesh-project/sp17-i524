@@ -1,0 +1,51 @@
+- hosts: all
+   user: root   # server user
+   sudo: yes    # is it super user
+
+   vars: # variable can be used throughout the script and it is
+      project_root: /srv/www
+      environment_name : env_projectearth
+      project_name: projectearth
+      repo_name:https://username:password@github.com/abc.git
+      environment_path:/root/env_ir
+
+
+   tasks:
+
+   - name: install packages
+     action: apt pkg=apache2 state=latest # this is equivalent to apt-get install apache2
+     # we can also write
+     #apt: pkg={{item}}  state=installed update_cache=yes
+     #instead of action directly apt
+
+   - install other packages and looping through all packages
+     action:apt pkg={{item}}  state=installed update_cache=yes
+     with_items:
+         - python-dev
+         - python-setuptools
+         - git-core
+     # action is repeated each time with_items value substituting on item tag
+     # apt-get install python-dev,apt-get install gcc etc
+
+  - name: install pip
+       action: easy_install name=pip
+
+  - name: install various libraries with pip
+       action: pip name={{item}} state=present
+       with_items:
+           - virtualenv
+
+     # likewise we can install all packages we need
+   - name: clone project from git
+       git: repo={{project_repo}} dest={{project_root}}/{{project_name}} remote=origin version=master
+
+   - name: create virtualenv with mysql-python installed in it
+       pip: name=mysql-python virtualenv={{environment_path}}
+
+   - name: change permissions
+       shell: chmod 777 {{environment_path}}
+
+   # shell means your command line
+
+   - name: install dependencies into virtualenv
+       action: pip requirements={{project_root}}{{project_name}}/requirements.txt virtualenv=/root/env_ir state=present
