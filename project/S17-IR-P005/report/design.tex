@@ -16,7 +16,7 @@ project. The data pipeline has three important stages:
  can be replaced or augmented with any web-crawler which can download or
  create the text files.
 
- \item News cralwer: News crawler is responsible for downloading the news
+ \item News crawler: News crawler is responsible for downloading the news
  articles.
 
 \item CreateWord2VecModel: This component is responsible for creating the
@@ -25,7 +25,7 @@ and stores the model on HDFS. Section \ref{createmodelsection} describes this
  component in detail.
 
 \item UseWord2VecModel and FindRelations: These two components use the
-precreated Word2Vec model to find synonym of a word or find the relationships.
+pre-created Word2Vec model to find synonym of a word or find the relationships.
 Section \ref{usemodel} describes these components in detail.
 \end{itemize}
 
@@ -57,9 +57,9 @@ implemented
 
 \subsection{News crawler} \label{newscrawlersection}
 News crawler is crawler implemented in Python. It executes in
- batch mode and download lates news artile related to the topics configured
+ batch mode and download latest news article related to the topics configured
  in its seedlist. The news crawler uses Google APIs
- \cite{www-google-custom-search} to serch the topics configured in the
+ \cite{www-google-custom-search} to search  the topics configured in the
  seedlist. Then it iterates over the result of each search, and downloads the
   original HTML page contents. The textual portion of the HTML is extracted
   using goose python library \cite{www-goose}
@@ -91,7 +91,7 @@ application is responsible for creating the Word2Vec model and storing it for
 \subsection{Using the Word2Vec model to find synonyms and relations}
 \label{usemodel}
 
-The precreated Word2Vec model can be queried to find the synonyms or
+The pre-created Word2Vec model can be queried to find the synonyms or
 relations between the words. In the context of Word2Vec, synonym of the word
 is the word that co-occur in similar context \cite{Goldberg2014word2vecED}.
 The \textit{UseWord2VecModel} finds the synonyms for the words provided in
@@ -110,7 +110,8 @@ performs the vector operations to find relationships. The relationtest.csv is
 
    \textit{Sachin,Anjali,Sourav}
 
-If Anjali is spouse of Sachin, then \textit{FindRelations} application is
+If \textit{Anjali} is spouse of \textit{Sachin}, then \textit{FindRelations}
+application is
 expected to
  predict the first name of the person who is spouse of Sourav.
   The result of \textit{FindRelations} is saved in relationsresult.csv.

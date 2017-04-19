@@ -1,1 +1,57 @@
 \subsection{Word2Vec app - key insights}
+We trained the Word2Vec model with the wikipedia data of Indian Cricket team
+members. We used \textit{List of India ODI cricketers} as seedlist and
+downloaded 500 pages from Wikipedia. With this dataset, we observed that the
+\textit{synonym} or correlated words were pretty accurate. Some interesting
+examples and its explanation:
+
+\textit{sachin -> tendulkar}
+
+\textit{world -> cup}
+
+Sachin Tendulkar \cite{www-wiki-sachin-tendulkar} is famous Indian cricket
+player. Naturally, the words \textit{sachin} and \textit{tendulkar} are
+highly correlated. The Word2Vec model was able to find this correlation.
+
+Cricket World Cup \cite{www-wiki-world-cup} is one of the most viewed
+sporting event and considered as the flagship event of the international
+cricket. Hence the words \textit{world} and \textit{cup} are highly correlated
+ in the context of cricket. The Word2Vec model was able to find this correlation.
+
+However, when we tried to find the people relationships using the wikipedia
+dataset, we could not get good accuracy. For example, \textit{Anjali Tendulkar}
+ is wife of \textit{Sachin Tendulkar} while \textit{Dona Ganguly} is wife of
+ \textit{Sourav Ganguly} who is another famous Indian Cricket player
+ \cite{www-wiki-sourav}. When we provided the test record of
+
+ \textit{sachin,anjali,sourav}
+
+ we did not get good results.
+
+ After observing the wikipedia data, we concluded that there is lot of
+ literature  in wikipedia about the cricketers. However, there were very few
+ mentions of their family members, coaches, schools etc. Due to this, we were
+  not getting good results on the people relationships.
+
+  To augment the Wikipedia data, we decided to crawl news data which provide
+ large amount of articles containing people and their relationships. We
+ implemented the news crawler as explained in the section
+ \ref{newscrawlersection}. After downloading about 200 news articles of 20
+ cricketers, our relationships discovery improved a lot. Some interesting
+ examples are given below:
+ \textit{sachin,anjali,sourav,dona}
+
+ \textit{sachin,anjali,dhoni,sakshi}
+
+ \textit{sachin,cricket,amitabh,hero}
+
+ In first two examples, the Word2Vec model was able to identify the
+ people-people relationships, while in third example, the Word2Vec model was
+ able to identify the people-profession relationships.
+
+
+
+
+
+
+
