@@ -100,18 +100,53 @@ application on Chameleon and Jetstream cloud.
 
 \section{Conclusion}
 
-Using this wiki analysis we should be able to build a network based on wiki data.
+Using this project we conclude that we can use Word2Vev model on Wikipedia
+and news data to find the relationships between the people.
+
+We further conclude that Word2Vec based analytics can be performed on public
+cloud systems like Chameleon cloud and Jetstream cloud. Our deployment
+automation, which is implemented using Cloudmesh and Ansible technology
+demonstrates the power of these technologies to achieve one touch deployment
+and execution of applications across multiple clouds.
 
 \section{Acknowledgement}
 
 We acknowledge our professor Gregor von Laszewski and all associate instructors for helping us and guiding us throughout this project.
 
 \section{Appendices}
-TBD
+Appendix A: Work Distribution
+The co-authors of this report worked together on the design of the technical
+solutions, implementation, testing and documentation. Below given is the work
+ distribution
+\begin{itemize}
+\item Avadhoot Agasti
+    \begin{itemize}
+    \item Implementation of wiki crawler and news cralwer in Python.
+    \item Implementation of CreateWord2VecModel in Spark.
+    \item Implementation of UseWord2VecModel and FindRelations in Spark.
+    \item Implementation of Python script MonitorSparkApp.
+    \item Analyzing the Word2Vec model results.
+    \item Testing of end to end flow on Chameleon cloud.
+    \item Writing related sections in this report.
+    \end{itemize}
+
+\item Abhishek Gupta
+    \begin{itemize}
+    \item Implementation of Ansible scripts for deployment of Spark 2.1 which
+     is required for the spark application.
+    \item Implementation of Ansible scripts for deployment.
+    \item Implementing the changes in the spark applications to get it
+    working on HDFS.
+    \item Testing the end to end flow on Chameleon cloud.
+    \item Testing the crawler and Word2Vec applications for semantic
+    correctness.
+    \item Gathering the perfomance statistics for comparison.
+    \item Writing related sections in this report.
+    \end{itemize}
+\end{itemize}
 
 % Bibliography
 
 \bibliography{references}
- 
 
 \end{document}
