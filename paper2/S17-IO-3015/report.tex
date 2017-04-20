@@ -32,7 +32,7 @@ Cassandra by understanding the architecture and internal data flows.\newline
 
 \section{Introduction}
 
-Apache Cassandra is an open source column-oriented database that bases its distribution design on Amazon’s Dynamo and its data model on Google’s Bigtable {`cite:`cassandra-book}. It was developed by Facebook to handle large volume of writes and fault tolerance. The choice of database is solely on the basis of requirements. Cassandra is meant for scalability. If the need is to support thousands of write operations with millions of records, Cassandra or any other column oriented database  is much more suitable. But if your need is to support transactions and considerably lower read/write access, RDBMS (Relational Database Management System) is best suited.
+Apache Cassandra is an open source column-oriented database that bases its distribution design on Amazon’s Dynamo and its data model on Google’s Bigtable \cite:{cassandra-book}. It was developed by Facebook to handle large volume of writes and fault tolerance. The choice of database is solely on the basis of requirements. Cassandra is meant for scalability. If the need is to support thousands of write operations with millions of records, Cassandra or any other column oriented database  is much more suitable. But if your need is to support transactions and considerably lower read/write access, RDBMS (Relational Database Management System) is best suited.
 
 \subsection{Column Oriented Database}
 
@@ -90,6 +90,25 @@ Read and write flows has been described in figure \ref{fig:figure2}. Each node p
      \item Manually flushed by a user  
 \end{enumerate}
 Read operation is similar to write operation. Every read operation must be with row key. As discussed earlier, row-key is used to determine the right node and the request is then passed to that particular node. Read is then catered by the bloom-filter and then proceeds to the desired result set.
+
+
+\section{Choosing the right Database}
+\subsection{Cap Theorem}
+Cap Theorem \cite{wiki-cap-thrm} states that, it is impossible for a distributed computer system to simultaneously provide more than two out of three of the following guarantees -
+\begin{enumerate}
+     \item Consistency - Every read receives the most recent write or an error.
+     \item Availability -  Every request receives a (non-error) response but doesn't guarantee if the data is recent or not.
+     \item Partition tolerance - System continues to operate even after loosing (dropped or delayed) an arbitrary number of messages  by the nodes.
+\end{enumerate}
+
+\subsection{Cassandra and Cap Theorem}
+All Big Data databases are tolerant so considering Cap Theorem one have to choose between Consistency and Availability as per the need. Cassandra is highly available trading off with consistency. As we have seen so far, Cassandra master less architecture allows client to connect any of the node for read write. This increases availability as in case a node is down, the client can quickly jump to nearest available. The disadvantage is while reading data, the data might not be the recent. If the node with recent data us down, the data won't be replicated and reads will lead to the older state. Cassandra is used in write once and read many scenario. For example historical data analysis where the updates are very few. 
+
+\subsection{Brief Comparison}
+Apart from Cassandra, Hbase and MongoDB are fairly popular choice of database for big data solutions. Hbase is built on HDFS (Hadoop Distributed File System) and column oriented database similar to Cassandra. Major advantage of Hbase is its querying functionality which is an edge over Cassandra. Hbase can also be installed on already clustered Hadoop environment. Check \href{https://hbase.apache.org/}{here} for details. Accumulo is another option available which is based upon HDFS as well. The advantage of Accumulo is its cell level security where as all other column oriented databases have column level security. Having security at cell level allows user to see different value as appropriate based on the row. Check \href{https://accumulo.apache.org/}{here} for details. MongoDB stands separate from all of the aforesaid mentioned as it is a document oriented database. Since data fields are to be stored vary between different elements, column oriented storage leads to lot of empty column values. MongoDB provides a way to store only the necessary fields. Check \href{https://www.mongodb.org/}{here} for more details.
+
+\section{Conclusion}
+Cassandra is a column oriented database with focus on high availability. The architecture allows it for fast write operations. Cassandra can handle bulk writes and make it an ideal candidate for storing logs as logs are generally high in volume and speed. Cassandra is poor in table joins and hence not suited for data mining.
 
 \section*{Acknowledgments}
 
