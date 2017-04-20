@@ -13,21 +13,26 @@
 
 \dates{project-001, \today}
 
-\ociscodes{Chemistry, Cloud, Hadoop Streaming, HPC, I524, Parallel Computing}
+\ociscodes{Chemistry, Cloud, Hadoop Streaming, HPC, I524, Parallel
+  Computing}
 \doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IO-3011/report/report.pdf}}
 
 \begin{abstract}
-A Charge Detection Mass Spectrometry research application is used to
-show the benefits of using Cloudmesh and Ansible Galaxy to deploy
-software on one or more Virutal Machines in the Cloud. Previously,
-this properitery research application was installed and run by hand on
-local servers or Supercomputers which turned out to be cumbersome for
-the domain scientists. Furthermore, transfering the input data to
-remote systems as well as aggregating and visualizing the results is
-difficult and tedious. Improving this research workflow by automating
-the deployment of the necessary software subsystems in the Cloud
-assists in building an efficient, reproducible and scalable Charge
-Detection Mass Spectrometry research workflow.
+A Charge Detection Mass Spectrometry research application, developed
+at Indiana University by the Martin F. Jarrold research group, is used
+to indicate the performance and simplicity benefits of using Cloudmesh
+and Ansible Galaxy to deploy and run big data software on one or more
+virutal machines in the cloud. This properitery research application
+was initially installed and run by hand on local servers and
+Supercomputers. The Charge Detection Mass Spectrometry research
+application performed well on these powerful remote systems; however,
+the in-depth manual process turned out to be inefficient and too
+cumbersome for the domain scientists. Therefore, Cloudmesh and Ansible
+Galaxy were leveraged in order to automate the deployment of this
+research application in the cloud. This modification abstracted away
+the need for human interaction while maintaining an efficient,
+reproducible and scalable Charge Detection Mass Spectrometry research
+workflow.
 \newline
 \end{abstract}
 
@@ -44,99 +49,141 @@ Detection Mass Spectrometry research workflow.
   Hepatitis B virus (HBV) created by the research group's Charge
   Detection Mass Spectrometry research application \cite{247}. This
   detailed mass information is used to create the images shown in the
-  middle and to the right, which show 2-D and 3-D models of an
-  instance of the HBV.}
+  middle and to the right, which show 2-D and 3-D models of ions
+  within the HBV.}
 \label{fig:hbvassembly}
 \end{figure}
 
 \section{Introduction} \label{introduction}
 \subsection{Research Background} \label{research-background}
-The Martin F. Jarrold research group studies Charge Detection Mass
-Spectrometry (CDMS). Their general day-to-day workflow consists of
-conducting many scientific experiments using a Mass Spectrometer. This
-expensive instrument creates raw frequency data throughout each
-experiement. They have developed a Fast Fourier based application
-written in Fortran to processes this raw frequency data in order to
-determine detailed mass information of the substance used in the
-aformentioned experiment. The detailed mass information outputted from
-the application is then used to solve important research topics such
-as the measurement and classification of the the Hepatitis B
-virus. The mass information can be straightforwardly plotted to
-determine interesting peaks and valleys when comparing the
-mass/abundance of ions and can be used to create graphical
-representations of the ions, shown in Figure \ref{fig:hbvassembly}.
+The Martin F. Jarrold research group at Indiana University studies
+Charge Detection Mass Spectrometry (CDMS). Their general day-to-day
+workflow consists of conducting many scientific experiments using a
+Mass Spectrometer. This expensive scientific instrument creates raw
+frequency data at a rate of four (4) MB/s throughout the duration of
+each experiement. The research group has developed a Fast Fourier
+based application written in Fortran to processes this raw frequency
+data. The Fortran application generates human interpretable output,
+which assists the domain scientists in understanding the substance
+analyzed in the aformentioned experiment. The outputted results
+contain detailed mass information of the many ions discovered, which
+is used to solve important research topics such as the measurement and
+classification of the Hepatitis B virus. The mass and the abundance of
+the ions discovered by the application can be plotted to determine
+\emph{Intermediates} that exist between definitive peaks in the plot,
+shown in Figure \ref{fig:hbvassembly}. This mass information can also
+be used to generate two and three dimensional graphical
+representations of the ions, which help the domains scientists
+visualize the underlying structure of the Hepatitis B virus, shown in
+Figure \ref{fig:hbvassembly}.
 
 \subsection{General Problem} \label{problem}
-The Martin F. Jarrold research group generates a lot of raw data that
-needs to be processed. For instance, a typical day conducting research
-will consist of 8 to 10 one hour experiements with each experiement
-generating 2 MB of raw frequency data every half second. Therefore, a
-single day of experiements can generate up to 144 GB of data. The
-research group must be able to process this data in a similar amount
-of time as the time required for the data generation or they will
-quickly get inundated in piles of raw data. This day-to-day research
-workflow typically strains the research groups local compute
-resources. And furthermore, the research group makes algorithmic
-changes to the CDMS research application from to time to time which
-requires a bulk reprocessing of months or even years worth of raw
-data. In this case, the limited compute resources available to the
-group becomes a significant limitation to their research.
+The Martin F. Jarrold research group has the ability to generate a lot
+of raw data, all of which needs to be processed by their Fortran
+application, as shown in Figure \ref{fig:pipeline}. A typical day
+conducting research consists of eight (8) to ten (10) one (1) hour
+experiements with each experiement generating raw frequency data at a
+rate of four (4) MB/s. Therefore, a single day of experiements has the
+ability to generate up to 144 GB of data. The research group must be
+able to process this data in a similar amount of time as the time
+required to generate the raw data. If their collection of compute
+resources are not powerful enough, they will quickly become inundated
+with piles and piles of raw data. This day-to-day research workflow
+typically strains the research group's local compute
+resources. Furthermore, the research group frequently makes
+algorithmic changes to the CDMS research application. When a
+significant change occurs, the research group must conduct a bulk
+reprocessing of months or even years worth of raw data. When a bulk
+reprocess is required, the limited compute resources available to the
+group becomes a significant limitation to the efficiency of their
+research. Additionally, when the application is run on remote sytems,
+the raw input data must be transfered to the remote systems and the
+resulting output must be aggregated and then plotted in order to
+visualize and interpret the results. The process of moving data around
+by hand is time consuming and the process to aggregating results is
+tedious.
 
 \subsection{General Solution} \label{solution}
 The research group is composed of domain scientists who do not
-necessarily have backgrounds in Computer Science. Therefore, a
-scalable, efficient, and reproducible solution must be generated to
-handle their day-to-day research workflow as well as bulk reprocessing
-of months or even years worth of raw data. The solution to their
-compute limitations consists of leveraging Cloudmesh and Ansible
-Galaxy to deploy their research application and the required software
-subsystems on one or more Virutal Machines in the Cloud. The ability
-to dynamically modify the number of Virutal Machines and even the
-number of Clouds will ensure a scalable, efficient, and reproducible
-solution that meets their compute needs. Furthermore, the usage of
-Ansible Galaxy will ensure a simple solution that these domain
-scientists will be able to master while spending the majority of their
-time and effort on their actual research problems.
+necessarily have backgrounds in Computer Science. Therefore, a simple
+and reproducible solution must be developed to handle their day-to-day
+research workflow and their bulk reprocessing requirements. The
+solution to their limited compute resources consists of leveraging
+multiple virtual machines in the Chameleon Cloud to conduct their CDMS
+analysis. The ability to dynamically scale up or down the number of
+virutal machines will align well with the evolving compute needs of
+the research group. The software tools Cloudmesh and Ansible Galaxy
+are at the backbone of the general solution to their
+difficulties. This software provides the ability to abstract away the
+technological details of the deployment and installation of virtual
+machines in the Cloud as well as the explicit need to run the CDMS
+application by hand. This will ensure a simple and reproducible
+solution, which allows the domain scientists in the Martin F. Jarrold
+research group to spend the majority of their time, effort and money
+on their actual research problems and not on the technogical hurdles
+of running the CDMS application.
+
+\begin{figure}
+\centering
+\includegraphics[height=0.45in, width=3.3in]{images/pipeline}
+\caption{The Martin F. Jarrold research group currently employs the
+  research pipeline shown above. This pipeline includes a one (1) hour
+  experiment that creates approximately seven thousand (7,000) two (2)
+  MB raw frequency files. These files need to be transfered to the
+  remote compute resource(s) and processed with a Fortran application
+  to generate four (4) human intrepetable output files.}
+\label{fig:pipeline}
+\end{figure}
 
 \section{Execution Plan} \label{plan}
-The following subsections act as a timeline regarding how I broke the
-project up week-by-week in order to complete the entire project by the
-desired deadline. The project execution plan is simply a guide and was
-followed diligently; however, some items were pushed slightly
-forwards or backwards as technological challenges were faced.
+The following subsections act as a timeline regarding how the project
+was divided up in order to complete all of the work by the desired
+deadline. The project execution plan is simply a guide and was
+followed diligently; however, some items were pushed slightly forwards
+or backwards as technological challenges were faced.
 \subsection{March 6, 2017 - March 12, 2017}
 This week I installed Cloudmesh on my local machine, created my first
-Virtual Machine on the Chameleon Cloud and tested Ansible Galaxy on
-remote systems such as one or more Chameleon Cloud VM's. I also wrote
-the project proposal, which will eventually become the project reoprt.
+virtual machine on the Chameleon Cloud and tested Ansible Galaxy on
+remote systems such as one or more Chameleon Cloud virtual machine. I
+also wrote the project proposal, which eventually became this project
+reoprt.
 \subsection{March 13, 2017 - March 19, 2017}
 This week I tested the deployment of the Intel Compiler on one or more
-Chameleon Cloud VM's using Ansible Galaxy. I did not expect
-significant progress to be made during this weeek given that I was out
-of town for Spring Break.
+Chameleon Cloud virtual machine using Cloudmesh and Ansible
+Galaxy. Given that I was out of town for Spring Break, I did not
+expect significant progress to be made during this weeek.
 \subsection{March 19, 2017 - March 26, 2017}
 This week I attempted to configure the Intel Compiler to use the
-Indiana University Intel license server. This required connecting to
-Indiana University's VPN from the command line.
+Indiana University Intel license server. Using this license server
+required connecting to Indiana University's Virtual Private Network
+(VPN) and using Two-Step Login (Duo) from the command line.
 \subsection{March 27, 2017 - April 2, 2017}
-This week I deployed the Charge Detection Mass Spectrometry along with
-the required input data on one or more Chameleon Cloud VM's using
-Ansible Galaxy.
+This week I deployed the Charge Detection Mass Spectrometry research
+application along with the required input data on one or more
+Chameleon Cloud virtual machines using Cloudmesh and Ansible Galaxy.
 \subsection{April 3, 2017 - April 9, 2017}
 This week I modified the source code of the OpenMP parallel Charge
-Detection Mass Spectrometry application to leverage Hadoop Streaming.
+Detection Mass Spectrometry research application to leverage Hadoop
+Streaming.
 \subsection{April 10, 2017 - April 16, 2017}
-This week I benchmarked both the deployment and the analysis on at
-least one cloud (i.e. Chameleon Cloud). I also created a method to
-aggregate the output from one or more VM's and locally visualize the
-results.
+This week I benchmarked the Charge Detection Mass Spectrometry
+research workflow on the Chameleon Cloud. This included varying the
+number and size of the virtual machines. I also wrote Python scripts
+to aggregate and plot the CDMS application's output from one or more
+virtual machines and locally visualize the results.
 \subsection{April 17, 2017 - April 23, 2017}
 This week I ensured the reproducibility of my source code as well as
-wrote and revised the final version of the report.
+wrote and revised the final version of this report.
 
-\section{Ansible Galaxy} \label{licensing}
+\section{Cloudmesh \& Ansible Galaxy} \label{ansible}
 Ansible Galaxy was leveraged in order to automate the deoployment of
 the required software subsystems, user code and data.
+
+\begin{figure*}
+\centering
+\includegraphics[height=3.0in, width=\textwidth]{images/architecture}
+\caption{Architecture}
+\end{figure*}
 
 \subsection{Software Subsystems} \label{software}
 The CDMS application relies on the Math Kernel Library (MKL) to
@@ -167,13 +214,6 @@ processed. This is why the parallelization and therefore the
 scalability of the application is critical to the Martin F. Jarrold
 research group. 
 
-\section{CDMS Research Pipeline} \label{cdms}
-\begin{figure}
-\centering
-\includegraphics[height=0.45in, width=3.3in]{images/pipeline}
-\caption{CDMS Pipeline}
-\end{figure}
-
 \section{Licensing} \label{licensing}
 \subsection{Deployment and Benchmarking Source Code} \label{source-license}
 The source code (i.e. Bash, Ansible, Python) presented is licensed
@@ -195,8 +235,44 @@ connect to the VPN, one must connect via DUO Authentication (i.e. use
 a phone or token to validate). Connecting to IU's VPN from the command
 line using Ansible ended up being more of a hassle than it was
 worth. 
+\subsubsection{Student License Limitations} \label{student-license}
+The Ansible scripts that were developed for this project leverage a
+free Intel student license to compile and link the CDMS
+application. While anyone can use this student license, this license
+is registered to the author of this paper. This student license is
+\emph{System Locked} and therefore can only be installed on at most
+five (5) Virutal Machines. Once this threshold has been passed, the
+Intel compiler and Intel MKL can no longer be installed. This
+limitatation inhibits the reproducibility and scalability of the
+research workflow. If a license registration error occurs during the
+Intel build phase of the deployment of the software, please contact
+the author of this paper. The author can uninstall the license from
+the registered hosts, since the Intel student license is registered to
+the author of this paper.
 
-\section{Benchmark} \label{benchmark}
+\section{Parallelization} \label{parallel}
+The Charge Detection Mass Spectrometry input data is split into many
+two (2) MB files. Conveniently, this data within each file is entirely
+independent to the data in the other input files. Therefore, the input
+data files can be processed in parallel.
+\subsection{OpenMP}
+The application contains OpenMP parallelization.
+\subsection{Hadoop}
+The source code is composed of ten thousand (10,000) lines of Fortran
+code that interfaces with the Intel Math Kernel Library. In order to
+use Hadoop framework, the source code would need to be rewritten in
+Java. 
+\subsubsection{Hadoop Streaming}
+The overall structure of the input and application allowed for a
+transformation of the parallelization interface from OpenMP to Hadoop
+Streaming.
+\begin{figure}
+\centering
+\includegraphics[height=1.65in, width=\columnwidth]{images/mapreduce}
+\caption{CDMS Hadoop Streaming MapReduce}
+\end{figure}
+
+\section{Benchmark} \label{benchmark-sect}
 As discussed in section \ref{code}, the application is parallelized
 using OpenMP. Therefore, this application utilizes the avaialable
 computational power available. Figure \ref{fig:scalability2} compares
@@ -206,14 +282,11 @@ the performance of the application on difference compute resources
 The time required to deploy and run the application in the cloud is
 shown in the figure \ref{fig:benchmark}. This benchmark includes the
 time required for the installation of the software subsystems as well
-as the time required to run the application.  \TODO{Add timing
-  information for one or more clouds (i.e. Chameleon) to Figure
-  \ref{fig:scalability2} and compare the results (if possilbe).}
-
+as the time required to run the application.
 \subsection{OpenMP Scalability} \label{omp-scalability}
 \begin{figure}
 \centering
-\includegraphics[height=2.3in, width=3.3in]{images/scalability2}
+\includegraphics[height=2.1in, width=3.3in]{images/scalability2}
 \caption{The figure above shows the scalability (i.e. reduction in
   time-to-solution) as the number of OpenMP threads increase on local
   servers, Supercomputers and Clouds.}
@@ -225,8 +298,41 @@ The Hadoop Streaming application does not exhibit the desired
 scalability. Since the application is essentially a map only Hadoop
 application, the performance (i.e. total runtime) of the application
 should decrease linearly with an increase in the number of nodes
-deployed. However, as the table below indicates, the runtime remains
-consistent for all clusters.
+deployed. However, the performance results in Table \ref{tab:hadoop}
+indicate that the runtime remains relatively consistent when one (1),
+two (2) or three (3) virtual machines are used to process the two
+hundred (200) raw input data files. The performance analysis of the
+Hadoop Streaming application will be conducted as part of the Future
+Work, as explain in Section \ref{future}.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\bf Chameleon Cloud Virtual Machine Flavors}\\
+\hline
+\# Flavor & \# of vCPUs \\
+\hline
+m1.medium & 2 \\
+m1.large & 4 \\
+m1.xlarge & 8 \\
+\hline
+\end{tabular}
+\caption{The table above indicates the number of virtual CPUs
+  allocated to the various Virtual Machine flavors in the Chameleon
+  Cloud. The number of vCPUs indicate the maximum degree of
+  parallelism for the CDMS application.}
+\label{tab:hadoop}
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics[height=2.1in, width=3.3in]{images/hadoop_benchmark}
+\caption{The table above shows the scalability (i.e. reduction in
+  time-to-solution) of the Charge Detection Mass Spectrometry Hadoop
+  Streaming application as the number of Virtual Machines increase in
+  the Chameleon Cloud Cluster.}
+\label{fig:benchmark}
+\end{figure}
 
 \begin{figure}
 \centering
@@ -281,17 +387,76 @@ into individual pieces, there are seperate Bash commands
 available. These commands will deploy the Hadoop cluster, install the
 required software subsystems, run the application, view the results
 and delete the Hadoop cluster.
-\noindent See the following Bash command:
+\noindent See the following Bash commands:
 \begin{lstlisting}[language=bash]
-  >> make [deploy/install/run/view/delete]
+  >> make deploy [num_nodes=x]
+  >> make install
+  >> make run
+  >> make view
+  >> make delete
+  >> make clean
 \end{lstlisting}
+\subsubsection{Deploy}
+The \emph{deploy} Makefile option leverages Cloudmesh to deploy Hadoop
+virutal machines in the Chameleon Cloud. The default number of virtual
+machines that the \emph{deploy} option will create is three (3). The
+number of virtual machines deployed can be changed by passing in
+num\_nodes=x, where x is the number of virutal machines you would like
+to be deployed in your cluster.
+\subsubsection{Install}
+The \emph{install} Makefile option installs necessary software
+(i.e. Intel Compiler, Python, Pip, Cloudmesh, Git, Charge Detection
+Mass Spectrometry, and etc.) on the master and slave virtual machines
+of the active Chameleon Cloud cluster.
+\subsubsection{Run}
+The \emph{run} Makefile option runs the serial, OpenMP, and Hadoop
+Streaming versions of the application on the active Chameleon Cloud
+cluster using the small test dataset containing two hundred (200)
+input files.
+\subsubsection{View}
+The \emph{view} Makefile option aggregates output data from the
+virtual machines in the active Chameleon Cloud cluster, plots the data
+using Python's matplotlib and transfers a few of the plots to the
+local system in order to confirm the accuracy of the application.
+\subsubsection{Delete}
+The \emph{delete} Makefile option deletes all virtual machines
+associated with your username in the Chameleon Cloud cluster.
+\subsubsection{Clean}
+The \emph{clean} Makefile option removes all local output files, if
+they exist.
+
+\section{Future Work} \label{future}
+Future work includes analyzing the performance of the CDMS Hadoop
+Streaming application to understand the poor scalability when running
+on multiple nodes.  Future work on this project includes using larger
+images and more virtual machines in order to increase the performance
+of the Hadoop Streaming application. Future work includes figuring out
+how to leverage Indiana University's Intel license server. This will
+increase reproducibility by allowing the Intel Compiler and Intel MKL
+to be installed on an unlimited number of virutal machines. Future
+work includes dispersing the raw input data across multiple virutal
+machines and running an instance of the CDMS OpenMP application on
+each virutal machine and then aggregating the results. Future work
+includes integrating Message Passing Interface (MPI) as the parallelel
+backbone of the application rather than OpenMP. This will increase the
+scalability of the application to more than a single virtual machine.
 
 \section{Conclusion} \label{conclusion}
-\subsection{Simplicity} \label{Simplicity}
+The development and analysis discussed above benefitted the Martin
+F. Jarrold research group with respect to simplicity for the domain
+scientists and with respect to the performance of the
+application. Streamelining the entire workflow will inevitably result
+in an increased in productivity for the research group. This may
+result in an increase in grant funding and/or an increase in
+publications for the Indiana University research group.
+
+\subsection{Simplicity} \label{simplicity}
 The use of Ansible Galaxy and Cloudmesh to run the Charge Detection
 Mass Spectrometry application in the Cloud (e.g. Chameleon Cloud)
-imporved the efficiency, reproduciblity and scalability.
+imporved the efficiency, reproducibility and scalability.
+
 \subsection{Performance} \label{performance}
+\subsubsection{OpenMP}
 In comparison torunning on the Indiana University HPC clusters
 (e.g. Karst and Big Red II), the application time-to-solution
 diminished sigificantly. The most important and useful tool that was
@@ -303,6 +468,15 @@ allow the Martin F. Jarrold research group to focus on the details of
 their specific research rather than on the details of managing the
 software subsystems, running the application and managing the
 input/output data.
+\subsubsection{Hadoop Streaming}
+The Hadoop Streaming version of the CDMS application does not exhibit
+optimal performance for the Martin F. Jarrold research group. If the
+execution time reduced when more virtual machines were used, then this
+version of the application would become a viable solution for the
+research group's need to bulk reprocess raw input data. The Hadoop
+streaming CDMS version of the application is a step in the right
+direction; however, additional work must to be done to ensure
+scalability across multiple virtual machines.
 
 \section*{Acknowledgements}
 The authors would like to thank the School of Informatics and
@@ -336,8 +510,9 @@ The work on this project was distributed as follows between the
 authors:
 \begin{description}
 \item[Scott McClary.] He completed all of the work for this project
-  including researching, deploying, testing and benchmarking the CDMS
-  application as well as composing this paper.
+  including researching, deploying, testing and benchmarking the
+  Charge Detection Mass Spectrometry research application as well as
+  composing this paper.
 \end{description}
 
 % Bibliography

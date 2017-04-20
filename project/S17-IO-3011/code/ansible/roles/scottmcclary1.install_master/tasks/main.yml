@@ -1,113 +1,108 @@
-- name: Step 1 of 28 -> Install python-pip
+- name: Step 1 of 27 -> Install python-pip
   become: yes
   apt: name=python-pip update_cache=yes state=latest
 
-- name: Step 2 of 28 -> Install python-dev
+- name: Step 2 of 27 -> Install python-dev
   become: yes
   apt: name=python-dev update_cache=yes state=latest
 
-- name: Step 3 of 28 -> Install pip
+- name: Step 3 of 27 -> Install pip
   become: yes
   easy_install: name=pip state=latest
 
-- name: Step 4 of 28 -> Install virtualenv
+- name: Step 4 of 27 -> Install virtualenv
   become: yes
   pip: name=virtualenv state=latest
 
-- name: Step 5 of 28 -> Create a virtualenv
+- name: Step 5 of 27 -> Create a virtualenv
   shell: virtualenv ~/.venv && echo . ~/.venv/bin/activate >> /home/cc/.bashrc 
 
-- name: Step 6 of 28 -> Install backports.ssl_match_hostname
+- name: Step 6 of 27 -> Install backports.ssl_match_hostname
   pip: name=backports.ssl_match_hostname state=latest virtualenv=~/.venv
 
-- name: Step 7 of 28 -> Install cloudmesh_client
+- name: Step 7 of 27 -> Install cloudmesh_client
   pip: name=cloudmesh_client state=latest virtualenv=~/.venv
 
-- name: Step 8 of 28 -> Create ~/.cloudmesh dir
+- name: Step 8 of 27 -> Create ~/.cloudmesh dir
   file: 
     path: ~/.cloudmesh
     state: directory
 
-- name: Step 9 of 28 -> Send cloudmesh.yaml
+- name: Step 9 of 27 -> Send cloudmesh.yaml
   copy:
     src: ~/.cloudmesh/cloudmesh.yaml
     dest: ~/.cloudmesh/cloudmesh.yaml
     force: yes
 
-- name: Step 10 of 28 -> Add key to cloudmesh
+- name: Step 10 of 27 -> Add key to cloudmesh
   shell: . /home/cc/.bashrc && /home/cc/.venv/bin/cm reset && /home/cc/.venv/bin/cm refresh on && /home/cc/.venv/bin/cm key add `uuidgen` && /home/cc/.venv/bin/cm key upload
 
-- name: Step 11 of 28 -> Install git
+- name: Step 11 of 27 -> Install git
   become: yes
   apt: name=git-all update_cache=yes state=latest
 
-- name: Step 12 of 28 -> Git clone common
+- name: Step 12 of 27 -> Git clone common
   git:
     repo: 'https://github.com/cloudmesh/common.git'
     dest: ~/common
     force: yes
 
-- name: Step 13 of 28 -> Git clone cmd5
+- name: Step 13 of 27 -> Git clone cmd5
   git:
     repo: 'https://github.com/cloudmesh/cmd5.git'
     dest: ~/cmd5
     force: yes
 
-- name: Step 14 of 28 -> Git clone extbar
+- name: Step 14 of 27 -> Git clone extbar
   git:
     repo: 'https://github.com/cloudmesh/extbar.git'
     dest: ~/extbar
     force: yes
 
-- name: Step 15 of 28 -> Setup Common cmd5
+- name: Step 15 of 27 -> Setup Common cmd5
   shell: . /home/cc/.bashrc && cd /home/cc/common && /home/cc/.venv/bin/python setup.py install
 
-- name: Step 16 of 28 -> Install Common cmd5
+- name: Step 16 of 27 -> Install Common cmd5
   pip: name=~/common state=latest virtualenv=~/.venv
 
-- name: Step 17 of 28 -> Setup cmd5
+- name: Step 17 of 27 -> Setup cmd5
   shell: . /home/cc/.bashrc && cd /home/cc/cmd5 && /home/cc/.venv/bin/python setup.py install
 
-- name: Step 18 of 28 -> Install cmd5
+- name: Step 18 of 27 -> Install cmd5
   pip: name=~/cmd5 state=latest virtualenv=~/.venv
 
-- name: Step 19 of 28 -> Setup Common cmd5
+- name: Step 19 of 27 -> Setup Common cmd5
   shell: . /home/cc/.bashrc && cd /home/cc/extbar && /home/cc/.venv/bin/python setup.py install
 
-- name: Step 20 of 28 -> Install extbar cmd5
+- name: Step 20 of 27 -> Install extbar cmd5
   pip: name=~/extbar state=latest virtualenv=~/.venv
 
-- name: Step 21 of 28 -> Fetch CDMS Source Code and Data
+- name: Step 21 of 27 -> Fetch CDMS Source Code and Data
   unarchive:
     src: https://github.com/cloudmesh/cloudmesh.cdms/archive/master.zip
     dest: /home/cc
     remote_src: True
 
-- name: Step 22 of 28 -> Setup CDMS cmd5
+- name: Step 22 of 27 -> Setup CDMS cmd5
   shell: . /home/cc/.bashrc && cd /home/cc/cloudmesh.cdms-master && /home/cc/.venv/bin/python setup.py install
 
-- name: Step 23 of 28 -> Install CDMS cmd5
+- name: Step 23 of 27 -> Install CDMS cmd5
   pip: name=~/cloudmesh.cdms-master state=latest virtualenv=~/.venv
 
-- name: Step 24 of 28 -> Compile CDMS Serial Code
-  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && /home/cc/.venv/bin/cms \!make realclean && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!make trap > ~/output.txt
+- name: Step 24 of 27 -> Compile CDMS Serial Code
+  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make realclean && make trap
   args:
     executable: /bin/bash
 
-- name: Step 25 of 28 -> Compile CDMS Hadoop Code
-  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && /home/cc/.venv/bin/cms \!make clean && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!make trap_hadoop >> ~/output.txt
+- name: Step 25 of 27 -> Compile CDMS Hadoop Code
+  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make clean && make trap_hadoop
   args:
     executable: /bin/bash
 
-- name: Step 26 of 28 -> Compile CDMS OpenMP Code
-  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && /home/cc/.venv/bin/cms \!make clean && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!make trap_omp >> ~/output.txt
+- name: Step 26 of 27 -> Compile CDMS OpenMP Code
+  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make clean && make trap_omp
   args:
     executable: /bin/bash
 
-- name: Step 27 of 28 -> Find timing info
-  shell: |
-     . /home/cc/.bashrc
-     grep Timer ~/output.txt >> ~/timing_data.txt
-
-- name: Step 28 of 28 -> Install matplotlib
+- name: Step 27 of 27 -> Install matplotlib
   pip: name=matplotlib state=latest virtualenv=~/.venv

@@ -10,7 +10,8 @@ else
 fi
 
 #Run ansible playbook:
-ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=$num_nodes"
+ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=$num_nodes image=CC-Ubuntu14.04 flavor=m1.medium cloud=chameleon"
+#ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=$num_nodes image=ubuntu-14.04-trusty-server-cloudimg cloud=jetstream"
 
 #Configure Default VM Image
 #cm default image=Ubuntu-Server-14.04-LTS
@@ -77,3 +78,10 @@ ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=$num_nodes"
 #/home/cc/binary_to_text.sh
 #hadoop fs -put /home/cc/cloudmesh.cdms-master/data/*.txt /cdms/input/
 #hadoop jar /opt/hadoop-2.7.1/share/hadoop/tools/lib/hadoop-streaming-2.7.1.jar -D mapreduce.input.fileinputformat.split.minsize=7090910 -input /cdms/input -output /cdms/output -mapper /home/cc/cloudmesh.cdms-master/code/trap_analysis/trap_hadoop -reducer /bin/cat
+
+#wget http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/11306/l_mkl_2017.2.174.tgz
+#tar -zxvf l_mkl_2017.2.174.tgz 
+#cd l_mkl_2017.2.174/
+#sudo ./install.sh --silent silent.cfg 
+#emacs silent.cfg 
+#source /opt/intel/compilers_and_libraries_2017.2.174/linux/bin/compilervars.sh intel64
