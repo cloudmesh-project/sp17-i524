@@ -20,7 +20,11 @@
 \doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IR-P005/report/report.pdf}}
 
 \begin{abstract}
-Given a wiki URL of a person, find out his details like School, Spouse, Coaches, language, alma-meter etc Typically, the wiki page has all this information available but in the free form text. We need to converting it into structured data format so that it can help us analyze the people, from the networks etc We can create a network by navigating the people mentioned in the wiki page. 
+Wikipedia pages of famous personalities contain details like school, spouse,
+coaches, languages, alma-meter etc. This information is in free form text. In
+ this project, we extract the people information from the Wikipedia page and
+ to establish relationships between them. Specifically, we use the data of
+ known relationships to derive the newer relationships.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -34,7 +38,21 @@ Given a wiki URL of a person, find out his details like School, Spouse, Coaches,
 
 \section{Introduction}
 
-Use spark \cite{www-spark-python} to load the wiki data and create word vectors. Train it using spark ML  \cite{www-sparkml} and then use the model for analytics and prediction. The training set will use Word2Vec. Word2vec \cite{www-word2vec} is a group of related models that are used to produce word embeddings. Word2Vec is used to analyze the linguistic context of the words. In this project, we created Word2vec model using Wikipedia data. Our focus is people and organization names occurring in the Wikipedia data and to see if Word2vec can be used to understand relationship between people. Typically Wikipedia page for people and celebraties contain the entire family and friends, colleagues information. Our idea is to use Word2vec to see if using a smaller training set of known relationships whether we can derive similar relationship for anyone who has presence on Wikipedia. This mechanism can be then used to convert the data hidden in textual format to more structured data. 
+Word2Vec \cite{www-word2vec} is a group of related models that are used to
+produce word embedding. Word2Vec is used to analyze the linguistic context
+of the words. In this project, we created Word2vec model using Wikipedia data
+and news articles.  Our focus is people names occurring in the
+Wikipedia data and to see if Word2vec can be used to understand relationship
+ between people. Typically Wikipedia page for people and celebrities contain
+  the entire family and friends, colleagues information. Our idea is to use
+  Word2vec to see if using a smaller training set of known relationships
+  whether we can derive similar relationship for anyone who has presence on
+  Wikipedia. This mechanism can be then used to convert the data hidden in
+  textual format to more structured data.
+
+We used spark \cite{www-spark-python} to load the wiki data and create word
+vectors. We then used vector manipulations to derive the relationships.
+
 
 \begin{center}
  \begin{tabular}{||c l||} 
@@ -48,28 +66,6 @@ Use spark \cite{www-spark-python} to load the wiki data and create word vectors.
  python \cite{www-spark-python} & development \\
  \hline
  ansible \cite{www-ansible} & automated deployment \\
- \hline
- collectd \cite{www-collectd} & statistics collection for benchmarking \\
- \hline
-\end{tabular}
-\end{center}
-
-\section{Plan}
-Following table gives a breakdown of tasks in order to complete the project. Assuming week1 starts after submission of the proposal. These work items are high level breakdown on the tasks and may changes if needed.
-
-\begin{center}
-\begin{tabular}{ |c|l|c| } 
- \hline
-Week & Work Item & Status \\
-\hline
-week1 & Basic POC of Word2Vec using Python  & planned \\ 
-week2 & Scripts to download Wiki data & planned \\ 
-week3 & Word2Vec Spark program & planned \\ 
-week4 & Training and measuring accuracy & planned \\ 
-week5 &  Ansible Deployment script for Spark & planned \\ 
-week6 & Deployment and test on 2 clouds & planned \\ 
-week7 & Performance measurement  & planned \\ 
-week8 & Report Creation(parallel) & planned \\ 
  \hline
 \end{tabular}
 \end{center}
