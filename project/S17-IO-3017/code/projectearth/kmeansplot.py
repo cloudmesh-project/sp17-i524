@@ -2,6 +2,8 @@ from pymongo import MongoClient
 import requests
 import time
 
+import dblayer
+
 import plotly
 import plotly.graph_objs as go
 
@@ -11,8 +13,6 @@ import random
 from sklearn.cluster import KMeans
 
 NUM_CLUSTER = 3
-client = MongoClient("mongodb://localhost:27017")
-db = client.TestUSGS
 
 def generate_color():
     color = '#{:02x}{:02x}{:02x}'.format(*map(lambda x: random.randint(0, 255), range(NUM_CLUSTER)))
@@ -48,16 +48,23 @@ def showMagnitudesInCluster(data):
                        )
 
     fig = go.Figure(data=plot_data, layout=layout)
-    plotly.offline.plot(fig, filename='magnitude_depth.html')
+    #plotly.offline.plot(fig, filename='mag_depth.html')
+    div = plotly.offline.plot(fig, include_plotlyjs=True, output_type='div')
+
+    return div
 
 def mkMag():
     #### TME: Get start time
     start_time = time.time()
     ####
+    sess = requests.Session()
+    dbobj = dblayer.classDBLayer()
+
     projection = [
         {"$project": {"_id": 0, "mag": "$properties.mag", "depth": {"$arrayElemAt": ["$geometry.coordinates", 2]}}}]
 
-    dframe_mag = pd.DataFrame(list(db.usgsdata.aggregate(projection)))
+    #dframe_mag = pd.DataFrame(list(dbobj.doaggregate(projection)))
+    dframe_mag = pd.DataFrame(list(dbobj.doaggregate(projection)))
 
     #### TME: Elapsed time taken to read data from MongoDB
     elapsed = time.time() - start_time
@@ -71,7 +78,8 @@ def mkMag():
     #### TME: Get start time
     start_time = time.time()
     ####
-    showMagnitudesInCluster(dframe_mag.values)
+    div = showMagnitudesInCluster(dframe_mag.values)
+    response = """<html><title></title><head><meta charset=\"utf8\"> </head> <body>""" + div + """</body> </html>"""
 
     #### TME: Elapsed time taken to cluster and plot data
     elapsed = time.time() - start_time
@@ -82,6 +90,9 @@ def mkMag():
     print (line)
     ####
 
-sess = requests.Session()
-mkMag()
-client.close()
+    dbobj.closedb()
+    return response
+
+#sess = requests.Session()
+#mkMag()
+# client.close()

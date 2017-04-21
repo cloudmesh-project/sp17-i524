@@ -2,6 +2,8 @@ from pymongo import MongoClient
 import requests
 import time
 
+import dblayer
+
 from sklearn.cluster import DBSCAN
 
 import plotly
@@ -10,9 +12,6 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 import random
-
-client = MongoClient("mongodb://localhost:27017")
-db = client.TestUSGS
 
 # Create random colors in list
 color_list = []
@@ -54,21 +53,24 @@ def showLatLongInCluster(data):
                                yaxis=dict(showgrid=False, zeroline=False))
 
     fig = go.Figure(data=plot_data, layout=layout)
+    #plotly.offline.plot(fig, filename='lat_long.html')
+    div = plotly.offline.plot(fig, include_plotlyjs=True, output_type='div')
 
-    plotly.offline.plot(fig, filename='lat_long.html')
-
+    return div
 
 def mkLatLong():
 
     #### TME: Get start time
     start_time = time.time()
     ####
+    sess = requests.Session()
+    dbobj=dblayer.classDBLayer()
     projection = [{"$project": {"_id": 0, "mag": "$properties.mag",
                              "depth": {"$arrayElemAt": ["$geometry.coordinates", 2]},
                              "longitude": {"$arrayElemAt": ["$geometry.coordinates", 0]},
                              "latitude": {"$arrayElemAt": ["$geometry.coordinates", 1]}}}]
 
-    df = pd.DataFrame(list(db.usgsdata.aggregate(projection)))
+    df = pd.DataFrame(list(dbobj.doaggregate(projection)))
     df = df[['longitude', 'latitude']].copy()
 
     #### TME: Elapsed time taken to read data from MongoDB
@@ -78,13 +80,16 @@ def mkLatLong():
     print ("Reading Longitude and Latitude")
     print(str(elapsed) + " secs required to read " + str(df['latitude'].count()) + " records from database.")
     print (line)
-    ####
+    ###
 
     #### TME: Get start time
     start_time = time.time()
     ####
 
-    showLatLongInCluster(df.values)
+    div = showLatLongInCluster(df.values)
+    response = """<html><title></title><head><meta charset=\"utf8\"> </head> <body>""" + div + """</body> </html>"""
+
+    dbobj.closedb()
 
     #### TME: Elapsed time taken to cluster and plot data
     elapsed = time.time() - start_time
@@ -93,9 +98,12 @@ def mkLatLong():
     print ("Applying DBSCAN clustering and plotting its output")
     print("Time taken: " + str(elapsed))
     print (line)
-    ####
+    ###
+
+    return response
 
 
-sess = requests.Session()
-mkLatLong()
-client.close()
+
+#sess = requests.Session()
+# mkLatLong()
+# client.close()
