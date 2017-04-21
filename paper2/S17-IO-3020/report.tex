@@ -12,7 +12,7 @@
 
 \affil[*]{Corresponding authors: laszewski@gmail.com}
 
-\dates{project-000, \today}
+\dates{project-paper2, \today}
 
 \ociscodes{Hadoop, Yarn, MapReduce, Cluster}
 
@@ -33,39 +33,39 @@ Apache Hadoop 2.0 came up with Yarn architecture which is capable of managing re
 
 \section{Introduction}
 
-Apache Hadoop is open source software framework, can be installed on a cluster of computers, which can communicate together for large amount of data storage and processing it, in highly distributed manner. Hadoop 2.0 project was developed to resolve the limitations of MapReduce (we will see the limitation as we move ahead). YARN (Yet Another Resource Negotiator) is Apache Hadoop’s cluster resource management system \cite{www-1}. It’s a resource management technology which makes pace between, the way applications use Hadoop system resources and node manager agents.  To understand Yarn, it is important to know the limitation of Hadoop1.0 MapReduce, which enforced the creation of Hadoop 2.0 
+Apache Hadoop \cite{www-7} is open source software framework, can be installed on a cluster of computers, which can communicate together for large amount of data storage and processing it, in highly distributed manner. Hadoop 2.0 project was developed to resolve the limitations of MapReduce (we will see the limitation as we move ahead). YARN (Yet Another Resource Negotiator) is Apache Hadoop’s cluster resource management system \cite{www-1}. It’s a resource management technology which makes pace between, the way applications use Hadoop system resources and node manager agents. To understand Yarn, it is important to know the limitation of Hadoop1.0 MapReduce, which enforced the creation of Hadoop 2.0. Hadoop 2.0 alpha version introduced in August 2013 \cite{www-8}.
 
 
 \section{Limitation of MapReduce}
 
-Hadoop 1.0 was designed for big data processing and MapReduce was the only option supported. In it, Node holds the meta data information and the daemon Job Tracker will be ensuring that the Task Tracker are processing the data. Task Tracker runs the Map and reduces the tasks and reports the status to Job Tracker. Job Tracker tracks the tasks, schedules the jobs and monitors the Tasks Tracker. As you clearly see, Job Tracker performs multiple operations which is bottleneck as we keep increasing the number of Task Trackers. Maximum 4000 Task Tracker and 40,000 concurrent tasks, can be handled by single Job Tracker. This was causing the limitation on use of number of Tasks Trackers. In MapReduce, there was a hard partition on resource utilization, which was causing inefficient use of resources \cite{www-5}.
+Hadoop 1.0 was designed for big data processing and MapReduce was the only option supported.MapReduce is the Hadoops framework, which Maps the multi terabyte data sets into chunks which will getting executed in parallel manner. The sorted output of the Map then given to Reduce tasks \cite{www-6}. In MapReduce framework Node holds the meta data information and the daemon Job Tracker will be ensuring that the Task Tracker are processing the data. Task Tracker runs the Map and reduces the tasks and reports the status to Job Tracker. Job Tracker tracks the tasks, schedules the jobs and monitors the Tasks Tracker. As shown in figure 1, Job Tracker performs multiple operations which is bottleneck as we keep increasing the number of Task Trackers. Maximum 4000 Task Tracker and 40,000 concurrent tasks, can be handled by single Job Tracker. This was causing the limitation on use of number of Tasks Trackers. In MapReduce, there was a hard partition on resource utilization, which was causing inefficient use of resources \cite{www-3}.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/Hadoop1_0}}
-	\caption{Source \cite{www-5}. }
+	\caption{Hadoop 1, MapReduce deamon diagram \cite{www-3}. }
 	\label{fig:false-color}
 \end{figure}
 
 
 \section{Design}
-To overcome the limitation of MapReduce, Hadoop 2.0 was introduced with Yarn. Yarn is an architectural center of Hadoop 2.0 design \cite{www-4}. It allows multiple data processing engines like Batch Streaming, Interactive SQL, Data science and Real time streaming to store and retrieve data in Hadoop Distributed File System (HDFS). Yarn is pre-requisite to Enterprise Hadoop. It acts as middle layer in Hadoop cluster which extends the Hadoop capability which provides resource management, delivers consistent operation, security and data governance tools across Hadoop cluster. It provides ISV engines with a consistent framework which allows developer to write data access applications that run in Hadoop. 
+To overcome the limitation of MapReduce, Hadoop 2.0 was introduced with Yarn. Yarn is an architectural center of Hadoop 2.0 design \cite{www-4}. It allows multiple data processing engines like Batch Streaming \cite{www-3}, Interactive SQL \cite{www-3}, Data science and Real time streaming to store and retrieve data in Hadoop Distributed File System (HDFS). Figure 2 showing the Hadoop 2.0 architectural design. Yarn is pre-requisite to Enterprise Hadoop. It acts as middle layer in Hadoop cluster which extends the Hadoop capability which provides resource management, delivers consistent operation, security and data governance tools across Hadoop cluster. It provides ISV engines with a consistent framework which allows developer to write data access applications that run in Hadoop. ISV’s (in a context of Hadoop Yarn) create the software product to support and run on the Hadoop Yarn architecture.  
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/YARN_design}}
-	\caption{Source \cite{www-4}. }
+	\caption{Architecture diagram for Hadoop 2.0 Yarn\cite{www-4}. }
 	\label{fig:false-color}
 \end{figure}
 
 \section{Architecture}
-Apache Hadoop YARN architecture has ResourceManager, ApplicationManager, NodeManager and distributed application as its important parts. YARN’s global ResourceManager runs in a master daemon. Usually ResourceManager is placed in dedicated machine, it allocates the requested resource based on available cluster resources. It keeps track of how many live nodes and resources are available on cluster for allocation. It coordinates with the NodeManager for resource allocation and release functionality. ResourceManager consists of two major components Scheduler and ApplicationManager \cite{www-2}. 
-Scheduler is pure scheduler which only allocates the resource, it will not perform any monitoring or tracking of status. Scheduler schedules the resource (like cpu, disk, network etc.) based on applications requirement. Scheduler can divide the cluster resource among the application tasks, queues it is called as pluggable policy \cite{www-2}. Once user submits the application to the ResourceManager, the ResourceManager’s scheduler will allocate the resource to it. Once resource get allocated ApplicationManger comes into picture and perform the coordination all the tasks running for that application like: monitoring of tasks, restarting failed tasks, speculatively running slow tasks and total values of application counter. It also asks for appropriate resources to run tasks \cite{www-4}. 
+Apache Hadoop YARN architecture has ResourceManager, ApplicationManager, NodeManager and distributed application as its important parts. Figure 3 shows the architectural work flow of Yarn. YARN’s global ResourceManager runs in a master daemon. Usually ResourceManager is placed in dedicated machine, it allocates the requested resource based on available cluster resources. It keeps track of how many live nodes and resources are available on cluster for allocation. It coordinates with the NodeManager for resource allocation and release functionality. ResourceManager consists of two major components Scheduler and ApplicationManager \cite{www-2}. 
+Scheduler is pure scheduler which only allocates the resource, it will not perform any monitoring or tracking of status. Scheduler schedules the resource (like cpu, disk, network etc.) based on applications requirement. Scheduler can divide the cluster resource among the application tasks, queues it is called as pluggable policy \cite{www-2}. Once user submits the application to the ResourceManager, the ResourceManager’s scheduler will allocate the resource to it. Once resource get allocated ApplicationManger comes into picture and perform the coordination all the tasks running for that application like: monitoring of tasks, restarting failed tasks, speculatively running slow tasks and total values of application counter. It also asks for appropriate resources to run tasks \cite{www-4}. This work flow is shown in figure 3.
 
 \begin{figure}[htbp]
 	\centering
 	\fbox{\includegraphics[width=\linewidth]{images/YARNArch}}
-	\caption{Source \cite{www-1}. }
+	\caption{Hadoop 2.0 Yarn architectural workflow diagram \cite{www-1}. }
 	\label{fig:false-color}
 \end{figure}
 
@@ -121,7 +121,8 @@ Yarn came with lots of features; we are not covering each of the features here. 
 	
 \section{Conclusion}
 
-Apache Hadoop Yarn is important part of Hadoop 2.0 architecture, which separates the resource management and processing components. With this functionality it achieves scalability, efficiency and flexibility compared to MapReduce engine (from first version of Hadoop). Adding to this Yarn based architecture will not limit the existing MapReduce applications. It supports such, existing application to run in Hadoop 2.0, without failure. Most of the Hadoop 1.0 users are migrating to Hadoop 2.0 Yarn and using it successfully, such as YAHOO!, eBay, Spotify, Xing, Allegro and more.
+Apache Hadoop Yarn is important part of Hadoop 2.0 architecture, which separates the resource management and processing components. With this functionality it achieves scalability, efficiency and flexibility compared to MapReduce engine (from first version of Hadoop). Adding to this Yarn based architecture will not limit the existing MapReduce applications. It supports such existing application to run in Hadoop 2.0, without failure. Most of the Hadoop 1.0 users are migrating to Hadoop 2.0. Yarn runs the large scale data, Yahoo deployed 35,000 nodes for 6 months without failure. Yarn allows multiple access engines like Pig, Hive, JavaScala, NoSQL, Spark and also engines from independent vendor to use the HDFS using Hadoop Yarn. This increased the Hadoop Yarn compatibility to larger extend. YAHOO!, eBay, Spotify, Xing, Allegro and more are already using the Hadoop Yarn.
+
 
 \section*{Acknowledgements}
 
