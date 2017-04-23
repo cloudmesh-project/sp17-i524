@@ -1,0 +1,4 @@
+---
+
+- name: create hbase zookeeper data directory
+  file: path={{ hbase_zookeeper_data_dir }} state=directory owner={{ hadoop_user }} group={{ hadoop_group }}
