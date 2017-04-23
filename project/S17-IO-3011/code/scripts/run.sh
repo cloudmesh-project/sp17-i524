@@ -6,4 +6,4 @@ cd ansible
 export ANSIBLE_HOST_KEY_CHECKING=false
 
 #Run ansible playbook:
-ansible-playbook -i inventory cdms.yml
+ansible-playbook -i inventory.txt cdms.yml

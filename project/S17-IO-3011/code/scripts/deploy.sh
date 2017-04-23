@@ -18,4 +18,4 @@ cloud=chameleon
 export ANSIBLE_HOST_KEY_CHECKING=false
 
 #Run ansible playbook:
-ansible-playbook deploy.yml -i inventory --extra-vars "num_nodes=$num_nodes image=$image flavor=$flavor cloud=$cloud"
+ansible-playbook deploy.yml -i inventory.txt --extra-vars "num_nodes=$num_nodes image=$image flavor=$flavor cloud=$cloud"

@@ -1,4 +1,4 @@
 ---
 # vars file for scottmcclary1.delete
-inventory_file: inventory
+inventory_file: inventory.txt
 temporary_file: tmp.txt

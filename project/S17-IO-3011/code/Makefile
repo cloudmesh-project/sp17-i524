@@ -15,7 +15,7 @@ benchmark:
 	scripts/benchmark.sh $(num_nodes)
 
 real-clean: clean
-	echo '' > ansible/inventory
+	echo '' > ansible/inventory.txt
 
 clean:
 	rm -rf *~ output

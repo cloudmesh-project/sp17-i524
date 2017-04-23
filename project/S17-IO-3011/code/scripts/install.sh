@@ -6,5 +6,5 @@ cd ansible
 export ANSIBLE_HOST_KEY_CHECKING=false
 
 #Run ansible playbooks:
-ansible-playbook -i inventory install_base.yml
-ansible-playbook -i inventory install_master.yml
+ansible-playbook -i inventory.txt install_base.yml
+ansible-playbook -i inventory.txt install_master.yml
