@@ -1,0 +1,81 @@
+% Encoding: UTF-8
+
+@Misc{www-gt,
+  author       = {{Globus Transfer}},
+  title        = {{Globus Transfer}},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://www.chameleoncloud.org/about/chameleon/},
+}
+
+@Misc{www-zeppelin,
+  author       = {{Apache Zeppelin}},
+  title        = {{Zeppelin 0.7.0 Documentation}},
+  howpublished = {Web Page},
+  month        = mar,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  url          = {https://zeppelin.apache.org/docs/0.7.0/},
+}
+
+@Misc{www-openstack,
+  author       = {{Open Stack}},
+  title        = {{Open Stack}},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://www.openstack.org/software/},
+}
+
+@Misc{www-laas,
+  author       = {{LaaS}},
+  title        = {{LaaS}},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://en.wikipedia.org/wiki/Logging_as_a_service},
+}
+
+@Misc{www-doi,
+  author       = {{DOI}},
+  title        = {{DOI}},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://en.wikipedia.org/wiki/Digital_object_identifier},
+}
+
+@Misc{www-cc,
+  author       = {{Chameleon Cloud}},
+  title        = {{Chameleon Cloud}},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://www.chameleoncloud.org/about/chameleon/},
+}
+
+@InProceedings{www-datasetdes,
+  author    = {Moro, S. and Laureano, R. and Cortez, P.},
+  title     = {Using Data Mining for Bank Direct Marketing: An Application of the CRISP-DM Methodology},
+  booktitle = {Proceedings of the European Simulation and Modelling Conference - ESM'2011},
+  year      = {2011},
+  editor    = {P. Novais et al.},
+  pages     = {117-121},
+  address   = {Guimaraes, Portugal},
+  month     = oct,
+  publisher = {EUROSIS},
+  timestamp = {2017-04-23},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
