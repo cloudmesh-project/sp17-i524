@@ -1,0 +1,18 @@
+---
+- hosts: mongodb_shard
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Creates directory
+      file: path={{MONGO_DIR}}/configdb state=directory
+    - name: Upload shard server configuration file
+      template: src="../configfiles/mongod.conf.shard.template" dest="{{MONGO_DIR}}/mongod.conf.shard"
+      become: true
+    - name: Stop mongod
+      service: name=mongod state=stopped
+      become: true
+    - name: Start shard server
+      command: mongod --config {{MONGO_DIR}}/mongod.conf.shard  --fork --logpath {{MONGO_DIR}}/mongo_shard.log
+      become: true
+
+
+
