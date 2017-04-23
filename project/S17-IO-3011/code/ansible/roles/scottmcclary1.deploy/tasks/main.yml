@@ -1,5 +1,5 @@
 - name: Step 1 of 7 -> CM Define Cluster 
-  shell: cm cluster define --count "{{ num_nodes }}" --image "{{ image }}" --flavor "{{ flavor }}" --cloud "{{ cloud }}"
+  shell: cm cluster define --count "{{ num_nodes }}" --image CC-Ubuntu14.04 --flavor m1.medium --cloud chameleon
 - name: Step 2 of 7 -> CM Hadoop Define 
   shell: cm hadoop define spark pig
 - name: Step 3 of 7 -> CM Hadoop Sync
