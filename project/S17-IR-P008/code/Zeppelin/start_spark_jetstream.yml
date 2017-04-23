@@ -1,0 +1,7 @@
+---
+- hosts: Master_node
+  become: no
+  vars_files:
+    - vars.yml
+  roles:
+    - launch

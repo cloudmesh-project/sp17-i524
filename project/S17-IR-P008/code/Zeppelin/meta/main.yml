@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: Naveenkumar Ramaraju
+  description: Spark and Zeppelin installation on Ubuntu with java, open ssh integrate. 
+  license:
+    - MIT
+  min_ansible_version: 2.2
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags:
+    - development
