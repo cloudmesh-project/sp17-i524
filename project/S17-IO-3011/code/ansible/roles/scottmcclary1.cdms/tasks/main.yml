@@ -1,23 +1,21 @@
 - name: Step 1 of 7 -> Run CDMS Serial Applicaton
-  shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && cd /home/cc/cloudmesh.cdms-master/data && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!/home/cc/cloudmesh.cdms-master/code/trap_analysis/trap >> /home/cc/output.txt
+  shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && cd /home/cc/data && /home/cc/cloudmesh.cdms-master/code/trap_analysis/trap >> /home/cc/serial_output.txt
   args:
      executable: /bin/bash
 
 - name: Step 2 of 7 -> Run CDMS OpenMP Applicaton
-  shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && export OMP_STACKSIZE=100M && cd /home/cc/cloudmesh.cdms-master/data && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!/home/cc/cloudmesh.cdms-master/code/trap_analysis/trap_omp >> /home/cc/output.txt
+  shell: source /home/cc/intel/bin/compilervars.sh intel64 && ulimit -S -s 120000 && export OMP_STACKSIZE=100M && cd /home/cc/data && /home/cc/cloudmesh.cdms-master/code/trap_analysis/trap_omp >> /home/cc/omp_output.txt
   args:
      executable: /bin/bash
 
 - name: Step 3 of 7 -> Convert CDMS Data
-  shell: |
-     /home/cc/.venv/bin/cms var timer=on
-     /home/cc/.venv/bin/cms \!/home/cc/cloudmesh.cdms-master/code/scripts/binary_to_text.sh >> /home/cc/output.txt
+  shell: cd /home/cc/data && /home/cc/cloudmesh.cdms-master/code/scripts/binary_to_text.sh
   args:
      executable: /bin/bash
 
 - name: Step 4 of 7 -> Put CDMS Data in HDFS
   sudo: yes
-  shell: su - hadoop -c "hadoop fs -mkdir /cdms" >> /home/cc/scott.txt && su - hadoop -c "hadoop fs -mkdir /cdms/input" && su - hadoop -c "hadoop fs -put /home/cc/cloudmesh.cdms-master/data/chA*.txt /cdms/input/"
+  shell: su - hadoop -c "hadoop fs -mkdir /cdms" && su - hadoop -c "hadoop fs -mkdir /cdms/input" && su - hadoop -c "hadoop fs -put /home/cc/data/chA*.txt /cdms/input/"
   args:
      executable: /bin/bash
 

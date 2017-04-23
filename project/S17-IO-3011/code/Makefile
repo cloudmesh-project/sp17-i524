@@ -9,7 +9,7 @@ ifeq ($(UNAME), Linux)
 OPENCMD=xdg-open
 endif
 
-all: deploy install run view delete
+all: deploy install run view delete clean
 
 benchmark:
 	scripts/benchmark.sh $(num_nodes)
@@ -35,5 +35,3 @@ delete:
 view:
 	scripts/view.sh
 	$(OPENCMD) ${FILE}
-
-.PHONY: all clean view fast watch
