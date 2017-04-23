@@ -11,9 +11,7 @@
    </property>
     <property>
         <name>hbase.zookeeper.quorum</name>
-	<value>
-        <value>hdfs://{{ nodes[0]['hostname'] }}:8020</value>
-	</value>
+        <value>{{ nodes[0]['hostname'] }},{{ nodes[1]['hostname'] }},{{ nodes[2]['hostname'] }}</value>
     </property>
     <property>
         <name>hbase.zookeeper.property.dataDir</name>
