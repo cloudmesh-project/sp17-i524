@@ -1,0 +1,67 @@
+---
+
+- name: download hadoop tarball
+  get_url:
+    url: 'http://apache.osuosl.org/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz'
+    dest: '{{ hadoop_user_home }}/hadoop-{{ hadoop_version }}.tar.gz'
+  sudo: yes
+  sudo_user: '{{ hadoop_user }}'
+
+- name: extract hadoop tarball
+  command: '/usr/bin/env tar xf hadoop-{{ hadoop_version }}.tar.gz'
+  args:
+    chdir: '{{ hadoop_user_home }}'
+    creates: '{{ hadoop_user_home }}/hadoop-{{ hadoop_version }}'
+  sudo: yes
+  sudo_user: '{{ hadoop_user }}'
+
+- name: set JAVA_HOME in .bashrc
+  lineinfile:
+    dest: '{{ hadoop_user_home }}/.bashrc'
+    line: 'export JAVA_HOME={{ java_home }}'
+    regexp: '^(# *)?export JAVA_HOME='
+
+- name: set HADOOP_HOME in .bashrc
+  lineinfile:
+    dest: '{{ hadoop_user_home }}/.bashrc'
+    line: 'export HADOOP_HOME={{ hadoop_home }}'
+    regexp: '^(# *)?export HADOOP_HOME='
+
+- name: add PATH to HADOOP_HOME/bin in .bashrc
+  lineinfile:
+    dest: '{{ hadoop_user_home }}/.bashrc'
+    line: 'export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin # HADOOP-BIN-PATH'
+    regexp: '# HADOOP-BIN-PATH'
+
+- name: set JAVA_HOME in hadoop-env.sh
+  lineinfile:
+    dest: '{{ hadoop_home }}/etc/hadoop/hadoop-env.sh'
+    line: 'export JAVA_HOME={{ java_home }}'
+    regexp: '^(# *)?export JAVA_HOME='
+
+- name: create hadoop log directory
+  file:
+    path: '{{ hadoop_home }}/log/hadoop'
+    state: directory
+    owner: '{{ hadoop_user }}'
+    group: '{{ hadoop_group }}'
+
+- name: set hadoop log directory in hadoop-env.sh
+  lineinfile:
+    dest: '{{ hadoop_home }}/etc/hadoop/hadoop-env.sh'
+    line: 'export HADOOP_LOG_DIR={{ hadoop_home }}/log/hadoop'
+    regexp: '^(# *)?export HADOOP_LOG_DIR='
+
+- name: configure hadoop
+  template:
+    src: 'core-site.xml.j2'
+    dest: '{{ hadoop_home }}/etc/hadoop/core-site.xml'
+    owner: '{{ hadoop_user }}'
+    group: '{{ hadoop_group }}'
+
+- - name: configure slaves
+    template:
+      src: 'slaves.j2'
+      dest: '{{ hadoop_home }}/etc/hadoop/slaves'
+      owner: '{{ hadoop_user }}'
+      group: '{{ hadoop_group }}'

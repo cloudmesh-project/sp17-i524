@@ -1,0 +1,7 @@
+---
+
+- name: create hbase rest systemd service file
+  template: src=systemd/hbase-rest.service.j2 dest=/etc/systemd/system/hbase-rest.service
+
+- name: start hbase rest
+  service: name=hbase-rest state=started enabled=yes
