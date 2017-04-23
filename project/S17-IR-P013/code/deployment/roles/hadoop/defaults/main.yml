@@ -1,0 +1,7 @@
+hadoop_user: cc
+hadoop_user_home: /home/cc
+hadoop_group: cc
+hadoop_version: 2.7.1
+hadoop_home: '{{ hadoop_user_home }}/hadoop-{{ hadoop_version }}'
+hadoop_keep_etc_hosts: no
+java_home: /usr/lib/jvm/java-8-oracle
