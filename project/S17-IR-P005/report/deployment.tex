@@ -33,7 +33,8 @@ pip uninstall cloudmesh_client
 pip install -U cloudmesh_client
 cm key add --ssh
 cm refresh on
-cm cluster define --count 3 --image CC-Ubuntu14.04 --flavor m1.medium
+cm cluster define --count 3 \
+	--image CC-Ubuntu14.04 --flavor m1.medium
 cm hadoop define spark pig
 cm hadoop sync
 cm hadoop deploy
@@ -81,17 +82,54 @@ Stage4 steps can be accomplished using \textit{word2vec\_execute.yaml} playbook.
 At the end of stage4 we also fetch the execution results from the cluster along with the 
 metrics of execution times at various stages. The output files are fetched into \textit{/tmp/word2vec\_results}
 \begin{verbatim}
-ls -lrt /tmp/word2vec_results
-total 56
--rw-rw-r--  1 abhigup4  wheel   571 Apr 18 17:36 jobs.csv
--rw-rw-r--  1 abhigup4  wheel   418 Apr 18 17:36 executors.csv
--rw-rw-r--  1 abhigup4  wheel    89 Apr 18 17:36 app.csv
--rwxrwxr-x  1 abhigup4  wheel    43 Apr 18 23:43 stest.csv
--rwxrwxr-x  1 abhigup4  wheel   145 Apr 18 23:43 relationstest.csv
--rw-r--r--  1 abhigup4  wheel  1833 Apr 18 23:46 stestresult.csv
--rw-r--r--  1 abhigup4  wheel   844 Apr 18 23:47 relationsresult.csv
+ls -1t /tmp/word2vec_results
+jobs.csv
+executors.csv
+app.csv
+stest.csv
+relationstest.csv
+stestresult.csv
+relationsresult.csv
 \end{verbatim}
 Files \textit{jobs.csv, executors.csv, and app.csv} collect the execution time for various jobs. 
 File \textit{relationsresult.csv} file collects the results for sample relations corresponding to
 \textit{relationstest.csv}. Similarly \textit{stestresult.csv} collects the results corresponding to \textit{stest.csv}.
+
+\subsection{Execution} \label{deploymentexecution}
+\subsubsection{Cleanup}
+We can execute the run from local system using  \textit{run.sh} located inside \textit{ansible-word2vec}. 
+Run script executes all stages sequentially on the remote system. To rerun word2vec, run the cleanup 
+playbook \textit{word2vec\_cleanup.yaml} located inside \textit{ansible-word2vec}.  Cleanup remove 
+the spark 2.1 binary and the soft link, remove \textit{/opt/word2vec} folder as well as any temporary files created
+during setup step.
+
+\subsubsection{Page size}
+The crawler downloads pages from wikipedia based on the config page count. To modify the page count, 
+we can edit \textit{ansible-word2vec/setupvariables.yml} and set the \textit{max\_pages} to desired 
+page size. The crawler downloads individual pages and then combines the pages into a single file
+before submitting the spark jobs.
+
+\subsubsection{Test Results}
+Test results are downloaded to local machine in  \textit{/tmp/word2vec\_results} folder. Ansible execution
+log is saved in \textit{/tmp/word2vec-logfile.txt}. The log gets appended each time you execute the run 
+script.
+
+\subsubsection{Troubleshooting}
+\begin{enumerate}
+\item If the installation \textit{run.sh} script fails in middle due to some reason, execute the cleanup script
+before re-triggering run script again. The run script may fail due to variety of reasons like failed to shh,
+hadoop not available etc
+\item If the run script fails due to spark memory errors, you can modify the spark memory setting in
+ \textit{code/config.properties} push the code to a git feature branch for example spark\_test. Modify
+ \textit{word2vec\_setup.yaml} git section \textit{version=master} to point to spark\_test branch and 
+ execute the run script.
+ \item If hadoop goes into safe mode, goto the cluster namenode and execute the following
+ \begin{verbatim}
+ /opt/hadoop$ bin/hadoop dfsadmin -safemode leave
+ \end{verbatim}
+ This will remove the cluster from safe mode.
+ \end{enumerate}
+ 
+ 
+ 
 
