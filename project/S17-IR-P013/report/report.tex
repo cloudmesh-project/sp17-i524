@@ -140,6 +140,39 @@ Once happybase, thrift and hbase is functional, we are ready to download our wea
 
 \end{itemize}
 
+\section{Deployment Using Ansible}
+
+Ansible is open source automation tool. It can be used for deployment of software, configuration  management and automation in the execution of application.
+It also serves for monitoring of the state of the application. As per current state of our project we have used ansible for deployment of software in our project.
+The script deploys Java, Hadoop, Hbase on the independent clusters. It also configures the properties in the key files.
+
+\subsection{Inventory Configuration}
+
+Inventory file contains the list of hostname or nodes that can be accessible by ansible. These nodes are then used in the script for deployment and configuration.
+In the current project chameleon server nodes were created and configured. These IP address can be changed dynamically. This file can also contain the group inside
+Which multiple ip can be configured.
+
+[weatherCluster]
+129.114.33.165 ansible_ssh_user=cc
+129.114.33.179 ansible_ssh_user=cc
+129.114.33.109 ansible_ssh_user=cc
+
+\subsection{Playbook}
+
+Playbook works on mentioned host of group. It mentions the roles those will be operated on each of the host. The main.yml  inside the task folder within each roles will be applied to
+The cluster.
+
+---
+- hosts: weatherCluster
+  remote_user: root
+  roles:
+    - master
+    - hadoop
+    - hbase
+    — hdfs
+
+\subsection{Roles}
+
 % Bibliography
 
 \bibliography{references}
