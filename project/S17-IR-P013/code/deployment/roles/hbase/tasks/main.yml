@@ -1,0 +1,71 @@
+---
+
+- name: download hbase tarball
+  get_url:
+    url: 'http://www-eu.apache.org/dist/hbase/{{ hbase_version }}/hbase-{{ hbase_version }}-bin.tar.gz'
+    dest: '{{ hadoop_user_home }}/hbase-{{ hbase_version }}.tar.gz'
+  sudo: yes
+  sudo_user: '{{ hadoop_user }}'
+
+- name: extract hbase tarball
+  command: '/usr/bin/env tar xf hbase-{{ hbase_version }}.tar.gz'
+  args:
+    chdir: '{{ hadoop_user_home }}'
+    creates: '{{ hadoop_user_home }}/hbase-{{ hbase_version }}'
+  sudo: yes
+  sudo_user: '{{ hadoop_user }}'
+
+
+- name: set HBASE_HOME in .bashrc
+  lineinfile:
+    dest: '{{ hadoop_user_home }}/.bashrc'
+    line: 'export HBASE_HOME={{ hbase_home }}'
+    regexp: '^(# *)?export HBASE_HOME='
+
+- name: set PATH to HBASE_HOME/bin in .bashrc
+  lineinfile:
+    dest: '{{ hadoop_user_home }}/.bashrc'
+    line: 'export PATH=$PATH:$HBASE_HOME/bin: # HBASE-BIN-PATH'
+    regexp: '# HBASE-BIN-PATH'
+
+- name: set JAVA_HOME in hbase-env.sh
+  lineinfile:
+    dest: '{{ hbase_home }}/conf/hbase-env.sh'
+    line: 'export JAVA_HOME={{ java_home }}'
+    regexp: '^(# *)?export JAVA_HOME='
+
+#- name: set java.library.path in hbase-env.sh
+#  lineinfile:
+#    dest: '{{ hbase_home }}/conf/hbase-env.sh'
+#    line: 'export HBASE_OPTS="$HBASE_OPTS -Djava.library.path={{ hadoop_home }}/lib/native" # HADOOP-LIB'
+#    regexp: '# HADOOP-LIB'
+
+- name: create hbase log directory
+  file: path={{ hbase_log_dir }} state=directory owner={{ hadoop_user }} group={{ hadoop_group }}
+
+- name: set hbase log directory in hbase-env.sh
+  lineinfile:
+    dest: '{{ hbase_home }}/conf/hbase-env.sh'
+    line: 'export HBASE_LOG_DIR={{ hbase_log_dir }}'
+    regexp: '^(# *)?export HBASE_LOG_DIR='
+  notify:
+    - restart hbase zookeeper
+    - restart hbase master
+    - restart hbase regionserver
+
+- name: configure hbase
+  template:
+    src: 'hbase-site.xml.j2'
+    dest: '{{ hbase_home }}/conf/hbase-site.xml'
+    owner: '{{ hadoop_user }}'
+    group: '{{ hadoop_group }}'
+
+- name: configure regionserver
+  template:
+    src: 'regionserver.j2'
+    dest: '{{ hbase_home }}/conf/regionservers'
+    owner: '{{ hadoop_user }}'
+    group: '{{ hadoop_group }}'
+
+
+- include: zookeeper.yml

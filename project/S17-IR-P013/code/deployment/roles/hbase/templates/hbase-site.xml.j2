@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hbase.rootdir</name>
+         <value>hdfs://{{ nodes[0]['hostname'] }}:8020/hbase</value>
+   </property>
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+	<value>
+        <value>{{ nodes[0]['hostname'] }},{{ nodes[1]['hostname'] }},{{ nodes[2]['hostname'] }}</value>
+	</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.dataDir</name>
+        <value>{{ hbase_zookeeper_data_dir }}</value>
+    </property>
+</configuration>
