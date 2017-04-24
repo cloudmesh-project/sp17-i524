@@ -45,7 +45,9 @@ Clouldmesh Client\cite{las14cloudmeshmultiple} capability is detailed in Figure~
 
 The cloudmesh docker application build  can be broadly divided into Docker and Swarm modules.\\
 
-The Docker Module capabilities are detailed in Figure~\ref{fig:cmsdocker}. This module would help user perform various docker functions mentioned in Section~\ref{Application Architecture} 
+The Docker Module capabilities are detailed in
+Figure~\ref{fig:cmsdocker}. This module would help user perform
+various docker functions mentioned in Section 3 
 
 \begin{figure}[h!]
 \centering
@@ -572,10 +574,31 @@ Swarm mode containers cannot use the the underlying host network as in the docke
 \end{enumerate}
 
  \subsection{Elasticsearch cluster Docker and Swarm mode benchmark results}
- 
 
-
-
+     \begin{table}[h!]
+     \caption{\bf Elastic Search Cluster Comparision }
+     \begin{tabular}{ccccc}
+     \hline
+      Operation & Metric & Unit & Docker &Swarm\\
+      \hline
+       & Flush  & min & 0.9709 & 1.34333\\
+       &Indexing & min   & 117.888 & 136.951\\
+      &Merge throttle & min   & 75.5648 & 87.8035 \\
+      & Merge          & min   & 146.693 & 179.403 \\
+      &Refresh        & min   & 27.4014 & 32.6458 \\
+      &Segment       &       & 141     & 128      \\
+monthlyaggcached   & Median   & ops/s & 20.0178 & 20.0175 \\
+default                      & Median   & ops/s & 20.0085 & 20.0093 \\
+ force-merge            & Median   & ops/s & 20.0133 & 20.007   \\
+phrase                      & Median   & ops/s & 1.75528 & 0.943048 \\
+phrase                      & Median   & ops/s & 20.0127 & 20.0129  \\
+scroll                        & Median   & ops/s & 1.31822 & 0.457152 \\
+term                          & Median   & ops/s & 20.0126 & 20.011  \\
+     \hline
+     \end{tabular}
+     \label{tab:tab1}
+     \end{table}
+     
  
 \section{Benchmarking Cloudmesh Docker} 
 We performed benchmarking of the cloudmesh docker application for docker and  swarm commands .The benchmark was performed both in remote mode (Cloudmesh docker client is run on a network outside the cloud data center) and local mode (Cloudmesh docker client is run from a VM  inside the cloud data center) . We
