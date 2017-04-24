@@ -54,15 +54,14 @@
   url          = {https://en.wikipedia.org/wiki/Digital_object_identifier},
 }
 
-@Misc{www-cc,
-  author       = {{Chameleon Cloud}},
-  title        = {{Chameleon Cloud}},
+@Misc{www-tutorial1,
+  title        = {Tutorial},
   howpublished = {Web Page},
   month        = apr,
   year         = {2017},
   address      = {Apache Software Foundation},
-  timestamp    = {2017-04-28},
-  url          = {https://www.chameleoncloud.org/about/chameleon/},
+  timestamp    = {2017-04-24},
+  url          = {https://zeppelin.apache.org/docs/0.5.5-incubating/tutorial/tutorial.html},
 }
 
 @InProceedings{www-datasetdes,
@@ -76,6 +75,47 @@
   month     = oct,
   publisher = {EUROSIS},
   timestamp = {2017-04-23},
+}
+
+@Misc{www-cc,
+  author       = {{Chameleon Cloud}},
+  title        = {{Chameleon Cloud}},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://www.chameleoncloud.org/about/chameleon/},
+}
+
+@Misc{www-zhub,
+  title        = {Zeppelin Hub},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://www.zeppelinhub.com/viewer},
+}
+
+@Misc{www-helium,
+  title        = {Helium},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://cwiki.apache.org/confluence/display/ZEPPELIN/Helium+proposal},
+}
+
+@Misc{www-bmhlpc,
+  title        = {Bare Metal High level Performance Computing Resources},
+  howpublished = {Web Page},
+  month        = apr,
+  year         = {2017},
+  address      = {Apache Software Foundation},
+  timestamp    = {2017-04-28},
+  url          = {https://cloudtweaks.com/2013/08/bare-metal-cloud-meeting-the-demand-for-high-performance-cloud-solutions/},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
