@@ -9,7 +9,7 @@ ifeq ($(UNAME), Linux)
 OPENCMD=xdg-open
 endif
 
-all: deploy install run view delete clean
+all: deploy install run delete clean
 
 benchmark:
 	scripts/benchmark.sh $(num_nodes)
