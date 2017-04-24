@@ -84,7 +84,7 @@ Automated deployment spark cluster using ansible:
 
         ansible-playbook copy-files-remotely.yml --ask-sudo-pass -vvvv
 
-Now your spark cluster is ready for analyis
+Now your spark cluster is ready for analysis
 
 
  
