@@ -45,7 +45,9 @@ Clouldmesh Client\cite{las14cloudmeshmultiple} capability is detailed in Figure~
 
 The cloudmesh docker application build  can be broadly divided into Docker and Swarm modules.\\
 
-The Docker Module capabilities are detailed in Figure~\ref{fig:cmsdocker}. This module would help user perform various docker functions mentioned in Section~\ref{Application Architecture} 
+The Docker Module capabilities are detailed in
+Figure~\ref{fig:cmsdocker}. This module would help user perform
+various docker functions mentioned in Section 3 
 
 \begin{figure}[h!]
 \centering
@@ -63,7 +65,7 @@ The Swarm module facilitates performing various swarm operations Figure~\ref{fig
 \label{fig:cmsswarm}
 \end{figure}
 
-Users can choose to use cloudmesh docker application from a remote terminal outside the network of the data center as in ~Figure\ref{fig:cmsdocker} or locally from a provisioning or configuration server inside the data center as in ~Figure\ref{fig:cmsdocker-2}
+Users can choose to use cloudmesh docker application from a remote terminal outside the network of the data center as in ~Figure\ref{fig:cmsdocker} or locally from a provisioning or configuration server inside the data center as in Figure~\ref{fig:cmsdocker-2}
 \begin{figure}[h!]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/cmsdocker-2.png}}
@@ -182,7 +184,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker2 & 45f4e3b2799e & elasticsearch:swarm & 0.45 \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab2}
      \end{table}
      
     \item \textbf{Image Refresh} 
@@ -229,7 +231,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker1 & 5545f4e3b27e & test1 & image1 &exited & 12.00PM \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab3}
      \end{table}
      
     \item \textbf{Container Refresh}
@@ -292,7 +294,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker1 & 5545f4e3b27e & network1 & test1  \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab4}
      \end{table}
 \end{enumerate}
 
@@ -325,7 +327,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker3 & docker1 & 4243 & Host & \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab5}
      \end{table}
      
     \item \textbf{Host Delete}
@@ -390,7 +392,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker1 & 5545f4e3b27e & network1 & test1  \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab6}
      \end{table}
      
     \item \textbf{Network Refresh}
@@ -434,7 +436,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker1 & 5545f4e3b27e & elasticsearch &elastic:swarm  & 3  \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab7}
      \end{table}
      
     \item \textbf{Service Delete}
@@ -468,7 +470,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       7645f4f4b27e &docker2& Worker&Ready&docker4  \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab8}
      \end{table}
      
     \item \textbf{Image Refresh}
@@ -496,7 +498,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker2 & 45f4e3b2799e & elasticsearch:swarm & 0.45 \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab9}
      \end{table}
      
     \item \textbf{Container Refresh}
@@ -522,7 +524,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
       docker1 & 5545f4e3b27e & test1 & image1 &exited & 12.00PM \\
      \hline
      \end{tabular}
-     \label{tab:shape-functions}
+     \label{tab:tab10}
      \end{table}
 \end{enumerate}
 
@@ -572,10 +574,31 @@ Swarm mode containers cannot use the the underlying host network as in the docke
 \end{enumerate}
 
  \subsection{Elasticsearch cluster Docker and Swarm mode benchmark results}
- 
 
-
-
+\begin{table}[]
+\centering
+\caption{Elastic search Benchmark Results Docker Vs Swarm}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Operation} & \textbf{Unit} & \textbf{Docker} & \textbf{Swarm} \\ \hline
+\textbf{Flush time} & min & 0.9709 & 1.34333 \\
+\textbf{Indexing time} & min & 117.888 & 136.951 \\
+\textbf{Merge throttle time} & min & 75.5648 & 87.8035 \\
+\textbf{Merge time} & min & 146.693 & 179.403 \\
+\textbf{Refresh time} & min & 27.4014 & 32.6458 \\
+\textbf{articles\_monthly\_agg\_cached} & ops/s & 20.0178 & 20.0175 \\
+\textbf{articles\_monthly\_agg\_uncached} & ops/s & 20.0085 & 20.0093 \\
+\textbf{default} & ops/s & 20.0133 & 20.007 \\
+\textbf{force-merge} & ops/s & 1.75528 & 0.943048 \\
+\textbf{index-append} & docs/s & 535.527 & 461.233 \\
+\textbf{index-stats} & ops/s & 49.8993 & 50.2674 \\
+\textbf{node-stats} & ops/s & 49.6913 & 50.2767 \\
+\textbf{phrase} & ops/s & 20.0127 & 20.0129 \\
+\textbf{scroll} & ops/s & 1.31822 & 0.457152 \\
+\textbf{term} & ops/s & 20.0126 & 20.011
+\end{tabular}
+\end{table}
  
 \section{Benchmarking Cloudmesh Docker} 
 We performed benchmarking of the cloudmesh docker application for docker and  swarm commands .The benchmark was performed both in remote mode (Cloudmesh docker client is run on a network outside the cloud data center) and local mode (Cloudmesh docker client is run from a VM  inside the cloud data center) . We
@@ -584,6 +607,23 @@ The results are plotted and tabulated as below
 
 Each of the benchmark runs was performed 100 times for a defined set of operations similar to the steps performed for setting up a elastic search cluster in docker and swarm.The results were gathered as a csv file  and plotted using a Ipython\cite{www-ipython}.
 
+The hardware specifications used on both the clouds is listed below
+\begin{table}[htbp]
+\centering
+\caption{\bf Hardware Specification}
+  \begin{tabular}{ l|l|r}
+    \hline
+    Parameter & Chameleon & Aws\\
+    \hline
+    VM & 3 & 3 \\
+    OS & Ubuntu 16.04 & Ubuntu 16.04 \\
+    Flavor & m1.large & m1.large \\
+    Secgroup & default & default \\
+    Assign floating IP & True & True \\
+    \hline
+  \end{tabular}
+  \label{tab:cloudconfig}
+\end{table}
 
 \subsection{Docker Mode - Results}
 
@@ -643,7 +683,7 @@ boot times on the cloud .
 \begin{table}[h]
 \centering
 \caption{Docker Mode AWS VS Chameleon Local Vs Remote}
-\label{my-label}
+\label{Docker Mode AWS VS Chameleon Local Vs Remotel}
 \begin{tabular}{|l|l|l|p{0.86cm}|l|p{0.86cm}|}
 \hline
  & \textbf{} & \multicolumn{2}{c|}{\textbf{Aws}} & \multicolumn{2}{c|}{\textbf{Chameleon}} \\ \hline
@@ -730,7 +770,7 @@ which is significantly faster than normal boot times for a similar number of VM 
 \begin{table}[h]
 \centering
 \caption{Swarm Mode AWS VS Chameleon Local Vs Remote}
-\label{my-label}
+\label{Swarm Mode AWS VS Chameleon Local Vs Remote}
 \begin{tabular}{|l|l|l|p{.86cm}|l|p{0.86cm}|}
 \hline
  &  & \multicolumn{2}{c|}{\textbf{Aws}} & \multicolumn{2}{l|}{\textbf{Chameleon}} \\ \hline
@@ -780,7 +820,7 @@ which is significantly faster than normal boot times for a similar number of VM 
 \section{Conclusion}
 
 In this project we have succefully integrated docker and swarm capabilities into
-cloudmesh client.We have also demostrated its use for a practical use case of
+cloudmesh client.We have also demonstrated its use for a practical use case of
 setting up a Elastic search cluster in docker and swarm modes.We have also 
 benchmarked the commands for multiple clouds(AWS and Chameleon) in both 
 local and remote modes and detailed the results and insights.The ansible scripts
