@@ -41,7 +41,7 @@ do
     DIFF=$(( $END - $START ))
     timing_info=$timing_info"Time (seconds) \"make delete num_nodes=$i\": $DIFF\n"
     DIFF=$(( $END - $START_iter ))
-    timing_info=$timing_info"Time (seconds) \"make all num_nodes=$i\": $DIFF\n"
+    timing_info=$timing_info"Time (seconds) \"Full Benchmark num_nodes=$i\": $DIFF\n"
 done
 
 #print timing results to the screen
