@@ -1,2 +1,6 @@
 [local]
 localhost ansible_connection=local
+[remote]
+scmcclar-131 ansible_ssh_host="129.114.33.9" ansible_ssh_user="cc"
+[master]
+scmcclar-131 ansible_ssh_host="129.114.33.9" ansible_ssh_user="cc"

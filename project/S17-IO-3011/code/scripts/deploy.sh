@@ -2,9 +2,9 @@
 #Move to correct directory:
 cd ansible
 
-#Parse input (if exists) otherwise default to 3 nodes
+#Parse input (if exists) otherwise default to 1 virtual machine
 if [ "$#" -eq 0 ]; then
-    export num_nodes=3
+    export num_nodes=1
 else 
     export num_nodes=$1
 fi

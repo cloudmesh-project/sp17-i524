@@ -22,9 +22,9 @@ proposal_submission: 03/09/2017 hh:mmam
 
 report: report.pdf
 
-report_submission: mm/dd/2017 hh:mmam
+report_submission: 04/24/2017 01:04am
 
-status: I am currently running final benchmarks on Chameleon and writing the final report. 
+status: I have completed the project.
 
 dataset_url: https://github.com/cloudmesh/cloudmesh.cdms
 

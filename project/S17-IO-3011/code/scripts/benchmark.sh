@@ -1,13 +1,16 @@
 #!/bin/bash
 
+#Parse input (if exists) otherwise default to 1 virtual machine  
 if [ "$#" -eq 0 ]; then
-    num_nodes=3
+    num_nodes=1
 else 
     num_nodes=$1
 fi
 
 timing_info=""
 
+#loop through from 1 to num_nodes 
+#time each task
 for i in `seq 1 $num_nodes`;
 do
     START_iter=$(date +%s)
@@ -41,4 +44,5 @@ do
     timing_info=$timing_info"Time (seconds) \"make all num_nodes=$i\": $DIFF\n"
 done
 
+#print timing results to the screen
 echo -e $timing_info
