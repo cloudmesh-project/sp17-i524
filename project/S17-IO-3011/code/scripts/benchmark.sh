@@ -30,11 +30,11 @@ do
     END=$(date +%s)
     DIFF=$(( $END - $START ))
     timing_info=$timing_info"Time (seconds) \"make run num_nodes=$i\": $DIFF\n"
-    START=$(date +%s)
-    make view
-    END=$(date +%s)
-    DIFF=$(( $END - $START ))
-    timing_info=$timing_info"Time (seconds) \"make view num_nodes=$i\": $DIFF\n"
+#    START=$(date +%s)
+#    make view
+#    END=$(date +%s)
+#    DIFF=$(( $END - $START ))
+#    timing_info=$timing_info"Time (seconds) \"make view num_nodes=$i\": $DIFF\n"
     START=$(date +%s)
     make delete
     END=$(date +%s)
