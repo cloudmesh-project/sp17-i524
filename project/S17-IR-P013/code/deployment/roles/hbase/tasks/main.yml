@@ -15,27 +15,6 @@
   sudo: yes
   sudo_user: '{{ hadoop_user }}'
 
-#- name: remove jar files that are provided by hadoop
-#  file:
-#    path: '{{ hbase_home }}/lib/{{ item }}'
-#    state: absent
-#  with_items:
-#    - slf4j-log4j12-1.7.5.jar
-#    - hadoop-annotations-2.5.1.jar
-#    - hadoop-auth-2.5.1.jar
-#    - hadoop-client-2.5.1.jar
-#    - hadoop-common-2.5.1.jar
-#    - hadoop-hdfs-2.5.1.jar
-#    - hadoop-mapreduce-client-app-2.5.1.jar
-#    - hadoop-mapreduce-client-common-2.5.1.jar
-#    - hadoop-mapreduce-client-core-2.5.1.jar
-#    - hadoop-mapreduce-client-jobclient-2.5.1.jar
-#    - hadoop-mapreduce-client-shuffle-2.5.1.jar
-#    - hadoop-yarn-api-2.5.1.jar
-#    - hadoop-yarn-client-2.5.1.jar
-#    - hadoop-yarn-common-2.5.1.jar
-#    - hadoop-yarn-server-common-2.5.1.jar
-
 - name: set HBASE_HOME in .bashrc
   lineinfile:
     dest: '{{ hadoop_user_home }}/.bashrc'
