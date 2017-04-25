@@ -40,18 +40,44 @@ def insert_list(row_key, cell_list):
 def insert(row_key, cell):
     table.put(row_key, cell)
 ##############################################################################################################################    
-def get_weather_data(start_row=''):   
+def get_weather_data(start_row=''): 
+    result_map = dict()  
     st_list = dict()
-    count = 0    
+    count = 0 
+    end_index = ''   
     if(start_row == ''):    
         for key, data in table.scan(limit=10):
-            st_list[key] = {'min_date':data['date_range:min_date'], 'max_date':data['date_range:max_date']}            
+            st_list[key] = data
+            end_index = key            
     else:
         for key, data in table.scan(limit=11, row_start=start_row):            
             count = count + 1
             if(count > 1):
-                st_list[key] = {'min_date':data['date_range:min_date'], 'max_date':data['date_range:max_date']}    
-    return st_list   
-##############################################################################################################################             
+                st_list[key] = data  
+                end_index = key  
+    result_map['END_INDEX'] = end_index
+    result_map['RESULT'] = st_list
+    return result_map   
+##############################################################################################################################    
+def get_all_row_keys():
+    row_keys = set()
+    start_row = ''
+    previous_row = ''
+    data_set = table.scan(limit=10)
+    loop = True
+    while(loop):   
+        for key,value in data_set:
+            row_keys.add(key)    
+            start_row = key
+        data_set = table.scan(limit=10,row_start=start_row)
+        if previous_row == start_row:
+            loop = False
+        else:
+            previous_row = start_row
+    return row_keys  
+##############################################################################################################################
+def find_by_id(row_key):
+    return  table.row(row=row_key)
+##############################################################################################################################          
 dao_parent.create_table(table_name, {'weather':dict()})
 table = dao_parent.hb_conn.table(table_name)
