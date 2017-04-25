@@ -77,37 +77,35 @@
 - name: Step 20 of 28 -> Install extbar cmd5
   pip: name=~/extbar state=latest virtualenv=~/.venv
 
-- name: Step 21 of 28 -> Fetch CDMS Source Code and Data
+- name: Step 21 of 28 -> Download CDMS Source Code
   unarchive:
     src: https://github.com/cloudmesh/cloudmesh.cdms/archive/master.zip
     dest: /home/cc
     remote_src: True
 
-- name: Step 22 of 28 -> Setup CDMS cmd5
+- name: Step 22 of 28 -> Download CDMS Data
+  shell: wget https://www.dropbox.com/s/hi1zzlt2y665xi3/data.zip?dl=0 && /usr/bin/unzip data.zip?dl=0
+
+- name: Step 23 of 28 -> Setup CDMS cmd5
   shell: . /home/cc/.bashrc && cd /home/cc/cloudmesh.cdms-master && /home/cc/.venv/bin/python setup.py install
 
-- name: Step 23 of 28 -> Install CDMS cmd5
+- name: Step 24 of 28 -> Install CDMS cmd5
   pip: name=~/cloudmesh.cdms-master state=latest virtualenv=~/.venv
 
-- name: Step 24 of 28 -> Compile CDMS Serial Code
-  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && /home/cc/.venv/bin/cms \!make realclean && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!make trap > ~/output.txt
+- name: Step 25 of 28 -> Compile CDMS Serial Code
+  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make realclean && make trap
   args:
     executable: /bin/bash
 
-- name: Step 25 of 28 -> Compile CDMS Hadoop Code
-  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && /home/cc/.venv/bin/cms \!make clean && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!make trap_hadoop >> ~/output.txt
+- name: Step 26 of 28 -> Compile CDMS Hadoop Code
+  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make clean && make trap_hadoop
   args:
     executable: /bin/bash
 
-- name: Step 26 of 28 -> Compile CDMS OpenMP Code
-  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && /home/cc/.venv/bin/cms \!make clean && /home/cc/.venv/bin/cms var timer=on && /home/cc/.venv/bin/cms \!make trap_omp >> ~/output.txt
+- name: Step 27 of 28 -> Compile CDMS OpenMP Code
+  shell: . /home/cc/.bashrc && source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make clean && make trap_omp
   args:
     executable: /bin/bash
-
-- name: Step 27 of 28 -> Find timing info
-  shell: |
-     . /home/cc/.bashrc
-     grep Timer ~/output.txt >> ~/timing_data.txt
 
 - name: Step 28 of 28 -> Install matplotlib
   pip: name=matplotlib state=latest virtualenv=~/.venv
