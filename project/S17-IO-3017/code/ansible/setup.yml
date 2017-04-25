@@ -1,0 +1,17 @@
+---
+
+-   hosts: dbserver
+    remote_user: cc
+    become: yes
+    become_method: sudo
+
+    roles:
+        - mongo
+
+-   hosts: appserver
+    remote_user: cc
+    become: yes
+    become_method: sudo
+    roles:
+        - pip
+        - projectearth
