@@ -1,0 +1,23 @@
+---
+- hosts: predict
+  become: yes
+  become_user: root
+  tasks:
+  - name: clone repo
+    git: >
+      repo=https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P016.git
+      update=no
+      dest=/opt/predict
+      version=master
+      accept_hostkey=yes
+    tags:
+      - clone-repo
+  - name: install packages 
+    command: pip install -r /opt/predict/requirements.txt
+    tags:
+      - install-python-packages
+  - name: Fix 'predict' folder permissions
+    file: path=/opt/predict owner=hadoop group=hadoop mode=0775 state=directory recurse=yes
+    tags:
+      - set-permissions
+

@@ -1,0 +1,29 @@
+---
+- hosts: predict
+  become: yes
+  become_user: hadoop
+  tasks:
+    - name: setup hdfs folders
+      command: "{{ item }} chdir=/opt/predict"
+      with_items:
+      - /opt/hadoop/bin/hdfs dfs -rmr /predict
+      - /opt/hadoop/bin/hdfs dfs -mkdir /predict
+      - /opt/hadoop/bin/hdfs dfs -put /opt/predict/data/Customer_Data.csv /predict/
+      become: yes
+      become_user: hadoop
+      become_method: sudo
+      tags:
+        - setup - Hadoop Directories
+    - debug: var=ansible_default_ipv4.address
+    - name: run spark job on training data set
+      command: /opt/predict/code/run_customer_churn_prediction.sh
+      environment:
+        PYTHONPATH: $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.9-src.zip:$PYTHONPATH
+      tags:
+        - training-prediction-model
+    - name: Fetch result csv files from remote to local
+      synchronize:  src={{ item }} dest=/tmp/predict_results mode=pull
+      with_items:
+        - "/opt/predict/data/*.txt"
+      tags:
+        - get-results
