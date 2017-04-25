@@ -1,0 +1,12 @@
+---
+- hosts: mongodb_config_1
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Upload initiate_config.js 
+      template: src="../json/initiate_config.js" dest="{{MONGO_DIR}}/initiate_config.js"
+      become: true
+    - name: Start config server
+      shell: mongo --port 27019 < {{MONGO_DIR}}/initiate_config.js
+#      become: true
+
+

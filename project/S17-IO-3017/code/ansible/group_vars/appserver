@@ -1,0 +1,5 @@
+# The variables defined in this file are used by MongoDB setup
+# The file does not need explicit importing as it is auto loaded by the subsystem
+
+app_dir: ~/projectearth
+git_repo: https://github.com/cloudmesh/cloudmesh.projectearth.git

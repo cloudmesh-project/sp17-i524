@@ -9,4 +9,4 @@ export ANSIBLE_HOST_KEY_CHECKING=false
 mkdir -p ../output
 
 #Run ansible playbook:
-ansible-playbook -i inventory view.yml
+ansible-playbook -i inventory.txt view.yml

@@ -1,0 +1,135 @@
+\section{Deployment} \label{deploymentsection}
+
+The deployment on the cluster can be accomplished using 2 steps, assuming the cluster
+is up and running
+\begin{itemize}[noitemsep]
+\item Step1: update hosts file \textit{ansible-word2vec/hosts} with the IP of the master. 
+The first node on the cluster becomes the master node.
+\item Step2: run the script  \textit{ansible-word2vec/run.sh}. This script will run the ansible 
+playbooks to accomplish stage1 through stage4 of the deployment process.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/deployment.png}}
+\caption{Deployment stages.}
+\label{fig:deploymentstages}
+\end{figure}
+
+Figure \ref{fig:deploymentstages} shows the deployment stages. The two steps
+accomplish deployment in multiple stages as discussed in the sections below.
+
+\subsection{Stage1} \label{deploymentstage1} 
+As pre-requisite, we need to create a cluster with 1 or more nodes.
+We created a 3 node cluster using Cloudmesh \cite{www-cloudmesh} command line interface(CLI). 
+Cloudmesh\cite{www-cloudmesh} CLI allows you to orchestrate virtual machines(VM) in a 
+cloud environment. For this project, we have used Chameleon and Jetstream cloud 
+providers to orchestrate the VMs using cloudmesh\cite{www-cloudmesh} CLI. We can orchestrate a 3 node 
+cluster using following CLI:
+
+\begin{verbatim}
+cm reset
+pip uninstall cloudmesh_client
+pip install -U cloudmesh_client
+cm key add --ssh
+cm refresh on
+cm cluster define --count 3 \
+	--image CC-Ubuntu14.04 --flavor m1.medium
+cm hadoop define spark pig
+cm hadoop sync
+cm hadoop deploy
+cm cluster cross_ssh
+\end{verbatim}   
+
+We are using Ubuntu14.04 image with m1.medium which comes with 2 CPU, 4GB
+memory. Also, the nodes created are having hadoop and spark add-ons.
+We can test the deployment by checking hdfs and spark-submit CLI work fine.
+\begin{verbatim}
+ssh cc@<cluster-ip>
+sudo su - hadoop
+hdfs
+spark-submit
+\end{verbatim}
+
+At this stage our cluster is ready for further deployments.
+
+\subsection{Stage2} \label{deploymentstage2}  
+By default, cloudmesh installs spark 1.6 but our word2vec solution requires
+spark 2.1. We need to upgrade spark on the cluster. In order to do so we can run 
+\textit{install\_upgrade\_spark.yaml} ansible\cite{www-ansible} playbook. This will download and unpack spark2.1 
+tar ball and further update the softlink to point to spark 2.1 folder.
+
+\subsection{Stage3} \label{deploymentstage3} 
+In this step, we upgrade the development libraries for python, and pip,
+install python modules like wkipedia, request etc, download the code from git repo and
+install it in \textit{/opt/word2vec} folder, set the folder permissions for the \textit{/opt/word2vec} folder
+so that it can be executed by hadoop user. These steps can be achieved using 
+\textit{word2vec\_setup.yaml} playbook. After completing this stage, we are ready for running
+our word2vec solution on the cluster. 
+
+\subsection{Stage4} \label{deploymentstage4} 
+This stage primarily deals with submitting the jobs for various purpose. 
+Before we submit the jobs, we need to make sure input folder are created on hadfs.
+First, we run the crawler to download the training set and upload the data on hdfs.
+Further we run various jobs to created model and find relations. Along with these jobs
+we also run some monitoring jobs. The monitoring job queries spark metrics using 
+\begin{verbatim}
+http://${spark_master}:4040
+\end{verbatim}
+
+Stage4 steps can be accomplished using \textit{word2vec\_execute.yaml} playbook. 
+
+At the end of stage4 we also fetch the execution results from the cluster along with the 
+metrics of execution times at various stages. The output files are fetched into \textit{/tmp/word2vec\_results}
+\begin{verbatim}
+ls -1t /tmp/word2vec_results
+jobs.csv
+executors.csv
+app.csv
+stest.csv
+relationstest.csv
+stestresult.csv
+relationsresult.csv
+\end{verbatim}
+Files \textit{jobs.csv, executors.csv, and app.csv} collect the execution time for various jobs. 
+File \textit{relationsresult.csv} file collects the results for sample relations corresponding to
+\textit{relationstest.csv}. Similarly \textit{stestresult.csv} collects the results corresponding to \textit{stest.csv}.
+
+\subsection{Execution} \label{deploymentexecution}
+\subsubsection{Cleanup}
+We can execute the run from local system using  \textit{run.sh} located inside \textit{ansible-word2vec}. 
+Run script executes all stages sequentially on the remote system. To rerun word2vec, run the cleanup 
+playbook \textit{word2vec\_cleanup.yaml} located inside \textit{ansible-word2vec}.  Cleanup remove 
+the spark 2.1 binary and the soft link, remove \textit{/opt/word2vec} folder as well as any temporary files created
+during setup step.
+
+\subsubsection{Page size}
+The crawler downloads pages from wikipedia based on the config page count. To modify the page count, 
+we can edit \textit{ansible-word2vec/setupvariables.yml} and set the \textit{max\_pages} to desired 
+page size. The crawler downloads individual pages and then combines the pages into a single file
+before submitting the spark jobs.
+
+\subsubsection{Test Results}
+Test results are downloaded to local machine in  \textit{/tmp/word2vec\_results} folder. Ansible execution
+log is saved in \textit{/tmp/word2vec-logfile.txt}. The log gets appended each time you execute the run 
+script.
+
+\subsubsection{Troubleshooting}
+\begin{enumerate}
+\item If the installation \textit{run.sh} script fails in middle due to some reason, execute the cleanup script
+before re-triggering run script again. The run script may fail due to variety of reasons like failed to shh,
+hadoop not available etc
+\item If the run script fails due to spark memory errors, you can modify the spark memory setting in
+ \textit{code/config.properties} push the code to a git feature branch for example spark\_test. Modify
+ \textit{word2vec\_setup.yaml} git section \textit{version=master} to point to spark\_test branch and 
+ execute the run script.
+ \item If hadoop goes into safe mode, goto the cluster namenode and execute the following
+ \begin{verbatim}
+ /opt/hadoop$ bin/hadoop dfsadmin -safemode leave
+ \end{verbatim}
+ This will remove the cluster from safe mode.
+ \end{enumerate}
+ 
+ 
+ 
+

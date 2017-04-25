@@ -14,13 +14,17 @@
 
 \dates{project-1: Data mining for a wiki url , \today}
 
-\ociscodes{Cloud, I524}
+\ociscodes{Cloud, I524, Chemeleon, Word2Vec, Jetstream, Cloudmesh}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IR-P005/report/report.pdf}}
 
 \begin{abstract}
-Given a wiki URL of a person, find out his details like School, Spouse, Coaches, language, alma-meter etc Typically, the wiki page has all this information available but in the free form text. We need to converting it into structured data format so that it can help us analyze the people, from the networks etc We can create a network by navigating the people mentioned in the wiki page. 
+Wikipedia pages of famous personalities contain details like school, spouse,
+coaches, languages, alma-meter etc. This information is in free form text. In
+ this project, we extract the people information from the Wikipedia page and
+ to establish relationships between them. Specifically, we use the data of
+ known relationships to derive the newer relationships.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -34,78 +38,105 @@ Given a wiki URL of a person, find out his details like School, Spouse, Coaches,
 
 \section{Introduction}
 
-Use spark \cite{www-spark-python} to load the wiki data and create word vectors. Train it using spark ML  \cite{www-sparkml} and then use the model for analytics and prediction. The training set will use Word2Vec. Word2vec \cite{www-word2vec} is a group of related models that are used to produce word embeddings. Word2Vec is used to analyze the linguistic context of the words. In this project, we created Word2vec model using Wikipedia data. Our focus is people and organization names occurring in the Wikipedia data and to see if Word2vec can be used to understand relationship between people. Typically Wikipedia page for people and celebraties contain the entire family and friends, colleagues information. Our idea is to use Word2vec to see if using a smaller training set of known relationships whether we can derive similar relationship for anyone who has presence on Wikipedia. This mechanism can be then used to convert the data hidden in textual format to more structured data. 
+Word2Vec \cite{www-word2vec} is a group of related models that are used to
+produce word embedding. Word2Vec is used to analyze the linguistic context
+of the words. In this project, we created Word2vec model using Wikipedia data
+and news articles.  Our focus is people names occurring in the
+Wikipedia data and to see if Word2vec can be used to understand relationship
+ between people. Typically Wikipedia page for people and celebrities contain
+  the entire family and friends, colleagues information. Our idea is to use
+  Word2vec to see if using a smaller training set of known relationships
+  whether we can derive similar relationship for anyone who has presence on
+  Wikipedia. This mechanism can be then used to convert the data hidden in
+  textual format to more structured data.
 
-\begin{center}
- \begin{tabular}{||c l||} 
+We used spark \cite{www-spark-python} to load the wiki data and create word
+vectors. We then used vector manipulations to derive the relationships.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c c||} 
  \hline
- Technology Name & Purpose  \\ [0.5ex] 
+ Name & Purpose \\ [0.5ex] 
  \hline\hline
- spark \cite{www-spark-python} & data analysis  \\
- \hline
- sparkML \cite{www-sparkml} & machine learning  \\
- \hline
- python \cite{www-spark-python} & development \\
- \hline
- ansible \cite{www-ansible} & automated deployment \\
- \hline
- collectd \cite{www-collectd} & statistics collection for benchmarking \\
+spark \cite{www-spark-python} & data analysis \\ 
+ sparkML \cite{www-sparkml} & machine learning  \\ 
+ python \cite{www-spark-python} & development  \\ 
+ ansible \cite{www-ansible} & automated deployment \\ [1ex] 
  \hline
 \end{tabular}
-\end{center}
+\caption{Technology Name and Purpose}
+\label{table:1}
+\end{table}
 
-\section{Plan}
-Following table gives a breakdown of tasks in order to complete the project. Assuming week1 starts after submission of the proposal. These work items are high level breakdown on the tasks and may changes if needed.
+%\section{Design}
+%TBD
+\input{design}
 
-\begin{center}
-\begin{tabular}{ |c|l|c| } 
- \hline
-Week & Work Item & Status \\
-\hline
-week1 & Basic POC of Word2Vec using Python  & planned \\ 
-week2 & Scripts to download Wiki data & planned \\ 
-week3 & Word2Vec Spark program & planned \\ 
-week4 & Training and measuring accuracy & planned \\ 
-week5 &  Ansible Deployment script for Spark & planned \\ 
-week6 & Deployment and test on 2 clouds & planned \\ 
-week7 & Performance measurement  & planned \\ 
-week8 & Report Creation(parallel) & planned \\ 
- \hline
-\end{tabular}
-\end{center}
+\input{deployment}
 
-\section{Design}
-TBD
-
-\section{Deployment}
-Solution will be deployed using Ansible \cite{www-ansible} playbook. Automated deployment should happen on two or more nodes cluster. Deployment script should install all necessary software along with the project code to the cluster nodes.
-
-\section{Benchmarking}
-Solution will use collectd \cite{www-collectd} to collect statistics. Once the solution is deployed to the cluster. We should benchmark parameters like
-\begin{itemize}[noitemsep]
-\item cpu
-\item memory
-\item throughput reads/writes
-\end{itemize}
-Benchmarking will be done for one or more cloud providers. The deployment scripts should be agnostic to the cloud provider. 
+\input{benchmarking}
 
 \section{Discussion}
-TBD
+The analysis of the results provided interesting insights.
+Section \ref{appdiscussion} provides key insights on our experiments with
+Word2Vec on Wikipedia data. Section \ref{deploymentdiscussion} provide key
+insights on our experience of deployment and execution of Word2Vec
+application on Chameleon and Jetstream cloud.
+\input{appdiscussion} \label{appdiscussion}
+\input{deploymentdiscussion} \label{deploymentdiscussion}
 
 \section{Conclusion}
 
-Using this wiki analysis we should be able to build a network based on wiki data.
+Using this project we conclude that we can use Word2Vev model on Wikipedia
+and news data to find the relationships between the people.
+
+We further conclude that Word2Vec based analytics can be performed on public
+cloud systems like Chameleon cloud and Jetstream cloud. Our deployment
+automation, which is implemented using Cloudmesh and Ansible technology
+demonstrates the power of these technologies to achieve one touch deployment
+and execution of applications across multiple clouds.
 
 \section{Acknowledgement}
 
 We acknowledge our professor Gregor von Laszewski and all associate instructors for helping us and guiding us throughout this project.
 
 \section{Appendices}
-TBD
+Appendix A: Work Distribution
+The co-authors of this report worked together on the design of the technical
+solutions, implementation, testing and documentation. Below given is the work
+ distribution
+\begin{itemize}
+\item Avadhoot Agasti
+    \begin{itemize}
+    \item Implementation of wiki crawler and news cralwer in Python.
+    \item Implementation of CreateWord2VecModel in Spark.
+    \item Implementation of UseWord2VecModel and FindRelations in Spark.
+    \item Implementation of Python script MonitorSparkApp.
+    \item Analyzing the Word2Vec model results.
+    \item Testing of end to end flow on Chameleon cloud.
+    \item Performance testing and bug fixing in the spark application.
+    \item Writing related sections in this report.
+    \end{itemize}
+
+\item Abhishek Gupta
+    \begin{itemize}
+    \item Implementation of Ansible scripts for deployment of Spark 2.1 which
+     is required for the spark application.
+    \item Implementation of Ansible scripts for deployment.
+    \item Implementing the changes in the spark applications to get it
+    working on HDFS.
+    \item Setting up and testing the end to end flow on Chameleon cloud.
+    \item Setting up and testing the end to end flow on Jetstream cloud.
+    \item Testing the crawler and Word2Vec applications for semantic
+    correctness.
+    \item Gathering the perfomance statistics for comparison.
+    \item Writing related sections in this report.
+    \end{itemize}
+\end{itemize}
 
 % Bibliography
 
 \bibliography{references}
- 
 
 \end{document}

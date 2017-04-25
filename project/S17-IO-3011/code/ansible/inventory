@@ -1,8 +1,0 @@
-[local]
-localhost ansible_connection=local
-[remote]
-scmcclar-053 ansible_ssh_host="129.114.33.149" ansible_ssh_user="cc"
-scmcclar-054 ansible_ssh_host="129.114.33.151" ansible_ssh_user="cc"
-scmcclar-055 ansible_ssh_host="129.114.33.49" ansible_ssh_user="cc"
-[master]
-scmcclar-053 ansible_ssh_host="129.114.33.149" ansible_ssh_user="cc"
