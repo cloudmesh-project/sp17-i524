@@ -1,0 +1,98 @@
+Test Error = 0.0899968142721
+Learned classification tree model:
+DecisionTreeModel classifier of depth 5 with 63 nodes
+  If (feature 1 <= 1.0)
+   If (feature 9 <= 0.0)
+    If (feature 3 <= 5.0)
+     If (feature 109 <= 0.0)
+      If (feature 10 <= 6.0)
+       Predict: 0.0
+      Else (feature 10 > 6.0)
+       Predict: 0.0
+     Else (feature 109 > 0.0)
+      If (feature 90 <= 0.0)
+       Predict: 0.0
+      Else (feature 90 > 0.0)
+       Predict: 0.0
+    Else (feature 3 > 5.0)
+     If (feature 126 <= 0.0)
+      If (feature 112 <= 0.0)
+       Predict: 0.0
+      Else (feature 112 > 0.0)
+       Predict: 0.0
+     Else (feature 126 > 0.0)
+      If (feature 7 <= 5.0)
+       Predict: 0.0
+      Else (feature 7 > 5.0)
+       Predict: 0.0
+   Else (feature 9 > 0.0)
+    If (feature 9 <= 1.0)
+     If (feature 8 <= 2.0)
+      If (feature 2 <= 1.0)
+       Predict: 0.0
+      Else (feature 2 > 1.0)
+       Predict: 0.0
+     Else (feature 8 > 2.0)
+      If (feature 112 <= 0.0)
+       Predict: 0.0
+      Else (feature 112 > 0.0)
+       Predict: 1.0
+    Else (feature 9 > 1.0)
+     If (feature 110 <= 0.0)
+      If (feature 17 <= 0.0)
+       Predict: 0.0
+      Else (feature 17 > 0.0)
+       Predict: 0.0
+     Else (feature 110 > 0.0)
+      If (feature 4 <= 40.0)
+       Predict: 0.0
+      Else (feature 4 > 40.0)
+       Predict: 0.0
+  Else (feature 1 > 1.0)
+   If (feature 9 <= 1.0)
+    If (feature 1 <= 18.0)
+     If (feature 1 <= 5.0)
+      If (feature 1 <= 4.0)
+       Predict: 0.0
+      Else (feature 1 > 4.0)
+       Predict: 0.0
+     Else (feature 1 > 5.0)
+      If (feature 114 <= 0.0)
+       Predict: 0.0
+      Else (feature 114 > 0.0)
+       Predict: 0.0
+    Else (feature 1 > 18.0)
+     If (feature 1 <= 22.0)
+      If (feature 10 <= 8.0)
+       Predict: 0.0
+      Else (feature 10 > 8.0)
+       Predict: 0.0
+     Else (feature 1 > 22.0)
+      If (feature 1 <= 25.0)
+       Predict: 0.0
+      Else (feature 1 > 25.0)
+       Predict: 0.0
+   Else (feature 9 > 1.0)
+    If (feature 9 <= 3.0)
+     If (feature 1 <= 14.0)
+      If (feature 74 <= 0.0)
+       Predict: 0.0
+      Else (feature 74 > 0.0)
+       Predict: 0.0
+     Else (feature 1 > 14.0)
+      If (feature 25 <= 0.0)
+       Predict: 1.0
+      Else (feature 25 > 0.0)
+       Predict: 0.0
+    Else (feature 9 > 3.0)
+     If (feature 0 <= 2.0)
+      If (feature 93 <= 0.0)
+       Predict: 0.0
+      Else (feature 93 > 0.0)
+       Predict: 1.0
+     Else (feature 0 > 2.0)
+      If (feature 8 <= 2.0)
+       Predict: 0.0
+      Else (feature 8 > 2.0)
+       Predict: 1.0
+
