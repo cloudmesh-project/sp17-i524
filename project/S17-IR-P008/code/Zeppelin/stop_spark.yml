@@ -1,0 +1,8 @@
+---
+- hosts: Master_node
+  become: no
+  vars_files:
+    - vars_ch.yml
+  roles:
+    - stop
+

@@ -1,0 +1,5 @@
+---
+- name: start spark master and slaves
+  shell: "{{spark_inst_dir}}{{spark_version}}/{{spark_start_sh}}"
+
+
