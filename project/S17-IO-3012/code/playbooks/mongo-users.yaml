@@ -1,0 +1,17 @@
+---
+- hosts: mongodb_mongos_1
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Upload user file 
+      copy:
+        src: ../json/create_users.js
+        dest: "{{MONGO_DIR}}/create_users.js"
+#        owner: cc
+#        group: cc
+        mode: 0774
+      become: true
+    - name: Add the users
+      shell: mongo < {{MONGO_DIR}}/create_users.js
+
+
+

@@ -16,7 +16,7 @@
 
 \ociscodes{Apache Ranger, LDAP, Active Directory, Apache Knox, Apache Atlas,
 Apache Hive, Apache Hadoop, Yarn, Apache HBase, Apache Storm, Apache Kafka,
-Data Lake, Apache Sentry}
+Data Lake, Apache Sentry, Hive Server2, Java}
 
 % replace this with your url in github/gitlab
 \doi{\url{https://github.com/cloudmesh/sp17-i524/raw/master/paper2/S17-IO-3000/report.pdf}}
@@ -24,12 +24,14 @@ Data Lake, Apache Sentry}
 
 \begin{abstract}
 Apache Hadoop provides various data storage, data access and data processing
-services. Apache Ranger is part of the Hadoop eco-system. Apache Ranger
+services. Apache Ranger is part of the Hadoop ecosystem. Apache Ranger
 provides capability to perform security administration tasks for storage,
 access and processing of data in Hadoop. Using Ranger, Hadoop administrator
-can perform security administration tasks using a central UI or Restful web
-services. He can define policies which enable users/user-groups to perform
-specific action using Hadoop components and tools. Ranger provides role based
+can perform security administration tasks using a central user interface or
+restful web
+services. Hadoop administrator can define policies which enable
+users or user-groups to perform
+specific actions using Hadoop components and tools. Ranger provides role based
  access control for datasets on Hadoop at column and row level. Ranger also
  provides centralized auditing of user access and security related
  administrative actions.\newline
@@ -50,8 +52,11 @@ Apache Ranger is open source software project designed to provide centralized
  overhead and is also error prone. Apache Ranger fills this gap to provide
  a central security and auditing mechanism for various Hadoop components. Using
   Ranger, Hadoop administrator can perform security administration tasks
-  using a central UI or Restful web services. He can define policies which
-  enable users/user-groups to perform specific action using Hadoop components
+  using a central user interface or restful web services. The administrator can
+  define
+  policies which,
+  enable users or user-groups to perform specific actions using Hadoop
+  components
    and tools. Ranger provides role based access control for datasets on
    Hadoop at column and row level. Ranger also provides centralized auditing
    of user access and security related administrative actions.
@@ -63,25 +68,26 @@ Apache Ranger is open source software project designed to provide centralized
 
 \subsection{Ranger Admin Portal}
 
-Ranger Admin Portal is the main interaction point for the user. Using Admin
-Portal, user can define policies. The policies are stored in Policy Database.
- The Policies are polled by various plugins. The Admin Portal also collects
- the audit data from plugins and stores in HDFS or in a relational database.
+Ranger admin portal is the main interaction point for the user. A user can
+define policies using the Ranger admin portal. These policies are stored in
+a policy database. The Policies are polled by various plugins. Admin
+portal also collects the audit data from plugins and stores it in HDFS or in a
+relational database.
 
 \subsection{Ranger Plugins}
 
-Plugins are Java Programs, which are invoked as part of the cluster component.
+Plugins are Java programs, which are invoked as part of the cluster component.
  For example, the ranger-hive plugin is embedded as part of Hive Server2. The
   plugins cache the policies, and intercept the user request and evaluates it
    against the policies. Plugins also collect the audit data for that
-   specific component and send to Admin Portal.
+   specific component and send to admin portal.
 
 \subsection{User group sync}
 
 While Ranger provides authorization or access control mechanism, it needs to
-know the users and the groups. Ranger integrates with Unix users management or
-LDAP or Active Directory to fetch the users and groups. The User group sync
-component is responsible for this integration.
+know the users and the groups. Ranger integrates with unix user management
+system or LDAP or active directory to fetch the users and the groups
+information. The user group sync component is responsible for this integration.
 
 \section{HADOOP COMPONENTS SUPPORTED BY RANGER}
 
@@ -91,16 +97,16 @@ Ranger supports auditing and authorization for following Hadoop components
 \subsection{Apache Hadoop and HDFS}
 
 Apache Ranger provides plugin for Hadoop, which helps in enforcing data access
-policies. The HDFS plugin works with Name Node to check if the user's access
+policies. The HDFS plugin works with name node to check if the user's access
 request to a file on HDFS is valid or not.
 
 \subsection{Apache Hive}
 
 Apache Hive provides SQL interface on top of the data stored in HDFS. Apache
-Hive supports two types of authorization - Storage based authorization and
+Hive supports two types of authorization: storage based authorization and
 SQL standard authorization. Ranger provides centralized authorization
-interface for Hive which provides granular access control at table and column
- level. Ranger implements a plugin which is part of Hive Server2.
+interface for Hive, which provides granular access control at table and column
+ level. Ranger's hive plugin is part of Hive Server2.
 
 \subsection{Apache HBase}
 Apache HBase is NoSQL database implemented on top of Hadoop and HDFS. Ranger
@@ -121,7 +127,7 @@ Apache Knox provides service level authorization for users and groups. Ranger
 Solr provides free text search capabilities on top of Hadoop. Ranger is
 useful to protect Solr collections from unauthorized usage.
 
-\subsection{Apache kafka}
+\subsection{Apache Kafka}
 Ranger can manager access control on Kafka topics. Policies can be
 implemented to control which users can write to a Kafka topic and which users
 can read from a Kafka topic.
@@ -161,7 +167,7 @@ Ranger can be deployed on top of Apache Hadoop.
 \cite{www-ranger-on-apache-hadoop} provides detailed steps of building and
 deploying Ranger on top of Apache Hadoop.
 
-Hortonwork Distribution of Hadoop (HDP) supports Ranger deployment using
+Hortonwork Distribution of Hadoop(HDP) supports Ranger deployment using
 Ambari. \cite{www-ranger-on-hdp} provides installation, deployment and
 configuration steps for Ranger as part of HDP deployment.
 
@@ -175,7 +181,7 @@ many use cases as explained below.
 
 \subsection{Data Lake}
 \cite{data-lake-whitepaper} explains that storing many types of data in the
-same repository is one of the most important feature of Data Lake. With
+same repository is one of the most important feature of data lake. With
 multiple datasets, the ownership, security and access control of the data
 becomes primary concern. Using Apache Ranger, the security administrator can
 define fine grain control on the data access.

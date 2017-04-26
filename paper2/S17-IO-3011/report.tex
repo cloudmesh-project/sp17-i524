@@ -16,14 +16,18 @@
 \doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/paper2/S17-IO-3011/report.pdf}}
 
 \begin{abstract}
-Apache Crunch is a Java API that simplifies the process of developing
-MapReduce pipelines. This library is built on top of Apache Hadoop and
-Apache Spark and is therefore used in industry to develop efficient,
-scalable and maintainable codebases for Big Data solutions. The main
-benefit of Apache Crunch is that the explicit need to manage MapReduce
-jobs has been abstracted away. Thus, Apache Crunch alleviates much of
-the steep learning curve inherently within developing scalable
-applications that utilize a MapReduce type approach.
+Apache Crunch is an Application Programming Interface (i.e. API)
+designed for the Java programming language. This software is built on
+top of Apache Hadoop as well as Apache Spark and simplifies the
+process of developing MapReduce pipelines. Apache Crunch abstracts
+away the explicit need to manage MapReduce jobs. This defining
+characteristic alleviates much of the steep learning curve inherently
+within developing scalable applications that utilize a MapReduce type
+approach. Therefore, developers using Apache Crunch are able to
+streamline the process of converting Big Data solutions into runnable
+code. As a result, this Java API is leveraged in industry and academia
+to develop efficient, scalable and maintainable codebases for Big Data
+solutions.
 \newline
 \end{abstract}
 
@@ -34,30 +38,67 @@ applications that utilize a MapReduce type approach.
 \maketitle
 
 \section{Introduction} \label{introduction} 
-Apache Crunch is an open source Java API that is ``built for pipelining MapReduce programs which are simple and efficient'' \cite{www-hadoop-ecosystem}. More specifically, Crunch allows developers to write, test and run MapReduce pipelines with minimal upfront investment \cite{www-hadoop-ecosystem}. As explained in Section \ref{about}, this Java API was developed by Josh Wills at Cloudera and is based on Google's FlumeJava library \cite{FlumeJava-paper-2012, www-crunch-about}.  
+Apache Crunch is an open source Java API that is ``built for
+pipelining MapReduce programs which are simple and efficient;'' more
+specifically, Crunch allows developers to write, test and run
+MapReduce pipelines with minimal upfront investment
+\cite{www-hadoop-ecosystem, www-mapreduce}. The minimal upfront
+investment of this API lowers the barrier for entry for Big Data
+developers.
 
-Apache Crunch ``aims to make writing, testing, and running MapReduce pipelines easy, efficient, and even fun'' \cite{www-wills-crunch}. This open source Java API provides a ``small set of simple primitive operations and lightweight user-defined functions that can be combined to create complex, multi-stage pipelines'' \cite{www-wills-crunch}. Apache Crunch abstracts away much of the complexity from the user by compiling ``the pipeline into a sequence of MapReduce jobs and manages their execution'' \cite{www-wills-crunch}. 
+Apache Crunch's purpose is to make ``writing, testing, and running
+MapReduce pipelines easy, efficient, and even fun''
+\cite{www-wills-crunch, www-mapreduce}. This open source Java API
+provides a ``small set of simple primitive operations and lightweight
+user-defined functions that can be combined to create complex,
+multi-stage pipelines'' \cite{www-wills-crunch}. Apache Crunch
+abstracts away much of the complexity from the user by compiling ``the
+pipeline into a sequence of MapReduce jobs and manages their
+execution'' \cite{www-wills-crunch, www-mapreduce}.
+
+\subsection{History} \label{about}
+Josh Wills at Cloudera was the major contributor/developer to the
+Crunch project in 2011 \cite{www-crunch-about,
+  www-wills-cloudera}. The original version of this software was based
+on Google's FlumeJava library \cite{FlumeJava-paper-2012,
+  www-crunch-about, www-wills-cloudera}. From 2011 until May 2012
+(i.e. version 0.2.4), the Apache Crunch project was open sourced at
+GitHub \cite{www-crunch-about, www-github}. After May 2012, the
+original Crunch source code was donated to Apache by Cloudera and
+shortly after ``the Apache Board of Directors established the Apache
+Crunch project in February 2013 as a new top level project''
+\cite{www-crunch-about}. Since February 2013, the Apache Crunch
+project continues to be used, maintained and improved in an open
+source fashion by the software's user and developer community. The
+user community has grown to include large reputable companies such as
+Spotify and Cerner \cite{www-crunch-spotify, www-crunch-cerner}.
 
 \subsection{Advantages}
-As Hadoop continues to grow in popularity, the variation of data (i.e. satellite images, time series data, audio files, and seismograms) that is stored in HDFS grows as well \cite{www-wills-crunch}. Many of these data ``formats are not a natural fit for the data schemas imposed by Pig and Hive;'' therefore, ``large, custom libraries of user-defined functions in Pig or Hive'' or ``MapReduces in Java'' have to be written, which significantly ``drain on developer productivity'' \cite{www-wills-crunch}. The Crunch API provides an alternative solution, which does not inhibit developer productivity. Apache crunch integrates seamlessly into Java and therefore, allow developers full access to Java to write functions. Thus, Apache Crunch is ``especially useful when processing data that does not fit naturally into relational model, such as time series, serialized object formats like protocol buffers or Avro records, and HBase rows and columns'' \cite{www-crunch-api}. 
-
-\begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/hadoop-ecosystem-and-components_3}}
-\caption{The image above depicts the Apache Hadoop Ecosystem, including where Apache Crunch lies within the software stack \cite{www-hadoop-ecosystem}.}
-\label{fig:hadoop-ecosystem-and-components_3}
-\end{figure}
-
-\subsection{About \& History} \label{about}
-The major contributor to the ``initial source code of the Apache Crunch project [was] ... Josh Wills at Cloudera in 2011'' \cite{www-crunch-about}. Up until May 2012 (i.e. version 0.2.4), the Apache Crunch project was open sourced at GitHub \cite{www-crunch-about}. After May 2012, ``Cloudera donated the source code to Apache and the project entered the Apache Incubator, ... [a]fter 9 months at the Incubator, ... the Apache Board of Directors established the Apache Crunch project in February 2013 as a new top level project'' \cite{www-crunch-about}. Since February 2013, the Apache Crunch project continues to be used, maintained and improved in an open source fashion, as explained in Section \ref{source}.
+As Hadoop continues to grow in popularity, the variation of data
+(i.e. satellite images, time series data, audio files, and
+seismograms) that is stored in HDFS grows as well
+\cite{www-wills-crunch, www-apache-hadoop}. Many of these data
+``formats are not a natural fit for the data schemas imposed by Pig
+and Hive;'' therefore, ``large, custom libraries of user-defined
+functions in Pig or Hive'' or ``MapReduces in Java'' have to be
+written, which significantly ``drain on developer productivity''
+\cite{www-wills-crunch, www-apache-pig, www-apache-hive,
+  www-mapreduce}. The Crunch API provides an alternative solution,
+which does not inhibit developer productivity. Apache crunch
+integrates seamlessly into Java and therefore, allows developers full
+access to Java to write functions. Thus, Apache Crunch is ``especially
+useful when processing data that does not fit naturally into
+relational model, such as time series, serialized object formats like
+protocol buffers or Avro records, and HBase rows and columns''
+\cite{www-crunch-api, www-apache-avro, www-apache-hbase}.
 
 \subsection{API} \label{api}
 Apache Crunch is a Java API that is used ``for tasks like joining and
 data aggregation that are tedious to implement on plain MapReduce''
-\cite{www-crunch-api}. Section \ref{educational} explains that the
-Apache Software Foundation provides thorough documentation of the API
-and provides examples of how to explicitly leverage this API from a
-Java application.
+\cite{www-crunch-api}. The Apache Software Foundation provides
+thorough documentation of the API for Apache Crunch and even provides
+useful examples of how to explicitly leverage this API from a Java
+application \cite{www-crunch-api}.
 
 \subsubsection{Shell Access} \label{shell}
 For users of the Scala programming language, there is the ``Scrunch
@@ -66,78 +107,87 @@ API, which is built on top of the Java APIs and includes a REPL
 \cite{www-crunch-api}.
 
 \section{Licensing} \label{licensing}
-The Apache Software Foundation, which includes Apache Crunch, is
-licensed under the Apache License, Version 2.0 \cite{www-apache-lic}.
+The Apache Software Foundation, which includes the software tool named
+Apache Crunch, is licensed under the Apache License, Version 2.0
+\cite{www-apache-lic}.
 
 \subsection{Source Code}\label{source}
 Apache Crunch leverages Git for version control, which allows the user
 and developer communities to contribute freely to this open source
-project \cite{www-crunch-git}.
+project \cite{www-crunch-git, www-github}.
 
 \section{Architecture \& Ecosystem} \label{ecosystem}
-Figure \ref{fig:hadoop-ecosystem-and-components_3} and Figure
-\ref{fig:architecture} provide a complete graphical representation of
-the MapReduce ecosystem and explicitly indicates Apache Crunch's place
-within the software stack. In the simplest of terms, Apache Crunch
-runs on top of Hadoop MapReduce and Apache Spark
-\cite{www-crunch-api}.
-
-\begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/hadoop-architecture}}
-\caption{The image above depicts the Apache Hadoop software stack, including Apache Crunch \cite{www-crunch-architecture}.}
-\label{fig:architecture}
-\end{figure}
-
+In the simplest of terms, Apache Crunch runs on top of Hadoop
+MapReduce and Apache Spark \cite{www-crunch-api}. Therefore, Apache
+Crunch abstracts away the need for the programmer to explicitly manage
+the MapReduce jobs through a Java API. However, the Apache Crunch's
+place within the software stack (i.e. on top of Hadoop MapReduce and
+Apache Spark) indicates its reliance on the MapReduce software
+subsystem. Given Apache Crunch's dependence on Hadoop MapReduce and
+Apache Spark, this API provides the ability for developers use the
+Java programming language to efficiently and effectively leverage
+MapReduce style processing to solve their complicated and complex Big
+Data problems.
 
 \section{Use Cases} \label{use}
-Apache Crunch has its applicability in the Big Data industry, as shown
-in Section \ref{big}. The widespread usage of Apache Hadoop and Apache
-Spark help to promote Apache Crunch in industry and academia alike.
+Apache Crunch has its applicability in the Cloud Computing and Big
+Data industry, as shown in the following section. The widespread usage
+of Java, Apache Hadoop and Apache Spark in Cloud Computing help
+promote Apache Crunch in industry and academia alike.
 
 \subsection{Use Cases for Big Data} \label{big}
-As explained in Section \ref{ecosystem}, Apache Crunch is built on top
-of Hadoop MapReduce and Apache Spark, which both go hand in hand in
-solving many complicated and challenging Big Data problems.
+The Apache Hadoop ecosystem indicates that Apache Crunch is built on
+top of Hadoop MapReduce and Apache Spark, which both go hand in hand
+in solving many complicated and challenging Big Data problems. The
+following sections demonstrate Apache Crunch's applicability in Big
+Data problems. Furthermore, these use cases explains that the software
+facilitates the rapid and clean development of the respective Big Data
+solutions. The benefits realized at companies such as Cerner and
+Spotify are due in part to Apache Crunch's well-defined applicability
+in the Big Data space.
 
 \subsection{Cerner} \label{cerner}
 Cerner, ``an American supplier of health information technology (HIT)
 solutions, services, devices and hardware'' \cite{www-cerner}, employs
 Apache Crunch to solve many of their Big Data problems
-\cite{www-crunch-cerner}. Cerner chose to use Apache Crunch since it
+\cite{www-crunch-cerner}. Cerner decided to use Apache Crunch since it
 interestingly solves what they refer to as ``a people problem''
 \cite{www-crunch-cerner}. As a company, they have noticed that Apache
 Crunch diminishes a potential steep learning curve for new employees
-and/or teams to use Big Data technologies. Specifically, Apache Crunch
-stands above the other ``options available for processing pipelines
-including Hive, Pig, and Cascading'' since Apache Crunch allows Cerner
-employees to ``easily ... translate how [they] ... described a problem
-into concepts [that they] ... can code'' \cite{www-crunch-cerner}. The
-diminished learning curve as a result of using Apache Crunch allows
-Cerner to focus their time, effort and money on performance tuning
-and/or algorithm adjustments rather than spending a significant amount
-time simply translating the problem into runnable code
+and/or teams to leverage Big Data technologies in their projects.
+
+Cerner definitively believes that Apache Crunch stands above the other
+``options available for processing pipelines including Hive, Pig, and
+Cascading'' since the Apache Crunch API allows their employees to
+straightforwardly code solutions to Big Data problems
+\cite{www-crunch-cerner, www-apache-hive, www-apache-pig,
+  www-cascading}. The diminished learning curve as a result of using
+Apache Crunch allows Cerner to focus their time, effort and money on
+performance tuning and/or algorithm adjustments rather than wasting a
+significant amount the developers time simply translating a Big Data
+problem into runnable and efficient MapReduce code
 \cite{www-crunch-cerner}.
 
 \subsection{Spotify} \label{spotify}
 Spotify, the popular ``music, podcast, and video streaming service''
 \cite{www-spotify}, leverages Apache Crunch to process the many
 terabytes of data generated every day by their large user community
-\cite{www-crunch-spotify}. Spotify has been using Hadoop since 2009
-and have spent significant effort since then to develop tools that
-make it ``easy for [their] developers and analysts to write data
-processing jobs using the MapReduce approach in Python''
-\cite{www-crunch-spotify}. However, in 2013 Spotify came to the
-realization that this approach wasn't performing well enough so they
-decided to start using Java and Apache Crunch to solve their Big Data
-problems \cite{www-crunch-spotify}. This transition to Apache Crunch
-resulted in higher performance, higher-level abstractions (e.g.
-filters, joins and aggregations), pluggable execution engines
-(e.g. MapReduce and Apache Spark) and added simple powerful testing
-(e.g. fast in-memory unit tests) \cite{www-crunch-spotify}. Apache
-Crunch has given Spotify a ``huge boost for both [their] ... developer
-productivity and execution performance on Hadoop''
-\cite{www-crunch-spotify}.
+\cite{www-crunch-spotify}. Spotify has been using Apache Hadoop since
+2009 and have spent significant effort since then to develop tools
+that make it simple for the Spotify ``developers and analysts to write
+data processing jobs using the MapReduce approach in Python''
+\cite{www-crunch-spotify, www-mapreduce}.
+
+However, in 2013 Spotify came to the realization that this approach
+wasn't performing well enough so they decided to start using Java and
+Apache Crunch to solve their Big Data problems
+\cite{www-crunch-spotify}. This transition to Apache Crunch resulted
+in higher performance, higher-level abstractions (e.g.  filters, joins
+and aggregations), pluggable execution engines (e.g. MapReduce and
+Apache Spark) and added simple powerful testing (e.g. fast in-memory
+unit tests) \cite{www-crunch-spotify}. Apache Crunch has given Spotify
+a significant enhancement for both their ``developer productivity and
+execution performance on Hadoop'' \cite{www-crunch-spotify}.
 
 \section{Educational Material} \label{educational}
 Apache Crunch makes the process of developing applications that
@@ -162,7 +212,10 @@ developers to focus their time and effort in developing the general
 concept of their solution rather than in the detailed process of
 writing their code. The aforementioned benefits of Apache Crunch are
 proven by its widespread use in industry (e.g. Spotify and Cerner) and
-in academia, shown in Section \ref{use}.
+in academia. This software tool helps diminish the gap between domain
+scientists solving Big Data problems and the potentially complicated
+Computer Science tools/mechanisms provided to the Cloud Computing/Big
+Data community.
 
 \section*{Acknowledgements}
 The authors would like to thank the School of Informatics and

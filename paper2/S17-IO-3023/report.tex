@@ -17,7 +17,7 @@
 
 \affil[+]{HID - S17-IO-3023}
 
-\dates{paper1, \today}
+\dates{paper2, \today}
 
 \ociscodes{AWS Lambda,Serverless Computing, I524}
 
@@ -27,19 +27,19 @@ eport.pdf}}
 
 
 \begin{abstract}
-The rapid pace of innovation in datacenters and the
+The rapid pace of innovation in data centers and the
 software platforms within them is set to transform
 how we build, deploy, and manage online applications
 and services. Common to both hardware-based and container-based.
 Virtualization is the central notion of a server. Servers
-have long been used to back online applications, but new
+have been used for the past several years to back online applications, but new
 cloud-computing platforms foreshadow the end of the
 traditional backend server. Servers are notoriously difficult to configure and 
 manage, and server
 startup time severely limits an application’s ability to scale up and down 
 quickly. As a result, a new model, called serverless computation, is poised to 
 transform the construction of modern, scalable applications ability to
-quickly scale up and down \cite{OpenLambda}. This paper is on AWS Lambda a 
+quickly scale up and down . This paper is on AWS Lambda a 
 Serverless Computing technology.
 \end{abstract}
 
@@ -51,8 +51,7 @@ Serverless Computing technology.
 
 \section{Introduction}
 
-Serverless applications are where some amount of server-side logic are written 
-by the application developer but unlike traditional architectures is run in 
+Serverless applications are where some amount of server-side logic, unlike traditional architectures, is run in 
 stateless compute containers that are event-triggered, ephemeral, and fully 
 managed by a 3rd party. One way to think of this is ‘Functions as a service / 
 Faas'. AWS Lambda is one of the most popular implementations of Faas 
@@ -66,7 +65,7 @@ system maintenance and capacity provisioning \cite{www-CouchAWSLambda}.
  
 In AWS Lambda one needs to pay only for the compute time consumed - there is no 
 charge when the code is not running. AWS Lambda, can run code for virtually any 
-type of application or backend service - all with zero administration. AWS 
+type of application or backend service with zero administration. AWS 
 Lambda requires only the code to be uploaded, and Lambda takes care of 
 everything required to run and scale the code with high availability. AWS 
 Lambda can be setup to automatically trigger the code from other AWS services 
@@ -101,7 +100,7 @@ the code is triggered. They don't pay anything when the code isn't running.
 \graphicspath{ {images/} }
 \fbox{\includegraphics[width=\linewidth]{Lambda_HowItWorks}}
 \caption{AWS Lambda Architecture} \cite{www-AWSLambda}
-\label{fig:false-color}
+\label{fig:arch}
 \end{figure}
 
 Lambda functions and event sources are the core components in AWS Lambda. An 
@@ -113,7 +112,7 @@ enables automatic invocation of Lambda function when events occur.
 
 Each event source mapping identifies the type of events to publish and the 
 Lambda function to invoke when events occur. The specific Lambda function then 
-receives the event information as a parameter, and as shown in Figure 1 the 
+receives the event information as a parameter, and as shown in Figure~\ref{fig:arch} the 
 Lambda function code can then process the event.
 
 The event sources can be any of the following:
@@ -137,12 +136,12 @@ events and invoke a Lambda function.
 \caption{Response Time. This CDF shows measured
 response times from a simulated load burst to an Elastic BS
 application and to an AWS Lambda application.}  \cite{OpenLambda}
-\label{fig:false-color}
+\label{fig:scale}
 \end{figure}
 
 A primary advantage of the Lambda model is its ability
 to quickly and automatically scale the number of workers
-when load suddenly increases. The Graph in Figure 2 demonstrates this by 
+when load suddenly increases. The Graph in Figure~\ref{fig:scale} demonstrates this by 
 comparing AWS Lambda to a container-based server platform,
 AWS Elastic Beanstalk \cite{www-AWSEBS} (hereafter Elastic BS).
 On both platforms, the same benchmark was run for one
@@ -183,7 +182,7 @@ The main competitors for AWS Lambda are
 \end{itemize}
 
 A detailed comparison of features between AWS Lambda, Google Cloud and 
-Microsoft Azure Functions is available in Table 1.
+Microsoft Azure Functions is available in Table~\ref{my-label}.
 
 \begin{table*}[h]
 \centering
@@ -263,11 +262,11 @@ function. The users are charged \$0.00001667 for every GB-second used
 \graphicspath{ {images/} }
 \fbox{\includegraphics[width=\linewidth]{Mobile}}
 \caption{Mobile Backend} \cite{www-AWSLambda}
-\label{fig:false-color}
+\label{fig:usecase1}
 \end{figure}
 
 \textbf{Mobile Backends}: Mobile Backends are an excellent use case to 
-implement AWS Lambda.As shown in Figure 3 the backend of the mobile application 
+implement AWS Lambda.As shown in Figure~\ref{fig:usecase1} the backend of the mobile application 
 can be built using AWS Lambda and Amazon API Gateway to authenticate and 
 process API requests. Lambda makes it easy to create rich, personalised app 
 experiences.
@@ -290,11 +289,11 @@ needed to build and operate the site  \cite{www-AWSLambdaBustle}.
 \centering
 \graphicspath{ {images/} }
 \fbox{\includegraphics[width=\linewidth]{Lambda_ETL}}
-\caption{} \cite{www-AWSLambda}
-\label{fig:false-color}
+\caption{Lambda ETL} \cite{www-AWSLambda}
+\label{fig:usecase2}
 \end{figure}
 
-\textbf{Extract, Transform, Load}: As shown in Figure 4 AWS Lambda can be used 
+\textbf{Extract, Transform, Load}: As shown in figure~\ref{fig:usecase2} AWS Lambda can be used 
 to perform data validation, filtering, sorting, or other transformations for 
 every data change in a DynamoDB table and load the transformed data to another 
 data store. \textbf{Zillow} is the leading real estate and rental marketplace 

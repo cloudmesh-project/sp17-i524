@@ -59,6 +59,9 @@ and memory ) will also be shared. Since there is single process
 controlling the memory and CPU usage is running this model has
 performance advantage \cite{www-slashroot}
 
+Figure below shows the comparison between the hypervisor based VM can
+container from the architecture.\cite{www-slashroot}
+
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/VM.jpg}}
@@ -117,10 +120,10 @@ depicts the main structural differences between LXC and docker.\cite{www-lxc-doc
 \caption{Architecture Comparison of LXC and Docker.}
 \label{fig:false-color}
 \end{figure}
-\section{performance Comparison} \cite{www-semantics}
+\section{performance Comparison} 
 In this study , Linux on KVM is studied for Hypervisor based VM , LXC
 and docker are compared as container based solutions. OSv is used as
-light weight guest OS.
+light weight guest OS. \cite{www-semantics}
 
 \begin{enumerate}
 
@@ -137,7 +140,7 @@ Cruncher' which calculate the values of Pi the results can be seen
 from the table below 
   NBENCH is used for single core comparison producing three different
   indexes: Integer Index, Floating Point Index, and Memory
-  Index. Please see the blow diagram from the comparison
+  Index. Please see the blow diagram from the comparison \cite{www-semantics}
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/Mcore.jpg}}
@@ -150,7 +153,7 @@ from the table below
 
 
 \item Memory Performance \\
- Below are test results  using STREAM 
+ Below are test results  using STREAM \cite{www-semantics}
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/Memory.jpg}}
@@ -160,7 +163,7 @@ from the table below
 
 \item Disk I/O Performance \\
    Bonnie++ is used to measure the disk performance and below are the
-   results.
+   results. \cite{www-semantics}
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/DiskIO.jpg}}
@@ -169,7 +172,7 @@ from the table below
 \end{figure}
 
 \item Network I/O Performance \\
-Network  I/O is measured with Netperf \\
+Network  I/O is measured with Netperf \cite{www-semantics} \\
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/NetworkIO.jpg}}
@@ -183,7 +186,7 @@ Network  I/O is measured with Netperf \\
 This test concludes that containers performed well but needs to
 improve on security and isolation. 
 
-\section{Use Cases}\cite{www-virtual}
+\section{Use Cases}
 \begin{enumerate}
 \item Continous Integration \\
 With the concept of DevOps there is a tight integration between the
@@ -210,7 +213,7 @@ and doesn't come with the lot of dependencies they are the best choice
 for Microservices. \cite{www-virtual}
 \end{enumerate}
 
-\section{LIMITATIONS} \cite{www-search}
+\section{LIMITATIONS} 
 
 \begin{enumerate}
 \item Containers are not suitable for all the purposes , some of the

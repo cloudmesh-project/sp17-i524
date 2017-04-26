@@ -1,0 +1,6 @@
+---
+- name: Install Git on Ubuntu
+  apt: name=git update_cache=yes state=latest
+  become: yes
+
+

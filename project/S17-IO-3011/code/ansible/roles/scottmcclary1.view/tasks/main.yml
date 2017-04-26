@@ -1,0 +1,40 @@
+- name: Step 1 of 7 -> Generate 55 Plots
+  shell: . /home/cc/.bashrc && /home/cc/.venv/bin/python /home/cc/cloudmesh.cdms-master/code/scripts/plot.py /home/cc/cloudmesh.cdms-master/code/trap_analysis/part-00000
+  args:
+    executable: /bin/bash
+
+- name: Step 2 of 7 -> Fetch Plots
+  fetch:
+    src: /home/cc/plot1-3.png
+    dest: ../output/plots/
+    flat: yes
+
+- name: Step 3 of 7 -> Fetch Plots
+  fetch:
+    src: /home/cc/plot4-9.png
+    dest: ../output/plots/
+    flat: yes
+
+- name: Step 4 of 7 -> Fetch Plots
+  fetch:
+    src: /home/cc/plot0-9.png
+    dest: ../output/plots/
+    flat: yes
+
+- name: Step 5 of 7 -> Fetch Plots
+  fetch:
+    src: /home/cc/plot5-8.png
+    dest: ../output/plots/
+    flat: yes
+
+- name: Step 6 of 7 -> Fetch OpenMP CDMS Raw Results
+  fetch:
+    src: /home/cc/cloudmesh.cdms-master/code/trap_analysis/part-00000
+    dest: ../output/raw/
+    flat: yes
+
+- name: Step 7 of 7 -> Fetch Hadoop CDMS Raw Results
+  fetch:
+    src: /home/cc/cloudmesh.cdms-master/data/data_Sep15_2014_run08.txt
+    dest: ../output/raw/
+    flat: yes

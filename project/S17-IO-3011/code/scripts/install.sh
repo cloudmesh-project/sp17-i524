@@ -1,6 +1,10 @@
 #!/bin/bash
-#move to correct directory
+#Move to correct directory
 cd ansible
 
-#Run ansible playbook:
-ansible-playbook -i inventory install.yml
+#Turn off SSH authenticity checking
+export ANSIBLE_HOST_KEY_CHECKING=false
+
+#Run ansible playbooks:
+ansible-playbook -i inventory.txt install_base.yml
+ansible-playbook -i inventory.txt install_master.yml

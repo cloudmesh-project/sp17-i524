@@ -25,8 +25,8 @@
   timely decisions, this has been challenging with batch-based systems
   due to unordered and unbounded dataset being generated and consumed
   thus requiring a paradigm shift to make it possible accommodate
-  these datasets.  This paper introduces Apache Beam previously Google
-  Cloud Dataflow, a unified model for building data processing
+  these datasets. Apache Beam previously Google Cloud Dataflow, a
+  unified model solves these problems by providing data processing
   pipelines that handle both batch and stream processes for bound and
   unbound data.
 \newline
@@ -78,16 +78,16 @@ portable allowing it to produce programs that can execute in many
 pluggable environments using “runners” which connect to the execution
 engines. At the moment, pluggable “runners” exist for Artisan, Apache
 Spark, single-node local execution runner by Google and Google hosted
-cloud Dataflow service execution engines
-
-Figure \ref{fig:false-color}
+cloud Dataflow service execution engines.
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/sdkstructure}}
 \caption{Dataflow Execusion Engine \cite{www-beamincubate}}
-\label{fig:false-color}
+\label{fig:execusion-engine}
 \end{figure}
+Figure \ref{fig:execusion-engine} shows an image of Dataflow Execusion Engine. 
+\newline
 
 When programing with Dataflow SDK, you essentially create a data
 processing job to be executed by one of the runner services. The model
@@ -132,32 +132,31 @@ and only that Pipeline. PCollection has the following limitations:
 
 \subsection{Dataflow SDK}
 
-As mentioned at the beginning of the paper, Cloud Dataflow was
+As mentioned in introduction section, Cloud Dataflow was
 submitted for incubation to Apache and now the project is referred to
 as Apache Beam. Thus, in the example below Apache Beam is referenced.
 
 \begin{figure}[htbp]
-\centering \fbox{\includegraphics[width=\linewidth]{images/dataflow}}
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/dataflow}}
 \caption{Apache Beam dataflow \cite{www-wordcountflow}}
-\label{fig:false-color}
+\label{fig:apache-beam}
 \end{figure}
+Figure \ref{fig:apache-beam} shows an image of Beam dataflow.
+\newline
 
 Below is the processing pipeline code, which is accomplishable with a
 few lines of code.
 
-\begin{figure}[htb]
-\begin{quote}
-\begin{Verbatim}
-    
+\begin{verbatim}
 # ... other imports ...
 import google.cloud.dataflow as df
 
-@df.typehints.with_output_types(df.typehints.Tuple[int,
-  float])
+@df.typehints.with_output_types(df.typehints.Tuple[int, float])
 def parse_sales_record(line):
-  # Lines look like this:
-# {"Timestamp": 1234.56, "Price": 10, "ProductName":
-  "Name", "ProductID": 4}
+# Lines look like this:
+# {"Timestamp": 1234.56, "Price": 10, "ProductName": "Name",
+  "ProductID": 4}
 record = json.loads(line)
 return int(record['ProductID']), float(record['Price'])
 
@@ -176,10 +175,8 @@ PATH/*.json'))
         CREATE_IF_NEEDED,
         write_disposition=df.io.BigQueryDisposition.
         WRITE_TRUNCATE)))
-p.run() \end{Verbatim}
-\end{quote}
-\caption{Processing Python Pipeline Code \cite{www-pythoncode}}\label{alg:python}
-\end{figure}
+        p.run()
+\end{verbatim}
 
 \section{Relation to Big Data}
 
@@ -200,7 +197,7 @@ crimes. By leveraging Cloud Dataflow real-time streaming, the industry
 can identify anomalies and notify necessary authorities for further
 investigations thus preventing catastrophic outcome.
 
-\subsection{Improve store layout}
+\subsection{Improve Store Layout}
 
 Sales are attributed to customers traffic, understanding the behavior
 of the customers when they are in a store and re-aligning to cater
@@ -239,7 +236,7 @@ limited to regional while Dataflow is global \cite{www-awscomparison}.
 
 Like Cloud Dataflow, Azure Stream Analytics is a fully managed
 real-time event processing engine capturing data from different
-sources and provide analytics [www-asa]. Stream Analytics is provided
+sources and provide analytics \cite{www-asa}. Stream Analytics is provided
 through Azure portal where analytics jobs can be authored. Stream
 Analytics connectivity is limited to Azure platform [www-asa] whereas
 Cloud Dataflow runners integrate with Flink, Spark and local runners

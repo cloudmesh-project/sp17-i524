@@ -1,0 +1,66 @@
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{SciDB: An Array Database}
+
+\author[1]{Piyush Rai}
+
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: piyurai@iu.edu}
+
+\affil[+]{HID - S17-IO-3014}
+
+\dates{\today}
+
+\ociscodes{Array Database, SciDB}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/piyurai/sp17-i524/tree/master/paper2/S17-IO-3014/report.pdf}}
+
+
+\begin{abstract}
+	\href{http://www.paradigm4.com/}
+	{SciDB} is an open-source array database developed and maintained by Paradigm4. This paper explores it's archtectural overview and it's features designed to optimize the array data processing.\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Introduction}
+	
+	SciDB is an open source DBMS based on multi-dimensional array data model and runs on Linux platform. The data store is optimized for mathematical operations such as linear algebra and statistical analysis. The data is organized into arrays which can be stored in different forms including vectors and matrices with general form being n-dimensional arrays. It can be used to used to analyze scientific data from various data acquisition devices like sensors and wearables \cite{archSummary}. Array databases are optimized for homogeneous data models which are found in the field such as IOT and earth and space observation.
+	
+	\section{Architectural Overview}
+	
+	The array and their dimensions are named. The data tuple stored in each cell contain values for one or more attributes which are named and typed. The operations such as to filter and join arrays and aggregation over the cell values are supported. The arrays can be partitioned and per-partition values such as sum can be computed. Operations on large sized arrays could be performed without requiring them to fit in-memory. It also has 'missing data' facilities to reduce noise and impute missing values in the data \cite{archSummary}.
+	
+	The arrays are divided into chunks and partitioned across the nodes in the cluster, with provision of caching some of them in the main memory. SciDB uses shared-nothing architecture. Each node in the cluster has it's own resources such as memory, storage and  CPU. The nodes can be added to or removed from the cluster without stopping the system. SciDB is ACID compliant. It uses Multiversion Concurrency Control	(MVCC) to retain old values of data and maintains log of the changes in database state over time. In case the data history isn't required, the facility of purging the redundant data is also available.
+	
+	Scalability and parallelism are the core requirements behind the design philosophy. Multiple machines connected over a network cluster are running server software instances. Disjoint subsets of data are stored locally on each machine. The input query is divided into smaller components which is applied by each instance to it's locally stored data. The information regarding which data is stored at what node is maintained by using Multidimensional Array Clustering (MAC) \cite{www-scidb-mac}. Data values close to each other are stored in the same chunk of storage media for faster access of range selects. It helps to minimize data movements among nodes. An optional user-settable chunk overlap can also be employed which enhances the performance of window queries that straddle two chunks. SciDB maintains a liveness-­list of functioning instances which keeps getting updated as and when the nodes are added or removed from the cluster. 
+	
+	\section{Extensibility}
+	
+	To be able to cover different applications for scientific computations, the existing computing functionality can be extended by embedding user-defined functions and algorithms into the system. It uses registries to maintain information about data such as types and functions available in the system. This information is used to break down the query into sequence of operations.  A number of client APIs are provided so that the system can be interfaced with tools like R and Python. With SciDB-­R and SciDB-­Py libraries, data in SciDB can be referenced as data frame objects.Bulk and parallel loading is supported for various formats such as binary and text. 
+	
+	
+	\section{Alternatives}
+	
+	SciDB tries to overcome the problem of scalability with traditional RDBMS and and lack of ACID support in NOSQL databases \cite{www-stonebraker-interview}. There are a few other array databases such as Rasdaman database. Rasdaman is one of the oldest array databases to be rolled out \cite{www-rasdaman-impact}. It's open source and it's source code is easily available. It's also available in form of VM image. However, it's source code is divided into two communities, one open-source and other enterprise. SciDB provides Amazon Machine Images to try out the database. SciDB project also started as an open source project. However, instructions and source code for installing SciDB are available at \cite{www-scidb-releasenotes} which can be accessed only after registration. SciDB has an in-depth documentation available explaining it's core features and design.
+	
+	\section{Conclusion}
+	
+	SciDB is designed for scalability and performance while at the same time complying with ACID properties. It also employs multiple methodologies to enhance the performance of the queries by dividing the data across multiple nodes and to reduce the data flow among nodes. It also provides the facility to embed user defined functions and algorithms into the system so that large variety of big data applications requiring scientific computation on homogeneous collection of data can benefit from it. SciDB is developed and supported by Paradigm4.
+	
+	
+	% Bibliography
+	
+	\bibliography{references}
+	
+	
+\end{document}

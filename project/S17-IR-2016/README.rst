@@ -1,14 +1,14 @@
 :orphan:
 
-submitted: "yyyy-mm-dd"
+submitted: "2016-04-16"
 
-author: "ENTER YOUR NAME HERE"
+author: "Anvesh Nayan Lingampalli"
 
-hid: "ENTER YOUR HID HERE"
+hid: "S17-IR-2016"
 
-pid: "ENTER YOUR PID HERE"
+pid: "S17-IR-2016"
 
-github: "YOUR GITHUB USERNAME"
+github: "Anveling"
 
 report: "report.pdf"
 

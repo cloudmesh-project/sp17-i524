@@ -1,0 +1,15 @@
+[Unit]
+Description=HBase Thrift Server
+After=network.target
+
+[Service]
+Environment=HADOOP_HOME={{ hadoop_home }} HBASE_HOME={{ hbase_home }}
+WorkingDirectory={{ hbase_home }}
+ExecStart={{ hbase_home }}/bin/hbase thrift start
+User={{ hadoop_user }}
+KillMode=process
+KillSignal=SIGINT
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+---
+- hosts: kafka
+  remote_user: cc
+  become: yes
+  vars:
+    scala_version: 2.11.8
+    sbt_version: 0.13.5
+    zookeeper_version: 3.4.9
+    kafka_version: 0.10.2.0
+  
+
+  tasks:
+    - include: tasks/install-java.yml
+    - include: tasks/install-scala.yml
+    - include: tasks/install-sbt.yml
+    - include: tasks/install-zookeeper.yml  
+    - include: tasks/install-kafka.yml
+

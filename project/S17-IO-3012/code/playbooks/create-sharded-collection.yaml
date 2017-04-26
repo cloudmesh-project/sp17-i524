@@ -1,0 +1,47 @@
+---
+- hosts: mongodb_mongos_1
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Upload find_collection.js 
+      copy:
+        src: ../json/find_collection.js
+        dest: "{{MONGO_DIR}}/find_collection.js"
+        mode: 0774
+      become: true
+    - name: Upload shard_distribution.js 
+      copy:
+        src: ../json/shard_distribution.js
+        dest: "{{MONGO_DIR}}/shard_distribution.js"
+        mode: 0774
+      become: true
+    - name: Upload create_collection.js 
+      copy:
+        src: ../json/create_collection.js
+        dest: "{{MONGO_DIR}}/create_collection.js"
+        mode: 0774
+      become: true
+    - name: Upload mapreduce.js 
+      copy:
+        src: ../json/mapreduce.js
+        dest: "{{MONGO_DIR}}/mapreduce.js"
+        mode: 0774
+      become: true
+    - name: Upload delete_collection.js 
+      copy:
+        src: ../json/delete_collection.js
+        dest: "{{MONGO_DIR}}/delete_collection.js"
+        mode: 0774
+      become: true
+    - name: Create collection
+      shell: mongo < {{MONGO_DIR}}/create_collection.js
+    - name: Upload shard_collection.js 
+      copy:
+        src: ../json/shard_collection.js
+        dest: "{{MONGO_DIR}}/shard_collection.js"
+#        owner: cc
+#        group: cc
+        mode: 0774
+      become: true
+    - name: Shard collection
+      shell: mongo < {{MONGO_DIR}}/shard_collection.js
+

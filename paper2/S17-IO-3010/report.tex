@@ -1,6 +1,21 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \usepackage{hyperref}
+\usepackage{color}
+\usepackage{listings}
+\lstdefinestyle{BashInputStyle}{
+  language=bash,
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{yellow!20},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+
 \journal{i524} 
 
 \title{Robot Operating System (ROS)}
@@ -47,11 +62,14 @@ The OSRF designed ROS as a distributed, modular system.  The OSRF maintains a su
 
 The modules or packages, which are analogous to packages in Linux repositories or libraries in other software distributions such as \textit{R}, provide solutions for numerous robot-related challenges.  General categories include a) drivers, such as sensor and actuator interfaces; b) platforms, for steering and image processing, etc.; c) algorithms, for task planning and obstacle avoidance; and, d) user interfaces, such as tele-operation and sensor data display. \cite{www-software-categories}
 
-\subsection{Communications Infrastructure -- General}
+\subsection{Communications Infrastructure}
+\subsubsection{General}
 OSRF maintains three distinct communication methods for ROS: a) \textit{message passing}; b) \textit{services}; and, c) \textit{actions}.  Each method utilizes ROS' standard communication type, the \textit{message} \cite{www-ros-core-components}.  Messages, in turn, adhere to ROS' \textit{interface description language}, or IDL. The IDL dictates that messages should be in the form of a data structure comprised of typed fields \cite{www-ros-messages}. Finally, \textit{.msg} files store the structure of messages published by various nodes so that ROS' internal systems can generate source code automatically.
 
-\subsection{Communications Infrastructure -- Message Passing}
-ROS implements a publish-subscribe anonymous message passing system for inter-process communication, hereinafter pubsub, as its most-basic solution for roboticists.  A pubsub system consists of two complementary pieces: a) a device, node or process, hereinafter node, publishing messages, i.e., information, to a \textit{topic}; and b) another node \textit{listening to} and ingesting the information from the associated topic.  Pubsub's method of operation analogizes to terrestrial radio.  In the analogy, the radio station represents the publishing node, the radio receiver maps to the subscribing node and the frequency on which one transmits and the other receives represents the topic.  
+\subsubsection{Message Passing}
+ROS implements a publish-subscribe anonymous message passing system for inter-process communication, hereinafter pubsub, as its most-basic solution for roboticists.  A pubsub system consists of two complementary pieces: a) a device, node or process, hereinafter node, publishing messages, i.e., information, to a \textit{topic}; and b) another node \textit{listening to} and ingesting the information from the associated topic.  Designating topics to which a node should subscribe and topics to which a node should publish falls to the roboticist.  ROS' \textit{rosnode} command line tool conveniently "display[s] a list of active topics, the publishers and subscribers of a specific topic, the publishing rate of a topic, the bandwidth of a topic, and messages published to a topic" \cite{www-ros-rostopic}.
+
+Pubsub's method of operation analogizes to terrestrial radio.  In the analogy, the radio station represents the publishing node, the radio receiver maps to the subscribing node and the frequency on which one transmits and the other receives represents the topic.  Unlike terrestrial radio, though, ROS provides a lookup mechanism versus "flipping through the dial."
 
 The OSRF touts the pubsub communications paradigm as the ideal method  primarily due to its anonymity and its requirement to communicate using its message format.  With respect to the first point, the nodes involved in bilateral or multilateral conversations need only know the topic on which to publish or subscribe in order to communicate.  As a result, nodes can be replaced, substituted or upgraded without changing a single line of code or reconfiguring the software in any manner.  The subscriber node can even be deleted entirely without affecting any aspect of the robot except those nodes that depend on the deleted node.
 
@@ -59,16 +77,17 @@ In addition, ROS' pubsub requires well-defined interfaces between nodes in order
 
 Finally, ROS' pubsub can natively replay messages by saving them as files.  Since a subscriber node processes messages received irrespective of the message's source, publishing a saved message from a subscriber node at a later time works just as well as an actual topic feed.  One use of asynchronous messaging: postmortem analysis and debugging.
 
-\subsection{Communications Infrastructure -- Services}
+\subsubsection{Services}
 ROS also provides a synchronous, real-time communication tool under the moniker \textit{services} \cite{www-ros-services}. Services allow a subscribing node to request information from a publishing node instead of passively receiving whatever the publishing node broadcasts whenever it broadcasts it.  A service consists of two messages, the request and the reply.  It otherwise mirrors ROS' message passing function.  Finally, users can establish a continuous connection between nodes at the expense of service provider flexibility.
 
-\subsection{Communications Infrastructure -- Actions}
-ROS \textit{actions} offer a more-advanced communication paradigm than either message passing or services \cite{www-ros-actionlib}.  Actions, which use the basic message structure from message passing, allow roboticists to create a request to accomplish some task, receive progress reports about the task completion process, receive task completion notifications and / or cancel the task request.  For example, the roboticist may create a task, or equivalently, initiate an action, for the robot to conduct a laser scan of the area.  The request would include the scan parameters, such as minimum scan angle, maximum scan angle and scan speed.  During the process, the node conducting the scan will regularly report back its progress, perhaps as a value representing the percent of the scan completed, before returning the results of the scan, which should be a point cloud.
+\subsubsection{Actions}
+ROS \textit{actions} offer a more-advanced communication paradigm than either message passing or services \cite{www-ros-actionlib}.  Actions, which use the basic message structure from message passing, allow roboticists to create a request to accomplish some task, receive progress reports about the task completion process, receive task completion notifications and / or cancel the task request.  For example, the roboticist may create a task, or equivalently, initiate an action, for the robot to conduct a laser scan of the area.  The request would include the scan parameters, such as minimum scan angle, maximum scan angle and scan speed.  During the process, the node conducting the scan will regularly report back its progress, perhaps as a value representing the percent of the scan completed, before returning the results of the scan, which should be a point cloud.  Roboticists can program a ROS-driven robot to attempt to accomplish any task imaginable, subject to physical realities.  Sample actions: a) move X meters left; b) detect the handle of a door; and / or c) locate an empty soda can on a table, pick it up to determine if it is empty enough to recycle, crush it if it is empty enough, identify the recyle bin and then place it in the recylce bin \cite{www-ros-actionlib02}. 
 
-\subsection{Tools -- Standard Messages}
-ROS' extensive use in the robotics realm has allowed it to create message standards for various robot components \cite{www-ros-core-components}.  Standard message definitions exist "for geometric concepts like poses, transforms, and vectors; for sensors like cameras, IMUs and lasers; and for navigation data like odometry, paths, and maps; among many others."  These standards facilitate interoperability amongst robot components as well as easing development efforts by roboticists. 
+\subsection{Tools}
+\subsubsection{Message Standards}
+ROS' extensive use in the robotics realm has allowed it to create message standards for various robot components \cite{www-ros-core-components}.  In this case, \textit{message standards} refers to expectations regarding information and information types robot components will provide to subscribing nodes.  For instance, standard message definitions exist "for geometric concepts like poses, transforms, and vectors; for sensors like cameras, IMUs and lasers; and for navigation data like odometry, paths, and maps; among many others."  These standards facilitate interoperability amongst robot components as well as easing development efforts by roboticists. 
 
-\subsection{Tools -- Robot Geometry Library}
+\subsubsection{Robot Geometry Library}
 Robots with independently movable components, such as appendages (with joints) or movable sensors, must be able to coordinate such movements in order to be usable.  Maintaining an accurate record of where a movable component is in relation to the rest of the robot presents a significant challenge in robotics \cite{www-ros-core-components}. 
 
 \begin{figure}[htbp]
@@ -80,17 +99,18 @@ Robots with independently movable components, such as appendages (with joints) o
 
 ROS addresses this issue with its \textit{transform} library.  The \textit{tf} library tracks components of a robot using three-dimensional coordinate frames \cite{www-ros-robot-geometry}.  It records the relationship between coordinate frame positional values at sequential points in time in a tree structure.  tf's built-in functions allow the roboticist to transform a particular coordinate frame's values to same basis as a different coordinate frame's values.  As a result, the user, or the user's program, can always calculate any coordinate frame's relative position to any or all of the other coordinate frame positions at any point in time.  Although the first-generation library, \textit{tf}, has been deprecated in favor of the second-generation one, \textit{tf2}, the Foundation and ROS users still refer to the library as tf.
 
-\subsection{Tools -- Robot Description Language}
+\subsubsection{Robot Description Language}
 ROS describes robots in a machine-readable format using its \textit{Unified Robot Description Format}, or URDF \cite{www-ros-core-components}.  The file delineates the physical properties of the robot in XML format.  URDF files enable use of the tf library, useful visualizations of the robot and the use of the robot in simulations.  
 
-\subsection{Tools -- Diagnostics}
+\subsubsection{Diagnostics}
 ROS' diagnostics meta-package, i.e., a package of related packages,  "contains tools for collecting, publishing, analyzing and viewing diagnostics data \cite{www-ros-diagnostics}."  ROS' diagnostics take advantage of the aforementioned message system to allow nodes to publish diagnostic information to the standard diagnostic topic.  The nodes use the diagnostic\_updater and self\_test packages to publish diagnostic information, while users can access the information using the rqt\_robot\_monitor package.  ROS does not require nodes to include certain information in their respective publications, but diagnostic publications generally provide some standard, basic information.  That information may include serial numbers, software versions, unique incident IDs, etc. 
 
-\subsection{Tools -- Command Line Interfaces (CLI)}
+\subsubsection{Command Line Interfaces (CLI)}
+ROS provides at least 45 command line tools to the roboticist \cite{www-ros-cli}.  Therefore, ROS can be setup and run entirely from the command line.  However, the GUI interfaces remain more popular among the user-base.  Examples of ROS CLI tools include: a) {\color{green} \lstinline[style=BashInputStyle]!rosmsg! }, which allows the user to examine messages, including the data structure of .msg files \cite{www-ros-messages}; b) {\color{green} \lstinline[style=BashInputStyle]!rosbag! }, a tool to perform various operations on .bag files, i.e., saved node publications; and, c) {\color{green} \lstinline[style=BashInputStyle]!rosbash! }, which extends bash, a Linux shell program, with ROS-related commands. 
 
-ROS provides at least 45 command line tools to the roboticist \cite{www-ros-cli}.  Therefore, ROS can be setup and run entirely from the command line.  However, the GUI interfaces remain more popular among the user-base.  Examples of ROS CLI tools include: a) \textit{rosmsg}, which allows the user to examine messages, including the data structure of .msg files \cite{www-ros-messages}; b) \textit{rosbag}, a tool to perform various operations on .bag files, i.e., saved node publications; and, c) \textit{rosbash}, which extends bash, a Linux shell program, with ROS-related commands. 
+% include: a) \colorbox{green}{{\color{white} \lstinline[style=BashInputStyle]!rosmsg! }}, which allows the user to examine messages, including the data structure of 
 
-\subsection{Tools -- Graphical User Interfaces (GUI)}
+\subsubsection{Graphical User Interfaces (GUI)}
 OSRF includes two commonly-used GUIs, \textit{rviz} and \textit{rqt} \cite{www-ros-core-components}, in the core ROS distribution.  rviz creates 3D visualizations of the robot, as well as the sensors and sensor data specified by the user.  This component renders the robot in 3D based on a user-supplied URDF document.  If the end-user wants or needs a different GUI, s/he can use rqt, a Qt-based GUI development framework.  It offers plug-ins for items such as: a) viewing layouts, like tabbed or split-screens; b) network graphing capabilities to visualize the robot's nodes; c) charting capabilities for numeric values; d) data logging displays; and, e) topic (communication) monitoring.   
 
 \subsection{Ecosystem}
@@ -111,14 +131,19 @@ Although the OSRF distributes the main ROS elements under the BSD-3 license, it 
 \section{Use Cases}
 ROS' end-markets, its use cases, include manipulator robots, i.e., robotic arms with grasping units; mobile robots, such as autonomous, mobile platforms; autonomous cars; social robots; humanoid robots, unmanned / autonomous vehicles; and an assortment of other robots \cite{www-ros-ecosystem}.
 
+\begin{figure*}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/autoAuto.png}}
+\caption{Estimated Amount of Data Produced by an Autonomous Automobile \cite{www-ros-autoAuto01}}
+\label{fig:autonomous automobile data production}
+\end{figure*}
 
-\subsection{Use Cases for Big Data}
+\subsection{Automated Data Collection Platform}
+Fetch Robotics, Inc. offers its \textit{Automated Data Collection Platform} robot to the market so corporations can "[g]ather environmental data more frequently and more accurately for [its] Internet of Things...and Big Data Applications \cite{www-ros-fetch}." Fetch's system automatically collects data, such as RFID tracking (inventory management) or in-store shelf surveys. The latter service began in January 2017 when Fetch partnered with Trax Image Recognition, which makes image recognition software \cite{www-ros-trax}.  
 
-Fetch Robotics, Inc. offers its \textit{Automated Data Collection Platform} robot to the market so corporations can "[g]ather environmental data more frequently and more accurately for [its] Internet of Things...and Big Data Applications. \cite{www-ros-fetch}" Fetch's system automatically collects data, such as RFID tracking (inventory management) or in-store shelf surveys. The latter service began in January 2017 when Fetch partnered with Trax Image Recognition, which makes image recognition software \cite{www-ros-trax}.  
+\subsection{Autonomous Robots of Various Natures}
+The applications of autonomous robots abound, especially for monotonous or dangerous work.  For instance, ClearPath Robotics, a company that sells autonomous robots using ROS, currently highlights the following use cases: a) "geotechnical mapping of rock masses, a crucial step in predicting potentially lethal rock falls and rock bursts in and around mines \cite{www-ros-autoAuto02};" minesweeping \cite{www-ros-autoAuto03}; and vibration control of bridges \cite{www-ros-autoAuto04}. In order to accomplish any of the aforementioned tasks, or any of the other tasks, the robots need sensors, such as lidar, high-definition cameras and / or sonar.  One estimate places lidar and camera data production at 10MB to 70MB per second and 20MB to 40MB per second \cite{www-ros-autoAuto01}.  Given the multitude of addressable end markets, as well as the probability of multiple robots with multiple sensors associated with one effort in any particular end market, the data produced by a ROS robot vaults it into \textit{big data} territory.  A single ROS instance may never create 4,000GB of data per day like an autonomous consumer automobile, but a small swarm of moderately complex robots run by a three-person team will likely prompt the team to avail itself of big data techniques.
 
-\section{Educational material}
-
-Those interested in learning more about OSRF's ROS should visit ROS' homepage, \url{www.ros.org} or its wiki page, \url{wiki.ros.org}  In addition, ClearPath Robotics maintains a useful set of tutorials at \url{https://goo.gl/hRmM3k}.  Finally, several books dedicated to programming with ROS, such as \textit{Programming Robots with ROS: A Practical Introduction to the Robot Operating System} by Quibley, Gerkey and Smart can be purchased at retail.
 \section{Conclusion}
 
 ROS offers a number of attractive features to its users, including a well-developed and standardized intra-robot communication system, modular design, vetted third-party additions and legitimacy via real-world applications.  Although its status as open source software precludes direct support from its parent organization, OSRF, for-profit organizations and the software's active community of users provide reassurances to any roboticist worried about encountering a seemingly-insurmountable problem.   

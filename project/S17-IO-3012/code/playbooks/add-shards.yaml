@@ -1,0 +1,16 @@
+---
+- hosts: mongodb_mongos_1
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Upload add_shards.js 
+      copy:
+        src: ../json/add_shards.js
+        dest: "{{MONGO_DIR}}/add_shards.js"
+#        owner: cc
+#        group: cc
+        mode: 0774
+      become: true
+    - name: Add shards
+      shell: mongo < {{MONGO_DIR}}/add_shards.js
+
+

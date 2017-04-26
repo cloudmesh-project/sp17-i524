@@ -22,13 +22,13 @@ proposal_submission: 03/09/2017 hh:mmam
 
 report: report.pdf
 
-report_submission: mm/dd/2017 hh:mmam
+report_submission: 04/24/2017 01:04am
 
-status: I am currently working on connecting to IU's VPN in the Chameleon Cloud so that I can use IU's Intel license server (using ansible).
+status: I have completed the project.
 
-dataset_url: https://github.com/scottmcclary1/CDMS-Data
+dataset_url: https://github.com/cloudmesh/cloudmesh.cdms
 
-deployment: I am currently deploying an Intel Compiler, unzip and a Charge Detection Mass Spectrometry research application using Ansible.
+deployment: Deploys Hadoop Cluster, Intel Compiler, Charge Detection Mass Spectrometry research application using Cloudmesh and Ansible.
 
 abstract: a copy of the abstract, make sure to use proper indentation in RST format
 

@@ -1,3 +1,0 @@
-[remote]
-
-129.114.33.156	ansible_connection=ssh	ansible_user=cc

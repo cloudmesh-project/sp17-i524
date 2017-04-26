@@ -101,7 +101,7 @@ appropriate\cite{www-avro-encoding}.
 \subsection{Object Container Files}
 
 Avro includes an object container file format. Objects stored in
-blocks that may be compressed and syncronization markers are used to
+blocks that may be compressed and synchronization markers are used to
 permit splitting of the files for MapReduce processing.  File consists
 of, a header followed by one or more data blocks.  Header consists of
 four bytes ‘O’, ‘b’, ‘j’, 1. It also consists of the file metadata,
@@ -144,11 +144,9 @@ compact data encoding.
 
 \subsection{Schema Evolution}
 
-This feature of Avro, is essentially a robust way to support various
-data schemas that change over time.  Avro cleanly handles schema
-changes such as missing fields, added fields and changed fields. By
-using this feature, new programs can read old data and old programs
-can read new data.
+Avro cleanly handles schema changes such as missing fields, added
+fields and changed fields. By using this feature, new programs can
+read old data and old programs can read new data.
 
 \section{Application}
 
@@ -174,7 +172,7 @@ binary data to the server and processes the response. Eventlet.wsgi
 
 Avro is not the fastest in serialization process, but it is one of the
 faster frameworks.  The syntax of Avro can be error prone. And error
-handling is complex whn compared with Protocol buffers and Thrift.
+handling is complex when compared with Protocol buffers and Thrift.
 
 \section{Educational Material}
 

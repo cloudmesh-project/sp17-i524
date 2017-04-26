@@ -1,6 +1,6 @@
 from __future__ import print_function
 import glob
-import yaml
+from ruamel import yaml
 from pprint import pprint
 import sys
 import re
@@ -190,6 +190,8 @@ print ("""
 print(titlepagemacro)
 
 print("""
+
+\\textheight=23.5cm
 
 \\begin{document}
 %\\title{Big Data Technologies}

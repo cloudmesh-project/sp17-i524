@@ -1,0 +1,10 @@
+---
+- hosts: mongodb_all
+  gather_facts: False
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: install python 2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      become: true
+
+# https://gist.github.com/gwillem/4ba393dceb55e5ae276a87300f6b8e6f

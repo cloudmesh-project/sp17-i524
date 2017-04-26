@@ -1,0 +1,3 @@
+---
+-   name: Install PIP
+    apt: pkg=python-pip state=installed update_cache=true

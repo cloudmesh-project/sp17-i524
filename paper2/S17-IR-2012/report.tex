@@ -35,7 +35,7 @@ systems. \newline
 
 \section{Introduction}
 
-With the continuous growth of Hadoop the range of computational
+With the continuous growth of Hadoop\cite{hadoop} the range of computational
 primitives expected by its users has also broadened. A number of
 performance and workload studies have shown that Hadoop MapReduce is a
 poor fit for iterative computations, such as machine learning and
@@ -138,17 +138,18 @@ systems, Tang and Wake which are both language independent and allow
 REEF to bridge the JVM and .NET.\newline
 
 Tang is a configuration management and checking framework
-\cite{reeftang}. It emphasizes explicit documentation and automatic
-checkability of configurations and applications instead of ad-hoc,
-application-specific configuration and bootstrapping logic. It not
-only supports distributed, multi-language applications but also
-gracefully handles simpler use cases. It makes use of dependency
-injection to automatically instantiate applications. Given a request
-for some type of object, and information that explains how
-dependencies between objects should be resolved, dependency injectors
-automatically instantiate the requested object and all of the objects
-it depends upon. Tang makes use of a few simple wire formats to
-support remote and even cross-language dependency injection.\newline
+\cite{reeftang}. It emphasizes explicit documentation and ability of
+configurations and applications of being automatically checkable
+instead of ad-hoc, application-specific configuration and
+bootstrapping logic. It not only supports distributed, multi-language
+applications but also gracefully handles simpler use cases. It makes
+use of dependency injection to automatically instantiate
+applications. Given a request for some type of object, and information
+that explains how dependencies between objects should be resolved,
+dependency injectors automatically instantiate the requested object
+and all of the objects it depends upon. Tang makes use of a few simple
+wire formats to support remote and even cross-language dependency
+injection.\newline
 
 Wake is an event-driven framework based on ideas from SEDA, Click,
 Akka and Rx \cite{reefwake}. It is general purpose in the sense that
@@ -171,7 +172,7 @@ profilers.
 
 Given REEF's position in the big data stack, there are three
 relationships to consider: Projects that fit below, on top of, or
-alongside REEF in the stack \cite{reefproposal}.
+alongside REEF in the stack.
 
 \subsection{Below REEF}
 REEF is designed to facilitate application development on top of
@@ -187,18 +188,18 @@ addresses.
 \subsection{Alongside REEF}
 
 Apache builds library layers on top of a resource management
-platform. Twill, Slider, and Tez are notable examples in the
-incubator. These projects share many objectives with REEF. Twill
-simplifies programming by exposing a programming model. Apache Slider
-is a framework to make it easy to deploy and manage long-running
-static applications in a YARN cluster. Apache Tez is a project to
-develop a generic Directed Acyclic Graph (DAG) processing framework
-with a reusable set of data processing primitives. Apache Helix
-automates application-wide management operations which require global
-knowledge and coordination, such as repartitioning of resources and
-scheduling of maintenance tasks. Helix separates global coordination
-concerns from the functional tasks of the application with a state
-machine abstraction.
+platform. Twill, Slider, and Tez are notable examples in the incubator
+\cite{reefproposal}. These projects share many objectives with
+REEF. Twill simplifies programming by exposing a programming
+model. Apache Slider is a framework to make it easy to deploy and
+manage long-running static applications in a YARN cluster. Apache Tez
+is a project to develop a generic Directed Acyclic Graph (DAG)
+processing framework with a reusable set of data processing
+primitives. Apache Helix automates application-wide management
+operations which require global knowledge and coordination, such as
+repartitioning of resources and scheduling of maintenance tasks. Helix
+separates global coordination concerns from the functional tasks of
+the application with a state machine abstraction.
 
 \section{Conclusion}
 

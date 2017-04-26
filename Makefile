@@ -5,7 +5,12 @@ test: test-papers
 	./test-papers paper*/*
 
 
-
+all:
+	cd paper1; make
+	cd paper2; make
+	cd project; make
+	git commit -a -m "chg:usr: update proceedings"
+	git push
 
 .PHONY: docker-image docker-run
 

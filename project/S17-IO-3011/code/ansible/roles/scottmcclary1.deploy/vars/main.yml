@@ -1,0 +1,5 @@
+---
+# vars file for scottmcclary1.deploy
+inventory_file: inventory.txt
+temporary_file: tmp.txt
+temporary_file2: tmp2.txt

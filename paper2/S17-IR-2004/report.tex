@@ -1,0 +1,222 @@
+\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\usepackage{fancyvrb}
+\journal{i524} 
+
+\title{Jelastic}
+
+\author[1]{Ajit Balaga, S17-IR-2004}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: abalaga@iu.edu, ajit.balaga@gmail.com}
+
+\dates{project-000, \today}
+
+\ociscodes{Cloud, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/argetlam115/sp17-i524/blob/master/paper2/S17-IR-2004/report.pdf}}
+
+\begin{abstract}
+Jelastic (acronym for Java Elastic) is an unlimited PaaS and Container based 
+IaaS within a single platform that provides high availability of applications, 
+automatic vertical and horizontal scaling via containerization to software 
+development clients, enterprise businesses, DevOps, System Admins, Developers, 
+OEMs and web hosting providers.\cite{www-jelastic2}\newline
+\end{abstract}
+
+\setboolean{displaycopyright}{true}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Enterprises are moving away from traditional virtualization solutions and 
+transitioning into the cloud. As software development in the enterprise becomes 
+more agile, there is an equivalent demand on IT to provide an infrastructure 
+that is responsive, scalable, highly available and secure. Enterprise IT 
+departments are responding with private cloud and hybrid cloud solutions that 
+provide IT-as-a-Service, a utility approach that delivers an agile 
+infrastructure to the user community, with ultimate control for administrators 
+but self-management for developers and users where appropriate. The promise of 
+the cloud was: simplicity, scalability, availability and reduced operating cost. 
+However, enterprises are quickly finding that current large-scale cloud 
+implementations are often complicated and expensive, often requiring the help of 
+third party integrators. Jelastic is a cloud service that solves the above 
+problems the above promises and allows enterprises to speed up the development 
+process.This paper introduces the architecture behind Jelastic.\cite{www-jelastic6}
+
+\section{Jelastic}
+Jelastic is a cloud platform solution that combines benefits of both Platform as
+a Service (PaaS) and Container as a Service cloud models, using an approach
+unleashes the full potential of a cloud for enterprises, ISVs, hosting service
+providers and developers. Jelastic software encompasses PaaS functionality, a
+complete infrastructure, smart orchestration, and containers support - all
+together.\cite{www-jelastic1}
+
+Jelastic solutions benefits for all kinds of clients:
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$}
+\item enterprises
+\item hosting providers
+\item developers
+\end{itemize}\cite{www-jelastic1}
+
+Some of the Jelastic key benefits:
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$}
+\item a turnkey Platform for Public, Private, Hybrid and Multi-Cloud deployments
+with automated continuous integration, delivery and upgrade processes
+\item support of numerous software stacks, extended with cartridges packaging
+model and custom Docker containers\cite{www-jelastic2}
+\item automated replication and true automated scaling, both vertical and
+horizontal - all applications scale up and down on demand
+\item various development environments for the most comfortable work experience
+- intuitive UI, open API and SSH access to containers
+\item intelligent workloads distribution with multi-cloud and multi-region
+management\cite{paper-jelastic2}
+\item smart pricing integration - alongside multiple billing systems support, 
+Jelastic provides comprehensive billing engine, quotas and access control
+policies
+\item embedded troubleshooting tools for metering, monitoring, logging, etc.
+\end{itemize}\cite{www-jelastic1}
+
+\section{Architecture}
+A consistent outline of the underlying Jelastic components with pointers to the
+corresponding documentation, namely:\cite{www-jelastic3}
+%\begin{itemize}
+%\item Сloudlet
+%\item Сontainer
+%\item Layer
+%\item Environment
+%\item Application
+%\item Hardware Node
+%\item Environment Region
+%\item Jelastic Platform
+%\end{itemize}
+%
+
+\subsection{Cloudlet}
+Cloudlet is a special infrastructure component that equals to 128 MiB of RAM and
+400 MHz of CPU power simultaneously. Such high granularity of resources allows
+the system to allocate the exactly required capacity for each instance in the
+environment. There are two types of cloudlets:
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$}
+\item Reserved Cloudlets are fixed amount of resources reserved in advance.
+Reserved cloudlets are used when the application load is permanent.
+\item Dynamic Cloudlets are added and removed automatically according to the
+amount of resources required. Dynamic cloudlets are used for applications with
+variable load or when it cannot be predicted in advance.
+\end{itemize}\cite{www-jelastic1}
+
+\subsection{Container}
+Container (node) is an isolated virtualized instance, provisioned for software
+stack handling and placed on a particular hardware node. Each container can be
+automatically scaled, both vertically and horizontally, making hosting of
+applications truly flexible. The platform provides certified containers for a
+lot of commonly used languages and the ability to deploy custom Docker
+containers. Each container has its own private IP and unique DNS record.\cite{www-jelastic4}
+
+\subsection{Layer}
+Layer (node group) is a set of similar containers in a single environment. There
+is a set of predefined layers within Jelastic topology wizard for certified
+containers, such as:\cite{paper-jelastic1}
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$}
+\item load balancer (LB)
+\item compute (CP)
+\item database (DB)
+\item data storage (DS)
+\item cacheVPS
+\item build node
+\item extra (custom layer)
+\end{itemize}\cite{www-jelastic1}
+
+The layers are designed to perform different actions with the same type of
+containers at once. The nodes can be simultaneously restarted or redeployed, as
+well as horizontally scaled manually or automatically based on the load triggers,
+checked for errors in the common logs and stats and make the required
+configurations via file manager for all containers in a layer. The containers of
+one layer are distributed across different hardware servers.\cite{www-jelastic5}
+
+\subsection{Environment}
+Environment is a collection of isolated containers for running particular
+application services. Jelastic provides built-in tools for convenient
+environment management. There is a number of actions that can be performed for
+the whole environment, such as stop, start, clone, migrate to another region,
+share with team members for collaborative work, track resource consumption, etc.
+Each environment has its own internal 3rd level domain name by default. A custom
+external domain can be easily bound or even further swapped with another
+environment for traffic redirection.\cite{www-jelastic2}
+
+\subsection{Application}
+Application is a combination of environments for running one project. A simple
+application with one or two stacks can be run inside a single environment.
+Applications with more complex topology usually require more flexibility during
+deploy or update processes They may be distributed across different types of
+servers and several environments, to be maintained independently. Application
+source code can be deployed from:\cite{paper-jelastic2}
+\begin{itemize}
+\renewcommand{\labelitemi}{\scriptsize$\square$}
+\item GIT/SVN repository
+\item local archive
+\item custom Docker template
+\end{itemize}\cite{www-jelastic1}
+
+\subsection{Hardware Node}
+Hardware node is a physical server or a big virtual machine that is virtualized
+via KVM, ESXi, Hyper-V, etc. Hardware nodes are sliced into small isolated
+containers that are used to build environments. Such partition provides the
+industry-leading multitenancy, as well as high density and smart resource
+utilization with the help of containers distribution according to the load
+across hardware nodes.\cite{www-jelastic3}\cite{paper-jelastic1}
+
+\subsection{Environment Region}
+Environment region is a set of hardware nodes orchestrated within a single
+isolated network. Each environment region has its own capacity in a specific
+data centre, predefined pool of private and public IP addresses and \cite{paper-jelastic2}
+corresponding resource pricing. Moreover, the initially chosen location can be
+effortlessly changed by migrating the project between available regions.\cite{www-jelastic4}
+
+
+\subsection{Jelastic Platform}
+Jelastic Platform is a group of environment regions and cluster orchestrator to
+control and act like a single system. This provides versatile possibilities to
+develop, deploy, test, run, debug and maintain applications due to the multiple
+options while selecting hardware - different capacity, pricing, location, etc.
+The platform provides a multi-data center or even multi-cloud solution for
+running your applications within a single panel, where each Platform is
+maintained by a separate hosting service provider with its local support team.\cite{www-jelastic1}
+
+\section{Conclusion}
+For enterprises, moving from traditional virtualization to the cloud using PaaS
+and IaaS can be a daunting proposition. However, the cloud market is growing 
+rapidly and enterprises are recognizing that PaaS allows them to develop and 
+deploy scalable, highly available cloud-based applications in a rapid and agile 
+fashion. Enterprises can capitalize on this new and sticky revenue stream by 
+quickly implementing PaaS and establishing a brand-defining presence in the 
+market. Jelastic provides the only integrated private cloud solution that 
+integrates PaaS/IaaS and is specifically built for enterprises.\cite{www-jelastic6}
+
+\bibliography{references}
+
+%\subsection{Sample Table}
+%Table \ref{tab:shape-functions} shows an example table.
+%\begin{table}[htbp]
+%\centering
+%\caption{\bf Shape Functions for Quadratic Line Elements}
+%\begin{tabular}{ccc}
+%\hline
+%local node & $\{N\}_m$ & $\{\Phi_i\}_m$ $(i=x,y,z)$ \\
+%\hline
+%$m = 1$ & $L_1(2L_1-1)$ & $\Phi_{i1}$ \\
+%$m = 2$ & $L_2(2L_2-1)$ & $\Phi_{i2}$ \\
+%$m = 3$ & $L_3=4L_1L_2$ & $\Phi_{i3}$ \\
+%\hline
+%\end{tabular}
+%  \label{tab:shape-functions}
+%\end{table}
+
+\end{document}
