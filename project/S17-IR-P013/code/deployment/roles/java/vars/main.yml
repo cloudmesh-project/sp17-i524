@@ -9,7 +9,7 @@ nodes:
 - ip: 129.114.33.165
   hostname: s17-ir-p013-wda-3
   internalip: 192.168.0.187
-- ip: 129.114.33.179 
+- ip: 129.114.33.179
   hostname: s17-ir-p013-wda-2
   internalip: 192.168.0.188
 hadoop_home: /home/cc/hadoop-2.7.1

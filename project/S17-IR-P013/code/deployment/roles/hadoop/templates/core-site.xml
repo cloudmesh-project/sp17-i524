@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/home/{{ hadoop_user }}/tmp</value>
+   </property>
+
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://{{ nodes[0]['hostname'] }}:54310</value>
+   </property>
+   <property>
+       <name>dfs.permissions</name>
+       <value>false</value>
+    </property>
+</configuration>
