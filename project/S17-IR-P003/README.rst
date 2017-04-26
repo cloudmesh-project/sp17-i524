@@ -1,6 +1,6 @@
 :orphan:
 
-title: "Detecting Street Signs in Videos in a Robot Swarm"
+title: "Detecting Street Signs in Images and Videos in a Robot Swarm"
    
 submitted: "2017-03-13"
 
