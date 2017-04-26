@@ -83,7 +83,7 @@ The Inquiry commands have two flavours a list and refresh mode.The list commands
 \subsection{Technologies Used}
 \begin{table}[H]
 \centering
-\begin{tabular}{|c c|} 
+\begin{tabular}{|l l|} 
  \hline
  Name & Purpose \\ 
  \hline
@@ -143,9 +143,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     
     \item \textbf{Host List}
      This command would list the hosts available.This command would display the Ip,Name,Port,and if the host is swarm manager and the swarm manager Ip. Please note the Swarmmanager Ip would be blank if the host is manager or not part of swarm. 
-     \begin{verbatim}
-     cms docker host list 
-     \end{verbatim}
+     \begin{verbatim} cms docker host list \end{verbatim}
      
      \begin{table}[h!]
      \caption{\bf cms docker host list }
@@ -162,14 +160,18 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Host Delete}
-    This command would be used to delete a host from the setup.This would also delete the host details from the database.User can do a host list to see the updated host details.\\
-    \begin{verbatim}
-    cms docker host delete docker1:4243
-    \end{verbatim}
+    This command would be used to delete a host from the setup.This
+    would also delete the host details from the database.User can do a
+    host list to see the updated host details.
+
+    \begin{verbatim} cms docker host delete docker1:4243 \end{verbatim}
     
     \item \textbf{Image List}
     This command would be used to display the images available on a host.
-    It would display the Ip of the host,the Image id , repository and the size of the image.Please note that this command would display the results from the local dB.\\
+    It would display the Ip of the host,the Image id , repository and
+    the size of the image.Please note that this command would display
+    the results from the local dB.
+
     \begin{verbatim}
     cms docker image list
     \end{verbatim}
@@ -188,10 +190,11 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Image Refresh} 
-     This command would refresh the images across the hosts available the results would update the local data base , and display the updated reults to the user.
-    \begin{verbatim}
-    cms docker image refresh
-    \end{verbatim}
+     This command would refresh the images across the hosts available
+     the results would update the local data base , and display the
+     updated reults to the user.
+
+    \begin{verbatim} cms docker image refresh\end{verbatim}
 
     \item \textbf{Container Create}
      This command would used to create a container on a given host.The arguments for this command would be the name of the container and the image from which the container needs to be created.The image in the argument must be available through image list command above on the given host.\\
@@ -202,14 +205,15 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     \end{verbatim}
     
     \item \textbf{Container Start}
-     This command would be used to start a container.The container should be already created using the above command.\\
+     This command would be used to start a container.The container
+     should be already created using the above command. 
 
     \begin{verbatim}
     cms docker container start test1
     \end{verbatim}     
      
     \item \textbf{Container Stop}
-     This command would be used to stop and container which is running.The container can be started using the above command\\
+     This command would be used to stop and container which is running.The container can be started using the above command
 
     \begin{verbatim}
     cms docker container stop test1
@@ -235,14 +239,14 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Container Refresh}
-     This command would refresh the current state of the containers across the hosts, This command would connect to the host and run the native docker container list to get the latest information and update the local database for refreshing the data. \\
+     This command would refresh the current state of the containers across the hosts, This command would connect to the host and run the native docker container list to get the latest information and update the local database for refreshing the data. 
      
     \begin{verbatim}
     cms docker container refresh
     \end{verbatim}  
     
     \item \textbf{Container Delete}
-     This command would be used to delete a required container on the host. The arguments required are the container name.The updated container list can be viewed by running cms docker container list command.\\
+     This command would be used to delete a required container on the host. The arguments required are the container name.The updated container list can be viewed by running cms docker container list command.
      
     \begin{verbatim}
     cms docker container delete test1 
@@ -250,7 +254,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     
     
     \item \textbf{Container Run}
-     This command would be used to run a container instead of creating and starting in two steps.This arguments for the function are the name of the container and the image from which it needs to be run.\\
+     This command would be used to run a container instead of creating and starting in two steps.This arguments for the function are the name of the container and the image from which it needs to be run.
      
     \begin{verbatim}
     cms docker container run test1 /
@@ -258,14 +262,14 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     \end{verbatim}  
 
     \item \textbf{Container Pause}
-     This command would pause the container which is currently running.Use can run a cms docker container list to observe the status change.\\
+     This command would pause the container which is currently running.Use can run a cms docker container list to observe the status change.
      
     \begin{verbatim}
     cms docker container pause test1
     \end{verbatim} 
 
     \item \textbf{Container Unpause}
-     This command would unpause the container which is currently paused.Use can run a cms docker container list to observe the status change.\\
+     This command would unpause the container which is currently paused.Use can run a cms docker container list to observe the status change.
      
     \begin{verbatim}
     cms docker container unpause test1
@@ -279,7 +283,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     \end{verbatim} 
 
     \item \textbf{Network List}
-    This command would display the results of the refreshed network.This would display the host ip where the network established , the network id , name and containers in the network\\
+    This command would display the results of the refreshed network.This would display the host ip where the network established , the network id , name and containers in the network
 
     \begin{verbatim}
     cms docker network list
@@ -302,7 +306,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
 \section{Swarm Commands}
 \begin{enumerate}
     \item \textbf{Host Set/Add}
-     The command would be used to setup the current host.The docker commands following would be executed on the host setup in this step. the host details will be also captured in the database with this command.\\
+     The command would be used to setup the current host.The docker commands following would be executed on the host setup in this step. the host details will be also captured in the database with this command.
      
     \begin{verbatim}
     cms swarm host docker1 docker1:4243
@@ -331,7 +335,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Host Delete}
-    This command would be used to delete a host from the setup.This would also delete the host details from the database.User can do a host list to see the updated host details.\\
+    This command would be used to delete a host from the setup.This would also delete the host details from the database.User can do a host list to see the updated host details.
 
     \begin{verbatim}
     cms swarm host delete docker1:4243
@@ -339,7 +343,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     
     \item \textbf{Image List}
     This command would be used to display the images available on a host.
-    It would display the Ip of the host,the Image id , repository and the size of the image.Please note that this command would display the results from the local dB.\\
+    It would display the Ip of the host,the Image id , repository and the size of the image.Please note that this command would display the results from the local dB.
     
     \begin{verbatim}
     cms swarm Image list
@@ -347,14 +351,14 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
 
     
     \item \textbf{Swarm Create}
-    This would create swarm on the host in use.There is no arguments required for this command, After this command is run the current host status would be treated as 'manager'.user can run a node list or host list to see the updated result.To setup the current host user needs to use cms swarm host ADDR command shown above.\\
+    This would create swarm on the host in use.There is no arguments required for this command, After this command is run the current host status would be treated as 'manager'.user can run a node list or host list to see the updated result.To setup the current host user needs to use cms swarm host ADDR command shown above.
     
     \begin{verbatim}
     cms swarm create
     \end{verbatim} 
     
     \item \textbf{Swarm Join}
-    This command would be applicable for the host which is not manager,user needs to setup a new current host with cms swarm host command and run cms swarm join so that current host would be joined with the swarm created in the last step.User needs to pass the swarm host Ip and address the host being joined\\
+    This command would be applicable for the host which is not manager,user needs to setup a new current host with cms swarm host command and run cms swarm join so that current host would be joined with the swarm created in the last step.User needs to pass the swarm host Ip and address the host being joined
     
     \begin{verbatim}
     cms swarm join docker3 docker4:4243 worker
@@ -362,7 +366,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     ( assuming docker3 is already a swarm manager) 
     
     \item \textbf{Swarm Leave}
-    This command is applicable for the swarm manager or worker , this would let the host leave swarm.If manager has multiple workers ,workers needs to be removed(leave) before manager can leave.This command would treat current host is to be removed(leave) the swarm.User may need to set up the current host before processing the command.\\
+    This command is applicable for the swarm manager or worker , this would let the host leave swarm.If manager has multiple workers ,workers needs to be removed(leave) before manager can leave.This command would treat current host is to be removed(leave) the swarm.User may need to set up the current host before processing the command.
     
     \begin{verbatim}
     cms swarm leave 
@@ -396,7 +400,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Network Refresh}
-    This command would refresh the network across the docker containers and hosts the updated results would be stored in the local database.\\
+    This command would refresh the network across the docker containers and hosts the updated results would be stored in the local database.
     
     \begin{verbatim}
     cms swarm network refresh  
@@ -474,7 +478,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Image Refresh}
-    This command would refresh the images across the hosts available the results would update the local data base , user can run docker image list to view the updated results.
+    This command would refresh the images across the hosts available the results would update the local data base, user can run docker image list to view the updated results.
     
     \begin{verbatim}
     cms swarm image refresh
@@ -482,7 +486,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      
     \item \textbf{Image List}
     This command would be used to display the images available on a host.
-    It would display the Ip of the host,the Image id , repository and the size of the image.Please note that this command would display the results from the local dB.\\
+    It would display the Ip of the host,the Image id , repository and the size of the image.Please note that this command would display the results from the local dB.
     
     \begin{verbatim}
     cms swarm image list
@@ -502,7 +506,7 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
      \end{table}
      
     \item \textbf{Container Refresh}
-    This command would refresh the current state of the containers across the hosts, This command would connect to the host and run the native docker container list to get the latest information and update the local database for refreshing the data. \\
+    This command would refresh the current state of the containers across the hosts, This command would connect to the host and run the native docker container list to get the latest information and update the local database for refreshing the data. 
     
     \begin{verbatim}
     cms swarm container refresh
@@ -529,7 +533,11 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
 \end{enumerate}
 
 \section{Use Case - Elasticsearch cluster }
- Elasticsearch\cite{www-ElasticSearch} is an open-source, broadly-distributable, readily-scalable, enterprise-grade search engine. Accessible through an extensive and elaborate API, Elasticsearch can power extremely fast searches that support your data discovery applications[2]
+ Elasticsearch\cite{www-ElasticSearch} is an open-source,
+ broadly-distributable, readily-scalable, enterprise-grade search
+ engine. Accessible through an extensive and elaborate API,
+ Elasticsearch can power extremely fast searches that support your
+ data discovery applications \cite{citemissing} [2]
 
  Using Cloudmesh  client , Ansible and Cloudmesh Docker application we deployed  and provisioned a Elasticsearch cluster on remote  hosts in Chameleon cloud in docker and swarm mode .We benchmarked the cluster using esrally\cite{www-ElasticSearchRally}  have compared  the  results between the elastic search clusters in docker and swarm mode.
  
