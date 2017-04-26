@@ -1,0 +1,59 @@
+---
+- name: add host name to etc hosts on {{ansible_hostname}}
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^{{inventory_hostname}}'
+    line: '{{inventory_hostname}} {{ansible_hostname}}'
+  #debug: var=ansible_hostname
+
+- name: get spark
+  get_url:
+    url: "{{spark_url}}"
+    dest: "{{spark_tar}}"
+    checksum: md5:"{{spark_md5}}"
+  
+- name: extract spark
+  unarchive:
+    src: "{{spark_tar}}"
+    dest: "{{spark_inst_dir}}"
+    remote_src: yes
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+
+- name: Clean artifact path
+  file:
+    state: absent
+    path: "{{spark_tar}}"
+    remote_src: yes
+
+- name: add path variable
+  shell: echo SPARK_HOME is $SPARK_HOME
+  environment:
+    SPARK_HOME: "{{spark_inst_dir}}{{spark_version}}"
+    register: shellout
+
+- name: Transfer spark env sh config file
+  copy:
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+    src: "{{ spark_env_sh_src }}"
+    dest: "{{spark_inst_dir}}{{spark_version}}/{{spark_env_sh_dest}}" 
+    mode: 0774
+
+- name: Transfer slaves config file
+  copy:
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+    src: "{{ spark_slaves_src }}"
+    dest: "{{spark_inst_dir}}{{spark_version}}/{{spark_slaves_dest}}"
+    mode: 0774
+
+
+- name: Transfer spark default config file
+  copy:
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+    src: "{{ spark_default_conf_src }}"
+    dest: "{{spark_inst_dir}}{{spark_version}}/{{spark_default_conf_dest}}"
+    mode: 0774
+

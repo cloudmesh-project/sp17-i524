@@ -1,0 +1,37 @@
+---
+- name: get zeppelin
+  get_url:
+    url: "{{zeppelin_url}}"
+    dest: "{{zeppelin_tar}}"
+    checksum: md5:"{{zeppelin_md5}}"
+  
+- name: extract zeppelin
+  unarchive:
+    src: "{{zeppelin_tar}}"
+    dest: "{{zeppelin_inst_dir}}"
+    remote_src: yes
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+
+- name: Clean artifact path
+  file:
+    state: absent
+    path: "{{zeppelin_tar}}"
+    remote_src: yes
+
+- name: set up spark home on zeppelin conf
+  lineinfile:
+    dest: "{{spark_inst_dir}}{{zeppelin_version}}/{{zeppelin_conf_loc}}"
+    regexp: '^{{export_key}} {{spark_home_key}}'
+    line: '{{export_key}} {{spark_home_key}}={{spark_inst_dir}}{{spark_version}}/'
+    create: yes
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+
+- name: set up zeppelin port conf
+  lineinfile:
+    dest: "{{spark_inst_dir}}{{zeppelin_version}}/{{zeppelin_conf_loc}}"
+    regexp: '^{{export_key}} {{zeppelin_port_key}}'
+    line: '{{export_key}} {{zeppelin_port_key}}={{zeppelin_port_value}}'
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"

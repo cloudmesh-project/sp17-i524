@@ -1,0 +1,3 @@
+---
+- name: start zeppelin
+  shell: "{{spark_inst_dir}}{{zeppelin_version}}/{{zeppelin_deamon}} {{start_key}}"

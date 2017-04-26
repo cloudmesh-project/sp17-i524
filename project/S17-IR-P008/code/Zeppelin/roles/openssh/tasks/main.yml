@@ -1,0 +1,43 @@
+---
+- name: install open-ssh
+  apt: name=openssh-server update_cache=yes
+  become: yes
+
+- name: Check .ssh directory exists.
+  file: 
+    dest: "{{ key_file_dest | dirname }}"
+    state: directory
+    remote_src: yes
+    mode: 0700
+
+- name: Transfer encrypted private key
+  copy: 
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+    src: "{{ key_file }}" 
+    dest: "{{ key_file_dest }}"
+    mode: 0600
+
+- name: Transfer public key
+  copy:
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+    src: "{{ pub_key_file }}"
+    dest: "{{ pub_key_file_dest }}"
+    mode: 0644
+
+- name: Add public key as authorized key
+  authorized_key:
+    user: "{{cloud_user}}"
+    key: "{{lookup('file', pub_key_file) }}"
+    manage_dir: False
+    path: "{{auth_key_file_dest}}"
+
+
+- name: Transfer config file
+  copy:
+    owner: "{{cloud_owner}}"
+    group: "{{cloud_group}}"
+    src: "{{ config_file }}"
+    dest: "{{ config_file_dest }}"
+    mode: 0600
