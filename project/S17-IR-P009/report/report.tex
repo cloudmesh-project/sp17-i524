@@ -32,9 +32,9 @@ Cloudmesh client is a simple client to enable access to multiple cloud environme
 
 
 \section{Introduction}
-In the time of Big data and Micro-Services,it is common to have a set of services running on multiple clouds.Docker\cite{www-Docker} with the build and ship model made the micro-services architecture work better.Since there would multiple containers running across multiple remote clouds managing them can become tedious.In project we have added the capability to provision and manage docker\cite{www-Docker} and swarm\cite{www-Swarm} containers to cloudmesh client\cite{las14cloudmeshmultiple}.
+In the time of Big data and Micro-Services,it is common to have a set of services running on multiple clouds.Docker\cite{www-Docker} with the build and ship model made the micro-services architecture work better.Since there would multiple containers running across multiple remote clouds managing them can become tedious.
 
-Clouldmesh Client\cite{las14cloudmeshmultiple} capability is detailed in Figure~\ref{fig:cmvm},it aims at managing vm instances in multiple heterogeneous clouds remotely via a command line interface.
+Clouldmesh Client\cite{las14cloudmeshmultiple} capability is detailed in Figure~\ref{fig:cmvm},it aims at managing vm instances in multiple heterogeneous clouds remotely via a command line interface.In this project we have added the capability to provision and manage docker\cite{www-Docker} containers  and swarm\cite{www-Swarm} services to cloudmesh client\cite{las14cloudmeshmultiple}.
 
 \begin{figure}[h!]
 \centering
@@ -43,29 +43,58 @@ Clouldmesh Client\cite{las14cloudmeshmultiple} capability is detailed in Figure~
 \label{fig:cmvm}
 \end{figure}
 
-The cloudmesh docker application build  can be broadly divided into Docker and Swarm modules.\\
 
-The Docker Module capabilities are detailed in
-Figure~\ref{fig:cmsdocker}. This module would help user perform
-various docker functions mentioned in Section 3 
+\subsection{Docker Mode}
+
+Docker is an open platform for developing, shipping, and running applications. Docker enables  to separate the applications from  infrastructure so that we can deliver software quickly. With Docker, we can manage your infrastructure in the same ways you manage your applications. 
+
+Docker provides the ability to package and run an application in a loosely isolated environment called a container. The isolation and security allow you to run many containers simultaneously on a given host. Containers are lightweight because they don’t need the extra load of a hypervisor, but run directly within the host machine’s kernel. This means we can run more containers on a given hardware combination than if you were using virtual machines. So we can even run Docker containers within host machines that are actually virtual machines.
+
+The Docker Module built in cloudmesh.docker application has the capabilities to manage docker hosts running of multiple remote VM's as shows in Figure~\ref{fig:cmsdocker}. 
 
 \begin{figure}[h!]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/cmsdocker.jpeg}}
-\caption{Docker Mode }
+\caption{Docker Module }
 \label{fig:cmsdocker}
 \end{figure}
 
-The Swarm module facilitates performing various swarm operations Figure~\ref{fig:cmsswarm}.
+\subsection{Swarm Mode}
+
+A swarm\cite{www-Swarm} is a cluster of Docker engines, or nodes,participating in a cluster where we deploy services .
+The Swarm Mode of docker orchestrates swarm services in standalone containers on Docker instances.
+
+\subsubsection{Node}
+A node is an instance of the Docker engine participating in the swarm.we can run one or more nodes on a single physical computer or cloud server.
+
+To deploy the  application to a swarm, we submit a service definition to a manager node. The manager node dispatches units of work called tasks to worker nodes.
+
+Manager nodes also perform the orchestration and cluster management functions required to maintain the desired state of the swarm. Manager nodes elect a single leader to conduct orchestration tasks.
+
+Worker nodes receive and execute tasks dispatched from manager nodes. By default manager nodes also run services as worker nodes, but we can configure them to run manager tasks exclusively and be manager-only nodes. An agent runs on each worker node and reports on the tasks assigned to it. The worker node notifies the manager node of the current state of its assigned tasks so that the manager can maintain the desired state of each worker.
+
+
+\subsubsection{Services and Tasks}
+
+A \textbf{service} is the definition of the tasks to execute on the worker nodes. It is the central structure of the swarm system and the primary root of user interaction with the swarm.When we create a service, we specify which container image to use and which commands to execute inside running containers.
+
+In the replicated services model, the swarm manager distributes a specific number of replica tasks among the nodes based upon the scale we set in the desired state.
+
+For global services, the swarm runs one task for the service on every available node in the cluster.
+
+A task carries a Docker container and the commands to run inside the container. It is the atomic scheduling unit of swarm. Manager nodes assign tasks to worker nodes according to the number of replicas set in the service scale. Once a task is assigned to a node, it cannot move to another node. It can only run on the assigned node or fail.
+
 
 \begin{figure}[h!]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/cmsswarm.jpeg}}
-\caption{Swarm Mode }
+\caption{Swarm Module }
 \label{fig:cmsswarm}
 \end{figure}
 
-Users can choose to use cloudmesh docker application from a remote terminal outside the network of the data center as in ~Figure\ref{fig:cmsdocker} or locally from a provisioning or configuration server inside the data center as in Figure~\ref{fig:cmsdocker-2}
+The Swarm Module built in cloudmesh.docker application has the capabilities to  create and manage a swarm cluster running of multiple remote VM's as shows in Figure~\ref{fig:cmsswarm}. 
+\subsection{Remote vs Local use}
+Users can choose to use cloudmesh docker application from a remote terminal outside the network of the data center as in Figure~\ref{fig:cmsdocker} or locally from a provisioning or configuration server inside the data center as in Figure~\ref{fig:cmsdocker-2}.We have analysed the difference in the application usage in depth in the project and have provided detailed benchmark results for both modes of use.
 \begin{figure}[h!]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/cmsdocker-2.png}}
@@ -83,15 +112,15 @@ The Inquiry commands have two flavours a list and refresh mode.The list commands
 \subsection{Technologies Used}
 \begin{table}[H]
 \centering
-\begin{tabular}{|c c|} 
+\begin{tabular}{|cp{3cm}|} 
  \hline
  Name & Purpose \\ 
  \hline
- docker \cite{www-Docker} & Docker Server and Api for managing containers \\ 
+ docker \cite{www-Docker} & Docker Server and Api for managing containers and services \\ 
  mongodb \cite{www-MongoDB} & Nosql DBMS \\ 
  Python-eve    \cite{www-Pythoneve} & Restful webservices interface to mongoDB \\ 
- python \cite{www-Python} & development  \\ 
- ansible \cite{www-Ansible} & automated deployment \\ [1ex] 
+ python \cite{www-Python} & Development  \\ 
+ ansible \cite{www-Ansible} & Automated deployment \\ [1ex] 
 \hline
 \end{tabular}
 \caption{Technology Name and Purpose}
@@ -112,13 +141,12 @@ in eve and mongoDB.
 \item Service
 \item Node
 \end{enumerate}
-A key benefit of using a NoSQL data base like mongoDB is that it allowed us to store the data in the the DB in the native form as returned by the Docker Api without the need for much marshaling of the data .The application uses the cloudmesh.rest repository for managing mongo and eve services.
-
+A key benefit of using a NoSQL data base like mongoDB is that it allowed us to store the data in the the DB in the native form as returned by the Docker Api without the need for much marshaling of the data .
 
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/Arch.jpeg}}
-\caption{cms docker extension application architecture}
+\caption{cloudmesh docker application architecture}
 \label{fig:Arch}
 \end{figure}
 
@@ -546,7 +574,8 @@ As part of the project we have built Ansible\cite{www-Ansible} scripts to automa
     environment=
     ["http.host=0.0.0.0",
     "transport.host=0.0.0.0",
-    "discovery.zen.ping.unicast.hosts=docker1,docker2"]
+    "discovery.zen.ping.unicast.hosts=/
+    docker1,docker2"]
 \end{verbatim}
 
 The network mode set to host allows the Elasticsearch containers use the underlying Virtual Machines  network for networking and leveraging the Elasticsearch unicast discovery find and form a cluster along with the other Elasticsearch instances running in other
