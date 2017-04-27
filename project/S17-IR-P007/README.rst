@@ -1,6 +1,6 @@
 :orphan:
 
-title : "Identifying Spam Messages Using R And Pandas Over Docker Swarm"   
+title : "Identifying Spam Messages Using R And Pandas Over Docker Kubernetes"   
 
 submitted: "2017-03-13"
 
