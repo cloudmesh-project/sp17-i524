@@ -225,6 +225,31 @@ For external authentication, the three users are created.  The user \emph{admin}
 
 The automated process fully deploys a sharded MongoDB environment with the Cloud, MongoDB version, number of Config Servers, Mongos Instances, Shards, and degree of Replication specified as input parameters.
 
+\subsection{Computing Resources}
+
+In all cases, virtual machines are deployed with the Ubuntu 16.04 LTS (Xenial Xerus).  The flavor defaults to the users cloudmesh flavor.  In our testing of deployment and benchmarking, m1.small was used as the flavor for all tests. Table \ref{tab:computing-resources} shows the comparative resources of an m1.small cloud in each environment. The VMs created on Chameleon and FutureSystems have identical resources, while Jetstream has double the CPU and RAM.
+
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Computing Resources}
+
+ \begin{tabular}{|c | c | c | c| c|} 
+ \hline
+ 
+Cloud &  Flavor & VCPU & RAM & Size \\ [0.5ex] 
+ \hline
+    
+Chameleon &  m1.small & 1 & 2 &	20 \\
+ \hline
+FutureSystems &  m1.small &  1 &	2 &	20 \\ 
+ \hline
+Jetstream &  m1.small &  2 &	4 &	20 \\ 
+\hline
+\end{tabular}
+  \label{tab:computing-resources}
+\end{table}
+
 \subsection{Deployment Process}
 
 Several programs are involved in the deployment.  A high level overview of each is provided.
@@ -631,6 +656,8 @@ The author thanks Gregor von Laszewski and Tony Liu for technical their technica
 References used in deployment, benchmarking, visualization programs are formally documented here as well as noted in a comment in the code \cite{www-bashNum} \cite{www-lastChar} \cite{www-configOpts} \cite{www-bashArgs} \cite{www-cmVms}  \cite{www-python1}  \cite{www-python2}  \cite{www-python3} \cite{www-ansibleDir} \cite{www-mongoAnsible} \cite{www-ansibleCopy} \cite{www-ansibleHost} \cite{www-installMongo}.
 
 \section{Execution Instructions}
+
+The project should be run on an Ubuntu 16.04 LTS (Xenial Xerus) machine.  The required modules for the project can be installed in a virtualenv virtual environment using the file project/S17-IO-3012/code/requirements.txt.
 
 The main script, project/S17-IO-3012/code/bin/project.py, can be run to execute all functionality.  Project.py functions (deploy, kill, benchmark, report, distribution) are described in help, but sample instructions are provided below for each function.
 
