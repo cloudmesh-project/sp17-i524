@@ -81,13 +81,6 @@
     owner: '{{ hadoop_user }}'
     group: '{{ hadoop_group }}'
 
-#- name: Replace keys COMMENTING AS NEED TO FIND WAY DO IT LOCALLY ON EACH CLUSTER.
-#  template: src={{ item.src }} dest={{ item.dest }} owner={{ hadoop_user}} group={{ hadoop_group }}
-#  with_items:
-#    - {src: '{{ id_rsa_path }}', dest: "~/.ssh"}
-#    - {src: '{{ id_rsa.pub_path }}', dest: "~/.ssh"}
-
-#- shell: sh -c "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys"
 
 - shell: sh -c "sudo mv {{hadoop_home}}/hosts /etc"
   become: yes
