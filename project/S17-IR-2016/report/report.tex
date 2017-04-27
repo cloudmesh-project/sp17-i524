@@ -20,12 +20,13 @@
 
 \begin{abstract}
 Analysis of flight data provides insights on the United States of
-America's Airline data. The On-time performance of flights operated by
-large air carriers are tracked and made as a report, Air Travel
-Consumer Report, which is a big data set. Hive component of Hadoop
-ecosystem, is utilized to process the big data in distributed
-environment. Efficient accessing and processing of the user queries is
-acheived by this analysis on flight data.
+America's Airline data by using Hadoop in the cloud environment. The
+On-time performance of flights operated by large air carriers are
+tracked and made as a report, Air Travel Consumer Report, which is a
+big data set. Hive component of Hadoop ecosystem, is utilized to
+process the big data in distributed environment. Efficient accessing
+and processing of the user queries is acheived by this analysis on
+flight data.
 \newline
 \end{abstract}
 
@@ -37,28 +38,69 @@ acheived by this analysis on flight data.
 
 \section{Introduction}
 
-Aviation industry manages enormous amount of data, which consists of
-the information regarding the delayed, cancelled, diverted or on-time
-flights by large air-carriers\cite{aviationanalysis}. This statistics
-is publicly available in the Air Travel Consumer Report. Big Data
-analysis of this data will provide a consistent understanding and
-importance of the given data. With 35 million flight departures per
-year, data is critically important for any planning decision made by
-airlines and airports. The results of analysis has benefits which can
-help airline operations to predict and reduce
-redundance\cite{bigdatainaviation}.
+Real world data is large and growing exponentially from several
+years. Data with structured and unstructured format is Big
+Data. Aviation industry manages enormous amount of data, which
+consists of the information regarding the delayed, cancelled, diverted
+or on-time flights by large air-carriers\cite{aviationanalysis}. This
+is essentially a big-data set, where statistics are publicly available
+in the Air Travel Consumer Report. Big Data analysis of this data will
+provide a consistent understanding and importance of the given
+data. With 35 million flight departures per year, data is critically
+important for any planning decision made by airlines and airports. The
+results of analysis has benefits which can help airline operations to
+predict and reduce redundance\cite{bigdatainaviation}.
 
-\section{Milestones}
+Hive is one of the ecosystems in Hadoop framework which is built to
+analyze the data on hadoop cluster. Syntax of Hive is based on SQL,
+which is also known as HiveQL. MySQL or PostGreSQL can be used for
+implementation of the queries. Hive provides tools which enable easy
+data extraction, transformation and data loading. Files can be stored
+in Hadoop Distributed File System(HDFS) and accessed by Hive
+efficiently.
 
+Schema of the Hive tables is stored in Hive Metastore. Metastore holds
+the information about tabes and partitions which are present in the
+data warehouse. In Hive the default Metastore is DerBy Database, which
+is a relational database management system provided by Apache
+Software.  There are two components of Hive, HCatalog and
+WebHCat. HCatalog is a storage management layer for Hadoop which
+provides data processing tools such as Pig and MapReduce. WebHCat
+provides a service that is used to run Hadoop MapReduce, Pig, Hive
+jobs using REST interface.
+
+Hive's SQL provides the basic SQL operations, such as,
 \begin{itemize}
-\item Performing Analysis on local VM
-\subitem Loading Data into HDFS
-\subitem Pre-processing of the data using Pig
-\subitem This data into Hive tables
-\item Analysis on the distributed cloud environment
-\item Visualizing the results using Tableau
+\item Filtering the rows from the table using WHERE clause.
+\item Selecting columns from table using SELECT clause.
+\item Joining two tables
+\item Aggregations of the data using 'group by' clause.
+\item Storing the results in a hdfs directory.
+\end{itemize}
+  
+\section{Implementation}
+
+Implementation of Hive to perform data analysis consists of the
+following steps
+\section{Performing Analysis on local Virtual Machine}
+\subsection{Install Hadoop environment}
+
+\subsection{Loading Data into HDFS}
+   Data is stored into HDFS by, 
+\subsection{This data into Hive tables}
+\subsection{Queries in Hive Query Language}
+  The following are the queries
+  in Hive QL, which are similar to SQL statements.
+ 
+  What are the total number of flights which are cancelled?
+  What are the total number of flights which are diverted?
+  What is effect of flight distance on cancellations?
+  What is the effect of flight distance on average departure delay?
+  What is the monthly average departure delay?
+  What is the yearly average departure delay?
+  
 \item Benchmarking
-\item Final update with report
+
 \end{itemize}
 
 
