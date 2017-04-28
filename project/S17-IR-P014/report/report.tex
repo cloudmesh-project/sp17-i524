@@ -4,7 +4,7 @@
 
 \title{Analysis of Airline delays data using Spark and HDFS}
 
-\author[1,*]{Bhavesh Reddy Merugurreddy}
+\author[1,*]{Bhavesh Reddy Merugureddy}
 \author[1,**]{Niteesh Kumar Akurati}
 
 
@@ -142,6 +142,33 @@ workflows for both small scale and larger scale environments. It can
 also be used as the backend to science gateways to supply research
 jobs to HTC or other HPC resources.
 
+Table 1 shows the specifications used from both Jetstream and
+Chameleon cloud environments.
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Hardware Specifications of Chameleon and Jetstream}
+
+ \begin{tabular} {| c | c | c |}
+\hline
+  & Chameleon  & Jetstream \\ [0.5ex] 
+ \hline
+
+    
+CPU     & Xeon X5550 & Haswell E-2680  \\
+ \hline
+cores &        1008   &  7680 \\
+ \hline
+speed     &               2.3GHz & 2.5GHz\\
+ \hline
+RAM   &               5376GB  &  40TBr\\
+ \hline
+storage     &                   1.5PB  & 2 TB\\ [1ex] 
+ \hline
+
+\end{tabular}
+  \label{tab:cloud-comparison}
+\end{table}
 
 \section{Software Stack} 
 
@@ -158,7 +185,7 @@ nodes are not being managed. This is due to the fact that there are no
 daemons that run for Ansible in the background. This makes Ansible a
 software with an agent-less architecture. This architecture prevents
 the nodes from polling the controlling machine thereby reducing the
-overhead on the network.
+overhead on the network as shown in figure 1.
 
 \begin{figure}[ht]
   \includegraphics[scale=0.4]{images/ansible_architecture.eps}
@@ -212,10 +239,10 @@ MLlib is a machine learning framework that simplifies machine learning
 pipelines in Spark \cite{sparkWiki}. MLlib is provided with several
 statistical and machine learning algorithms. This reduces the overhead
 of performing classification and regression, correlations, linear
-regression, support vector machines and k-means clustering
-method. Apache Spark consists of a graph processing component known as
-GraphX. It depends on RDDs and generally used for graphs that are
-immutable.
+regression, support vector machines and k-means clustering method. A
+simple spark architecture can be observed in figure 2. Apache Spark
+consists of a graph processing component known as GraphX. It depends
+on RDDs and generally used for graphs that are immutable.
 
 \begin{figure}[ht]
   \includegraphics[scale=0.35]{images/sparkYarn.eps}
@@ -266,7 +293,7 @@ ensures efficiency by processing the distributed data in parallel. It
 automatically redeploys processing logic in the failure situations by
 maintaining multiple copies of data. Rather than processing data close
 to logic, HDFS processes logic closer to data. It is accessible in
-different ways.
+different ways. 
 
 A web browser can be used to browse files in HDFS. It consists of a
 single node called name node and several data nodes that store data as
@@ -289,7 +316,7 @@ messages to the name node periodically and the failure is detected
 when name node stops receiving the messages. In this situation, the
 data node is marked as dead and removed from the system. When the data
 node count reaches a limit value, replication is done by the name
-node.
+node. Figure 3 shows the architecture of HDFS.
 
 \begin{figure}[ht]
   \includegraphics[scale=0.45]{images/hdfs_architecture.eps}
@@ -423,14 +450,38 @@ Cloudmesh provides one line command for doing so. In order to make use
 of the nodes, floating IPs need to be assigned to the created
 nodes. Cluster creation fails when the cloud runs out of floating
 IPs. Floating IP is required for the communication between the servers
-and ssh from the client to the cloud.A Hadoop cluster is defined on
-top of the cluster we defined.
+and ssh from the client to the cloud. A Hadoop cluster is defined on
+top of the cluster we defined. Table 2 shows the resources on the
+cloud that have been used.
+
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Resources on clouds}
+
+ \begin{tabular}{|c | c | c|} 
+ \hline
+&  Chameleon & Jetstream \\ [0.5ex] 
+ \hline\hline
+    
+Flavor &	m1.medium &	m1.medium \\
+ \hline
+OS&	Ubuntu 14.04 &	Ubuntu 14.04 \\ 
+ \hline
+secgroup &	default &	default \\ 
+ \hline
+Nodes &	3 &	3 \\ [1ex] 
+ \hline
+
+\end{tabular}
+  \label{tab:fault-tolerance}
+\end{table}
 
 \begin{itemize}
   
-\item Similar to the defined cluster, multiple specifications can be
-  defined for the Hadoop cluster and one specification has to be
-  activated.
+\item Similar to the cluster previously defined, multiple
+  specifications can be defined for the Hadoop cluster and one
+  specification has to be activated.
 
 \item After this, Hadoop cluster can be deployed by synchronizing the
   Big Data stack.
@@ -463,57 +514,173 @@ airports.csv files contains the code for an airline and airport
 respectively and their corresponding names.  The airline and airport
 files can be used as lookup files. The flight data is the key for the analysis.
 
-The method of analysis goes as follows initially, the flight data is
-parsed to create a flight tuple with all the fields in the flight
-class to be members of the named tuple, just like class and its
-objects. The following functions are implemented they are parse, split
-and notHeader. Parse is used to parse each indiviual row in the
-flights.csv and convert it into a named tuple. The split function is
-used to split each column value in a row based on comma since the
-dataset is comma seperated values.After loading the SparkContext, the
-airlines data is parsed to eliminate the header and split it
-accordingly.
+Initially, the flight data is parsed to create a flight tuple with all
+the fields in the flight class to be members of the named tuple, just
+like class and its objects. The following functions are implemented
+they are parse, split and notHeader. Parse is used to parse each
+indiviual row in the flights.csv and convert it into a named
+tuple. The split function is used to split each column value in a row
+based on comma since the dataset is comma seperated values. After
+loading the SparkContext, the airlines data is parsed to eliminate the
+header and split it accordingly.
 
 Similarly, the airports data is parsed.  The flights data is parsed
 such that each individual row is converted into a named tuple.  By
-using this parsed data we uniquely various transformations and actions
-to get the output. The process is transform the flights rdd by
-applying filters and map functions to get the delay based on two
-instances i.e, airports and airlines. Then we performed ReduceByKey
-and CombineByKey actions by aggregating and computing the average
-delay in case of each airport, and applied sorting function to sort
-the output in descending order and based on that we extracted the top
-ten airports to avoid provided the average delay per airport. Since,
-only the codes of various airlines and airports are available, lookup
+using this parsed data, output is obtained by performing various
+transformations and actions.
+
+The process is to transform the flights RDD by applying filters and
+map functions for getting the delay based on two instances i.e,
+airports and airlines. Then ReduceByKey and CombineByKey actions are
+performed by aggregating and computing the average delay in case of
+each airport and sorting functions are applied to sort the output in
+descending order and based on that, the top ten airports to avoid are
+obtained given the average delay per airport. Since the codes of
+various airlines and airports are the only ones available, lookup
 operations are performed by using countAsMap() operation with airports
-and airlines dataset and by using broadcast various the lookup
-information is passed on to all workers and executors within
-them. Also, finding the top ten airlines to avoid by computing the
-total minutes of delay per airline over a period of time. The
-following analysis can be further improvised by used various Machine
-Learning techniques which helps us to predict the delays over a period
-of time ahead and gives us various insights which helps us to make
-better decisions in choosing airlines and airports to commute.
+and airlines dataset and by using broadcast, the lookup information is
+passed on to all workers and executors within them.
 
-
-\section{Timeline}
+The top ten airlines to avoid are found by computing the total minutes
+of delay per airline over a period of time. The analysis can
+be further improvised by using various Machine Learning techniques
+which helps in predicting the delays over a period of time ahead and
+provides various insights which are helpful in making better decisions
+in choosing airlines and airports to commute.
 
 
 \section{Benchmarking}
 
-Benchmarking is the process that is carried out after the deployment
-and data analysis. It is done to evaluate the efficiency and
-performance of the system.
+Benchmarking is carried out after the deployment and data analysis. It
+is done to evaluate the efficiency and performance of the system. As a
+part of benchmarking, the flight and airline data analysis performed
+is evaluated by running the code on Jetstream and Chameleon cloud
+computing environments.
 
+The data is transferred to Hadoop Distributed file system and analysis
+is done by using Spark with YARN. To evaluate the efficiency of the
+analyis, the dataset has been used in varying sizes. Datasets with
+increasing size in rows have been considered for this purpose. As it
+is known that the transformations in Spark are lazy, the results are
+not evaluated right away. This makes it even more efficient.
 
+Python's time module is used for obtaining the current time. Time for
+running the analysis is found out by determining timestamps both
+before and after running the code, named beforeTime and afterTime
+respectively. The required time is determined by subtracting
+beforeTime from afterTime. Due to Spark's lazy evaluation, the time
+module used is wrapped around the Spark actions. Figure 4 shows the
+time, in seconds, taken by the analysis in Jetstream cloud computing
+environment with different dataset sizes.
 
-\section{Results}
+\begin{figure}[ht]
+  \includegraphics[scale=0.50]{images/jsBench.eps}
+  \caption{Performance on Jetstream}
+\end{figure}
+
+Figure 5 shows the performance of the analysis on Chameleon cloud
+environment.
+
+\begin{figure}[ht]
+  \includegraphics[scale=0.50]{images/ccBench.eps}
+  \caption{Performance on Chameleon}
+\end{figure}
+
+As the analyis code, data and packages are installed on the clusters
+through Ansible playbook, the time taken for the automation on
+Chameleon and Jetstream clouds is determined and the values obtained
+on each cloud are compared. The comparison is shown in figure 6.
+
+\begin{figure}[ht]
+  \includegraphics[scale=0.50]{images/CcVsJs.eps}
+  \caption{Deployment in Chameleon and Jetstream}
+\end{figure}
+
+\section{Timeline}
+
+Week by week timeline for project completion is specified in this section.
+
+\begin{enumerate}
+
+\item {March 6 - March 12, 2017: } Created virtual machines on Chameleon
+  cloud using Cloudmesh.
+  
+\item {March 13 - March 19, 2017: } Deployed Hadoop cluster to Chameleon
+  cloud using Cloudmesh.
+
+\item {March 20 - March 26, 2017: } Acquired data for performing
+  analysis and submitted the project proposal.
+
+\item {March 27 - April 02, 2017: } Created virtual machines on
+  Jetstream cloud using Cloudmesh and deployed Hadoop cluster to the
+  cloud using Cloudmesh.
+
+\item {April 03 - April 09, 2017: } Perfomed analysis on the data using
+  Apache Spark on top of Hadoop stack.
+  
+\item {April 10 - April 16, 2017: } Developed Ansible playbook to deploy
+  Hadoop and Spark to the cloud machines. 
+
+\item {April 17 - April 23, 2017: } Completed project report and developed
+  benchmarks for the project.
+
+\end{enumerate}
+
 
 \section{work breakdown} 
 
+Below is the work distribution for the implementation, testing and documentation of the project.
+
+\begin{itemize}
+\item Bhavesh Reddy Merugureddy
+    \begin{itemize}
+    \item Creating and deploying clusters on Jetstream.
+    \item Acquiring the data and performing analysis on flight data.
+    \item Writing transformations and actions required for the
+      analysis using Spark.
+    \item Setting up and testing the end to end flow on Jetstream cloud.
+    \item Performing benchmarking for the analysis on Jetstream by
+      varying the data set size.
+    \item Writing related sections in this report.
+    \end{itemize}
+
+\item Niteesh Kumar Akurati
+    \begin{itemize}
+    \item Creating and deploying clusters on Chameleon.
+    \item Collecting airport data and performing analysis. 
+    \item Implementation of Ansible scripts for deployment of code,
+      data and the required packages.
+    \item Setting up and testing the end to end flow on Chameleon cloud.
+    \item Performing benchmarking for the analysis on Chameleon by
+      varying the data set size.
+    \item Writing related sections in this report.
+    \end{itemize}
+\end{itemize}
+
 \section{Conclusion} 
 
+Airline delays data has been analyzed by the deployment of Hadoop and
+Spark on Chameleon and Jetstream cloud computing environments. A
+publicly available data set containing flight and airline related data
+is taken for analysis. Cloudmesh Client is used as the cloud manager
+to access multiple clouds and deploy a Hadoop cluster on Chameleon and
+Jetstream clouds. Ansible scripts are written for extracting data sets
+from the published zip file and deploying them on the clouds. Hadoop
+Distributed File System is used to store the extracted data sets. A
+program is written in Spark to perform the data analysis which is
+deployed by using an Ansible script. Bar graphs are drawn for the
+analysis performed. Apart from the deployment and analysis,
+benchmarking is done to evaluate the performance of the program on
+each node of a cluster and on different clouds. The efficiency of the
+program is determined by varying the sizes of the data set and
+comparing the results.
 
+\section{Acknowledgements}
+
+This project is undertaken as part of the I524: Big Data and Open
+Source Software Projects coursework at Indiana University. We would
+like to thank our Prof. Gregor von Laszewski, Prof. Gregory Fox and
+the Associate Instructors for their help and support.
 
 \bibliography{references}
 
