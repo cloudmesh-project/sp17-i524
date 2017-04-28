@@ -2,6 +2,6 @@
 hadoop_user: cc
 hadoop_group: cc
 hadoop_user_home: /home/cc
-hadoop_home: /home/cc/hadoop-2.7.1
+#hadoop_home: /home/cc/hadoop-2.7.1
 hbase_home: '{{ hadoop_user_home }}/hbase-{{ hbase_version }}'
 
