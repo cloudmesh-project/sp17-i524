@@ -1,5 +1,6 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
+\usepackage{listings}
 \journal{i524} 
 
 \title{Weather Data Analysis}
@@ -100,11 +101,11 @@ Getting data ready is the very first and basic step for analysis. We have chose 
 \begin{itemize}
 \item I) Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.	
 \item II) Data Categories: This groups data into data category like Temperature, Pressure etc. We will consider only few. ( URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories, Attributes : "TEMP" (Air Temperature) , "PRES" (Pressure) , "EVAP" (Evaporation) and "VELOCITY" (Velocity) ). For our project we will be using PRCP, SNOW, TMAX, TMIN and TAVG.
-\item III) Data Types: This group Data Categories into further smaller sub types. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datatypes?datasetid=GSOM&datacategoryid=TEMP , Attributes : "TAVG" (Average Temperature), "TMAX" (Maximum Temperature) and "TMIN" (Minimum Temperature)    ) Other Data Categories does not have sub type.
-\item IV) Location Categories: This groups data in terms of location. (URL:https://www.ncdc.noaa.gov/cdo-web/api/v2/locationcategories , Attributes : "CITY" , "CLIM_DIV" (Climate Division), "CLIM_REG" (Climate Region) , "CNTRY" (Country) ,"ST" (State)). For this project we will be downloading data for India only.
+\item III) Data Types: This group Data Categories into further smaller sub types. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datatypes?datasetid=GSOM\&datacategoryid=TEMP , Attributes : "TAVG" (Average Temperature), "TMAX" (Maximum Temperature) and "TMIN" (Minimum Temperature)    ) Other Data Categories does not have sub type.
+\item IV) Location Categories: This groups data in terms of location. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locationcategories , Attributes : "CITY" , "CLIM\_DIV" (Climate Division), "CLIM\_REG" (Climate Region) , "CNTRY" (Country) ,"ST" (State)). For this project we will be downloading data for India only.
 \item V)  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))	
 \item VI) Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.	
-\item VII) 	Data : This collects actual weather data for the given stationId, start_date and end_date. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&stationId=GHCND:IN1NCBC0005&startdate=1970-10-10&enddate=1971-10-10). Since the project only requires only 5 attributes, further filter is applied while invoking the API. The data received will be saved into database. 
+\item VII) 	Data : This collects actual weather data for the given stationId, startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005\&startdate=1970-10-10\&enddate=1971-10-10). Since the project only requires only 5 attributes, further filter is applied while invoking the API. The data received will be saved into database. 
 \end{itemize}
 
 \subsection{Collecting Data}
@@ -114,31 +115,96 @@ NCDC uses token based authentication for security and with each token , no more 
 We have considered python , Apache thrift and Apache Hbase for data curation step. We will be covering a short introduction of the steps to configure the system, before diving into the core logic of curation. Since we are going to use Apache Hadoop for our analysis purpose, Hbase comes as a natural choice of NoSql database. Java is the default language for both Hadoop and Hbase. So now the question is how to connect to Hbase using python and the solution is Apache Thrift or thrift. Thrift is a library from apache which generates hbase client. Thrift supports many third party languages including python. The following steps will be required to install thrift first.
 \subsubsection{Install Apache Thrift \cite{thrift-python-install}}
 \begin{itemize}
-\item 1) Download Thrift from "http://redrockdigimark.com/apachemirror/thrift/0.10.0/thrift-0.10.0.tar.gz".
+\item 1) Download Thrift from 
+"http://redrockdigimark.com/apachemirror/thrift/0.10.0/thrift-0.10.0.tar.gz".
 \item 2) Extract the file and run ./configure.
-\item 3) Execute sudo make install or simply make to generate the binaries. If using make, the thrift binaries has to put into path manually (can be found under compiler/cpp/).
-\item 4) After thrift is available in path , it can be tested by running "thrift --version".
-\item 5) Then the python module has to be created to be used within python. To do this download "https://github.com/apache/hbase/blob/master/hbase-thrift/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift" file.
-\item 6) Then execute "thrift --gen py <path/to/Hbase.thrift>". This will generate "gen-py" folder.
-\item 7) Add this folder to python path by export PYTHONPATH=<path/to>/gen-py/:$PPYTHONPATH.
+\item 3) Execute sudo make install or simply make to generate the binaries.
+ If using make, the thrift binaries has to put into path manually 
+ (can be found under compiler/cpp/).
+\item 4) After thrift is available in path , it can be tested by 
+running "thrift --version".
+\item 5) Then the python module has to be created to be used within python.
+ To do this download "https://github.com/apache/hbase/blob/master/hbase-thrift/
+ src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift" file.
+\item 6) Then execute "thrift --gen py <path/to/Hbase.thrift>". This will 
+generate "gen-py" folder.
+\item 7) Add this folder to python path by export 
+PYTHONPATH=<path/to>/gen-py/:\$PYTHONPATH.
 \end{itemize}
 For details you can check \href{https://acadgild.com/blog/connecting-hbase-with-python-application-using-thrift-server/}{Installation} steps.Installation of Hbase will be discussed later along with Hadoop.
 Now thrift is ready to use. Execute "/hbase thrift start" to start the thrift server. Hbase has to be started separately.
 \subsubsection{Install Happybase \cite{happybase-install}}
 Happybase is a wrapper program written on thrift to facilitate data access layer in python in a more readable and swift way. Rather than using thrift client directly we will be using happybase python module. To install happybase run "pip install happybase". 
 Once done test the python library by running the following test code 
-\begin{lstlisting}[label=python,caption=Connect-Hbase]
+\begin{lstlisting}[language=Python,caption=Connect-Hbase,breaklines=true]
 import happybase as hbase				
 
 connection = hbase.Connection('localhost')
 print connection.tables()
 \end{lstlisting}
 
+\section{Hbase and Table Structure}
+Hbase \cite{hbase} is a column based key-value database. We have considered two tables for weather data `wda\_stations` and `wda\_weather`. The structure of the tables are as follows\newline
+\begin{lstlisting}[label=JSON,caption=WDA\_STATIONS Table,breaklines=true]
+[{station-id-key : {
+	station : {name : {} , id : {}},
+	date_range : {
+		min_date : {} ,
+		max_date : {}
+	 },
+	location : {
+		latitude : {},
+	 	longitude : {}
+	}
+}}]
+\end{lstlisting}
+\begin{lstlisting}[label=JSON,caption=WDA\_WEATHER Table,breaklines=true]
+[{yyyy-mm-key : {
+	weather : {station-id : {
+		data-type : {value}			
+}}}}]
+\end{lstlisting}
+\subsection{Table Definition}
+Stations table will consist of all the weather stations with its location and the date range within which it is was active. Location will have the latitude and longitude. The station id will be the key for the table. NCDC uses a uniquely identifiable key for the stations across the globe. This makes the best attribute for the primary key irrespective of country and region. Weather table is a more completed table and has dynamic column family. The key for the table is the year and month in (YYYY-MM) format. Each key contains all the stations with their weather parameter. For example say a key 1967-01 (meaning January 1967) is having 10 stations with station id sid-1 to sid-10. Each station id will having 4 parameters or data types (TAVG,TMAX,TMIN and PRCP). And finally each parameter have their values. 
+
+\section{Data Persistence Layer}
+The project is structured with python packages. We have a specific package for persistence as 'iu.i524.S17IRP013.dao'. The dao has the scripts to connect hbase and performs operations. The base script is `hbase\_connect.py` which does the connection. The connection is made through Apache Thrift Rest Api. It has the connection object , which is used by the other two dao classes.
+
+\subsection{Station Dao}
+This script does all CRUD operations on stations table. On startup it will create the table if not available. It has 2 main functions insert and retrieve. The insert function takes key value pair as argument and put it into hbase table. Cntd .. 
+
+\section(Weather Data Persistence)
 Once happybase, thrift and hbase is functional, we are ready to download our weather data. Weather data download is divided into two steps 1) Getting weather stations details for a given country and 2) Getting Weather data for a given station. Lets see them individually :
 \begin{itemize}
-\item Download Weather Stations - To consume rest services we have used python's inbuilt request response module.  Let us walk you through the code. We have two main python script one for data access and another for rest consumption. "stations_dao.py" is for accessing table "wda_stations" in hbase. The functions are self explaining and hence will not be repeated here. "weather_services.py" is for consuming NCDC rest services. To load all stations , contd...
+\item Download Weather Stations - To consume rest services we have used python's inbuilt request response module.  Let us walk you through the code. We have two main python script one for data access and another for rest consumption. "stations\_dao.py" is for accessing table "wda\_stations" in hbase. The functions are self explaining and hence will not be repeated here. "weather\_services.py" is for consuming NCDC rest services. To load all stations , we will be using the code \textit{`FIPS:IN`} i.e the region code for India.\newline
+
+\begin{lstlisting}[language=Python,caption=Get Weather Stations,breaklines=true]
+def get_stations(country='FIPS:IN', offset=0):
+    url = NCDC_API + NCDC_SERVICES.STATIONS + \
+    '?locationid=' + country + '&offset=' + str(offset)
+    
+    response = requests.get(url, headers=HEADERS)
+    return response.json()
+
+def load_stations():
+    limit = 25    
+    offset = 0
+    nbr_of_records = 0
+    result = Services.get_stations(offset=offset)   
+    while(result != {}):       
+        nbr_of_records = nbr_of_records \
+        + insert_station(result['results'])
+        offset = offset + limit
+        result = Services.get_stations(offset=offset)
+    print str(nbr_of_records) \
+    + ' stations loaded successfully !!'    
+\end{lstlisting}
+The function `load\_stations` calls `get\_stations` till all the available stations are downloaded. `insert\_station` is the \textit{DAO (Data Access Object)} call and inserts the dataset into hbase table. The dao layers are discussed next. For now they are meant for basic CRUD operations.
+
+
 
 \end{itemize}
+
 
 \section{Deployment Using Ansible}
 
@@ -153,9 +219,9 @@ In the current project chameleon server nodes were created and configured. These
 Which multiple ip can be configured.
 
 [weatherCluster]
-129.114.33.165 ansible_ssh_user=cc
-129.114.33.179 ansible_ssh_user=cc
-129.114.33.109 ansible_ssh_user=cc
+129.114.33.165 ansible\_ssh\_user=cc
+129.114.33.179 ansible\_ssh\_user=cc
+129.114.33.109 ansible\_ssh\_user=cc
 
 \subsection{Playbook}
 
@@ -164,7 +230,7 @@ The cluster.
 
 ---
 - hosts: weatherCluster 
-  remote_user: root
+  remote\_user: root
   roles:
     - master
     - hadoop
