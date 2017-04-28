@@ -1,7 +1,7 @@
 ---
 hadoop_user: cc
 hadoop_group: cc
-hadoop_download_url: http://apache.cs.utah.edu/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
+#hadoop_download_url: http://apache.cs.utah.edu/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
 nodes: 
 - ip: 129.114.33.109 
   hostname: s17-ir-p013-wda-1
@@ -12,4 +12,7 @@ nodes:
 - ip: 129.114.33.179 
   hostname: s17-ir-p013-wda-2
   internalip: 192.168.0.188
-hadoop_home: /home/cc/hadoop-2.7.1
+#hadoop_home: /home/cc/hadoop-2.7.3
+hadoop_user_home: /home/cc
+hadoop_version: 2.7.3
+hadoop_home: '{{ hadoop_user_home }}/hadoop-{{ hadoop_version }}'
