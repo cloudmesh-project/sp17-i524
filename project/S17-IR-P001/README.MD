@@ -50,4 +50,4 @@ URI: http://public_ip:1240/dynamic-master-detail
 ![Time Chart](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/timechart.JPG "Total Tweets vs Time" width="300" height="100")
 
 URI: http://public_ip:1240/heatmap
-![Heatgrid](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg "Sentiment Heatgrid" width="300" height="100")
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg" alt="Sentiment Heatgrid" width="300" height="100"/>
