@@ -13,4 +13,5 @@ for make in makes:
     print (70 * "=")
     print (d)
     print (70 * "=")
+    os.system("cd " + d + "; make clean > ~/all.log")
     os.system("cd " + d + "; make > ~/all.log")
