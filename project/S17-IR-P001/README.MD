@@ -30,14 +30,24 @@ These 2 keys and 2 tokens are necessary to run the Python script that fetches th
 Visualization
 ================
 
+Below are the six different visualization that shows the output of the analysis performed. Each of the those can be accessed using the
+public ip of the system as shown above each chart. It is necessary that the security groups are updated so that the ports "5025" and "1234"
+"1240" can be accessed from the local machine running the ansisble playbooks.
+
+URI: http://public_ip:1234
 ![Realtime Tweet Map](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/realtime.JPG "Realtime Tweet")
 
+URI: http://public_ip:1240/US_heat_count
 ![US State](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_tweet.JPG "US State Tweet Count")
 
+URI: http://public_ip:1240/map-pies
 ![US State Sentiment](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_senti.JPG "US State-wise Sentiment")
 
+URI: http://public_ip:1240/co_occur_new.html
 ![Co-occurence](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/cooccur.JPG "Tweet token Co-occurence")
 
+URI: http://public_ip:1240/dynamic-master-detail
 ![Time Chart](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/timechart.JPG "Total Tweets vs Time")
 
+URI: http://public_ip:1240/heatmap
 ![Heatgrid](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg "Sentiment Heatgrid")
