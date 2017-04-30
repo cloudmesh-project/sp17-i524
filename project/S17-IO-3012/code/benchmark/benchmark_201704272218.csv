@@ -1,2 +1,2 @@
 cloud,config_replicas,mongos_instances,shard_replicas,shards_per_replica,mongo_version,test_size,import_time,find_time,mapreduce_time
-jetstream,1,1,2,1,34,large,763,43,69
+jetstream,1,1,1,1,34,small,14,1,2
