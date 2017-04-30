@@ -37,19 +37,19 @@ USGS collects volumes of geospatial data pertaining to earthquakes and makes it 
 Technologies used for development and deployment of this project are listed below.
 \begin{enumerate}
 
-\item {\bfseries Cloudmesh} - Cloudmesh provides Cloud Testbeds as a Service (CTaaS). It is a platform where one can manage all cloud accounts and local files enabling one to copy them between services. Project uses cloudmesh to connect to various cloud environments.
+\item {\bf Cloudmesh} - Cloudmesh provides Cloud Testbeds as a Service (CTaaS). It is a platform where one can manage all cloud accounts and local files enabling one to copy them between services. Project uses cloudmesh to connect to various cloud environments.
 
-\item {\bfseries Ansible} - Ansible is an IT automation tool that automates cloud provisioning, configuration management, and application deployment. Once Ansible gets installed on a control node, which is an agentless architecture, it connects to a managed node through the default OpenSSH connection type. Ptoject uses ansible for one-click deployment.
+\item {\bf Ansible} - Ansible is an IT automation tool that automates cloud provisioning, configuration management, and application deployment. Once Ansible gets installed on a control node, which is an agentless architecture, it connects to a managed node through the default OpenSSH connection type. Ptoject uses ansible for one-click deployment.
 
-\item {\bfseries Python} - Python is an object oriented, light weight programming language. Python is primary programming language used in this project.
+\item {\bf Python} - Python is an object oriented, light weight programming language. Python is primary programming language used in this project.
 
-\item {\bfseries Mongo-DB} - MongoDB is an unstructured (NOSQL) database, which uses document-oriented data model. It stores data in flexible JSON-like documents. The project uses Mongo-DB to store GeoJSON data of earthquakes locally.
+\item {\bf Mongo-DB} - MongoDB is an unstructured (NOSQL) database, which uses document-oriented data model. It stores data in flexible JSON-like documents. The project uses Mongo-DB to store GeoJSON data of earthquakes locally.
 
-\item {\bfseries Plotly} - Plotly is data analytics and visualization tool. One can create interactive graphs using plotly. It provides graphing libraries for Python. The plotly is used in the project as a visualization tool.
+\item {\bf Plotly} - Plotly is data analytics and visualization tool. One can create interactive graphs using plotly. It provides graphing libraries for Python. The plotly is used in the project as a visualization tool.
 
-\item {\bfseries Scikit-learn} - Scikit-learn provides tools for data analysis and data mining. Scikit-learn provides a wide range of learning algorithms. Scikits are the names given to the modules for SciPy, a fundamental library for scientific computing. As these modules provide different learning algorithms, the library is named as sciki-learn. In this project data classification is done using scikit learn.
+\item {\bf Scikit-learn} - Scikit-learn provides tools for data analysis and data mining. Scikit-learn provides a wide range of learning algorithms. Scikits are the names given to the modules for SciPy, a fundamental library for scientific computing. As these modules provide different learning algorithms, the library is named as sciki-learn. In this project data classification is done using scikit learn.
 
-\item {\bfserver Cherrypy} - CherryPy is an object-oriented web application framework. It is designed for rapid development of web applications by wrapping the HTTP protocol. It is WSGI (Web Server Gateway Interface) thread-pooled web server. Cherrypy is used as a web server in the application.
+\item {\bf Cherrypy} - CherryPy is an object-oriented web application framework. It is designed for rapid development of web applications by wrapping the HTTP protocol. It is WSGI (Web Server Gateway Interface) thread-pooled web server. Cherrypy is used as a web server in the application.
 \end{enumerate}
 
 \section{Design}
@@ -89,9 +89,9 @@ USGS earthquake data is fetched using the USGS web service and passing relevant 
 
 \subsection{Data Processing and Visualization}
 
-{\bfseries Severity of earthquakes.} Severity of earthquakes is analysed by their magnitude and depth. Data is classified into clusters using K-Means clustering algorithm (Section 4.1). Clusters are plotted on a interactive scatter plot.
+{\bf Severity of earthquakes.} Severity of earthquakes is analysed by their magnitude and depth. Data is classified into clusters using K-Means clustering algorithm (Section 4.1). Clusters are plotted on a interactive scatter plot.
 
-{\bfseries Region affected the most by earthquakes}. Analysing Latitude-Longitude of epicenter of the earthquake shows the regions where earthquakes are frequent. Lat-long data is clustered using DBSCAN algorithm (Section 4.2). Clusters are plotted on a geo-scatter plot on a world map.
+{\bf Region affected the most by earthquakes}. Analysing Latitude-Longitude of epicenter of the earthquake shows the regions where earthquakes are frequent. Lat-long data is clustered using DBSCAN algorithm (Section 4.2). Clusters are plotted on a geo-scatter plot on a world map.
 
 \subsection{Deployment}
 
@@ -144,7 +144,7 @@ The performance of application was tested on the speed and latency while data in
 
 \begin{table}[htbp]
   
-\begin{left}
+%\begin{left}
 \caption{\bf VM Configuration}
 \begin{tabular}{ m{5em} m{2cm} m{2cm} } 
 \hline
@@ -156,11 +156,11 @@ Assign Floating IP & True & True \\
 
 \hline
 \end{tabular}
-\end{left}
+%\end{left}
 \end{table} 
 
 \begin{table}[htbp]
-\begin{left}
+%\begin{left}
 \caption{\bf Datasets}
 \begin{tabular}{ m{5em} m{2cm} m{2cm} } 
 \hline
@@ -173,7 +173,7 @@ Data Size & Small & Large \\
 
 \hline
 \end{tabular}
-\end{left}
+%\end{left}
 \end{table} 
 
 Figure 2 shows time taken in seconds for data read and data processing with small dataset. Figure 3 shows the result with large dataset.
