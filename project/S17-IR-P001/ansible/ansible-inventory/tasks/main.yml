@@ -1,0 +1,18 @@
+---
+# tasks to edit inventory
+- name: create inventory file
+  become_user: '{{ local_user_name }}'
+  shell: |
+    echo [localhost] > {{ inv_file }}
+    echo localhost ansible_connection=local >> {{inv_file}} 
+
+- name: Add nodes to inventory file
+  become_user: '{{ local_user_name }}'
+  shell: |
+    echo [remote] >> {{ inv_file }}
+    cm cluster inventory > {{ node_list }}
+    tail -n +2 {{ node_list }} > {{ node_list_1 }} 
+    echo [master] >> {{ node_list_1 }}
+    sed -n '2p' {{ node_list }} >> {{ node_list_1 }}
+    cat {{ node_list_1 }} >> {{ inv_file }} 
+    rm -f {{ node_list_1 }} && rm -f {{ node_list }}
