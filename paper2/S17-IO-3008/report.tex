@@ -1,0 +1,183 @@
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb}
+\usepackage{url}
+\journal{i524} 
+
+\title{Google Cloud DNS}
+
+\author[1,*]{Vishwanath Kodre}
+
+\affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
+
+\affil[*]{Corresponding authors: vkodre@iu.edu}
+
+\dates{paper2, \today}
+
+\ociscodes{Google Cloud Platform and Cloud DNS, I524}
+
+% replace this with your url in github/gitlab
+\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/paper1/S17-IO-3008/report.pdf}}
+
+\begin{abstract}
+  Google CloudPlatform is one of the key player in providing cloud based services (IaaS, PaaS and SaaS) and solutions to their customers. The users of the Google cloud platform have the flexibility to custom their services as per their requirement fitting to their application architecture or design and budget. Google has established their CloudPlatform infrastructure worldwide. With the high availability, Google Cloud Platform offers their users NO or very is very less downtime, low latency and high throughput.
+ 
+Google Cloud DNS is fairly new service added by google with an aim to lower the latency of the application or the website loading time, as most of the complicated websites now a days has resources referencing to multiple/different DNS addresses and resolution of such DNS by application per user of the website takes lot of time and slows down the rendering of the website to their end user. With an introduction to Cloud DNS Google’s customer can improve the speed of loading the site as has multiple things/services to offer their customers such as zonal distribution of the DNS, caching and programmable feature/customization which offers Google’s Cloud DNS users an opportunity to enhance experience of the web app.
+
+Though Google Cloud DNS being new entry in already established Cloud DSN market, Google is giving though competition to other providers such as Amazon Route 53. Google Cloud DNS has lot to offer to their user as it not only a very reliable DNS service, it leverages the cloud infrastructure which Google has established, also Google Cloud DNS comes with very affordable pricing.
+\end{abstract}
+\setboolean{displaycopyright}{true}
+\begin{document}
+\maketitle
+\section{Importance of DNS}
+DSN maintains the mapping between the name and actual IP address of the website. Many websites has complex pages which maps or needs to resolve from multiple IP address. Resolving these names and corresponding IP address decides the uptime or response time of the website along with infrastructure web site is deployed on and other deciding factors of the speed of the website. DNS resolution is one of the key deciding factor to decide the response time of the website. 
+Google’s Cloud DNS is a pure cloud-based DNS service, which don’t handle domain registration but offers higher control and more features on the service itself.
+
+\section{Google Public DNS and Cloud DNS}
+Google offers services of caching resolved DNS to overcome the performance challenges while resolving public DNS that complex web pages includes resources from multiple origin domains, which leads to performance hit due to multiple lookups, “Google Public DNS is a recursive DNS resolver, similar to other publicly available services”\cite{public-dns}
+In comparison Google Cloud DNS is designed for very high volume, programable, autoreactive name server which leverages the power of google cloud infrastructure and it just add up more performance, security, correctness which public DNS already are offering, it guaranties the high availability and distribution of the DNS service per zone which add ups the performance boost while resolving multiple domains.
+
+\section{Technologies provided}
+The concept of google cloud DNS is built around “Projects, Managed Zones, Record sets and changes to record sets”\cite{dns-overview}
+\subsection{Project}
+A Platform for managing the projects, resources, domain access control and place billing is configured, every cloud DNS resource lives within project and every cloud DNS operation must specify the project to work with.
+
+\subsection{Managed Zones}
+A managed zone is collection or metadata info of DNS zones which holds the records for same DNS suffix. Inside a project there could be multiple managed zones identified by unique name. “They are automatically assigned named server when they are created to handle responding to DNS queries for that zone.” \cite{dns-zne}
+
+To create the managed zone for enabling cloud DNS with google one has to create google account and enable the cloud DNS service on their account followed by choosing the compute engine or by creating new Project. After completing the prerequisites user can create the new zones or delete existing ones. 
+
+To create a zone user have to provide DNS zone name, description and name to identify zone. Newly created zone is connected to google cloud DNS project automatically however it is not in use until user update their domain registration or explicitly point some resolver at or directly query zone’s name servers.
+
+e.g. for creating new zone
+“gcloud dns managed-zones create --dns-name="example.com." --description="A zone" "myzonename”\cite{dns-overview}
+
+\subsection{Resource record sets collection}
+“The resource record sets collection holds the current state of the DNS records that make up a managed zone.” \cite{dns-overview} It is read only resource collection which can be modified from manage zone creating Change request in the changes collection and it reflects immediately. “User can easily send the desired changes to the API using the import, export, and transaction commands” \cite{dns-overview}
+Importing record set into Managed Zone the format can be of BIND zone file format or YAML record format.
+
+To import user need to run “dns record-set import”
+e.g. “gcloud dns record-sets import -z=examplezonename --zone-file-format path-to-example-zone-file” \cite{dns-overview}
+
+To Export user need to run “dns record-sets export”
+e.g.  “gcloud dns record-sets export -z=examplezonename --zone-file-format example.zone” \cite{dns-overview}
+
+To modify record Transactions are used, a transaction is group of one or more record changes that should be propagated together, which ensures the data is never saved partially. To Modify DNS records use has to first start the transaction
+e.g. “gcloud dns record-sets transaction start -z=examplezonename” \cite{dns-overview}
+
+As the transaction start cloud DNS creates local file in YAML format as “transaction.yaml” each specified operation gets added to this file.
+e.g. gcloud dns record-sets transaction add -z=examplezonename --name="mail.example.com." --type=A --ttl=300 “7.5.7.8” \cite{dns-overview}
+
+\subsection{Supported DNS record types}
+Table \ref{tab:shape-functions} shows an example table.
+\begin{table}[htbp]
+\centering
+\caption{\bf Cloud DNS supports the following types of records:}
+\begin{tabular}{|c|p{7cm}|}
+\hline Record type & Description \\
+\hline\hline
+A & Address record, which is used 
+to map host names to their IPv4 address.\\
+\hline
+AAAA & IPv6 Address record, 
+which is used to map host 
+names to their IPv6 address.\\
+\hline
+CAA & Certificate Authority 
+(CA) Authorization, which 
+is used to specify which CAs 
+are allowed to create certificates 
+for a domain.\\
+\hline
+CNAME & Canonical name record, which 
+is used to specify alias names.\\
+\hline
+MX & Mail exchange record, which is 
+used in routing requests to mail servers.\\
+\hline
+NAPTR & Naming authority pointer record, 
+defined by RFC3403.\\
+\hline
+NS & Name server record, which delegates
+ a DNS zone to an authoritative server.\\
+\hline
+PTR & Pointer record, which is often 
+used for reverse DNS lookups.\\
+\hline
+SOA & Start of authority record, which 
+specifies authoritative information 
+about a DNS zone. An SOA resource 
+record is created for you when you create
+ your managed zone. You can modify 
+the record as needed.\\
+\hline
+SPF & Sender Policy Framework record, 
+a deprecated record type formerly used
+ in e-mail validation systems 
+(use a TXT record instead).\\
+\hline
+SRV & Service locator record, which is used 
+by some voice over IP, instant 
+messaging protocols, and other applications.\\
+\hline
+TXT & Text record, which can contain 
+arbitrary text and can also be used 
+to define machine-readable data, such as 
+security or abuse prevention information.\\
+\hline
+\end{tabular}
+	\label{tab:shape-functions}
+\end{table}
+
+\cite{dns-overview}
+\section{Services provided by google Cloud DNS}
+Google Cloud DNS provides full control over DNS management and services, with Google’s command and exposed REST APIs user can manage their zones, records, migrate DNS from non-cloud to cloud DNS. Based on the SLA defined in the service plans user purchase the guaranty of services is provided. Apart from the basic plans user has 24X7 support from googles’ expert team to resolved query or any issue user is facing. Apart from technical support team user can carry out maintenance of their own by referring to the technical documents and guidelines. 
+
+\subsection{Migrating to Cloud DNS}
+Cloud DNS supports the migration of an existing DNS domain from another DNS provider to Cloud DNS just by creating Managed zones from user’s domain, importing existing DNS configuration, verify DNS propagation, and updating registrar’s name service records.
+
+\subsection{Monitoring Changes}
+DNS changes can be done via command line tool or REST API, they are initially marked as pending and user can verify the changes has reflected by referring to change history or look for status change. Listing changes and verifying DNS propagation by using the watch and dig commands to monitor changes has picked up by DNS server. 
+
+Syntax for lookup zone’s server name:
+“gcloud dns managed-zones describe $<zone name>$”\cite{dns-zne}
+
+With this command it’ll list down all the zone name server within that zone, which can be used to monitor individual server with Syntax.
+“watch dig example.com in MX $@<your zone's nameserver>$”\cite{dns-zne}
+
+The watch command will run the dig command every 2 seconds by default.
+Migration to Cloud DNS and Monitoring are activities the users can easily carry out by them selves 
+
+\section{Scalability}
+Google Cloud DNS inherently scaled for larger data set, as every solutions provided by Google Cloud are backed up by the googles’ wide spread highly scalable infrastructure of Google compute Engine. Google’s auto scaling and load balancing technique compute resources can be distributed over the multiple regions 
+
+“With Google’s cloud load balancing user can put resources behind single anycast IP and scale resources up and down with intelligent autoscaling. It provides cross-region load balancing including automatic multi-region failover which gently moves traffic infractions if backend become unhealthy”\cite{dns-load-balancing}
+
+\section{Google Cloud DNS with Big Data}
+With Google’s one account user gets to use multiple cloud services that google is offering. Once the user creates the account and starts using the Google’s compute engine and Appl engine, they are closer to harness the power of Big Data solutions offered on cloud platform, and with cloud DNS’s programable feature it is up to user to leverage power of Big data analytics and enhance the caching of DNS resolver. Which is inherently implemented by Google themselves.
+
+\section{Cloud DNS services in comparison with google}
+In comparison with other cloud based DNS services offerings Google is pretty new in their comparison, and the cloud DNS market is already well established and customers get to choose appropriate service as their requirement. Few of the well-known cloud DNS provider with Key feature and services to offer to end customer.
+
+Cloudflare Global DNS is free and fast in comparison and stand as no one position as per the market share. With its highly available DNS infrastructure and global anycast network address latency issue with local and global load balancer and health checks with fast failover to reroute visitors and website is always available.
+
+Amazon Route 53 is amazon’s cloud DNS service gives their customer option along with their other cloud services along with AWS. However this is comparatively expensive service as compared with other providers.
+
+Microsoft Azure DNS, is said to be most cheapest cloud DNS however along with Google Cloud it is newly launch in DNS market and has about similar market share compared with google.
+
+\section{Key points to take away}
+Google Cloud DNS is comparatively new in the market however with its competitive pricing and highly available and vast spread infrastructure it is challenging the market especially to Amazon’s Route 53 services. With Google’s technical Support, documentations, online help. User can easily migrate their DNS and choose cloud option. With Google’s one account to it is easy to maintain multiple services under one roof. Google is eyeing to become the market leader in all Cloud Services as they has to offer with Cloud DNS resolver it ensures the every web site using their DNS services are always up and running 24X7 that wins customer’s confidence. Google Cloud DNS though it is new in the market but with it’s competitive pricing and services it is moving towards becoming the leader in services of Cloud DNS
+\bibliography{references}
+ 
+\section*{Author Biography}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm] as required for separation of bio photos.
+%  \begin{wrapfigure}{L}{0.25\columnwidth}
+%   \includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
+%  \end{wrapfigure}
+  \noindent
+  {\bfseries Vishwanath Kodre} received his Masters Degree in Computer Science from Pune University.  He is currently studying Data Science at Indiana University Bloomington.
+\end{minipage}
+\endgroup
+
+\end{document}
