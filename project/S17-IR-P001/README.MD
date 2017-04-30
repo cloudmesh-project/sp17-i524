@@ -35,19 +35,19 @@ public ip of the system as shown above each chart. It is necessary that the secu
 "1240" can be accessed from the local machine running the ansisble playbooks.
 
 URI: http://public_ip:1234
-![Realtime Tweet Map](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/realtime.JPG "Realtime Tweet" width="300" height="200")
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/realtime.JPG" alt="Realtime Tweet" width="600" height="449"/>
 
 URI: http://public_ip:1240/US_heat_count
-![US State](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_tweet.JPG "US State Tweet Count" width="150" height="150")
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_tweet.JPG" alt="US State Tweet Count" width="600" height="388"/>
 
 URI: http://public_ip:1240/map-pies
-![US State Sentiment](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_senti.JPG "US State-wise Sentiment" width="150" height="150")
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_senti.JPG" alt="US State-wise Sentiment" width="600" height="388"/>
 
 URI: http://public_ip:1240/co_occur_new.html
-![Co-occurence](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/cooccur.JPG "Tweet token Co-occurence" width="200" height="200")
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/cooccur.JPG" alt="Tweet token Co-occurence" width="727" height="727"/>
 
 URI: http://public_ip:1240/dynamic-master-detail
-![Time Chart](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/timechart.JPG "Total Tweets vs Time" width="300" height="100")
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/timechart.JPG" alt="Total Tweets vs Time" width="600" height="401"/>
 
 URI: http://public_ip:1240/heatmap
-<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg" alt="Sentiment Heatgrid" width="300" height="100"/>
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg" alt="Sentiment Heatgrid" width="600" height="401"/>
