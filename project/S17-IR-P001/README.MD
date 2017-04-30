@@ -13,15 +13,31 @@ You are expected to use a Linux machine which has the following packages install
 - Cloudmesh Client (and having a valid cloudmesh.yml file for accessing Chameleon Cloud)
 - Ansible
 
-You are expected to create API keys in twitter to collect the data from Twittr. This can be achieved using the following steps:
+You are expected to create API keys in twitter to collect the data from Twitter. This can be achieved using the following steps:
 ```
-1- Log into the Twitter Developers section.If you don't already have an account, you can login with your normal Twitter credentials
+1- Log into the Twitter Developers section.If you don't already have an account, you can login with your normal 
+Twitter credentials
 2- Go to "Create an app"
 3- Fill in the details of the application you'll be using to connect with the API
-4- Your application name must be unique. If someone else is already using it, you won't be able to register your application until you can think of something that isn't being used.
+4- Your application name must be unique. If someone else is already using it, you won't be able to register your 
+application until you can think of something that isn't being used.
 5- Click on Create your Twitter application
-6- Details of your new app will be shown along with your consumer key and consumer secret.scroll down and click Create my access token.
-
+6- Details of your new app will be shown along with your consumer key and consumer secret.scroll down and click 
+Create my access token.
 ```
 These 2 keys and 2 tokens are necessary to run the Python script that fetches the data from Twitter streaming API.
+
+Visualization
 ================
+
+![Realtime Tweet Map](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/realtime.JPG "Realtime Tweet")
+
+![US State](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_tweet.JPG "US State Tweet Count")
+
+![US State Sentiment](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_senti.JPG "US State-wise Sentiment")
+
+![Co-occurence](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/cooccur.JPG "Tweet token Co-occurence")
+
+![Time Chart](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/timechart.JPG "Total Tweets vs Time")
+
+![Heatgrid](https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg "Sentiment Heatgrid")
