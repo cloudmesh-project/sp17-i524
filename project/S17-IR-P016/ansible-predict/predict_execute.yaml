@@ -6,7 +6,7 @@
     - name: setup hdfs folders
       command: "{{ item }} chdir=/opt/predict"
       with_items:
-      - /opt/hadoop/bin/hdfs dfs -rmr /predict
+      - /opt/hadoop/bin/hdfs dfs -rm -r /predict
       - /opt/hadoop/bin/hdfs dfs -mkdir /predict
       - /opt/hadoop/bin/hdfs dfs -put /opt/predict/data/Customer_Data.csv /predict/
       become: yes
@@ -14,7 +14,7 @@
       become_method: sudo
       tags:
         - setup - Hadoop Directories
-    - debug: var=ansible_default_ipv4.address
+
     - name: run spark job on training data set
       command: /opt/predict/code/run_customer_churn_prediction.sh
       environment:

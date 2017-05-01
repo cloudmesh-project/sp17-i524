@@ -1,0 +1,17 @@
+---
+- hosts: predict
+  become: yes
+  become_user: hadoop
+  tasks:
+    - name: run data analysis
+      command: python /opt/predict/code/analysis.py
+      environment:
+        PYTHONPATH: $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.9-src.zip:$PYTHONPATH
+      tags:
+        - data analysis
+    - name: Fetch result plots files from remote to local
+      synchronize:  src={{ item }} dest=/tmp/ mode=pull
+      with_items:
+        - "/opt/predict/data/*.png"
+      tags:
+        - get-results
