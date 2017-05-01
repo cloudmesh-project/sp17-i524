@@ -1,0 +1,3 @@
+Command for searching for public ip of the first node of the spark cluster:
+
+cm vm list | grep satyam | awk '{print $11}'| head -1
