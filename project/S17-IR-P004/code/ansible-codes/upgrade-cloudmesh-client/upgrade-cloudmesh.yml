@@ -1,0 +1,75 @@
+---
+ - hosts: mylocalhost
+   become: true
+   tasks:
+
+     - name: Check that if cm is installed
+       stat: path=/usr/local/bin/cm
+       register: cloudmesh_installed
+
+     - name: fresh install
+       pip: name=cloudmesh_client state=latest
+       when: cloudmesh_installed.stat.exists == false
+
+     - name: reset cloudmesh db before re-install
+       become_user: "{{ lookup('env','USER') }}"
+       shell:
+         cm reset
+       when: cloudmesh_installed.stat.exists == true
+
+     - name: uninstall cloudmesh_client
+       pip: name=cloudmesh_client state=absent
+       when: cloudmesh_installed.stat.exists == true
+
+     - name: re-install
+       pip: name=cloudmesh_client state=latest
+       when: cloudmesh_installed.stat.exists == true
+
+     - name: refresh
+       become_user: "{{ lookup('env','USER') }}" 
+       shell: |
+         cm refresh on
+
+     - name: Preparing cloudmesh-set cloud as cloudmesh
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm default cloud=<cloud provider name>
+
+     - name: Preparing cloudmesh- registering the profile
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm register profile
+
+     - name: Preparing cloudmesh- setting default user
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm default user=<cloud username>
+
+     - name: run ssh-add
+       become_user: "{{ lookup('env','USER') }}"
+       shell: ssh-add
+
+     - name: adding ssh key
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm key add --ssh
+
+     - name: refresh
+       become_user: "{{ lookup('env','USER') }}" 
+       shell: |
+         cm refresh on
+
+     - name:  uploading ssh key to cloud
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+         cm key upload
+
+     - name: upload security group
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+         cm secgroup upload
+
+     - name: security group list
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+         cm secgroup list
+
+     - name : listing the vms
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm vm list

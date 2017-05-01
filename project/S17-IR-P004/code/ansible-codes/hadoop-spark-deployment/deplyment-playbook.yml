@@ -1,0 +1,36 @@
+---
+ - hosts: mylocalhost
+   become: true
+   tasks:
+
+     - name : listing the vms
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm vm list
+
+     - name: define the a normal cluster
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm cluster define --count 7 --image ubuntu-14.04-trusty-server-cloudimg
+
+     - name: define hadoop cluster with addons as spark and pig 
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm hadoop define spark pig
+
+     - name: show details of cluster addons
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm hadoop addons
+
+     - name: show details of cluster, shows the number of stacks
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm hadoop avail
+
+     - name: sync
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm hadoop sync
+
+     - name: deploy
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm hadoop deploy
+
+     - name: cross ssh
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm cluster cross_ssh
