@@ -104,7 +104,7 @@ Users can choose to use cloudmesh docker application from a remote terminal outs
 
 
 \section{Cloudmesh Docker Application Architecture}
-The architecture of the application is depicted in Figure~\ref{fig:Arch}.The commands developed can be broadly classified as 'action commands','Inquiry commands'.\\
+The architecture of the application is depicted in Figure~\ref{fig:Arch}.The commands developed can be broadly classified as 'action commands','Inquiry commands'.
 The action commands are which would create or alter an entity.The entity can be a host/container/node. We use the corresponding API call to get the latest values for the changed entity.Docker API module is developed for addressing the docker commands, and Swarm API module is used for swarm commands.
 The Inquiry commands have two flavours a list and refresh mode.The list commands fetch the data locally from the Database and the refresh command will refresh the current state of the corresponding entity from the hosts.
 
@@ -178,14 +178,12 @@ The source code and the detailed deployment and use instructions are available a
 \begin{enumerate}
     \item\textbf{Host Set/Add}
      This command will Set/Add the docker host on which the user wants to operate.The host details will be captured in the database with this command.
-    \begin{verbatim} cms docker host docker1 docker1:4243 \end{verbatim}
-    
+    \begin{verbatim} cms docker host docker1 docker1:4243 \end{verbatim}    
     \item \textbf{Host List}
      This command will list the hosts available.The output would display the Ip, Name, Port,and if the host is swarm manager and the swarm manager Ip. Please note the Swarm manager Ip will be blank if the host is manager or not part of swarm. 
      \begin{verbatim}
      cms docker host list 
-     \end{verbatim}
-     
+     \end{verbatim}    
      \begin{table}[h!]
      \caption{\bf cms docker host list }
      \begin{tabular}{ccccc}
@@ -201,18 +199,16 @@ The source code and the detailed deployment and use instructions are available a
      \end{table}
      
     \item \textbf{Host Delete}
-    This command will delete the host from the setup.This would also delete the host details from the database.User can do a host list to see the updated host details.\\
+    This command will delete the host from the setup.This would also delete the host details from the database.User can do a host list to see the updated host details.
     \begin{verbatim}
     cms docker host delete docker1:4243
-    \end{verbatim}
-    
+    \end{verbatim}    
     \item \textbf{Image List}
     This command will display the images available on the hosts available in the database.
-    It would display the Ip of the host, the Image Id, repository and the size of the image.Please note that this command would display the results from the local dB.\\
+    It would display the Ip of the host, the Image Id, repository and the size of the image.Please note that this command would display the results from the local dB.
     \begin{verbatim}
     cms docker image list
-    \end{verbatim}
-    
+    \end{verbatim}   
     \begin{table}[h!]
      \caption{\bf cms docker image list }
      \begin{tabular}{cccc}
@@ -231,36 +227,27 @@ The source code and the detailed deployment and use instructions are available a
     \begin{verbatim}
     cms docker image refresh
     \end{verbatim}
-
     \item \textbf{Container Create}
-     This command will create a container on a given host.The arguments for this command is the name of the container and the image from which the container needs to be created.The image in the argument must be available through image list command above on the given host.\\
- 
+     This command will create a container on a given host.The arguments for this command is the name of the container and the image from which the container needs to be created.The image in the argument must be available through image list command above on the given host.
     \begin{verbatim}
     cms docker container create test1 \
     elasticsearch:docker
-    \end{verbatim}
-    
+    \end{verbatim}   
     \item \textbf{Container Start}
-     This command will start a container.The container should have been already created using the create command.\\
-
+     This command will start a container.The container should have been already created using the create command.
     \begin{verbatim}
     cms docker container start test1
-    \end{verbatim}     
-     
+    \end{verbatim}         
     \item \textbf{Container Stop}
-     This command will stop and container which is running.\\
-
+     This command will stop and container which is running.
     \begin{verbatim}
     cms docker container stop test1
-    \end{verbatim}  
-    
+    \end{verbatim}     
     \item \textbf{Container List}
-     This command will display the list of containers running across the hosts.The output contains the Ip, Container Id, Name, Image, status and start time of the container.The details would be shown from the local database maintained.
-     
+     This command will display the list of containers running across the hosts.The output contains the Ip, Container Id, Name, Image, status and start time of the container.The details would be shown from the local database maintained.  
     \begin{verbatim}
     cms docker container list
     \end{verbatim}  
-        
      \begin{table}[h!]
      \caption{\bf cms docker container list }
      \begin{tabular}{cccccc}
@@ -274,56 +261,41 @@ The source code and the detailed deployment and use instructions are available a
      \end{table}
      
     \item \textbf{Container Refresh}
-     This command will refresh the current state of the containers across the hosts. This application will connect to all the hosts available in the database and run the native Docker container list to get the latest information and update the local database for refreshing the data. \\
-     
+     This command will refresh the current state of the containers across the hosts. This application will connect to all the hosts available in the database and run the native Docker container list to get the latest information and update the local database for refreshing the data.    
     \begin{verbatim}
     cms docker container refresh
-    \end{verbatim}  
-    
+    \end{verbatim}
     \item \textbf{Container Delete}
-     This command will delete the container on the host. The argument required is the container name.The updated container list can be viewed by running cms docker container list command.\\
-     
+     This command will delete the container on the host. The argument required is the container name.The updated container list can be viewed by running cms docker container list command.   
     \begin{verbatim}
     cms docker container delete test1 
     \end{verbatim}  
-    
-    
     \item \textbf{Container Run}
-     This command will create and run a container in one step.The arguments for the function are the name of the container and the image from which it needs to be run.\\
-     
+     This command will create and run a container in one step.The arguments for the function are the name of the container and the image from which it needs to be run.     
     \begin{verbatim}
     cms docker container run test1 /
     elasticsearch:docker
     \end{verbatim}  
-
     \item \textbf{Container Pause}
-     This command will pause the container which is currently running.\\
-     
+     This command will pause the container which is currently running.   
     \begin{verbatim}
     cms docker container pause test1
     \end{verbatim} 
-
     \item \textbf{Container Unpause}
-     This command will unpause the container which is currently paused.
-     
+     This command will unpause the container which is currently paused.   
     \begin{verbatim}
     cms docker container unpause test1
     \end{verbatim} 
-
     \item \textbf{Network Refresh}
     This command will refresh the network details across all the available hosts in the database and  update the results to the local database.
-    
     \begin{verbatim}
     cms docker network refresh
     \end{verbatim} 
-
     \item \textbf{Network List}
-    This command will display the network details available in the local database.The output would display the host Ip where the network is established, the network Id , name and containers on the network\\
-
+    This command will display the network details available in the local database.The output would display the host Ip where the network is established, the network Id , name and containers on the network.
     \begin{verbatim}
     cms docker network list
     \end{verbatim} 
-    
     \begin{table}[htbp]
      \caption{\bf cms docker network list }
      \begin{tabular}{cccc}
@@ -341,20 +313,15 @@ The source code and the detailed deployment and use instructions are available a
 \section{Swarm Commands}
 \begin{enumerate}
     \item \textbf{Host Set/Add}
-     The command will add or set the input host to the current host.The swarm commands following this command will be executed on the host setup in this step. The host details will also be captured in the database as part of this command.\\
-     
+     The command will add or set the input host to the current host.The swarm commands following this command will be executed on the host setup in this step. The host details will also be captured in the database as part of this command.  
     \begin{verbatim}
     cms swarm host docker1 docker1:4243
     \end{verbatim} 
-
-     
     \item \textbf{Host List}
-     This command will list the hosts available. It displays the Ip, Name,Port,and if the host is swarm manager and the swarm manager Ip. Please note the Swarm manager Ip will be blank if the host is manager or not part of swarm.
-     
+     This command will list the hosts available. It displays the Ip, Name,Port,and if the host is swarm manager and the swarm manager Ip. Please note the Swarm manager Ip will be blank if the host is manager or not part of swarm.    
     \begin{verbatim}
     cms swarm host list
     \end{verbatim} 
-
      \begin{table}[htbp]
      \caption{\bf cms docker host list }
      \begin{tabular}{ccccc}
@@ -370,58 +337,42 @@ The source code and the detailed deployment and use instructions are available a
      \end{table}
      
     \item \textbf{Host Delete}
-    This command will delete the host from the database and also the associate container,service,networkand image objects of the host.\\
-
+    This command will delete the host from the database and also the associate container,service,networkand image objects of the host.
     \begin{verbatim}
     cms swarm host delete docker1:4243
     \end{verbatim} 
-    
     \item \textbf{Image List}
     This command will display the images available on a host.
-    It would display the Ip of the host, the Image Id , repository and the size of the image.Please note that this command would display the results from the local dB.\\
-    
+    It would display the Ip of the host, the Image Id , repository and the size of the image.Please note that this command would display the results from the local dB.
     \begin{verbatim}
     cms swarm Image list
-    \end{verbatim} 
-
-    
+    \end{verbatim}  
     \item \textbf{Swarm Create}
-    This command will initialise the  swarm mode on the current host.There are no arguments required for this command. After this command is run the current host would become the swarm manager.\\
-    
+    This command will initialise the  swarm mode on the current host.There are no arguments required for this command. After this command is run the current host would become the swarm manager.
     \begin{verbatim}
     cms swarm create
     \end{verbatim} 
-    
     \item \textbf{Swarm Join}
-    This command will join the current host to a swarm node either as a manager or a worker. User needs to setup a new current host with cms swarm host command and run cms swarm join so that current host would be joined with the swarm created.User needs to pass the address or host name of the swarm manager and the mode in which the current node will operate in the swarm.\\
-    
+    This command will join the current host to a swarm node either as a manager or a worker. User needs to setup a new current host with cms swarm host command and run cms swarm join so that current host would be joined with the swarm created.User needs to pass the address or host name of the swarm manager and the mode in which the current node will operate in the swarm.
     \begin{verbatim}
     cms swarm join docker3 docker4:4243 worker
     \end{verbatim} 
-    ( assuming docker3 is already a swarm manager) 
-    
+    ( assuming docker3 is already a swarm manager)  
     \item \textbf{Swarm Leave}
-    This command is applicable for the swarm manager or worker, this would remove the host from the swarm.If a manager has multiple workers, workers need to be removed(leave) before the manager can leave.\\
-    
+    This command is applicable for the swarm manager or worker, this would remove the host from the swarm.If a manager has multiple workers, workers need to be removed(leave) before the manager can leave.
     \begin{verbatim}
     cms swarm leave 
-    \end{verbatim}
-
-    
+    \end{verbatim}  
     \item \textbf{Network Create}
     This command will create the network which can be used by the swarm containers later.The argument it needs is the name of the containers.
-    
     \begin{verbatim}
     cms swarm network create network1 
     \end{verbatim}
-    
     \item \textbf{Network List}
-     This command will display the network details from the local database.The output will display the host Ip where the network is established, the network Id, name and containers on the network\\
-     
+     This command will display the network details from the local database.The output will display the host Ip where the network is established, the network Id, name and containers on the network.
     \begin{verbatim}
     cms swarm network list  
     \end{verbatim}
-    
     \begin{table}[htbp]
      \caption{\bf cms swarm network list }
      \begin{tabular}{cccc}
@@ -435,37 +386,27 @@ The source code and the detailed deployment and use instructions are available a
      \end{table}
      
     \item \textbf{Network Refresh}
-    This command will refresh the network details across the Docker hosts available in the database and update the results in the local database.\\
-    
+    This command will refresh the network details across the Docker hosts available in the database and update the results in the local database.
     \begin{verbatim}
     cms swarm network refresh  
-    \end{verbatim}
-    
-    
+    \end{verbatim}   
     \item \textbf{Network Delete}
     This command will delete an existing network.The input required for this command is just the network name.
-    
     \begin{verbatim}
     cms swarm network delete network1  
-    \end{verbatim}
-    
-    
+    \end{verbatim}   
     \item \textbf{Service Create}
-    This command will create a service, the arguments required are the image name and the name of service.This command will record the service details into the local database.This command also takes several configurable options such as Replica Count , Replica Mode and Network which can be passed as advanced options as detailed in Section 5.\\
-    
+    This command will create a service, the arguments required are the image name and the name of service.This command will record the service details into the local database.This command also takes several configurable options such as Replica Count , Replica Mode and Network which can be passed as advanced options as detailed in Section 5.
     \begin{verbatim}
     cms swarm service create elasticsearch \
     elasticsearch:swarm  
-    \end{verbatim}
-    
+    \end{verbatim}    
     \item \textbf{Service List}
-    This command will list the current services running , the data displayed is from the local database, if the most current details are required user can run service refresh command below.\\
-
+    This command will list the current services running , the data displayed is from the local database, if the most current details are required user can run service refresh command below.
     \begin{verbatim}
     cms swarm service list 
-    \end{verbatim}  
-    
-    The number of replicas below indicates the number of containers which are running the services.\\
+    \end{verbatim}    
+    The number of replicas below indicates the number of containers which are running the services.
     \begin{table}[htbp]
      \caption{\bf cms swarm service list }
      \begin{tabular}{p{1.25cm}p{1.5cm}p{1.5cm}p{1.5cm}p{.75cm}}
@@ -479,26 +420,20 @@ The source code and the detailed deployment and use instructions are available a
      \end{table}
      
     \item \textbf{Service Delete}
-    This command will delete a running service, the argument required is the service name.This command will also delete the service details into the local database.\\
-    
+    This command will delete a running service, the argument required is the service name.This command will also delete the service details into the local database.
     \begin{verbatim}
     cms swarm service delete elasticsearch
-    \end{verbatim} 
-    
+    \end{verbatim}    
     \item \textbf{Service Refresh}
     This command will refresh the services status for all the hosts available in the database and refresh the service details in the local database.
- 
     \begin{verbatim}
     cms swarm service refresh
-    \end{verbatim} 
-       
+    \end{verbatim}       
     \item \textbf{Node List}
     This command will display the list of the nodes across the hosts available.The results come from the local database. The command will display the node Id, node Ip, Role, Status and Manager Ip.
-    
     \begin{verbatim}
     cms swarm node list
     \end{verbatim} 
-
      \begin{table}[htbp]
      \caption{\bf cms swarm node list }
      \begin{tabular}{ccccc}
@@ -514,19 +449,15 @@ The source code and the detailed deployment and use instructions are available a
      
     \item \textbf{Image Refresh}
     This command will refresh the images details across the hosts available in the database and store the results in the local database .
-    
     \begin{verbatim}
     cms swarm image refresh
-    \end{verbatim} 
-     
+    \end{verbatim}     
     \item \textbf{Image List}
     This command will display the images available on a host.
-    It would display the Ip of the host, the Image Id, repository and the size of the image.Please note that this command would display the results from the local dB.\\
-    
+    It would display the Ip of the host, the Image Id, repository and the size of the image.Please note that this command would display the results from the local dB.
     \begin{verbatim}
     cms swarm image list
-    \end{verbatim} 
-    
+    \end{verbatim}    
     \begin{table}[htbp]
      \caption{\bf cms swarm image list }
      \begin{tabular}{cccc}
@@ -541,19 +472,15 @@ The source code and the detailed deployment and use instructions are available a
      \end{table}
      
     \item \textbf{Container Refresh}
-    This command will refresh the current state of the containers across the hosts available in the local database. This command would connect to the host and run the native Docker container list to get the latest information and update the local database  refreshing the data. \\
-    
+    This command will refresh the current state of the containers across the hosts available in the local database. This command would connect to the host and run the native Docker container list to get the latest information and update the local database  refreshing the data.
     \begin{verbatim}
     cms swarm container refresh
     \end{verbatim} 
-
     \item \textbf{Container List}
     This command will display the list of containers running across the hosts.This would return the Ip, Container Id, Name, Image, status and start time of the container.The details would be shown from the local database maintained.
-    
     \begin{verbatim}
     cms swarm container list
-    \end{verbatim} 
-    
+    \end{verbatim}    
      \begin{table}[htbp]
      \caption{\bf container list }
      \begin{tabular}{cccccc}
@@ -605,7 +532,7 @@ The hardware specifications used on both the clouds is detailed in Table~\ref{ta
 \item Created 3 Virtual Machines using Cloud Mesh Client .2 of the Virtual Machines  are to be used for the docker Elasticsearch cluster, and 1 Virtual machine is the Benchmark server for the Kibana and esrally docker images 
 \item Using Ansible scripts Install Docker in 3 Virtual Machines and enable the docker daemon for remote access.
 \item Using Ansible scripts Install Images of Elasticsearch on hosts for Docker cluster and the Image of Esrally in the Benchmark server.
-\item Using the Cloudmesh Docker application we start four containers 2 in each of the virtual machines.To enable clustering of Elasticsearch applications running in the docker containers, we need set the below parameters in container creation
+\item Using the Cloudmesh Docker application we start four containers 2 in each of the virtual machines.To enable clustering of Elasticsearch applications running in the docker containers, we need set the below parameters in container creation.
 \begin{verbatim}
     network_mode=host 
     environment=
@@ -614,7 +541,6 @@ The hardware specifications used on both the clouds is detailed in Table~\ref{ta
     "discovery.zen.ping.unicast.hosts=/
     docker1,docker2"]
 \end{verbatim}
-
 The network mode set to host allows the Elasticsearch containers use the underlying Virtual Machines  network for networking and leveraging the Elasticsearch unicast discovery find and form a cluster along with the other Elasticsearch instances running in other
 containers either on the same host or different hosts.
 
@@ -634,7 +560,6 @@ containers either on the same host or different hosts.
     networks=["elastic_cluster"] 
     env=["SERVICE_NAME=elasticsearch"]
 \end{verbatim}
-
 Swarm mode containers cannot use the underlying host network as in the docker mode to enable the communication between the swarm containers we created an "overlay" network in the swarm manager.This network is passed in the service creation.So every container that is created by the swarm mode Manager will run on this network.In the swarm mode to enable elastic search unicast discovery on the start of the elastic search cluster using the Service name environmental variable we identify other containers available in the cluster and dynamical set the \begin{verbatim} discovery.zen.ping.unicast.hosts \end{verbatim} parameter to enable elastic search to find and form a cluster with other Elasticsearch applications in the swarm.
 
 \end{enumerate}
