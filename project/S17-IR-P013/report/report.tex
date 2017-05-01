@@ -168,12 +168,35 @@ Hbase \cite{hbase} is a column based key-value database. We have considered two 
 Stations table will consist of all the weather stations with its location and the date range within which it is was active. Location will have the latitude and longitude. The station id will be the key for the table. NCDC uses a uniquely identifiable key for the stations across the globe. This makes the best attribute for the primary key irrespective of country and region. Weather table is a more completed table and has dynamic column family. The key for the table is the year and month in (YYYY-MM) format. Each key contains all the stations with their weather parameter. For example say a key 1967-01 (meaning January 1967) is having 10 stations with station id sid-1 to sid-10. Each station id will having 4 parameters or data types (TAVG,TMAX,TMIN and PRCP). And finally each parameter have their values. 
 
 \section{Data Persistence Layer}
-The project is structured with python packages. We have a specific package for persistence as 'iu.i524.S17IRP013.dao'. The dao has the scripts to connect hbase and performs operations. The base script is `hbase\_connect.py` which does the connection. The connection is made through Apache Thrift Rest Api. It has the connection object , which is used by the other two dao classes.
+The project is structured with python packages. We have a specific package for persistence as 'iu.i524.S17IRP013.dao'. The dao has the scripts to connect hbase and performs db operations. The base script is `hbase\_connect.py` which does the connection. The connection is made through Apache Thrift Rest Api. It has the connection object , which is used by the other two dao classes.
 
 \subsection{Station Dao}
-This script does all CRUD operations on stations table. On startup it will create the table if not available. It has 2 main functions insert and retrieve. The insert function takes key value pair as argument and put it into hbase table. Cntd .. 
+This script does all CRUD operations on stations table. On startup it will create the table if not available. It has 2 main functions insert and retrieve. The insert function takes key value pair as argument and put it into hbase table. Another function and the important one is `get\_station\_data` which takes the start row as argument and returns next ten records. This is done via scan command of hbase which supports record limitation.
+\begin{lstlisting}[language=Python,caption=Stations Dao,breaklines=true]
+def get_station_data(start_row=''):   
+    st_list = dict()
+    count = 0    
+    if(start_row == ''):    
+        for key, data in table.scan(limit=10):
+            st_list[key] = {'min_date':data['date_range:min_date'], 'max_date':data['date_range:max_date'] , \
+                            'station_id': data['station:id'], \
+                            'latitude':data['location:latitude'], \
+                            'longitude':data['location:longitude']}            
+    else:
+        for key, data in table.scan(limit=11, row_start=start_row):            
+            count = count + 1
+            if(count > 1):
+                st_list[key] = {'min_date':data['date_range:min_date'], 'max_date':data['date_range:max_date'], \
+                            'station_id': data['station:id'], \
+                            'latitude':data['location:latitude'], \
+                            'longitude':data['location:longitude']}    
+    return st_list
+\end{lstlisting}
+\subsection{Weather Dao}
+Weather dao is similar to station in dao in all respect except it deals with weather table. Apart from the getting records from the weather table, there is another method to get all keys from the table. We will see in later sections why we need the entire key list from the table.
 
-\section(Weather Data Persistence)
+
+\section{Weather Data Persistence}
 Once happybase, thrift and hbase is functional, we are ready to download our weather data. Weather data download is divided into two steps 1) Getting weather stations details for a given country and 2) Getting Weather data for a given station. Lets see them individually :
 \begin{itemize}
 \item Download Weather Stations - To consume rest services we have used python's inbuilt request response module.  Let us walk you through the code. We have two main python script one for data access and another for rest consumption. "stations\_dao.py" is for accessing table "wda\_stations" in hbase. The functions are self explaining and hence will not be repeated here. "weather\_services.py" is for consuming NCDC rest services. To load all stations , we will be using the code \textit{`FIPS:IN`} i.e the region code for India.\newline
@@ -199,11 +222,98 @@ def load_stations():
     print str(nbr_of_records) \
     + ' stations loaded successfully !!'    
 \end{lstlisting}
-The function `load\_stations` calls `get\_stations` till all the available stations are downloaded. `insert\_station` is the \textit{DAO (Data Access Object)} call and inserts the dataset into hbase table. The dao layers are discussed next. For now they are meant for basic CRUD operations.
+The function `load\_stations` calls `get\_stations` till all the available stations are downloaded. `insert\_station` is the \textit{DAO (Data Access Object)} call and inserts the dataset into hbase table.
 
+\item Download Weather Data - With all stations in the table, we invoke the data api of NCDC for downloading weather data. The argument for getting weather data is station id and date range. The two main methods for loading weather data are as follows 
 
+ \begin{lstlisting}[language=Python,caption=Get Weather Stations,breaklines=true]
+def load_weather_data():
+    start_row = ''
+    st_list = stations.get_station_data(start_row=start_row)
+    while st_list != {}:
+        for key, value in st_list.items():
+            get_weather_data(startDate=value['min_date'], \
+            endDate=value['max_date'], stationId=key, station_details=value) 
+            start_row = key
+        print 'Weather Data loaded till station id = ' + key
+        st_list = stations.get_station_data(start_row=start_row)    
+
+def get_weather_data(station_details, startDate='1968-01-01', endDate='1970-01-01', stationId='GHCND:IN001011001'):
+    date_range_list = AppUtil.get_year_list(start_date=startDate, end_date=endDate)
+    for date_range in date_range_list:
+        limit = 25    
+        offset = 0
+        result = Services.get_weather_data(startDate=date_range['min_date'],\ endDate=date_range['max_date'], stationId=stationId, offset=offset)   
+        while(result != {}):        
+            # print result['results']
+            insert_result(result['results'], station_details)
+            offset = offset + limit
+            result = Services.get_weather_data(startDate=date_range['min_date'],\ endDate=date_range['max_date'], stationId=stationId, offset=offset)
+
+\end{lstlisting}
+
+The `load\_weather\_data` function retrieves station data from the station table in a batch of ten. For each station id, it is then passed to `get\_weather\_data` function to get weather data for the given station id. This data is again persisted into wda\_weather table for future analysis and usage. These are the main functions to download weather data. All other functions are helper functions to enable the download. 
 
 \end{itemize}
+
+
+\section{Install Python Program}
+Our python programs are structure and packaged. So to use it, we need to install the packages , in order to make them available in the classpath or pythonpath. There is a setup.py script provided with the main source folder. This script installs the entire package into python core folder. To execute this \textit{pip} must be pre-installed. Once pip is available run the following command 
+
+\begin{lstlisting}[language=Python,caption=Install python packages,breaklines=true]
+sudo pip install  <path_to_src_folder>/src
+\end{lstlisting}
+
+Use sudo or super user to install as other may have permissions issues. Once they are installed , we are ready to run our map reduce program.
+
+\section{Execution}
+The application expects all the data in hbase are prefetched and ready. For downloading the datasets into hbase follow the steps 
+\begin{itemize}
+
+\item Install the python packages. Check all installations hbase, hadoop , thrift and happybase.
+\item Start Hadoop and Hbase and Apache Thrift.
+\item Open up python cli and run the command  `iu.i524.S17IRP013.hadoop.init.DataSetup.py`.
+\item The above command will take time and will dump data into hbase table.
+\item It also created hdfs input folder as '/wda/input' and write `wda\_row\_keys.txt` file into it. This file will have all the keys (year-month format) from weather table.  
+
+\end{itemize}
+
+\subsection{Run MapReduce}
+We need hadoop streaming api to execute our ma reduce program. Hadoop streaming api reads from hdfs and write it onto the standard io. This data is then read by our map program \textit{wda\_mapper.py} and further sent to reducer program \textit{wda\_reducer.py}.
+\begin{lstlisting}[language=bash,caption=Run MapReduce,breaklines=true]
+bin/hadoop jar <path_to_streaming_jar>{share/hadoop/tools/lib}/hadoop-streaming-2.7.3.jar \
+-file <path_to_mapper>/run/wda_mapper.py -mapper wda_mapper.py \
+-file <path_to_reducer>/run/wda_reducer.py -reducer wda_reducer.py \
+-input /wda/input -output /wda/output
+\end{lstlisting}
+The above will  execute the map reduce analysis program and write the output into hdfs `/wda/output` folder. Once the program is finished check the output with following command :
+\begin{lstlisting}[language=bash,caption=Run MapReduce,breaklines=true]
+hdfs dfs -ls /wda/output
+hdfs dfs -cat /wda/output/<name_of_the_file>{part-r-00000}
+Output >>
+{'TAVG': ('GHCND:IN001020700', '35.02'), 
+'TMAX': ('GHCND:IN001020700', '43.08'), 
+'PRCP': ('GHCND:IN001011000', '863.7'), 
+'TMIN': ('GHCND:IN001020700', '14.08')}
+\end{lstlisting}
+
+\section{Benchmarking}
+The aforesaid program has been executed on futuresystems. The execution time has been collected by increasing nodes from 1 (single) to 3 (multiple) with 2cpus each. 
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/graph}}
+\caption{Benchmarking}
+\label{Reference:false-color}
+\end{figure}
+The graph indicates the reduction in time with increase in nodes. Since the data used for the sample is not big enough , the time taken for starting the framework is considerably high as compared to total time taken by the analysis program itself.
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/MR_Benchmark_fs}}
+\caption{Map Reduce Snapshot}
+\label{Reference:false-color}
+\end{figure}
+So only the map reduce time or the program time has been considered and not the ancillary time which includes time to start the hadoop framework. 
+
 
 
 \section{Deployment Using Ansible}
