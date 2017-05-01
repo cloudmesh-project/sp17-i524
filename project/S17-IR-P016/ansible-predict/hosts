@@ -1,2 +1,2 @@
 [predict]
-129.114.33.230 ansible_ssh_user=cc
+129.114.33.42 ansible_ssh_user=cc

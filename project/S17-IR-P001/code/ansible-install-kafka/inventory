@@ -1,3 +1,0 @@
-[kafka]
-129.114.33.47 ansible_connection=ssh ansible_ssh_user=cc
-129.114.32.186 ansible_connection=ssh ansible_ssh_user=cc

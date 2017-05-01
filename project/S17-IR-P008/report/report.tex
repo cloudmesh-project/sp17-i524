@@ -146,6 +146,35 @@ narayana1043@gmail.com}
 		with a 
 	Digital Object Identifier(DOI)\cite{www-doi}.
 	
+	\subsection{Virtual Machine Specifications}
+	
+	A brief comparison of multiple attributes of the clouds discussed 
+	above are shown in the table 1.
+	
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{|c|c c|} 
+			\hline
+			\textit{Clouds} & \textit{Chameleon} & 
+			\textit{Jetstream}   \\ 
+			\hline
+			\hline 
+			\textit{CPU} & Intel Xeon & Dual Intel   \\ 
+			& X5550 & E-2680v3 "Haswell"\\
+			\hline 
+			\textit{RAM} & 4 GB & 2 GB \\ 
+			\hline 
+			\textit{Number of CPU's} & 1 & 1 \\
+			\hline 
+			\textit{CPU Cores} & 1 & 1 \\
+			\hline 
+			\textit{CPU Speed} & 2.3 GHz & 2.3 GHz\\
+			\hline 
+		\end{tabular}
+		\caption{Comparison of cloud vendors}
+		\label{table:clouds}
+	\end{table}
+	
 	
 	
 	\section{Apache Zeppelin}
@@ -799,23 +828,7 @@ narayana1043@gmail.com}
 	similar 
 	when the other parameters are fixed. 
 	
-	\section*{Acknowledgements}
-	
-	This work was done as part of the course "I524: Big Data and
-	Open Source Software Projects" at Indiana University during
-	Spring 2017. Thanks to our Professor Gregor von Laszewski
-	and associate instructors for their help and support during the
-	course.
-	
-	
-	% Bibliography
-	
-	\bibliography{references}
-	
-	\appendix
-	
-	\section{Appendix}
-	\subsection{Execution plan}
+	\section{Execution Plan}
 	
 	The following subsections act as a timeline regarding how we 
 	broke 
@@ -826,7 +839,7 @@ narayana1043@gmail.com}
 	of the project was implemented during the second half of the 
 	semester.
 	
-	\subsubsection{March 6,2017 - March 12,201}
+	\subsection{March 6,2017 - March 12,201}
 	
 	This week we discussed about the planned how to implement the 
 	project 
@@ -836,7 +849,7 @@ narayana1043@gmail.com}
 	documentation of Apache Zeppelin and came up with a workflow for 
 	implementing this project.
 	
-	\subsubsection{March 13,2017 - March 18,201}
+	\subsection{March 13,2017 - March 18,201}
 	
 	This week we have installed Cloudmesh on our local machines, 
 	completed the tutorials on Cloudmesh present on the class 
@@ -854,7 +867,7 @@ narayana1043@gmail.com}
 	have 
 	made a decision to use CMD module in python for this purpose.
 	
-	\subsubsection{March 19,2017 - March 26,201}
+	\subsection{March 19,2017 - March 26,201}
 	
 	During this week we have completed the development of the command 
 	shell which can start a given number of virtual machines are 
@@ -875,13 +888,13 @@ narayana1043@gmail.com}
 	tutorials on the class website as we will using ansible to deploy 
 	Apache Zeppelin on various clouds
 	
-	\subsubsection{March 27,2017 - April 2,201}
+	\subsection{March 27,2017 - April 2,201}
 	
 	Developed and tested code to deploy the Apache Zeppelin on the 
 	clusters. Upon successful deployment we have opened ports so that 
 	Apache Zeppelin can be accessed through web-interfaces.
 	
-	\subsubsection{April 10,2017 - April 16,201}
+	\subsection{April 10,2017 - April 16,201}
 	
 	Integrated the deployment code into the command shell developed 
 	previously and tested the deployment chameleon cloud. We have ran 
@@ -900,11 +913,19 @@ narayana1043@gmail.com}
 	on the cloud from a web-page on in external machine. More details 
 	about the analytics are discussed in the analytics section below.
 	
-	\subsubsection{April 17,2017 - April 23,201}
+	\subsection{April 17,2017 - April 23,201}
 	
 	Review of deployment and developing the final draft of the report 
 	for 
 	submission.
+	
+	\section*{Acknowledgements}
+	
+	This work was done as part of the course "I524: Big Data and
+	Open Source Software Projects" at Indiana University during
+	Spring 2017. Thanks to our Professor Gregor von Laszewski
+	and associate instructors for their help and support during the
+	course.
 	
 	\section*{Author Biographies}
 	\begingroup
@@ -912,21 +933,51 @@ narayana1043@gmail.com}
 	\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height 
 		%[3.2cm] as required for separation of bio photos.
 		\begin{wrapfigure}{L}{0.25\columnwidth}
-			\includegraphics[width=0.25\columnwidth]{images/john_smith.eps}
+			\includegraphics[width=0.25\columnwidth]{images/nr}
 		\end{wrapfigure}
 		\noindent
-		{\bfseries Naveenkumar Ramaraju} yet to update his 
-		Bio\end{minipage}
+		{\bfseries Naveenkumar Ramaraju} is a graduate student  in 
+		Data Science at the School of Informatics and Computing 
+		Indiana University. He is interested in
+		Machine learning, data science and big data.
+		\end{minipage}
 	\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height 
 		%[3.2cm] as required for separation of bio photos.
 		\begin{wrapfigure}{L}{0.25\columnwidth}
-			\includegraphics[width=0.25\columnwidth]{images/alice_smith.eps}
+			\includegraphics[width=0.25\columnwidth]{images/linkedIN}
 		\end{wrapfigure}
 		\noindent
-		{\bfseries Veera Marni} yet to update his bio
+		{\bfseries Veera Marni} received his Bachelors in Technology 
+		in Electronics and Communication from SRM University, India 
+		and will be receiving his Masters in Data Science from 
+		Indiana University in Dec 2017. His research interests are 
+		Machine Learning and Big Data. He will be working as Data 
+		Scientist intern at Proteous Digital Health during the summer 
+		2017.
 	\end{minipage}
 	
 	\endgroup
+	
+	\section{Work break down:}
+	
+	{\bfseries Naveenkumar Ramaraju} is responsible for the following 
+	\begin{itemize}
+		\item Ansible scripts for deployment
+		\item Benchmarking on Jetstream
+	\end{itemize}
+	
+	\hspace{-3ex}{\bfseries Veera Marni} is responsible for the 
+	following
+	\begin{itemize}
+		\item Python wrapper using CMD
+		\item Benchmarking on Chameleon
+		\item Zeppelin notebook
+	\end{itemize}
+	
+	
+	% Bibliography
+	
+	\bibliography{references}	
 	
 	\newpage
 	

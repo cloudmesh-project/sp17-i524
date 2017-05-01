@@ -1,0 +1,21 @@
+---
+- hosts: master
+  become: true
+  vars:
+    ubuntu_user_name: cc
+  roles:
+    - chameleon_ben1
+
+#- hosts: master
+#  become: true
+#  vars:
+#    ubuntu_user_name: cc
+#  roles:
+#    - chameleon_ben2
+
+#- hosts: master
+#  become: true
+#  vars:
+#    ubuntu_user_name: cc
+#  roles:
+#    - chameleon_ben3

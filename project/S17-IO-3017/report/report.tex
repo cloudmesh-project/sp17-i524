@@ -17,9 +17,8 @@
 \doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IO-3017/report/report.pdf}}
 
 
-
 \begin{abstract}
-Big Data Analytics tools allow us to analyze the huge volumes of geo-spatial data. Data of earthquakes that take place globally is a major part of crucial geo-spatial data. US Geological Survey's (USGS) Earthquake Hazards Program monitor and report earthquakes, assess earthquake impacts and hazards, and research the causes and effects of earthquakes \cite{www-usgs1}. Machine learning algorithms are used for advanced data analysis and earthquakes prediction.
+US Geological Survey's (USGS) Earthquake Hazards Program monitor and report earthquakes, assess earthquake impacts and hazards, and research the causes and effects of earthquakes \cite{www-usgs1}. The geo-spatial data it collects is available for free. Big Data Analytics tools are used to analyze this data. Machine learning algorithms are used for advanced data analysis and earthquakes prediction.
 \newline
 \end{abstract}
 
@@ -38,27 +37,74 @@ USGS collects volumes of geospatial data pertaining to earthquakes and makes it 
 Technologies used for development and deployment of this project are listed below.
 \begin{enumerate}
 
-\item Cloudmesh - For connecting to different cloud environments.
-\item Ansible -For deploying software and associated packages.
-\item Python - Writing script for data analysis and data processing 
-\item Mongo-DB - For storing Geo-spatial data
-\item Plotly - As a visualization tool
-\item Scikit-learn - For classification of data into clusters 
-\item Cherrypy - For web server development 
+\item {\bf Cloudmesh} - Cloudmesh provides Cloud Testbeds as a Service (CTaaS). It is a platform where one can manage all cloud accounts and local files enabling one to copy them between services. Project uses cloudmesh to connect to various cloud environments.
+
+\item {\bf Ansible} - Ansible is an IT automation tool that automates cloud provisioning, configuration management, and application deployment. Once Ansible gets installed on a control node, which is an agentless architecture, it connects to a managed node through the default OpenSSH connection type. Ptoject uses ansible for one-click deployment.
+
+\item {\bf Python} - Python is an object oriented, light weight programming language. Python is primary programming language used in this project.
+
+\item {\bf Mongo-DB} - MongoDB is an unstructured (NOSQL) database, which uses document-oriented data model. It stores data in flexible JSON-like documents. The project uses Mongo-DB to store GeoJSON data of earthquakes locally.
+
+\item {\bf Plotly} - Plotly is data analytics and visualization tool. One can create interactive graphs using plotly. It provides graphing libraries for Python. The plotly is used in the project as a visualization tool.
+
+\item {\bf Scikit-learn} - Scikit-learn provides tools for data analysis and data mining. Scikit-learn provides a wide range of learning algorithms. Scikits are the names given to the modules for SciPy, a fundamental library for scientific computing. As these modules provide different learning algorithms, the library is named as sciki-learn. In this project data classification is done using scikit learn.
+
+\item {\bf Cherrypy} - CherryPy is an object-oriented web application framework. It is designed for rapid development of web applications by wrapping the HTTP protocol. It is WSGI (Web Server Gateway Interface) thread-pooled web server. Cherrypy is used as a web server in the application.
 \end{enumerate}
 
-\section{Background}
+\section{Design}
+
+Figure 1 shows main components and data flow of the application. There are four major components in the application.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/figure4}}
+\caption{Application Components} 
+\label{fig:figure4}
+\end{figure}
+
+\subsection{WebServer}
+Purpose of web server is to listen to the user's HTTP GET request, call appropriate python method at the backend, get the response from the python method, and send it to the web client as a response. The server listens at port 8081.
+
+\subsection{getusgsdata - getdata}
+getusgsdata component is responsible for fetching the data from USGS and storing it in local database. It uses dblayer common component to communicate with the local database. Running this component at least once is necessary as it downloads the data on which other components are dependent. 
+
+\subsection{kmeansplot - plotmag}
+kmeansplot component implements the K-Means clustering algorithm and plots it using plotly library. It reads the Magnitude and Depth data from local database using dblayer common component. The algorithm classifies the data in 3 clusters based on the earthquakes magnitudes. Number 3 is selected by trial and error basis. 
+Output of plotly.plot() function is set as \emph div so that it returns the \emph div with scatter plot and data, which has later been embedded into a simple HTML. This HTML is rendered on web browser as output.
+
+\subsection{dbscanplot - plotlatlong}
+dbscanplot implements DBSCAN algorithm for clustering the latitude-longitude data. It reads the data from local database using dblayer common component. 
+Clusters are plotted on a globe using plotly's Scattergeo() function. Following programming statements ensure showing North and South America region on globe.
+
+\[ geo=dict(scope=('north america', 'south america') \]
+\[projection=dict(type='orthographic') \]
+
+For clustering lat long data DBSCAN algorithm is used instead of K-Means because, (1) for clustering lat long data it needs an algorithm that can handle arbitrary distance function, (2) K-Means works well with linear data. Lat long data is not linear, (3) Unlike K-Means, number of clusters are not required to mention in DBSCAN. It is hard to predict clusters when locations are spread across world.
+
+\section{Implementation}
 
 \subsection{USGS Web Service and Data Set}
-USGS earthquake data is fetched using the web service and passing relevant parameters to it. Out of the voluminous world-wide data of decades this project uses data of earthquakes appeared in North and South America for duration of 2 years from 2015-1-1 till 2017-1-1, having magnitude over 4. To select North and South America region data, its Latitude and Longitude are taken from Search Earth Catalog tool provided by USGS. \cite{www-usgs3}. Web service returns data in JSON format.
+USGS earthquake data is fetched using the USGS web service and passing relevant parameters to it. Out of the voluminous world-wide data of decades this project uses data of earthquakes appeared in North and South America for duration of 2 years from 2015-1-1 till 2017-1-1, having magnitude over 4. To select North and South America region data, its Latitude and Longitude are taken from Search Earth Catalog tool provided by USGS. \cite{www-usgs3}. Web service returns data in JSON format.
 
 \subsection{Data Processing and Visualization}
 
-{\bfseries Severity of earthquakes.} Severity of earthquakes is analysed by their magnitude and depth. Data is classified into clusters using K-Means clustering algorithm (Section 4.1). Clusters are plotted on a interactive scatter plot.
+{\bf Severity of earthquakes.} Severity of earthquakes is analysed by their magnitude and depth. Data is classified into clusters using K-Means clustering algorithm (Section 4.1). Clusters are plotted on a interactive scatter plot.
 
-{\bfseries Region affected the most by earthquakes}. Analysing Latitude (lat)-Longitude (lon) of epicenter of the earthquake shows the regions where earthquakes are frequent. Lat lon data is clustered using DBSCAN algorithm (Section 4.2). Clusters are plotted on a geo-scatter plot on a world map.
+{\bf Region affected the most by earthquakes}. Analysing Latitude-Longitude of epicenter of the earthquake shows the regions where earthquakes are frequent. Lat-long data is clustered using DBSCAN algorithm (Section 4.2). Clusters are plotted on a geo-scatter plot on a world map.
 
-\section{Implementation}
+\subsection{Deployment}
+
+Project is deployed using ansible. Ansible jobs are collected in a playbook and run on virtual clusters provided by Chameleon and Jetstream cloud. The tasks include cloning the git repository, installing software stack, installing dependencies and installing MongoDB.
+
+\subsection{Local Data Storage}
+To avoid frequent web service calls and unnecessary traffic, data once downloaded, is stored locally in MongoDB for further usage by other components. Data is fetched using pymongo library. 
+
+\subsection{Steps to Execute}
+
+Steps to execute the project are explained in detail in README.md file \cite{readme-001}.
+
+\section{Clustering Algorithms}
 
 \subsection{K-Means Clustering}
 Given a target number, \emph k, of clusters to find, K-means algorithm locates the centers of each of those \emph k clusters and the boundaries between them. It does this using the following algorithm \cite{www-kmeans}.
@@ -90,14 +136,69 @@ DBSCAN (Density-Based Spatial Clustering of Application with Noise) is a cluster
     \item Step 4: For the points, which do not belong to any cluster, are treated as outliers. 
 \end{itemize}
 
-\subsection{Ansible}
 
-Project is deployed using ansible. Ansible is an automation platform, that automates cloud provisioning, configuration management, application deployments, etc. Ansible jobs are collected in a playbook and run on virtual clusters provided by Chameleon cloud. The tasks include cloning the git repository, installing dependencies and installing MongoDB.
+\section{Benchmarking}
 
-\subsection{Application}
-Application has a Cherrypy web server and python scripts that use the web server to send the output in the form of response so that users can see the output of the application in web browser.
+The performance of application was tested on the speed and latency while data input/output and data processing. Two different sized datasets were used for testing. They are given in Table 'Datasets'. The Table 'VM Configuration' shows details of VMs used for performance testing. Results are shown in Table 'Benchmark Results'.
+ 
 
-Figure \ref{fig:figure1} shows default page showing application usage.
+\begin{table}[htbp]
+  
+%\begin{left}
+\caption{\bf VM Configuration}
+\begin{tabular}{ m{5em} m{2cm} m{2cm} } 
+\hline
+Cloud & Chameleon & Jetstream \\ 
+Image & Ubuntu-Server-14.04-LTS & ubuntu-14.04-trusty-server-cloudimg \\ 
+Group & pearth & pearth \\ 
+Flavour & m1.small & m1.small \\ 
+Assign Floating IP & True & True \\ 
+
+\hline
+\end{tabular}
+%\end{left}
+\end{table} 
+
+\begin{table}[htbp]
+%\begin{left}
+\caption{\bf Datasets}
+\begin{tabular}{ m{5em} m{2cm} m{2cm} } 
+\hline
+Parameter & Dataset1 & Dataset2 \\ 
+\hline
+Region & North, South America & North, South America \\ 
+Duration & 2 years & 2 years \\ 
+Min Magnitude & 4 & 3 \\ 
+Data Size & Small & Large \\ 
+
+\hline
+\end{tabular}
+%\end{left}
+\end{table} 
+
+Figure 2 shows time taken in seconds for data read and data processing with small dataset. Figure 3 shows the result with large dataset.
+
+Performance tests are included in the python scripts themselves. As the scripts are executed, results are written in text files in 'benchmark' folder at project directory.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/figure2}}
+\caption{Time taken for small dataset} 
+\label{fig:figure2}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/figure3}}
+\caption{Time taken for large dataset} 
+\label{fig:figure3}
+\end{figure}
+
+\section {Result And Analysis}
+
+Figure \ref{fig:figure1} shows default page showing application usage. Output of K-Means clustering of magnitude and depth data is given in Figure 5. Figure 6 shows a closer look at scatter plot. Figure 7 is the output of DBSCAN clustering of earthquake locations. Both the graphs are interactive. On the 'Magnitude and Depth' graph one can choose one or more clusters. Mouse hover shows magnitude  and its corresponding depth. The 'Earthquake locations' globe shows lat-long information on mouse hover. The user can rotate the globe with mouse key press.
+
 
 \begin{figure}[htbp]
 \centering
@@ -106,85 +207,43 @@ Figure \ref{fig:figure1} shows default page showing application usage.
 \label{fig:figure1}
 \end{figure}
 
-\subsection{Steps to Execute}
-
-Steps to execute the project are explained in detail in README.md file \cite{readme-001}.
-
-\section{Execution Plan}
-
-This is how the project is executed on week-by-week basis. 
-
-\begin{enumerate}
-
-\item {\bfseries 13 Mar 2017 - 19 Mar 2017} Research on USGS data and fetching it. Deploy Mongo DB and Mongo Express tool to fetch data from Mongo DB. Data analysis and finalizing the analysis for project.
-
-\item {\bfseries 20 Mar 2017 - 26 Mar 2017} Write script in Python for downloading USGS data at run-time and storing in local MongoDB. Research on clustering algorithms. 
-
-\item {\bfseries 27 Mar 2017 - 02 Apr 2017} Implement K-Means clustering and DBSCAN clustering in sample project. Understand the result. Create a VM on Chameleon. 
-
-\item {\bfseries 03 Apr 2017 - 09 Apr 2017} Write Python script to read data from MongoDB, implement K-Means clustering algorithm. Research on Plotly. Plot clustering result using Plotly. 
-
-\item {\bfseries 10 Apr 2017 - 16 Apr 2017} Implement DBSCAN clustering and plot clustering result using Plotly. Write ansible scripts for deployment.
-
-\item {\bfseries 17 Apr 2017 - 23 Apr 2017} Deploy using ansible and run the project on various clouds. Observe and document benchmarks. Update and finalize the Project Report
-\end{enumerate}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/figure5}}
+\caption{Magnitude and Depth(Kms)} 
+\label{fig:figure5}
+\end{figure}
 
 
-\section{Benchmarks}
-
-The Table 'Benchmark Identification' lists the benchmarks against which performance is tested. Application is tested on multiple environments to observe the performance against identified benchmarks.
-
-
-\begin{table}[htbp]
-  Table \ref{tab:benchmark} shows performance benchmarks.
-  
-\begin{left}
-\caption{\bf Benchmark Identification}
-\begin{tabular}{ m{5em} m{2cm} m{2cm} } 
-\hline
-Benchmark & Data Volume & Expected Result (sec) \\ 
-\hline
-Data Download Time & 5000 records & 1 sec \\ 
-Data Read Time & 5000 records & 0.10 sec \\ 
-Data processing Time & 5000 records & 0.10 sec \\ 
-
-\hline
-\end{tabular}
-  \label{tab:benchmark}
-\end{left}
-\end{table} 
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/figure6}}
+\caption{Close look at the cluster} 
+\label{fig:figure6}
+\end{figure}
 
 
-\subsection {Benchmark Result}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/figure7}}
+\caption{Earthquake locations on globe} 
+\label{fig:figure7}
+\end{figure}
 
-Performance tests are included in the python scripts themselves. As the scripts are executed, results are written in text files in 'benchmark' folder at project directory.
+The focus of an earthquake is the actual point underground where rocks break. From the results it is clear that there were fewer earthquakes having the focus deep, greater than 300kms. Earthquakes having shallow focus (less than 70kms) are comparatively lesser than the ones having intermediate focus (70kms to 300km). Thus, maximum earthquakes occurred between 70kms to 300kms deep underground.
 
-Performance tests are done on local VM, Chameleon cloud and on jetstream cloud. Results are shown in Table 'Benchmark Results'.
+Analysis of earthquake locations shows that maximum earthquakes have happened in the Pacific coastal area of North and south America. We can confirm this result with USGS facts, which states "The majority of the earthquakes and volcanic eruptions occur along plate boundaries such as the boundary between the Pacific Plate and the North American plate. One of the most active plate boundaries where earthquakes and eruptions are frequent, for example, is around the massive Pacific Plate commonly referred to as the Pacific Ring of Fire \cite{www-usgs4}."
 
-\begin{table}[htbp]
-  Table \ref{tab: benchmark1} shows performance tests on different environment.
-  
-\begin{left}
-\caption{\bf Benchmark Results. (Reading values are in seconds)}
-\begin{tabular}{ m{4em} m{2cm} m{1cm} m{1.5cm} m{1.5cm}} 
-\hline
-Benchmark & Data Volume & Local VM & Chameleon & Jetstream\\ 
-\hline
-Data Download Time & 7034 records & 2.16 & 0.70 & 9.18\\ 
-Data Read Time-K-Means & 7034 records & 0.05 & 0.07 & 0.07\\ 
-Data Read Time-DBSCAN & 7034 records & 0.10 & 0.06 & 0.07\\ 
-Data processing-KMeans & 7034 records & 0.10 & 0.08 & 0.08\\ 
-Data processing-DBSCAN & 7034 records & 0.30 & 0.09 & 0.02\\ 
+There is a subtle difference in output of K-Means and DBSCAN algorithms. K-Means worked with lesser number of clusters (3), while DBSCAN created greater number of clusters, more than 50 in this case. K-Means produced output linearly, cluster1 to cluster3. DBSCAN produced non-linear output. A cluster in Pacific ocean is Cluster28, whereas, the cluster adjacent to it is Cluster39.  
 
-\hline
-\end{tabular}
-  \label{tab: benchmark1}
-\end{left}
-\end{table} 
 
-\section {Result And Analysis}
+\section {Conclusion}
+This project was an opportunity to use Big Data open source software and projects. 
+We can conclude that Ansible is a powerful tool for one click deployment and continuous integration. Cloudmesh client is a convenient tool to work with multiple cloud environments at the same time. Plotly is a powerful library that allows creating interactive visualization. 
 
-TODO
+While researching for the algorithms we came to know that DBSCAN is better choice for classification if one doesn't want to specify number of clusters beforehand.
+
+Analysis of earthquakes data showed interesting facts. In 2 years span from year 2015 till 2017 there were around 15,000 earthquakes of magnitude more than 3, and approx 7,100 earthquakes of magnitude more than 4.
 
 \section {Acknowledgements}
 
@@ -194,9 +253,6 @@ This project is undertaken as part of the I524: Big Data and Open Source Softwar
 
 Project uses Apache license ver 2.0.
 
-\section {Conclusion}
-
-TBD
 
 % Bibliography
 
@@ -204,9 +260,9 @@ TBD
  
 \newpage
 
-\section{Work Breakdown}
+\section{Appendices}
 
-The work on this project was distributed as follows between the
+Appendix A: The work on this project was distributed as follows between the
 authors:
 
 \begin{description}

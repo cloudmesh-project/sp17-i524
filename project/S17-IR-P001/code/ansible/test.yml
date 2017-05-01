@@ -1,5 +1,34 @@
 ---
-- hosts: realtime
-  remote_user: root
+- hosts: all
+  become: true
+  vars:
+    ubuntu_user_name: cc
   roles:
-    - ansible-node
+    - chameleon_setup
+
+- hosts: master
+  become: true
+  vars:
+    ubuntu_user_name: cc
+  roles:
+    - chameleon_ben1
+
+- hosts: master
+  become: true
+  vars:
+    ubuntu_user_name: cc
+  roles:
+    - chameleon_ben2
+
+- hosts: master
+  become: true
+  vars:
+    ubuntu_user_name: cc
+  roles:
+    - chameleon_ben3
+
+- hosts: master
+  remote_user: true
+  roles:
+   - ansible-node
+

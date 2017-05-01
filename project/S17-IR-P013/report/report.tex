@@ -65,6 +65,8 @@ Following sources has been compiled for weather, natural disaster and geo magnet
 
 \section{High Level Design}
 
+\begin{verbatim}
+
 The design of the application is thought of leveraging power of Hadoop as main processing unit of
 analysis with deployment on the cluster environment where application requires multiple processing
 units for execution, database for persistence and visualization tools for graphical outputs.
@@ -95,8 +97,14 @@ performance for strong scaling. The report will be represented in tabular format
 \end{itemize}
 
 
+
+
+THIS SECTION IS NATURALLY NOT ACCEPTABLE AS IT MUST BE PROPER REFERNCES. 
+WE CAN NOT ACCEPT SUCH A SECTION AS IT DOES NOT COMPILE EVEN IN DRAFT FORM
+
 \section{Data Curation}
 Getting data ready is the very first and basic step for analysis. We have chose NCDC as our source of data. NCDC exposes few rest apis for accessing weather data. Following will give you a brief understanding on the apis used for getting the required data.
+
 \begin{itemize}
 \item I) Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.	
 \item II) Data Categories: This groups data into data category like Temperature, Pressure etc. We will consider only few. ( URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories, Attributes : "TEMP" (Air Temperature) , "PRES" (Pressure) , "EVAP" (Evaporation) and "VELOCITY" (Velocity) ). For our project we will be using PRCP, SNOW, TMAX, TMIN and TAVG.
@@ -113,6 +121,7 @@ NCDC uses token based authentication for security and with each token , no more 
 \subsection{Technology Stack}
 We have considered python , Apache thrift and Apache Hbase for data curation step. We will be covering a short introduction of the steps to configure the system, before diving into the core logic of curation. Since we are going to use Apache Hadoop for our analysis purpose, Hbase comes as a natural choice of NoSql database. Java is the default language for both Hadoop and Hbase. So now the question is how to connect to Hbase using python and the solution is Apache Thrift or thrift. Thrift is a library from apache which generates hbase client. Thrift supports many third party languages including python. The following steps will be required to install thrift first.
 \subsubsection{Install Apache Thrift \cite{thrift-python-install}}
+
 \begin{itemize}
 \item 1) Download Thrift from "http://redrockdigimark.com/apachemirror/thrift/0.10.0/thrift-0.10.0.tar.gz".
 \item 2) Extract the file and run ./configure.
@@ -122,17 +131,23 @@ We have considered python , Apache thrift and Apache Hbase for data curation ste
 \item 6) Then execute "thrift --gen py <path/to/Hbase.thrift>". This will generate "gen-py" folder.
 \item 7) Add this folder to python path by export PYTHONPATH=<path/to>/gen-py/:$PPYTHONPATH.
 \end{itemize}
+
 For details you can check \href{https://acadgild.com/blog/connecting-hbase-with-python-application-using-thrift-server/}{Installation} steps.Installation of Hbase will be discussed later along with Hadoop.
 Now thrift is ready to use. Execute "/hbase thrift start" to start the thrift server. Hbase has to be started separately.
+
 \subsubsection{Install Happybase \cite{happybase-install}}
 Happybase is a wrapper program written on thrift to facilitate data access layer in python in a more readable and swift way. Rather than using thrift client directly we will be using happybase python module. To install happybase run "pip install happybase". 
 Once done test the python library by running the following test code 
+
 \begin{lstlisting}[label=python,caption=Connect-Hbase]
+
 import happybase as hbase				
 
 connection = hbase.Connection('localhost')
 print connection.tables()
 \end{lstlisting}
+
+
 
 Once happybase, thrift and hbase is functional, we are ready to download our weather data. Weather data download is divided into two steps 1) Getting weather stations details for a given country and 2) Getting Weather data for a given station. Lets see them individually :
 \begin{itemize}
@@ -174,6 +189,8 @@ The cluster.
 \subsection{Roles}
 
 % Bibliography
+
+\end{verbatim}
 
 \bibliography{references}
  

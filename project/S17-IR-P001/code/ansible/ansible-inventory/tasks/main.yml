@@ -1,0 +1,12 @@
+---
+# tasks to edit inventory
+- name: Add nodes to inventory file
+  become_user: '{{ local_user_name }}'
+  shell: |
+    echo [slaves] >> {{ inv_file }}
+    cm cluster inventory > {{ node_list }}
+    tail -n +3 {{ node_list }} > {{ node_list_1 }} 
+    echo [master] >> {{ node_list_1 }}
+    sed -n '2p' {{ node_list }} >> {{ node_list_1 }}
+    cat {{ node_list_1 }} >> {{ inv_file }} 
+    rm -f {{ node_list_1 }} && rm -f {{ node_list }}

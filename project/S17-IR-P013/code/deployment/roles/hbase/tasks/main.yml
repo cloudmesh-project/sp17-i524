@@ -2,7 +2,7 @@
 
 - name: download hbase tarball
   get_url:
-    url: 'http://www-eu.apache.org/dist/hbase/{{ hbase_version }}/hbase-{{ hbase_version }}-bin.tar.gz'
+    url: 'http://www-eu.apache.org/dist/hbase/stable/hbase-{{ hbase_version }}-bin.tar.gz'
     dest: '{{ hadoop_user_home }}/hbase-{{ hbase_version }}.tar.gz'
   sudo: yes
   sudo_user: '{{ hadoop_user }}'
