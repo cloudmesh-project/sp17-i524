@@ -35,29 +35,29 @@ Visualization
 ================
 
 Below are the six different visualization that shows the output of the analysis performed. Each of the those can be accessed using the
-public ip of the system as shown above each chart. It is necessary that the security groups are updated so that the ports "5025" and "1234"
+public ip of the system as shown above each chart. It is necessary that the security groups are updated so that the ports "5025", "1234"
 "1240" can be accessed from the local machine running the ansisble playbooks.
 
-URI: http://public_ip:1234
+Vis Location: http://public_ip:1234
 
 <img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/realtime.JPG" alt="Realtime Tweet" width="600" height="449"/>
 
-URI: http://public_ip:1240/US_heat_count
+Vis Location: http://public_ip:1240/US_heat_count
 
 <img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_tweet.JPG" alt="US State Tweet Count" width="600" height="388"/>
 
-URI: http://public_ip:1240/map-pies
+Vis Location: http://public_ip:1240/map-pies
 
 <img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/us_senti.JPG" alt="US State-wise Sentiment" width="600" height="388"/>
 
-URI: http://public_ip:1240/co_occur_new.html
+Vis Location: http://public_ip:1240/co_occur_new.html
 
 <img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/cooccur.JPG" alt="Tweet token Co-occurence" width="727" height="727"/>
 
-URI: http://public_ip:1240/dynamic-master-detail
+Vis Location: http://public_ip:1240/dynamic-master-detail
 
 <img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/timechart.JPG" alt="Total Tweets vs Time" width="800" height="300"/>
 
-URI: http://public_ip:1240/heatmap
+Vis Location: http://public_ip:1240/heatmap
 
-<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg" alt="Sentiment Heatgrid" width="600" height="401"/>
+<img src="https://github.com/sriramsitharaman/sp17-i524/blob/master/project/S17-IR-P001/Images/senticont.jpeg" alt="Sentiment Heatgrid" width="700" height="300"/>
