@@ -73,15 +73,7 @@ if __name__ == "__main__":
     print auroc
 
     f = open(sys.argv[2],'w')
-    f.write("the area under curve is: " + str(auroc))
+    f.write("the area under curve for Random Forest Classifier is: " + str(auroc))
     f.close()
 
-# def loadCSVRecord(line):
-#     input = StringIO.StringIO(line)
-#     reader = csv.DictReader(input, fieldnames=["customerID", "gender", "SeniorCitizen", "Partner", \
-#                                                "Dependents", "tenure", "PhoneService", "MultipleLines", \
-#                                                "InternetService", "OnlineSecurity", "OnlineBackup", "DeviceProtection",
-#                                                "TechSupport", "StreamingTV", "StreamingMovies", "Contract",
-#                                                "PaperlessBilling", "PaymentMethod", "MonthlyCharges", "TotalCharges",
-#                                                "Churn"])
-#     return reader.next()
+
