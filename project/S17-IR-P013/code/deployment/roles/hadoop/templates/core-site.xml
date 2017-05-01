@@ -8,7 +8,7 @@
 
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://{{ nodes[0]['hostname'] }}:54310</value>
+    <value>hdfs://{{ nodes[0]['hostname'] }}:9000</value>
    </property>
    <property>
        <name>dfs.permissions</name>
