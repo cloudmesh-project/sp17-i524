@@ -105,7 +105,11 @@ Getting data ready is the very first and basic step for analysis. We have chose 
 \item IV) Location Categories: This groups data in terms of location. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locationcategories , Attributes : "CITY" , "CLIM\_DIV" (Climate Division), "CLIM\_REG" (Climate Region) , "CNTRY" (Country) ,"ST" (State)). For this project we will be downloading data for India only.
 \item V)  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))	
 \item VI) Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.	
-\item VII) 	Data : This collects actual weather data for the given stationId, startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005\&startdate=1970-10-10\&enddate=1971-10-10). Since the project only requires only 5 attributes, further filter is applied while invoking the API. The data received will be saved into database. 
+\item VII) 	Data : This collects actual weather data for the given stationId,
+ startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data
+ ?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005\&startdate=1970-10-10
+ \&enddate=1971-10-10). Since the project only requires only 5 attributes, 
+ further filter is applied while invoking the API. The data received will be saved into database. 
 \end{itemize}
 
 \subsection{Collecting Data}
@@ -314,7 +318,13 @@ The graph indicates the reduction in time with increase in nodes. Since the data
 \end{figure}
 So only the map reduce time or the program time has been considered and not the ancillary time which includes time to start the hadoop framework. 
 
+\section{Scope of Extensions}
+The application is only distribute the data load from the hbase table. But fetching data from NCDC is sequential. Though its only a one time job , it takes considerable amount of time to download. The same application can be extended to use Hadoop MapReduce for downloading and persisting the raw data from Rest APIs. The same fundamentals can be used for this purpose. Initial weather stations can be downloaded sequentially and then the keys are to be distributed in HDFS for further weather data download. 
+\subsection{Limitation}
+There is a limitation in download imposed by NCDC. NCDC uses token bases authentication which allows only 10000 invocation per day. To distribute the download among multiple nodes requires multiple tokens.
 
+\section{Conclusion}
+MapReduce (MR) with Hadoop is an efficient framework for distributed computing. It can be run on any commodity hardwares and virtual machines. It has also some useful plugins available for shared computing which can share dataset without doing any IO operations,ex - Twister and Spark. Python with Hadoop on other hand is not so great combination as the communication requires additional layer i,e Standard IO. We have seen earlier that there is no support for Hbase communication within the hadoop as well. FutureSystems and Jetstream works well with the framework. Chameleon VMs did not have all ports opened (except 22 for ssh) which is a must for Hadoop to work in cluster as Hadoop uses IPC protocol for inter node communication. 
 
 \section{Deployment Using Ansible}
 
