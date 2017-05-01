@@ -1,0 +1,48 @@
+---
+ - hosts: mylocalhost
+   become: true
+   tasks:
+
+     - name: Preparing cloudmesh-set cloud as cloudmesh
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm default cloud=<cloud provider name>
+
+     - name: Preparing cloudmesh- registering the profile
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm register profile
+
+     - name: Preparing cloudmesh- setting default user
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm default user=<cloud username>
+
+     - name: run ssh-add
+       become_user: "{{ lookup('env','USER') }}"
+       shell: ssh-add
+
+     - name: adding ssh key
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm key add --ssh
+
+     - name: refresh
+       become_user: "{{ lookup('env','USER') }}" 
+       shell: |
+         cm refresh on
+
+     - name:  uploading ssh key to cloud
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+         cm key upload
+
+     - name: upload security group
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+         cm secgroup upload
+
+     - name: security group list
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+         cm secgroup list
+
+     - name : listing the vms (TESTING STEP-YOU SHOULD SEE THE LIST OF VMS IF ANY)
+       become_user: "{{ lookup('env','USER') }}"
+       shell: cm vm list

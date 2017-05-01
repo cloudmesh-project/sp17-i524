@@ -1,0 +1,77 @@
+---
+ - hosts: mylocalhost
+   become: true
+   tasks:
+
+     - name: check if git is installed
+       stat: path=/usr/bin/git
+       register: git_exists
+
+     - name: Install git
+       become_user: root
+       apt: name=git state=latest
+       when: git_exists.stat.exists == False
+
+     - name: Check that the somefile.conf exists
+       stat: path=/home/{{ lookup('env','USER') }}/.ssh/id_rsa.pub
+       register: ssh_exists
+
+     - name: Generates SSH keys if they do not exist
+       become_user: root
+       shell: ssh-keygen
+       args:
+         creates: /home/{{ lookup('env','USER') }}/.ssh/id_rsa
+       when: ssh_exists.stat.exists == False
+
+     - name: install pip
+       become_user: root
+       apt: name=python-pip state=latest
+
+     - name: upgrade pip
+       become_user: root
+       command: pip install --upgrade pip
+
+     - name: install dependency for cloudmesh_client
+       become_user: root
+       apt: name={{item}} state=latest
+       with_items:
+         - build-essential
+         - libffi-dev
+         - libssl-dev
+         - python-dev
+
+     - name: install virtual env
+       become_user: root
+       pip: name=virtualenv state=present
+
+     - name: github first time sync
+       become_user: "{{ lookup('env','USER') }}"
+       shell: |
+          git config --global user.name "username"
+          git config --global user.email "emailid"
+
+     - name: install venvwrapper
+       become_user: root
+       pip: name=virtualenvwrapper state=latest
+
+     - name: install cryptography
+       become_user: root
+       pip: name=cryptography
+
+     - name: python dependencies for cloudmesh
+       become_user: root
+       action: pip name={{item}} state=present
+       with_items:
+         - httplib2
+
+     - name: Check that the somefile.conf exists
+       stat: path=/home/{{ lookup('env','USER') }}/.cloudmesh/
+       register: cloudmesh_exists
+
+     - name: Check that if cm is installed
+       stat: path=/usr/local/bin/cm
+       register: cloudmesh_installed
+
+     - name: fresh install
+       pip: name=cloudmesh_client state=latest
+       when: cloudmesh_installed.stat.exists == false

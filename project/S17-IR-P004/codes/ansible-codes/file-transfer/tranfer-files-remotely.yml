@@ -1,0 +1,9 @@
+---
+ - hosts: remotehosts
+   tasks:
+     - name: Transfer file from local to master node vm
+       synchronize:
+         src: /<absolute path>/inputfileandpythoncode.tar.gz
+         dest: /home/hadoop/
+         mode: push
+       delegate_to: 127.0.0.1
