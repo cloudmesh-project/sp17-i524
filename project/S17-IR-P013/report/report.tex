@@ -302,6 +302,64 @@ Output >>
 'TMIN': ('GHCND:IN001020700', '14.08')}
 \end{lstlisting}
 
+\section{Deployment Using Ansible}
+
+Ansible is open source automation tool. It can be used for deploy- ment of software, configuration management and automation in the execution of application. 
+It also serves for monitoring of the state of the application. As per current state of our project we have used ansible for deployment of software in our project. 
+The script deploys Java, Hadoop, Hbase on the independent clusters. It also configures the properties in the key files. This script can further be extended to
+build the analysis , deploy and run the analysis module. Monitor the progress of the execution and display the reports, however currently it is work to be done. 
+
+In the project a separate directory structure is created for deployment.
+This folder consists of some key files and folders. We can dig into the details for each of them in below section.
+
+\begin{itemize}
+\item 1) Inventory.
+\item 2) Playbook.yml.
+\item 3) Roles —> Roles is a directory and we can going to explore the roles used in the project as we proceed.
+\end{itemize}
+
+\subsection{Inventory Configuration}
+
+
+Inventory file contains the list of hostname or nodes that can be accessible by ansible. These nodes are then used in the script for deployment and configuration. 
+In the current project chameleon server nodes were created and configured.
+These IP address can be changed dynamically. This file can also contain the group inside Which multiple ip can be configured. The deployment of hadoop was in 
+clustered mode where we have on master and multiple slaves. In the inventory.configuration file there are multiple section with header which mentioned the list
+of nodes/IP address those needs to be included in the group. For example in the below file we have two groups.
+
+\begin{itemize}
+\item [weatherClusterMaster]\item <ipaddress1> ansible_ssh_user=cc\item [weatherClusterSlave]\item <ipaddress2>  ansible_ssh_user=cc\item <ipaddress3ansible_ssh_user=cc
+\end{itemize}
+
+1. WeatherClusterMaster : Node/Instance with ipaddress1 falls under the master cluster.
+2. WeatherClusterSlave: Node/Instance with ipaddress2, ipaddress3 falls under the slave cluster.
+
+The mapping of IP address to the group from the inventory file is used in the playbook.yml to represent them as a group. There are some script which needs 
+to be part of the master cluster deployment however it don’t need to be executed on the slave cluster. This problem is address using the playbook.yml roles
+
+
+\subsection{Playbook}
+
+Playbook works on mentioned host of group. It mentions the roles those will be operated on each of the host. The main.yml inside the task folder within 
+each roles will be applied to The cluster.
+
+\begin{itemize}
+\item ---\item - hosts: weatherClusterMaster\item remote_user: root roles:\item     - java\item     - hadoop\item     - hbase\item     - master\item - hosts: weatherClusterSlave remote_user: root\item roles:\item     - java\item     - hadoop\item     - hbase
+\end{itemize}
+
+
+As mentioned above the hosts mentions the instance on which the scripts are going to be executed. So all the ipaddress those are mentioned under the weatherClusterMaster 
+will undergo the execution of scripts those are mentioned in each of the roles for that task.These script will be executed using the remote_user mentioned in the script.In above example from project, both the cluster will execute the script mentioned inside java, hadoop and hbase role however master cluster additionally will execute the script
+from the master role folder as well. These could be the addition scripts like configuration of slave addresses in the slaves file and many such task which needs to be executed only for master instance.
+
+\subsection{Roles}
+
+Roles folder contains the list of the roles mentioned in the playbook.xml. There could be multiple roles which can be executed on node or group of nodes.In current project there are four roles i.e. java, hadoop, base and master. The name are very much self explainatory.Java : — Java role installs java on the remote machine . Roles contains multiple directory. The task directory is the main directory which mentions the list of task / script 
+those needs to be executed on the nodes.Current project mentions 4 different task in java. All these task takes care of installing java on the remote node.Hadoop — Hadoop along with Hbase is the major role. The task file mentioned the below list of task\begin{itemize}\item 1. Download hadoop.\item 2. Extract hadoop.\item 3. Set java home/ Hadoop home configuration in bashrc.\item 4 Set Java home/Hadoop home path to env.rc\item 5. Create and Configure logging file.\item 6. Update core-site.xml\item 7. Configure slaves\item 8. Update other configuration files like core-site.xml, hdfs-site.xml, yarn-site, mapper- site.xml.\item 9. Replace hosts.
+\end{itemize}Sources fIleThe sources folder consists of other key folders like\begin{itemize}\item 1. Vars This is yml file which maintains the mapping for placeholder names used in the configuration files.\item 2.Meta : This file can contain it dependency roles and other details.\item 3. Templates : This contains the template configuration file.
+\end{itemize}After Hadoop, HBase, Thrift is installed and configured using similar way. You can refer to the main.yml inside the task folder in for the script details.
+
+
 \section{Benchmarking}
 The aforesaid program has been executed on futuresystems. The execution time has been collected by increasing nodes from 1 (single) to 3 (multiple) with 2cpus each. 
 \begin{figure}[htbp]
@@ -324,41 +382,34 @@ The application is only distribute the data load from the hbase table. But fetch
 \subsection{Limitation}
 There is a limitation in download imposed by NCDC. NCDC uses token bases authentication which allows only 10000 invocation per day. To distribute the download among multiple nodes requires multiple tokens.
 
+\section{Problem And WorkAround}
+
+Usually Hadoop is run with java and connects directly with the Hbase to retrieve the data from database.
+However in the current implementation we have python script which is used for the analysis. The challenge was to fetch the data from Hbase by running the Hadoop program in python. 
+There were some of the library available which connects Hadoop to Hbase  however those were not reliable and supported by Apache. 
+
+Workaround for Connecting Hadoop to Hbase
+
+In order to execute the python script on Hadoop in cluster, there was a work around considered. 
+In this work around, all the keys were stored in the hadoop file system. These key were then divider as per the nodes and passed to the mapper method. 
+For each key, mapper method called the hbase to fetch the data.  This call to Hbase was via apache thrift and happybase
+
+Let drill down more on what is Apache thrift. 
+
+Apache thrift is mechanism or framework which can be talk between two services which may or may not been written in same language. Apache thrift has its own 
+Interface definition language, its compiler can generate client code and server code in same or different language and hence can be used as a bridge to talk between the two different language.
+
+Apache thrift is very similar to SOAP. The way SOAP uses UDDI for publishing and discovering the service, thrift uses zoo keeper for finding services.
+Apache thrift was connecting to the Base with the help of Apache 
+
+
+HappyBase is a developer-friendly Python library to interact with Apache HBase. 
+Below the surface, HappyBase uses the Python Thrift library to connect to HBase.	
+
+
 \section{Conclusion}
 MapReduce (MR) with Hadoop is an efficient framework for distributed computing. It can be run on any commodity hardwares and virtual machines. It has also some useful plugins available for shared computing which can share dataset without doing any IO operations,ex - Twister and Spark. Python with Hadoop on other hand is not so great combination as the communication requires additional layer i,e Standard IO. We have seen earlier that there is no support for Hbase communication within the hadoop as well. FutureSystems and Jetstream works well with the framework. Chameleon VMs did not have all ports opened (except 22 for ssh) which is a must for Hadoop to work in cluster as Hadoop uses IPC protocol for inter node communication. 
 
-\section{Deployment Using Ansible}
-
-Ansible is open source automation tool. It can be used for deployment of software, configuration  management and automation in the execution of application. 
-It also serves for monitoring of the state of the application. As per current state of our project we have used ansible for deployment of software in our project. 
-The script deploys Java, Hadoop, Hbase on the independent clusters. It also configures the properties in the key files. 
-
-\subsection{Inventory Configuration}
-
-Inventory file contains the list of hostname or nodes that can be accessible by ansible. These nodes are then used in the script for deployment and configuration. 
-In the current project chameleon server nodes were created and configured. These IP address can be changed dynamically. This file can also contain the group inside 
-Which multiple ip can be configured.
-
-[weatherCluster]
-129.114.33.165 ansible\_ssh\_user=cc
-129.114.33.179 ansible\_ssh\_user=cc
-129.114.33.109 ansible\_ssh\_user=cc
-
-\subsection{Playbook}
-
-Playbook works on mentioned host of group. It mentions the roles those will be operated on each of the host. The main.yml  inside the task folder within each roles will be applied to 
-The cluster. 
-
----
-- hosts: weatherCluster 
-  remote\_user: root
-  roles:
-    - master
-    - hadoop
-    - hbase
-    — hdfs
-
-\subsection{Roles}
 
 % Bibliography
 
