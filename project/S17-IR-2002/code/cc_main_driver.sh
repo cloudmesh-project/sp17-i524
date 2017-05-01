@@ -48,6 +48,11 @@ echo "[slave1]" >> hosts ;  sed '2q;d'  inventory | sed 's/$/\ ansible_ssh_user=
 echo "[slave2]" >> hosts ;  sed '3q;d'  inventory | sed 's/$/\ ansible_ssh_user=cc/' >> hosts
 chmod 770 hosts
 
+#GENERATE ANSIBLE CONFIG FILE
+echo "[defaults]" >> ansible.cfg
+echo "hostfile = hosts" >> ansible.cfg
+chmod 770 ansible.cfg
+
 #COPY PY TO THE CLUSTER
 ansible master -m copy -a "src=~/cc_analyze_data.py dest=~/cc_analyze_data.py mode=770" 
 ansible master -m copy -a "src=~/cc_etl_data.sh dest=~/cc_etl_data.sh mode=770"
