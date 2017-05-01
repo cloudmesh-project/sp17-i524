@@ -106,9 +106,10 @@ Getting data ready is the very first and basic step for analysis. We have chose 
 \item V)  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))	
 \item VI) Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.	
 \item VII) 	Data : This collects actual weather data for the given stationId,
- startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data
- ?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005\&startdate=1970-10-10
- \&enddate=1971-10-10). Since the project only requires only 5 attributes, 
+ startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data 
+ ?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005
+ \&startdate=1970-10-10\&enddate=1971-10-10).
+ Since the project only requires only 5 attributes, 
  further filter is applied while invoking the API. The data received will be saved into database. 
 \end{itemize}
 
