@@ -6,16 +6,16 @@
   shell: tar -xzvf /tmp/kafka-{{ kafka_version }}-src.tar.gz chdir=/tmp/ creates=/tmp/kafka-{{ kafka_version }}-src
   
 - name: run SBT update
-  shell: sbt update chdir=/tmp/kafka-{{ kafka_version }}-src creates=/usr/local/kafa-{{ kafka_version }}
+  shell: sbt update chdir=/tmp/kafka-{{ kafka_version }}-src creates=/usr/local/kafka-{{ kafka_version }}
 
 - name: run SBT package
-  shell: sbt package chdir=/tmp/kafka-{{ kafka_version }}-src creates=/usr/local/kafa-{{ kafka_version }}
+  shell: sbt package chdir=/tmp/kafka-{{ kafka_version }}-src creates=/usr/local/kafka-{{ kafka_version }}
   
 - name: Copy Kafka into place
-  shell: mv /tmp/kafka-{{ kafka_version }}-src /usr/local/kafa-{{ kafka_version }} creates=/usr/local/kafa-{{ kafka_version }}
+  shell: mv /tmp/kafka-{{ kafka_version }}-src /usr/local/kafka-{{ kafka_version }} creates=/usr/local/kafka-{{ kafka_version }}
   
 - name: Symlink /usr/local/kafka to this version
-  shell: ln -s kafa-{{ kafka_version }} kafka chdir=/usr/local creates=/usr/local/kafka
+  shell: ln -s kafka-{{ kafka_version }} kafka chdir=/usr/local creates=/usr/local/kafka
   
 - name: Switch Scala version numbers
   replace: dest=/usr/local/kafka/gradle.properties regexp='^scalaVersion=.*$' replace='scalaVersion={{ scala_version }}'

@@ -1,0 +1,13 @@
+---
+
+- name: restart hbase zookeeper
+  service: name=hbase-zookeeper state=restarted
+  when: '"hbase_zookeeper" in group_names'
+
+- name: restart hbase master
+  service: name=hbase-master state=restarted
+  when: '"hbase_master" in group_names'
+
+- name: restart hbase regionserver
+  service: name=hbase-regionserver state=restarted
+  when: '"hbase_regionserver" in group_names'

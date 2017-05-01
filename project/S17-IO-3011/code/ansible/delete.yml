@@ -1,0 +1,6 @@
+---
+- hosts: local
+  vars_files:
+    - roles/scottmcclary1.delete/vars/main.yml
+  roles:
+    - scottmcclary1.delete

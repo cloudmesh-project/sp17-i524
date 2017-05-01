@@ -1,0 +1,28 @@
+---
+- hosts: mongodb_mongos_1
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Download the pitches data
+      unarchive:
+        src: https://s3.us-east-2.amazonaws.com/i524projectfiles/pitches.csv.tgz
+        dest: "{{MONGO_DIR}}/"
+        remote_src: True
+      become: true
+    - name: Make a smaller version of the file for testing
+      shell: head -100000 {{MONGO_DIR}}/data/pitches.csv > {{MONGO_DIR}}/data/pitches_small.csv
+      become: true
+    - name: Rename the original file
+      command: mv {{MONGO_DIR}}/data/pitches.csv {{MONGO_DIR}}/data/pitches_large.csv
+      become: true
+#    - name: Download the pitches data
+#      get_url:
+#        url: https://s3.us-east-2.amazonaws.com/i524projectfiles/pitches.csv.tgz
+#        dest: "{{MONGO_DIR}}/pitches.csv.tgz"
+#        mode: 0777
+#      become: true
+#    - name: Unzip the pitches data
+#      unarchive:
+#        src: "{{MONGO_DIR}}/pitches.csv.tgz"
+#        dest: "{{MONGO_DIR}}/"
+#       remote_src: yes
+#      become: true

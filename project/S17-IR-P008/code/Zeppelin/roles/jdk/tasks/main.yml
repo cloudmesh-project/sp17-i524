@@ -1,0 +1,8 @@
+---
+- name: install jdk
+  apt: name=openjdk-7-jdk update_cache=yes
+  become: yes
+
+- name: install jre
+  apt: name=openjdk-7-jre-lib update_cache=yes
+

@@ -1,0 +1,16 @@
+---
+- hosts: weatherClusterMaster
+  remote_user: root
+  roles:
+    - java
+    - hadoop
+    - hbase
+    - master
+
+
+- hosts: weatherClusterSlave
+  remote_user: root
+  roles:
+    - java
+    - hadoop
+    - hbase

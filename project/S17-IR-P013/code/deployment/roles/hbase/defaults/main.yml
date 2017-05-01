@@ -1,0 +1,5 @@
+hbase_version: 1.2.5
+hbase_home: '{{ hadoop_user_home }}/hbase-{{ hbase_version }}'
+hbase_log_dir: '{{ hbase_home }}/log/hbase'
+hbase_data_dir: /hbase
+hbase_zookeeper_data_dir: '{{ hbase_home }}/lib/zookeeper'

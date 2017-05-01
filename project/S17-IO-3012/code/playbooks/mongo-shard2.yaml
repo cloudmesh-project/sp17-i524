@@ -1,0 +1,16 @@
+---
+- hosts: mongodb_shard_1
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Upload initiate_shard.js 
+      copy:
+        src: ../json/{{INITIATE_FILE}}
+        dest: "{{MONGO_DIR}}/initiate_shard.js"
+#        owner: cc
+#        group: cc
+        mode: 0774
+      become: true
+    - name: Initiate shards
+      shell: mongo --port 27018 < {{MONGO_DIR}}/initiate_shard.js
+
+

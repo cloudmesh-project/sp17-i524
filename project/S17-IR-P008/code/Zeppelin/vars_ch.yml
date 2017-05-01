@@ -1,0 +1,44 @@
+---
+spark_url: http://d3kbcqa49mib13.cloudfront.net/spark-2.1.0-bin-hadoop2.7.tgz
+spark_md5: 50e73f255f9bde50789ad5bd657c7a71
+spark_inst_dir: /home/cc/
+spark_tar: /home/cc/spark.tgz
+spark_version: spark-2.1.0-bin-hadoop2.7
+spark_env_sh_src: spark-env.sh
+spark_env_sh_dest: conf/spark-env.sh
+spark_slaves_src: slaves
+spark_slaves_dest: conf/slaves
+spark_start_sh: /sbin/start-all.sh
+spark_default_conf_src: spark-defaults.conf
+spark_default_conf_dest: conf/spark-defaults.conf
+spark_home_key: SPARK_HOME
+spark_stop_sh: /sbin/stop-all.sh 
+
+export_key: export
+zeppelin_url: http://mirror.metrocast.net/apache/zeppelin/zeppelin-0.7.1/zeppelin-0.7.1-bin-all.tgz
+zeppelin_md5: 4c752c9f7352e87c1be64a4f6630fB8f
+zeppelin_inst_dir: /home/cc
+zeppelin_tar: /home/cc/zeppelin.tgz
+zeppelin_version: zeppelin-0.7.1-bin-all
+zeppelin_conf_loc: conf/zeppelin-env.sh
+zeppelin_port_key: ZEPPELIN_PORT
+zeppelin_port_value: 8084
+zeppelin_deamon: bin/zeppelin-daemon.sh
+start_key: start
+stop_key: stop
+
+ssh_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  ...
+  -----END RSA PRIVATE KEY-----
+key_file: spark_rsa
+key_file_dest: /home/cc/.ssh/spark_rsa
+pub_key_file: spark_rsa.pub
+pub_key_file_dest: /home/cc/.ssh/spark_rsa.pub
+auth_key_file_dest: /home/cc/.ssh/authorized_keys
+config_file: config
+config_file_dest: /home/cc/.ssh/config
+spark_path: /home/cc/spark-2.1.0-bin-hadoop2.7 
+cloud_owner: cc
+cloud_user: cc
+cloud_group: cc

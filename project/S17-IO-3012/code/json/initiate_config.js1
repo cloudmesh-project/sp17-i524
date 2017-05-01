@@ -1,0 +1,6 @@
+rs.initiate(
+  {
+    _id: "repset_config",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "129.114.33.134:27019" },

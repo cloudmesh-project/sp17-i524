@@ -1,0 +1,18 @@
+---
+- hosts: mongodb_mongos
+  remote_user: "{{ansible_ssh_user}}"
+  tasks:
+    - name: Creates directory
+      file: path=~/mongo-project/configdb state=directory
+    - name: Upload mongos server configuration file
+      template: src="../configfiles/mongod.conf.mongos.template" dest="{{MONGO_DIR}}/mongod.conf.mongos"
+      become: true
+    - name: Stop mongod
+      service: name=mongod state=stopped
+      become: true
+    - name: Start mongos server
+      command: mongos --config {{MONGO_DIR}}/mongod.conf.mongos  --fork --logpath {{MONGO_DIR}}/mongo_mongos.log
+      become: true
+
+
+

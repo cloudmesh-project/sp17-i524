@@ -1,0 +1,2 @@
+cloud,config_replicas,mongos_instances,shard_replicas,shards_per_replica,mongo_version,cluster_deploy_time,ansible_deploy_time
+chameleon,1,1,2,1,32,222,206

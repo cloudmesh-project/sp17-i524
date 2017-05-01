@@ -1,0 +1,7 @@
+---
+- hosts: ansible-test
+  remote_user: ubuntu
+  tasks:
+    - name: Change /etc/hosts to prevent warning when using sudo
+      shell: sed -i "1 s/$/ `hostname`/" /etc/hosts
+      become: true

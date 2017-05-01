@@ -1,4 +1,4 @@
-FILE=report
+FILE=output/plots/plot*.png
 
 UNAME := $(shell uname)
 
@@ -9,16 +9,19 @@ ifeq ($(UNAME), Linux)
 OPENCMD=xdg-open
 endif
 
-all: install run view
+all: deploy install run view delete clean
+
+benchmark:
+	scripts/benchmark.sh $(num_nodes)
 
 real-clean: clean
-	echo '' > ansible/inventory
+	echo '' > ansible/inventory.txt
 
 clean:
-	rm -rf *~
+	rm -rf *~ output
 
 deploy:
-	scripts/deploy.sh
+	scripts/deploy.sh $(num_nodes)
 
 install:
 	scripts/install.sh
@@ -26,7 +29,9 @@ install:
 run:
 	scripts/run.sh
 
-view:
-	$(OPENCMD) ${FILE}.pdf
+delete:
+	scripts/delete.sh
 
-.PHONY: all clean view fast watch
+view:
+	scripts/view.sh
+	$(OPENCMD) ${FILE}

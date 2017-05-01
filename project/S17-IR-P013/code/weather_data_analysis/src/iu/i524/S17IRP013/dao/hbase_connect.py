@@ -11,10 +11,10 @@ def create_table(table_name, families):
         is_table_exists = False;
     if(is_table_exists == False):
         hb_conn.create_table(table_name, families)
-        print 'Table ' + table_name + ' created successfully !!'    
+        #print 'Table ' + table_name + ' created successfully !!'    
         return True
     else:
-        print 'Table ' + table_name + ' exists !!'    
+        #print 'Table ' + table_name + ' exists !!'    
         return False
 ##############################################################
 
@@ -34,4 +34,4 @@ def delete_table(table_name):
         print 'Table ' + table_name + ' does not exists !!'    
         return False
 
-print hb_conn.tables()
+#print hb_conn.tables()

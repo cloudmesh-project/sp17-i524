@@ -1,7 +1,0 @@
----
-- hosts: remote
-
-  roles:
-    - scottmcclary1.upgrade
-    - scottmcclary1.intel
-    - scottmcclary1.cdms

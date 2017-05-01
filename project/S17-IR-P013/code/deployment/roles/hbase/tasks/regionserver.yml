@@ -1,0 +1,7 @@
+---
+
+- name: create hbase regionserver systemd service file
+  template: src=systemd/hbase-regionserver.service.j2 dest=/etc/systemd/system/hbase-regionserver.service
+
+- name: start hbase regionserver
+  service: name=hbase-regionserver state=started enabled=yes

@@ -12,5 +12,8 @@ for make in makes:
     d = make.replace("/Makefile", "")
     print (70 * "=")
     print (d)
-    print (70 * "=")
+    os.system("cd " + d + "; make clean > ~/all.log")
     os.system("cd " + d + "; make > ~/all.log")
+    print (70 * "=")
+
+os.system("make")
