@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  vars:
+    ubuntu_user_name: cc
+  roles:
+    - chameleon_setup
+
+
+
+

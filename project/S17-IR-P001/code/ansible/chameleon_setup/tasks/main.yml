@@ -1,0 +1,106 @@
+---
+- name: Ensure python-apt is installed
+  command: >
+      apt-get install python-apt -y -q
+      creates=/usr/share/doc/python-apt
+  sudo: yes
+
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+     update_cache: yes
+
+- name: Get Newer version of Python
+  command: wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
+
+- name: Configure Python
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     tar xvf Python-2.7.13.tgz
+     cd Python-2.7.13
+     ./configure --prefix /usr/local/lib/python2.7.13 --enable-ipv6
+     make
+     sudo make install
+
+- name: install build_essentials       
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+     - python-setuptools
+     - python-pip
+     - expect
+     - git
+     - build-essential
+     - libpam-umask
+     - libssl-dev
+     - libffi-dev
+     - python-dev
+     - libncurses-dev
+     - libreadline-gplv2-dev
+     - libncursesw5-dev
+     - libsqlite3-dev
+     - tk-dev
+     - libgdbm-dev
+     - libc6-dev
+     - libbz2-dev
+
+- name: pip upgrade
+  command: sudo -H pip install --upgrade pip
+
+- name: Upgrade pyparsing
+  become_user: "{{ ubuntu_user_name }}"
+  command: sudo pip install -U pyparsing
+
+- pip:
+    name: nltk
+    state: present
+
+- pip:
+    name: numpy
+    state: present
+
+- name: Add the new python installation to bashrc
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/dist-packages' >> ~/.bashrc
+     source ~/.bashrc
+  args:
+    executable: /bin/bash 
+
+- name: git config
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     sudo mkdir /git/
+     cd /git/
+     sudo git init
+     sudo git config --global user.name "Sowmya Ravi"
+     sudo git config --global user.email sowravi@iu.edu
+     sudo git clone https://github.com/sowravi/data_code.git
+
+- name: Copy the extracted files 
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     cd /git/data_code/
+     sudo cp spark_mllib_c.py /opt/spark-1.6.0-bin-hadoop2.6/examples/src/main/python/mllib/spark_mllib_c.py 
+
+- name: Set permissions for Hadoop 1
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     cd /opt/
+
+- name: Set permissions for Hadoop 2
+  become : true
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     sudo su - hadoop -c "hdfs dfs -mkdir -p /user/cc"
+     sudo su - hadoop -c "hdfs dfs -chown cc:cc /user/cc"
+
+- name: Modify configuration file
+  become_user: "{{ ubuntu_user_name }}"
+  command: echo 'export PYSPARK_PYTHON=/usr/bin/python' >> /opt/spark-1.6.0-bin-hadoop2.6/conf/spark-env.sh
+
+- name: Give Permissions
+  become : true
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+    sudo chown cc:cc /home/cc
+

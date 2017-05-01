@@ -1,0 +1,28 @@
+---
+- name: Start master slaves
+  become: yes
+  become_user: "{{ ubuntu_user_name }}"
+  shell : |
+     chdir=/opt/spark-1.6.0-bin-hadoop2.6/ sudo ./sbin/start-master.sh
+     echo 'export SPARK_WORKER_INSTANCES=2' | sudo tee --append /opt/spark-1.6.0-bin-hadoop2.6/conf/spark-env.sh
+     chdir=/opt/spark-1.6.0-bin-hadoop2.6/ sudo ./sbin/start-slave.sh spark://stack-0050:7077 
+
+- name: Remove existing outputs
+  become : true
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     sudo su - hadoop -c "hdfs dfs -rm -r /user/cc/naiveBayes"
+     sudo su - hadoop -c "hdfs dfs -rm -r /user/cc/output"
+
+- name: Run spark and save output 2
+  become: yes
+  become_user: "{{ ubuntu_user_name }}"
+  shell : |
+     sudo su - hadoop -c  "/opt/spark-1.6.0-bin-hadoop2.6/bin/spark-submit --master spark://stack-0050:7077 --name Sentiment  /opt/spark-1.6.0-bin-hadoop2.6/examples/src/main/python/mllib/spark_mllib_c.py"
+
+- name: Stop master and slaves
+  become: yes
+  become_user: "{{ ubuntu_user_name }}"
+  shell : chdir=/opt/spark-1.6.0-bin-hadoop2.6/ sudo ./sbin/stop-all.sh
+
+

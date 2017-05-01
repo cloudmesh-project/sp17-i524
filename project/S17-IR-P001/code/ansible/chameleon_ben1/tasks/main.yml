@@ -1,0 +1,13 @@
+---
+- name: Copy all nltk data
+  become_user: "{{ ubuntu_user_name }}"
+  shell: |
+     cd /git/data_code/
+     sudo cp spark_mllib_c.py /home/cc/spark_mllib_c.py
+     sudo cp -r nltk_data /usr/lib/nltk_data/ 
+
+- name: Run spark and save output
+  become: yes
+  become_user: "{{ ubuntu_user_name }}"
+  shell : |
+     sudo su - hadoop -c "/opt/spark-1.6.0-bin-hadoop2.6/bin/spark-submit --master yarn --deploy-mode client --executor-memory 1g --conf "YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop" --driver-memory 500m --name Sentiment  /opt/spark-1.6.0-bin-hadoop2.6/examples/src/main/python/mllib/spark_mllib_c.py"
