@@ -1,0 +1,4 @@
+[all]
+sowravi-007 ansible_ssh_host="129.114.32.208" ansible_ssh_user="cc"
+sowravi-008 ansible_ssh_host="129.114.32.175" ansible_ssh_user="cc"
+sowravi-009 ansible_ssh_host="129.114.111.61" ansible_ssh_user="cc"
