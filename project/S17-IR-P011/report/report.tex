@@ -808,6 +808,36 @@ VM and just vary in few seconds on average.
 \label{fig:false-color}
 \end{figure}
 
+The results shown in table 2 were run on VM's running Ubuntu 16.04
+with flavor as medium and swap size of 5 GB. The results were taken
+for 1 image to see how much time initialization takes. The results
+show that there is significant improvement when number of agents gets
+increased.
+
+\begin{table}[htbp]
+\centering
+\caption{Application Benchmarks} 
+\label{Application Benchmarks}
+\begin{tabular}{|c|c|c|}
+  \hline
+  Number & Run Time & Run Time\\
+  Of Images & with 1 Agent & with 2 Agents\\
+   & (in hh:mm:ss) & (in hh:mm:ss)\\
+  \hline
+  1 & 00:00:28 & 00:00:45 \\
+  \hline
+  50 & 00:01:21 & 00:01:15 \\
+  \hline
+  100 & 00:02:12 & 00:01:52 \\
+  \hline
+  500 & 00:05:08 & 00:03:25 \\
+  \hline
+  1000 & 00:10:21 & 00:07:32 \\
+  \hline 
+\end{tabular}
+\end{table}
+
+
 \section{Conclusion}
 The head count detection framework is running successfully on Apache
 Mesos and the output is generated on the local machine which gives the
