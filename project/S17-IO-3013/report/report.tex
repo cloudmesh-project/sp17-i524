@@ -2,13 +2,13 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{Proposal for Music Predictive Analysis Project based on Lyrics}
+\title{Music Predictive Analysis Project based on Lyrics}
 
 \author[1,*]{Leonard Mwangi}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
-\affil[*]{Corresponding authors: lmwangi@iu.com}
+\affil[*]{Corresponding authors: lmwangi@iu.edu}
 
 \dates{project-01, \today}
 
@@ -57,48 +57,224 @@ an in-depth analysis of the next possible hit. The project will
 utilize a Hadoop cluster deployed on Chameleon Cloud using CloudMesh
 to accomplish this analysis.
 
-The following components will be utilized to accomplish the project:
+\section{Environment}
+
+To achieve the analysis, Cloudmesh was used in order to allow the end
+users ability to choose a cloud of their liking. Chameleon Cloud and
+Jetstream were used for initial testing but changing the default cloud
+on CloudMesh would allow deployment to other clouds.
+
+\subsection{Cloudmesh}
+
+Cloudmesh is an open source component aimed at delivering
+software-defined system. It’s a collection of virtualized bare-metal
+infrastructure, networks, application, systems and platform software
+unifying different clouds as a Cloud Testbeds as a Service (CTaas)
+\cite{cloudmesh}. Cloudmesh was developed by Professor Gregor von
+Laszewski in collaboration with his team at Indiana University \cite{multipleclouds}. In this environment, cloudmesh is used to
+automate installation of a four-node cluster.
+
+\subsection{Ansible}
+
+Ansible is also an open source platform used in automation of
+deployments and tasks executions  \cite{ansible} . It has the ability to
+execute scripts to a remote system thus making it easy to administer
+and manage hosts farm. Ansible is written in Python thus it requires
+python to be installed in the remote host for successful executions.
+
+\subsubsection{Ansible Playboks}
+
+Deemed as the real strength of Ansible, a playbook is a collection of
+instructions that defines what Ansible will do when it connects to
+each host \cite{docansible} . Playbooks are written in YAML an easy to
+read data serialization language  \cite{yaml} . In this project, Ansible
+is used to deploy the required components to successfully accomplished
+the deployment, configuration and analysis of the defined files. 
+
+\subsection{Apache Spark}
+
+Apache Spark is an open-source data processing and analytics engine
+designed to handle large scale dataset. Spark was originally developed
+by UC Berkeley but has been adopted in the Apache software stack since
+2013  \cite{amplab}. Spark has the ability to run as part of Hadoop,
+Mesos, Standalone or in a cloud environment  \cite{spark}. In this
+project, Spark is deployed as a standalone environment and primarily
+used to analyze music data to in order to identify patterns and make
+predictions.
+
+\subsection{MongoDB}
+
+MongoDB is a NoSQL, open source database program aimed at hosting
+documents in JSON-like format. MongoDB is favorable in storing
+unstructured data since it does not follow the traditional RDBMS
+structure. Its performance is also paramount when coupling related
+unstructured data  \cite{mongod}. For this project, MongoDB become the
+ideal database application because the source data structure is unknow
+and it can span in many directions where one dataset doesn’t resemble
+the next. Putting such data in a structured database program would be
+cumbersome.
+
+\subsection{Python}
+
+Python is used as the programming of choice in this project due to its
+extensibility and also as a requirement for Ansible to execute
+successfully.
+
+
+\section{Deployment}
+
+Environment deployment is automated as mentioned earlier using
+Cloudmesh and Ansible scripts. The environment is deployed on a 4-node
+cluster with the following resources.
+
+\subsection{Resources Table}
+
+Table \ref{tab:shape-functions} resources.
+
+\begin{table}[htbp]
+\centering
+\caption{\bf resources dedicated to the environment}
+\begin{tabular}{ccc}
+\hline
+Node & Role & Flavor  \\
+\hline
+$Node 1$ & $Spark$ & $m1.small$ \\
+$Node 2$ & $Mesos$ & $m1.small$ \\
+$Node 3$ & $MongoDB$ & $m1.medium$ \\
+$Node 4$ & $Analytics$ & $m1.small$ \\
+\hline
+\end{tabular}
+  \label{tab:shape-functions}
+\end{table}
+
+\subsection{Cloudmesh}
+Code snippet below generates 4 node cluster that will be used in the
+inventory file for the Ansible roles. In order to use Cloudmesh
+Cluster, the following package levels or higher must be installed
 \begin{itemize}
-\item Ansible
-\item Apache Mesos
-\item Apache Spark
-\item MongoDB
-\item Million Song Dataset
-\item Billboard charts
-\item Python Scripts
+\item Cloudmesh client 4.7.2
+\item Pip 8.1.2
+\item Python 2.7.12  
 \end{itemize}
 
-\section{Components Roles}
+\begin{algorithm}
+\caption{cloudmesh code}\label{alg:python}
+\begin{quote}
+\begin{Verbatim}[numbers=left]
+\$ cm cluster define --count 4 --image CC-Ubuntu16.04
+\$ cm cluster use cluster-001
+\$ cm cluster allocate
+\$ cm cluster nodes > inventory.txt 
+\end{Verbatim}
+\end{quote}
+\end{algorithm}
 
-\section*{Ansible}
-Will be used to install software packages and define roles to
-different nodes in the cluster.
+\subsubsection {format inventory file}
+Define roles in the inventory file and also remove the resolved
+name. After formatting the inventory file, the server roles and their
+corresponding public IP address should look similar to the output
+below with the right IP address.
 
-\section*{Apache Mesos}
-Will act as the scheduler for the environment.
+\begin{algorithm}
+\caption{Inventory file}\label{alg:python}
+\begin{quote}
+\begin{Verbatim}[numbers=left]
+[spark\_server]
+<ip address> 
 
-\section*{Apache Spark}
-Due to Sparks ability to parallel process, we’ll utilize it to process
-the dataset to achieve the required performance while providing
-in-depth analysis.
+[mesos\_server]
+<ip address>
 
-\section*{MongoDB}
-MongoDB will be used as the repository for the dataset.
+[mongo\_server]
+<ip address>
 
-\section{Million Songs Dataset}
-This is a freely-available community maintained dataset  \cite{www-millionsong}. The dataset
-will be used by ML as the source of random songs that will be analyzed
-for results. This project will utilize a subset of the dataset due to
-time and size of our development environment. 
+[data\_node]
+<ip address>
+\end{Verbatim}
+\end{quote}
+\end{algorithm}
 
-\section*{Billboard Charts}
-In conjunction with Million Songs Dataset, Billboard charts  \cite{www-billboard} will be
-used to determine the greatest hits of all time, which will be used to
-train the model on how to determine a great hit. 
+\subsection{Ansible}
+After configuring deployment of virtual machines and configuring the
+inventory.txt, Ansible playbooks are used to automate deployment of
+the required components to the nodes defined above.
+The following Ansible files are included:
+ansible.cfg – used to define default configurations for Ansible including role\_path and remote user.
 
-\section*{Python scripts}
-Scripts will be used to train the model and determine the next
-greatest hit.
+\begin{algorithm}
+\caption{ansible config file}\label{alg:python}
+\begin{quote}
+\begin{Verbatim}[numbers=left]
+[defaults]
+roles\_path = roles
+host\_key_checking=false
+callback\_whitelist = profile_tasks
+remote\_user=cc
+\end{Verbatim}
+\end{quote}
+\end{algorithm}
+
+\subsubsection{Playbooks}
+
+The following playbooks are utilized for deployment
+
+\begin{enumerate}
+  \item predict.yml – main file for the playbooks, used to call all
+    the other playbooks and define their locations. Role-based
+    playbooks are contained in scripts directory of the environment.
+  \item spark.yml – used to define the host, roles location and
+    execution of Spark installation playbook. The playbooks redirect
+    the folder structure to /roles/ansible-role-spark.
+    \begin{itemize}
+      \item Tasks directory - contains main.yml playbook that’s used
+        to define all the tasks for Spark installation.
+      \item Defaults directory – contains main.yml that defines the
+        default requirements for Spark installation including the
+        spark version and download site for the distribution. 
+    \end{itemize}
+
+    \item mesos.yml – used to define the host, roles location and
+      execution of MongoDB installation playbook. The playbooks
+      redirect the folder structure to /roles/ansible-role-mesos.
+       \begin{itemize}
+      \item tasks directory – contains main.yml playbook that checks
+        the operating system to determine the flavor of mesos that
+        would be deployed. The environment contains playbooks for
+        Debian and Redhat flavors.
+      \item defaults directory – contains main.yml which defines the
+        version of mesos that will be downloaded and installed. 
+       \end{itemize}
+    \item mongo.yml – used to define the host, roles location and
+      execution of MongoDB installation playbook. The playbooks
+      redirect the folder structure to /roles/ansible-role-mongo.
+      \begin{itemize}
+      \item tasks directory - contains main.yml playbook that’s used
+        to define all the tasks for MongoDB installation. The file
+        also includes task to create a database and initial user for
+        the Mongo environment.
+      \item defaults directory – contains main.yml that defines the
+        default requirements for MongoDB installation including the
+        MongoD version and download site for the distribution.
+      \item vars directory – contains main.yml that defines the
+        variables for the environment like data path, admin account
+        and password.
+      \item template directory – contains mongod\_config.j2 file which
+        is used to define MongoDB configurations.
+      \end{itemize}
+
+      \item data.yml - used to define the host, roles location and
+        execution of dataset playbook. The playbooks redirect the
+        folder structure to /roles/ansible-role-dataset.
+        \begin{itemize}
+        \item tasks directory - contains main.yml playbook that’s
+          downloads the MillionSongs dataset and copies into to
+          MongoDB. The file also contains task to create collection
+          and load data into MongoDB by executing a remote file
+          myfiles.py
+        \end{itemize}
+
+
+\end{enumerate}
 
 
 \section{Conclusion}

@@ -1,0 +1,94 @@
+
+# tasks file for ansible-role-mongo
+
+- name: Import public key used by the system
+  apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=7F0CEB10 state=present
+
+- name: Add MongoDB repository
+  apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' state=present
+
+- name: install mongodb
+  apt: pkg=mongodb-org state=latest update_cache=yes
+  with_items:
+   - libselinux-python
+   - mongo-10gen
+   - mongo-10gen-server
+   - bc
+   - python-pip
+  notify:
+  - start mongodb
+
+- name: Install pip
+  apt: pkg={{ item }}
+  with_items:
+    - python-dev
+    - python-pip
+
+- name: create directories
+  file: path={{mongo_dir}}/configdb state=directory mode=0777
+
+- name: create db directory
+  file: path={{mongo_dir}}/db state=directory mode=0777
+
+- name: load config startup file
+  template: src=mongod_conf.j2 dest=/etc/mongod.conf mode=0777
+  register: config_results
+
+- name: run mongodb
+  service: name=mongod state=started enabled=yes
+  register: service_mongo_status
+
+- name: Confirm Automation Agent is running
+  command: service mongodb-mms-automation-agent status
+  register: agent_status
+  failed_when: "'NOT' in agent_status.stdout"
+  changed_when: False
+
+- name: install python 2
+  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  become: true
+
+- name: Install pymongo
+  pip: name=pymongo state=latest
+
+- name: remove lock
+  file:
+    state: absent 
+    path: var/lib/mongodb/mongod.lock
+
+- name: mongodb restart
+  service: name={{ mongodb_daemon_name }} state=restarted
+ 
+- name: Ensure MongoDB is running
+  service:
+    name: mongod
+    state: started
+
+- name: Add MongoDB users
+  mongodb_user:
+    database: admin
+    name: admin_user
+    password: 12345
+    roles: userAdminAnyDatabase
+    state: present
+
+
+
+    
+
+#- name: Wait when mongodb is started
+#  wait_for:
+#    host: "{{ansible_ssh_host | default(mongo_server) }}"
+#    port: "{{ mongodb_net_port }}"
+#    delay: 10 
+#    timeout: 120
+
+#- name: Stop mongo
+#  service: name=mongod state=stopped
+#  become: true
+
+#- name: restart mongo with config
+#  command: mongod --config {{mongo_dir}}/mongod.conf.configserver --fork --logpath {{mongo_dir}}/mongo_config.log
+#  become: true
+
+

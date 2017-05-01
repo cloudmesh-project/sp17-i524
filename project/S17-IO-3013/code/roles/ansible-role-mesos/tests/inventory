@@ -1,0 +1,6 @@
+[all]
+localhost
+[masters]
+localhost
+[slaves]
+localhost

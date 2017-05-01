@@ -1,0 +1,103 @@
+---
+- name: Add mesosphere repo
+  yum: name={{ mesosphere_yum_repo }} state=present
+
+- name: Downloading and enable the EPEL repository definitions.
+  yum: name={{ epel_repo }} state=present
+
+- name: Install mesosphere
+  yum: name={{item}} state=present
+  with_items:
+    - mesos
+
+- name: Install zk
+  yum: name=mesosphere-zookeeper state=present
+  when: installing_on_master == "yes"
+
+- name: update /etc/hosts
+  template: src=hosts.j2 dest=/etc/hosts backup=yes
+  when: update_hosts == "yes"
+  tags:
+    - hosts
+
+- name: myid var
+  set_fact: myid={{ myid + 1 }}
+  tags:
+    - myid
+  
+- name: set zoo.cfg.template
+  template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg.template backup=yes
+  when: installing_on_master == "yes"
+  tags:
+    - zoo.cfg
+
+- name: Add lines in zoo.cfg.template to zoo.cfg
+  shell: "cat /etc/zookeeper/conf/zoo.cfg.template >> /etc/zookeeper/conf/zoo.cfg"
+  when: installing_on_master == "yes"
+  tags:
+    - zoo.cfg
+
+- name: zookeeper systemd
+  service: name=zookeeper state=started
+  when: installing_on_master == "yes"
+  tags:
+    - zk.started
+
+- name: Define zk masters in mesos
+  set_fact: zk_masters="{% for host in groups['masters'] %}{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}"
+  tags:
+    - mesos.zk
+
+- name: /etc/mesos/zk
+  replace: dest=/etc/mesos/zk regexp='localhost:2181' replace="{{ zk_masters }}"
+  tags:
+    - mesos.zk
+
+- name: 'set quorum: a number greater than # of masters divided by 2'
+  set_fact: number_of_masters="{{(groups['masters']|length/2)|round|int}}"
+  when: installing_on_master == "yes"
+  tags:
+    - quorum
+
+- name: update quorum on masters
+  lineinfile: dest=/etc/mesos-master/quorum regexp="^[0-9]*" line="{{ number_of_masters }}"
+  when: installing_on_master == "yes"
+  tags:
+    - quorum
+
+- name: stop mesos-slave on masters
+  service: name=mesos-slave state=stopped
+  when: installing_on_master == "yes"
+  tags:
+    - mesos-master
+
+- name: disable mesos-slave on masters
+  service: name=mesos-slave enabled=no
+  when: installing_on_master == "yes"
+  tags:
+    - mesos-master
+
+- name: restart mesos-master
+  service: name=mesos-master state=restarted
+  when: installing_on_master == "yes"
+  tags:
+    - mesos-master
+
+- name: stop mesos-master on slaves
+  service: name=mesos-master state=stopped
+  when: installing_on_slave == "yes"
+  tags:
+    - mesos-slave
+
+- name: disable mesos-master on masters
+  service: name=mesos-master enabled=no
+  when: installing_on_slave == "yes"
+  tags:
+    - mesos-slave
+
+- name: restart mesos-slave
+  service: name=mesos-slave state=restarted
+  when: installing_on_slave == "yes"
+  tags:
+    - mesos-slave
+

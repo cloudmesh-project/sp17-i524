@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+  become: yes
+  remote_user: cc
+  roles:
+          - { role: ansible-role-mesos-by-mesosphere, master_or_slave: "both", zk_masters: "" }
+
+- hosts: masters
+  become: yes
+  remote_user: ubuntu
+  roles:
+          - { role: ansible-role-mesos-by-mesosphere, master_or_slave: "yes", myid: 1 }
+ 
+- hosts: slaves
+  become: yes
+  remote_user: ubuntu
+  roles:
+          - { role: ansible-role-mesos-by-mesosphere, master_or_slave: "no", myid: 1 }
+ 

@@ -1,0 +1,15 @@
+---
+# defaults file for ansible-role-spark-for-mesos
+
+spark_version: 2.0.1 
+spark_distribution_type: "-bin-hadoop2.7" # put '' if source installation
+spark_filename: "spark-{{ spark_version}}{{ spark_distribution_type}}" # excluding extension
+spark_url: https://dist.apache.org/repos/dist/release/spark/spark-{{ spark_version }}/{{ spark_filename }}.tgz
+spark_dest: /opt
+spark_home: "{{ spark_dest }}/spark"
+
+# mesos
+prefix_mesos: /usr/local
+mesos_master_host: mesos://zk://{% for host in groups['spark_server'] %}{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}/mesos
+# mesos_master_host: mesos://zk://{{ zk_hosts }} # from group_vars
+mesos_master_port: 5050

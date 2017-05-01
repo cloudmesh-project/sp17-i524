@@ -1,0 +1,9 @@
+{% for host in groups['masters'] %}
+{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }} {{ hostvars[host]['ansible_hostname'] }}
+{% endfor %}
+
+{% for host in groups['slaves'] %}
+{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }} {{ hostvars[host]['ansible_hostname'] }}
+{% endfor %}
+
+

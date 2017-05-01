@@ -1,0 +1,20 @@
+---
+# global vars file for ansible-role-mongo
+
+
+# The port in which mongos server should listen on 
+#mongos_port: 8888
+
+# The port for mongo config server
+#mongoc_port: 7777
+
+# Defaults to the first interface. Change this to:
+# intface: '{{ ansible_default_ipv4.interface }}'
+
+# The password for admin user
+mongo_admin_pass: 123456
+
+mongodb:
+    dbpath: /var/lib/mongo
+
+

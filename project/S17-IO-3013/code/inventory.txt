@@ -1,0 +1,18 @@
+#server running Spark
+[spark_server]
+129.114.33.236
+
+[master]
+129.114.33.151
+
+[slaves]
+129.114.33.51
+
+#server running Mongo
+[mongo_server]
+129.114.33.87
+
+#server running Mesos
+[mesos_server]
+129.114.111.46
+

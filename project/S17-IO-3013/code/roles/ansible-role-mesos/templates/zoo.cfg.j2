@@ -1,0 +1,20 @@
+tickTime=2000 
+dataDir={{ zookeeper_dataDir }}
+dataLogDir=/var/log/zookeeper
+clientPort=2181 
+initLimit=5 
+syncLimit=2
+{% for host in groups['masters'] %}
+server.{{ loop.index }}={{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:2888:3888
+{% endfor %}
+
+# Description of these configuration settings
+
+# tickTime: the length of a single tick, which is the basic time unit used by ZooKeeper, as measured in milliseconds.
+# dataDir: the location where ZooKeeper will store the in-memory database snapshots and, unless specified otherwise, the transaction log of updates to the database.
+# dataLogDir: This option will direct the machine to write the transaction log to the dataLogDir rather than the dataDir. This allows a dedicated log device to be used, and helps avoid competition between logging and snaphots.
+# clientPort: the port to listen for client connections; that is, the port that clients attempt to connect to.
+# initLimit: Amount of time, in ticks (see tickTime), to allow followers to connect and sync to a leader. Increased this value as needed, if the amount of data managed by ZooKeeper is large.
+# syncLimit: Amount of time, in ticks (see tickTime), to allow followers to sync with ZooKeeper. If followers fall too far behind a leader, they will be dropped.
+
+# source: https://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html#sc_zkMulitServerSetup

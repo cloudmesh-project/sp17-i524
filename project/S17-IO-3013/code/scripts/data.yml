@@ -1,0 +1,9 @@
+---
+
+- name: get data
+  hosts: mongo_server
+  remote_user: cc
+  become: yes
+  roles:
+    - { role: ansible-role-dataset }
+

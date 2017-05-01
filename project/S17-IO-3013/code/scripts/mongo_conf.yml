@@ -1,0 +1,24 @@
+---
+
+- name: configure mongodb
+  hosts: mongo_server
+  tasks:
+    - name: create directories
+      file: path={{MONGO_DIR}}/configdb state=directory
+
+    - name: Upload config server configuration file
+      template: src="../configfiles/mongod.conf.configserver.template" dest="{{MONGO_DIR}}/mongod.conf.configserver"
+      become: true
+
+    - name: Stop mongod
+      service: name=mongod state=stopped
+      become: true
+
+    - name: Start config server
+      command: mongod --config {{MONGO_DIR}}/mongod.conf.configserver --fork --logpath {{MONGO_DIR}}/mongo_config.log
+      become: true
+
+
+
+  
+

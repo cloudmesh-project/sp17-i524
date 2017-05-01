@@ -1,0 +1,20 @@
+---
+# defaults file for ansible-mesosphere-zk
+mesosphere_yum_repo: "http://repos.mesosphere.com/el/{{ os_version_major }}/noarch/RPMS/{{ mesosphere_releases[os_version_major] }}"
+epel_repo: "http://dl.fedoraproject.org/pub/epel/{{ os_version_major }}/{{ ansible_architecture }}/{{ epel_releases[os_version_major] }}"
+apt_key_id: "E56151BF"
+apt_key_server: "keyserver.ubuntu.com"
+
+# Debian
+mesosphere_apt_url: "http://repos.mesosphere.com/"
+DISTRO: "{{ ansible_distribution | lower }}"
+CODENAME: "{{ansible_distribution_release|lower}}"
+
+# https://github.com/AnsibleShipyard/ansible-zookeeper/blob/06f703ca1cc53c84a14e552e4495e99a4055aea3/defaults/main.yml
+# List of dict (i.e. {zookeeper_hosts:[{host:,id:},{host:,id:},...]})
+zookeeper_hosts:
+  - host: "{{inventory_hostname}}" # the machine running
+    id: 1
+zookeeper_dataDir: /var/lib/zookeeper
+zookeeper_owner: zookeeper
+zookeeper_group: "{{ zookeeper_owner }}"

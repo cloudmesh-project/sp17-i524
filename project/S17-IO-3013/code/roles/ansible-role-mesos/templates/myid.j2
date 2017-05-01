@@ -1,0 +1,5 @@
+{% for server in groups['masters'] %}
+{% if server == inventory_hostname %}
+{{ loop.index }}
+{% endif %}
+{% endfor %}
