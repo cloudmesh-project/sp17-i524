@@ -99,13 +99,13 @@ performance for strong scaling. The report will be represented in tabular format
 \section{Data Curation}
 Getting data ready is the very first and basic step for analysis. We have chose NCDC as our source of data. NCDC exposes few rest apis for accessing weather data. Following will give you a brief understanding on the apis used for getting the required data.
 \begin{itemize}
-\item I) Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.	
+\item I) Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.  
 \item II) Data Categories: This groups data into data category like Temperature, Pressure etc. We will consider only few. ( URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories, Attributes : "TEMP" (Air Temperature) , "PRES" (Pressure) , "EVAP" (Evaporation) and "VELOCITY" (Velocity) ). For our project we will be using PRCP, SNOW, TMAX, TMIN and TAVG.
 \item III) Data Types: This group Data Categories into further smaller sub types. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datatypes?datasetid=GSOM\&datacategoryid=TEMP , Attributes : "TAVG" (Average Temperature), "TMAX" (Maximum Temperature) and "TMIN" (Minimum Temperature)    ) Other Data Categories does not have sub type.
 \item IV) Location Categories: This groups data in terms of location. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locationcategories , Attributes : "CITY" , "CLIM\_DIV" (Climate Division), "CLIM\_REG" (Climate Region) , "CNTRY" (Country) ,"ST" (State)). For this project we will be downloading data for India only.
-\item V)  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))	
-\item VI) Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.	
-\item VII) 	Data : This collects actual weather data for the given stationId,
+\item V)  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))  
+\item VI) Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.   
+\item VII)  Data : This collects actual weather data for the given stationId,
  startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data 
  ?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005
  \&startdate=1970-10-10\&enddate=1971-10-10).
@@ -142,7 +142,7 @@ Now thrift is ready to use. Execute "/hbase thrift start" to start the thrift se
 Happybase is a wrapper program written on thrift to facilitate data access layer in python in a more readable and swift way. Rather than using thrift client directly we will be using happybase python module. To install happybase run "pip install happybase". 
 Once done test the python library by running the following test code 
 \begin{lstlisting}[language=Python,caption=Connect-Hbase,breaklines=true]
-import happybase as hbase				
+import happybase as hbase               
 
 connection = hbase.Connection('localhost')
 print connection.tables()
@@ -152,21 +152,21 @@ print connection.tables()
 Hbase \cite{hbase} is a column based key-value database. We have considered two tables for weather data `wda\_stations` and `wda\_weather`. The structure of the tables are as follows\newline
 \begin{lstlisting}[label=JSON,caption=WDA\_STATIONS Table,breaklines=true]
 [{station-id-key : {
-	station : {name : {} , id : {}},
-	date_range : {
-		min_date : {} ,
-		max_date : {}
-	 },
-	location : {
-		latitude : {},
-	 	longitude : {}
-	}
+    station : {name : {} , id : {}},
+    date_range : {
+        min_date : {} ,
+        max_date : {}
+     },
+    location : {
+        latitude : {},
+        longitude : {}
+    }
 }}]
 \end{lstlisting}
 \begin{lstlisting}[label=JSON,caption=WDA\_WEATHER Table,breaklines=true]
 [{yyyy-mm-key : {
-	weather : {station-id : {
-		data-type : {value}			
+    weather : {station-id : {
+        data-type : {value}         
 }}}}]
 \end{lstlisting}
 \subsection{Table Definition}
@@ -329,10 +329,10 @@ of nodes/IP address those needs to be included in the group. For example in the 
 
 \begin{lstlisting}[language=xml,caption=Inventory,breaklines=true]
 [weatherClusterMaster]
-	<ipaddress1> ansible_ssh_user=cc
+    <ipaddress1> ansible_ssh_user=cc
 [weatherClusterSlave]
-	<ipaddress2>  ansible_ssh_user=cc
-	<ipaddress3> ansible_ssh_user=cc
+    <ipaddress2>  ansible_ssh_user=cc
+    <ipaddress3> ansible_ssh_user=cc
 \end{lstlisting}
 
 \begin{enumerate}
@@ -449,7 +449,7 @@ Apache thrift was connecting to the Base with the help of Apache
 
 
 HappyBase is a developer-friendly Python library to interact with Apache HBase. 
-Below the surface, HappyBase uses the Python Thrift library to connect to HBase.	
+Below the surface, HappyBase uses the Python Thrift library to connect to HBase.    
 
 
 \section{Conclusion}
