@@ -22,7 +22,7 @@
 
 
 \begin{abstract}
-The project aims to analyze any relationship between change in climate, geo- magnetic field and natural disasters with focusing on use of Hadoop Framework for data analysis and Ansible for automating deployment and monitoring.
+The project aims to analyze climate data with focusing on use of Hadoop Framework for data analysis and Ansible for automating deployment and monitoring.
 \newline
 \end{abstract}
 
@@ -323,17 +323,22 @@ This folder consists of some key files and folders. We can dig into the details 
 
 Inventory file contains the list of hostname or nodes that can be accessible by ansible. These nodes are then used in the script for deployment and configuration. 
 In the current project chameleon server nodes were created and configured.
-These IP address can be changed dynamically. This file can also contain the group inside Which multiple ip can be configured. The deployment of hadoop was in 
+These IP address can be changed dynamically. This file can also contain the group inside Which multiple ip can be configured. The deployment of hadoop was in 
 clustered mode where we have on master and multiple slaves. In the inventory.configuration file there are multiple section with header which mentioned the list
 of nodes/IP address those needs to be included in the group. For example in the below file we have two groups.
 
-\begin{itemize}
-\item [weatherClusterMaster]\item <ipaddress1> ansible_ssh_user=cc\item [weatherClusterSlave]\item <ipaddress2>  ansible_ssh_user=cc\item <ipaddress3ansible_ssh_user=cc
-\end{itemize}
+\begin{lstlisting}[language=xml,caption=Inventory,breaklines=true]
+[weatherClusterMaster]
+	<ipaddress1> ansible_ssh_user=cc
+[weatherClusterSlave]
+	<ipaddress2>  ansible_ssh_user=cc
+	<ipaddress3> ansible_ssh_user=cc
+\end{lstlisting}
 
-1. WeatherClusterMaster : Node/Instance with ipaddress1 falls under the master cluster.
-2. WeatherClusterSlave: Node/Instance with ipaddress2, ipaddress3 falls under the slave cluster.
-
+\begin{enumerate}
+\item WeatherClusterMaster : Node/Instance with ipaddress1 falls under the master cluster.
+\item WeatherClusterSlave: Node/Instance with ipaddress2, ipaddress3 falls under the slave cluster.
+\end{enumerate}
 The mapping of IP address to the group from the inventory file is used in the playbook.yml to represent them as a group. There are some script which needs 
 to be part of the master cluster deployment however it don’t need to be executed on the slave cluster. This problem is address using the playbook.yml roles
 
@@ -343,21 +348,61 @@ to be part of the master cluster deployment however it don’t need to be execut
 Playbook works on mentioned host of group. It mentions the roles those will be operated on each of the host. The main.yml inside the task folder within 
 each roles will be applied to The cluster.
 
-\begin{itemize}
-\item ---\item - hosts: weatherClusterMaster\item remote_user: root roles:\item     - java\item     - hadoop\item     - hbase\item     - master\item - hosts: weatherClusterSlave remote_user: root\item roles:\item     - java\item     - hadoop\item     - hbase
-\end{itemize}
+\begin{lstlisting}[language=xml,caption=Playbook Modules,breaklines=true]
+---
+- hosts: weatherClusterMaster
+ remote\_user: root roles:
+     - java
+     - hadoop
+     - hbase
+     - master
+ - hosts: weatherClusterSlave remote\_user: root
+ roles:
+     - java
+     - hadoop
+     - hbase
+\end{lstlisting}
 
 
 As mentioned above the hosts mentions the instance on which the scripts are going to be executed. So all the ipaddress those are mentioned under the weatherClusterMaster 
-will undergo the execution of scripts those are mentioned in each of the roles for that task.These script will be executed using the remote_user mentioned in the script.In above example from project, both the cluster will execute the script mentioned inside java, hadoop and hbase role however master cluster additionally will execute the script
+will undergo the execution of scripts those are mentioned in each of the roles for that task.
+These script will be executed using the remote\_user mentioned in the script.
+In above example from project, both the cluster will execute the script mentioned inside java, hadoop and hbase role however master cluster additionally will execute the script
 from the master role folder as well. These could be the addition scripts like configuration of slave addresses in the slaves file and many such task which needs to be executed only for master instance.
 
 \subsection{Roles}
 
-Roles folder contains the list of the roles mentioned in the playbook.xml. There could be multiple roles which can be executed on node or group of nodes.In current project there are four roles i.e. java, hadoop, base and master. The name are very much self explainatory.Java : — Java role installs java on the remote machine . Roles contains multiple directory. The task directory is the main directory which mentions the list of task / script 
-those needs to be executed on the nodes.Current project mentions 4 different task in java. All these task takes care of installing java on the remote node.Hadoop — Hadoop along with Hbase is the major role. The task file mentioned the below list of task\begin{itemize}\item 1. Download hadoop.\item 2. Extract hadoop.\item 3. Set java home/ Hadoop home configuration in bashrc.\item 4 Set Java home/Hadoop home path to env.rc\item 5. Create and Configure logging file.\item 6. Update core-site.xml\item 7. Configure slaves\item 8. Update other configuration files like core-site.xml, hdfs-site.xml, yarn-site, mapper- site.xml.\item 9. Replace hosts.
-\end{itemize}Sources fIleThe sources folder consists of other key folders like\begin{itemize}\item 1. Vars This is yml file which maintains the mapping for placeholder names used in the configuration files.\item 2.Meta : This file can contain it dependency roles and other details.\item 3. Templates : This contains the template configuration file.
-\end{itemize}After Hadoop, HBase, Thrift is installed and configured using similar way. You can refer to the main.yml inside the task folder in for the script details.
+Roles folder contains the list of the roles mentioned in the playbook.xml. There could be multiple roles which can be executed on node or group of nodes.
+In current project there are four roles i.e. java, hadoop, base and master. The name are very much self explainatory.
+Java : — Java role installs java on the remote machine . Roles contains multiple directory. The task directory is the main directory which mentions the list of task / script 
+those needs to be executed on the nodes.
+
+Current project mentions 4 different task in java. All these task takes care of installing java on the remote node.
+
+Hadoop — Hadoop along with Hbase is the major role. The task file mentioned the below list of task
+\begin{itemize}
+\item 1. Download hadoop.
+\item 2. Extract hadoop.
+\item 3. Set java home/ Hadoop home configuration in bashrc.
+\item 4 Set Java home/Hadoop home path to env.rc
+\item 5. Create and Configure logging file.
+\item 6. Update core-site.xml
+\item 7. Configure slaves
+\item 8. Update other configuration files like core-site.xml, hdfs-site.xml, yarn-site, mapper- site.xml.
+\item 9. Replace hosts.
+\end{itemize}
+
+Sources fIle
+
+The sources folder consists of other key folders like
+
+\begin{itemize}
+\item 1. Vars This is yml file which maintains the mapping for placeholder names used in the configuration files.
+\item 2.Meta : This file can contain it dependency roles and other details.
+\item 3. Templates : This contains the template configuration file.
+\end{itemize}
+
+After Hadoop, HBase, Thrift is installed and configured using similar way. You can refer to the main.yml inside the task folder in for the script details.
 
 
 \section{Benchmarking}
