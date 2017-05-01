@@ -6,7 +6,7 @@
     - name: setup hdfs folders
       command: "{{ item }} chdir=/opt/predict"
       with_items:
-      - /opt/hadoop/bin/hdfs dfs -rm -r /predict
+      - /opt/hadoop/bin/hdfs dfs -rm -r -f /predict
       - /opt/hadoop/bin/hdfs dfs -mkdir /predict
       - /opt/hadoop/bin/hdfs dfs -put /opt/predict/data/Customer_Data.csv /predict/
       become: yes
