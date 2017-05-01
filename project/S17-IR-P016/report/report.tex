@@ -145,7 +145,7 @@
 		\item {Creating Hadooop/Spark Cluster-} using Cloudmesh's deploy command. 
 	\end{enumerate}
 	
-	\item \textbf{GitHub}: GitHub is 'a web-based Git or version control repository and Internet hosting service' \cite{www-Github}. We used Github repositories to store our files related to documentation, ansible scripts and python code.
+	\item \textbf{GitHub}: GitHub is 'a web-based Git or version control repository and Internet hosting service' \cite{www-github}. We used Github repositories to store our files related to documentation, ansible scripts and python code.
 	
 	\item \textbf{Ansible}: Ansible is an open source automation platform that automates Application Deployment, and many other IT needs. In our project, Ansible is used to manage the configuration and automate deployment of software stacks on to the clouds. Ansible scripts are run via localhost by providing it with the IP addresses of the cloud VM's set up using Cloudmesh Client.
 	
@@ -197,7 +197,7 @@
 		Every single information we use to represent a customer is called a “feature” and the activity of finding useful features is called “feature engineering.” In the Customer data set the data is labeled with two classes – Yes (Churned) and 0
 		(Not Churned). The features for each customer consist of:
 		\begin{description}
-			\item \textbf{Labels-->} Churn: Yes or NO
+			\item \textbf{Labels-->} Churn: Yes or No
 			\item \textbf{Features-->} customerID,gender,SeniorCitizen,Partner,
 			Dependents, PhoneService,MultipleLines,InternetService,
 			OnlineSecurity,
@@ -229,7 +229,7 @@
 		\item {Support Vector Machine} 
 		\end{enumerate}
 
-	For each of the algorithms, the data was split into training and testing subsets with a ratio of 70 percent for training and 20 percent for testing.The predictive performance of each of the algorithm was evaluated by comparing predictions on the testing data set with true values (known as ground truth) using a variety of metrics such as Accuracy, AUROC and Confusion Matrix.
+	For each of the algorithms, the data was split into training and testing subsets with a ratio of 70 percent for training and 30 percent for testing.The predictive performance of each of the algorithm was evaluated by comparing predictions on the testing data set with true values (known as ground truth) using a variety of metrics such as Accuracy, AUROC and Confusion Matrix.
 
 \section{Model Evaluation}
 	We used Spark ML's inbuilt classification evaluators to evaluate the predictions of our algorithms. Table \ref{table:ML} below shows the accuracy for each of the algorithm used.
@@ -241,13 +241,11 @@
 		\textit{Classification Algorithm} & \textit{Accuracy ($\%$)}\\ 
 		\hline
 		\hline 
-		DecisionTreeClassifier &  89.75\\
+		Decision Tree  &  83.75\\
 		\hline  
-		SGDClassifier & 88.82\\
+		Support Vector Machine & 86.82\\
 		\hline 
-		NaiveBayes & 85.02\\
-		\hline 
-		RandomForest & 88.02\\
+		Random Forest & 84.02\\
 		\hline
 		\end{tabular}
 		\caption{Predictive Accuracy}
