@@ -1,0 +1,16 @@
+Benchmark
+time_setup 21
+time_spark_job 71
+time_spark_job2 21
+Benchmark
+time_setup 30
+time_spark_job 70
+time_spark_job2 21
+Benchmark
+time_setup 31
+time_spark_job 74
+time_spark_job2 18
+Benchmark
+time_setup 23
+time_spark_job 81
+time_spark_job2 23

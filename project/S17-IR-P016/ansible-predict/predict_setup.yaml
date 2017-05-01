@@ -5,19 +5,29 @@
   tasks:
   - name: clone repo
     git: >
-      repo=https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P016.git
-      update=no
+      repo=https://github.com/yatinsharma7/Customer_Churn.git
+      update=yes
       dest=/opt/predict
       version=master
       accept_hostkey=yes
+      force=yes
     tags:
       - clone-repo
-  - name: install packages 
-    command: pip install -r /opt/predict/requirements.txt
+  - name: Install list of required apt packages
+    apt: name={{item}} state=installed
+    with_items:
+    - python-dev
+    - python-pip
+    - libfreetype6-dev
+    - libatlas-base-dev
+    become: yes
+    become_user: root
+  - name: install python packages 
+    command: pip install -r /opt/predict/code/requirements.txt
     tags:
       - install-python-packages
   - name: Fix 'predict' folder permissions
     file: path=/opt/predict owner=hadoop group=hadoop mode=0775 state=directory recurse=yes
     tags:
-      - set-permissions
+      - set-Hadoop permissions
 
