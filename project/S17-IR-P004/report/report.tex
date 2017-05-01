@@ -14,12 +14,12 @@
 \affil[**]{Corresponding authors: pshinde@iu.edu}
 \affil[***]{Corresponding authors: srikrama@iu.edu}
 
-\dates{project-000, \today}
+\dates{project-004, \today}
 
 \ociscodes{Hadoop, Spark, MLlib, Ansible, Cloudmesh Client, Predictive Analysis}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/project/S17-IR-P004/report/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/diabetic}}
 
 
 \begin{abstract}
@@ -48,7 +48,7 @@ We chose the case study of predicting the likelihood of a diabetes patient getti
 
 We approached the solution from a pure data perspective to address the challenge of lacking medical domain knowledge. For some basic information, we relied on the dataset description on UCI website \cite{www-dataset}, ICD-9 \cite{www-icd9} and earlier studies \cite{article-hindawi}. We followed a workflow as shown in figure \ref{fig:workflow}. 
 
-Our other important goal is to propose an end-to-end solution that is scalable and faster. While our dataset is about 100,000 records, anticipating real-world scenarios with huge amounts of data we are proposing a Hadoop based solution. We are utilizing Spark for its faster processing \cite{www-sparkfast} and  advanced analytics through packages like Mllib \cite{www-mllib} which provides several commonly used machine learning algorithms. Finally we are implementing this solution over cloud infrastructure to meet our infrastructure requirements. This helped us demonstrate an end-to-end solution closer to real-world scenarios, where enterprises utilize cloud infrastructure in a pay per-use model. This helped us save time and resources in setting up the infrastructure.
+Our other important goal is to propose an end-to-end solution that is scalable and faster. While our dataset is about 100,000 records, anticipating real-world scenarios with huge amounts of data we are proposing a Hadoop based solution. We are utilizing Spark for its faster processing \cite{www-sparkfast} and  advanced analytics through packages like Mllib \cite{www-mllib}, which provides several commonly used machine learning algorithms. Finally we are implementing this solution over cloud infrastructure to meet our infrastructure requirements. This helped us demonstrate an end-to-end solution closer to real-world scenarios, where enterprises utilize cloud infrastructure in a pay per-use model. This helped us save time and resources in setting up the infrastructure.
 
 We deployed our solution on two different clouds and obtained metrics to assess the infrastructure performance with our solution.  We also deployed our solutions on a distributed Hadoop/Spark environment built on on-premise machines. We compared the performance metrics of all the three infrastructure choices, with respect to our solution  and included them in this report.
 
@@ -134,7 +134,7 @@ A brief comparison of multiple attributes of the clouds used are displayed in ta
  \textit{CPU} & Intel Xeon & Dual Intel & Intel Core  \\ 
  & X5550 & E-2680v3 "Haswell" & i5-6200U\\
  \hline 
- \textit{RAM} & 4 GB & 2 GB & 2 GB \\ 
+ \textit{RAM} & 2 GB & 2 GB & 2 GB \\ 
 \hline 
 \textit{Number of CPU's} & 1 & 1 & 1 \\
 \hline 
@@ -152,72 +152,24 @@ For this project, we used Ansible to automate the deployment of spark and its pr
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale = 0.28]{images/auto_deploy}
+\includegraphics[scale = 0.28]{images/auto_deployf}
 \caption{Automated Cloud Deployment using Ansible}
 \label{fig:ansible}
 \end{figure}
 
-
-The Ansible playbook package constitutes 4 files.
+The below listed ansible playbooks are invoked through shell scripts.
 \begin{enumerate}
-\item \textit{ansible.cfg}: This file consists of configuration information.
+\item \textit{inventory}: This file is used by the playbook to install packages and services on target servers. This Inventory file consists of target servers and these servers can be categorized into groups like webservers, dbservers etc. Under each group, we can list the server which serves common purpose.
 \item \textit{playbook-cloudmesh-first-time-install.yml}: This file was used for deployment of cloudmesh client.
-\item \textit{host}: This file contains the list of hosts.
-\item \textit{hadoop-spark-playbook.yml}: This consists of the ansible code for redeployment of all the pre-requisites packages for cloudmesh client. This also deployment of spark using cloudmesh client.
+\item \textit{cloudmesh-first-time-configure.yml} : Used for configuring the cloudmesh after installation
+
+\item \textit{deployment-playbook.yml:} used to deploy the hadoop-spark cluster in chameleon and jetstream
+
+\item  \textit{tranfer-files-remotely.yml:} used to transfer pyspark codes and input files from local machine to report machines
+
+\item \textit{upgrade-cloudmesh.yml:} it is used only when there is a need to upgrade
 \end{enumerate}
 
-The following procedure has to be followed to run the Ansible script:
-\begin{enumerate}
-\item Install cloudmesh client for the first run 'playbookcloudmesh-first-time-install.yml' with the following command. This automates the deployment of cloudmesh client, which is a pre-requiste for installing Spark over our cloud infrastructure.  
-\begin{verbatim}
-ansible-playbook
-playbook-cloudmesh-first-time-install.yml 
---ask-sudo-pass -vvvv
-\end{verbatim}
- \item Open, $~$/.cloudmesh/cloudmesh.yaml and edit the following section,the entry with $< >$ should be customized as per your credentials.
-\begin{verbatim}
-profile:
-     firstname: <first name>
-     lastname: <last name>
-     email: <email id>
-     user: <chameleon/jetsream/other cloud username>
-\end{verbatim}
-\item Change the entry of active cloud to use your preferred cloud.  Example with chameleon is present below:
-\begin{verbatim}
-    active:
-      - chameleon
-    clouds:
-      ...
-\end{verbatim}
-\item Under a cloud(chameleon/jetstream/..) change the following entry, the entry with <> should be customized as per your credentials:
-\begin{verbatim}
-credentials:
-OS_PASSWORD: <enter your chameleon cloud password
-here>
-OS_TENANT_NAME: CH-818664
-OS_TENANT_ID: CH-818664
-OS_PROJECT_NAME: CH-818664
-OS_USERNAME: <username>
-\end{verbatim}
-\item Also change, the type of OS and flavor you want for hadoop/spark cluster provided by your preferred cloud:
-\begin{verbatim}
-default:
-        flavor: m1.medium
-        image: CC-Ubuntu14.04
-\end{verbatim}
-\item Edit the file hadoop-spark-playbook.yml  in the section:
- 'name:Preparing cloudmesh- setting default user', the entry with <> should be customized as per user credentials:
-\begin{verbatim}
-- name: Preparing cloudmesh- setting default user
-become_user: "{{ lookup('env','USER') }}"
-shell: cm default user=<chameleon/jetstream user>
-\end{verbatim}
-\item Now run the following command to deploy hadoop/spark cluster which will run the hadoop-spark-playbook.yml. It will again upgrade cloudmesh client, so it is up to date:
-\begin{verbatim}
-ansible-playbook hadoop-spark-playbook.yml
---ask-sudo-pass -vvvv
-\end{verbatim}
-\end{enumerate}
 
 \section{Data Cleansing and Pre-processing}
 The initial data set is publicly available on the UCI Machine Learning Repository \cite{www-dataset}.
@@ -254,14 +206,7 @@ The original data contains the age attribute grouped in 10-year intervals from 0
 
 \section{Preliminary Data Analysis}
 The unit of our analysis is an encounter; to keep the observations independent, we only analyzed one encounter per patient.
-We performed early data analysis in python in a local machine. We implemented four classification algorithms using scikit-learn library on each of the 3 data sets created. The data sets were first divided in training and testing set. The training set had about 80$\%$ observations (5000 observations approx.) whereas the testing set had the remaining 20$\%$ observations (12937 observations). Each of the algorithms provided by scikit-learn were used following in the manner:
-\begin{enumerate}
-\item Create and fit a model using the observations and readmission of the training set.
-\item Predict labels of the testing set.
-\item Calculate the accuracy using the predicted labels and true labels of the testing set. The parameters needed in implementing the above-mentioned algorithms were set so as to be valid to our data, give optimum results and make the results to be reproducible.
-\end{enumerate}
-KMeans clustering gave us approximately 55$\%$ accuracy with all the three data sets.  Though it is an unsupervised learning algorithm, we used it to examine if the clustering divided the data into readmission classes, Yes and No, to an acceptable level. We concluded that clustering based on the Euclidean distance may not be the right approach for this classifying this data set. The accuracy percentages obtained  for other classification algorithms can be found  in the Table \ref{table:sklearn}.
-
+We performed early data analysis in python in a local machine. We implemented four classification algorithms using scikit-learn library on each of the 3 data sets created. The data sets were first divided in training and testing set. The training set had about 80$\%$ observations (5000 observations approx.) whereas the testing set had the remaining 20$\%$ observations (12937 observations). 
 \begin{table}[h!]
 \centering
  \begin{tabular}{|c c c|} 
@@ -286,6 +231,18 @@ DecisionTreeClassifier & 136 & 83.35 \\ & 26 & 82.50\\
 \caption{Results from scikit-learn}
 \label{table:sklearn}
 \end{table}
+
+
+Each of the algorithms provided by scikit-learn were used following in the manner:
+\begin{enumerate}
+\item Create and fit a model using the observations and readmission of the training set.
+\item Predict labels of the testing set.
+\item Calculate the accuracy using the predicted labels and true labels of the testing set. The parameters needed in implementing the above-mentioned algorithms were set so as to be valid to our data, give optimum results and make the results to be reproducible.
+\end{enumerate}
+
+
+KMeans clustering gave us approximately 55$\%$ accuracy with all the three data sets.  Though it is an unsupervised learning algorithm, we used it to examine if the clustering divided the data into readmission classes, Yes and No, to an acceptable level. We concluded that clustering based on the Euclidean distance may not be the right approach for this classifying this data set. The accuracy percentages obtained  for other classification algorithms can be found  in the Table \ref{table:sklearn}.
+
 
 
 
@@ -410,26 +367,54 @@ Similar analysis in a real world scenario can be utilized to predict the readmis
 
 \section{Benchmarking}
 
-In the figure \ref{fig:bench} we are displaying the time taken to run each of the four algorithms in different clouds. The four algorithms are SGD Classifier, Gaussian Naïve Bayes, kmeans and Decision Tree Classifier.
+We have recorded several metrics while running each of the four algorithms in different clouds. The four algorithms are SGD Classifier, Gaussian Naïve Bayes, kmeans and Decision Tree Classifier.
+The variations in run-time, deployment time and file transfer are caused due to factors like:
 
 \begin{enumerate}
- \item The complexity of the algorithm. For example,  kmeans clustering has  O(n log n) time complexity which is worse than Gaussian Naïve Bayes and hence takes more time.
- \item The compute resources used.  For example the chameleon cloud takes less time to execute any other algorithm because the RAM configuration for the VMs of chameleon cloud is better than any other VMs.
- \item The network latency between the hosts: The VMs which are provisioned on clouds can be on different hosts spread across different racks of datacenters and even datacenters across geographies. This may result in network latency and affect the runtime of a program running in a distributed environment.
+ \item \textit{The complexity of the algorithm:} For example,  kmeans clustering has  O(n log n) time complexity which is worse than Gaussian Naïve Bayes and hence takes more time.
+
+ \item \textit{The network latency between the hosts:} The VMs which are provisioned on clouds can be on different hosts spread across different racks of datacenters and even datacenters located in different geographies. This may result in network latency and affect the run-time of a program running in a distributed environment.
 \end{enumerate}
 
-\subsection{Computation time of algorithms in clouds}
-Figure \ref{fig:bench} shows the performance of multiple machine learning algorithms using Spark MLlib in multiple clouds.
+\subsection{Comparison of Spark Deployment Time}
+
+We compared the Hadoop-Spark deployment time with different number of machines on each of the clouds, Jetstream and Chameleon. We can see from figure \ref{fig:spd} the Hadoop-Spark deployment times observed on Chameleon and Jetstream clouds. 
+
 \begin{figure}[h]
-\centering
-\includegraphics[scale=0.85]{images/Benchmarking}
-\caption{Run-time in different clouds.}
-\label{fig:bench}
+	\centering
+	\includegraphics[width=\linewidth,scale=1]{images/finalspdeployment.png}
+	\caption{Comparison of Spark deployment results}
+	\label{fig:spd}
 \end{figure}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.85]{images/Benchmarking}
+	\caption{Run-time in different clouds.}
+	\label{fig:bench}
+\end{figure}
+
+\subsection{Computation time of algorithms in clouds}
+Figure \ref{fig:bench} shows the performance of multiple machine learning algorithms provided by Spark MLlib on clusters in Jetstream, Chameleon and Virtual Box.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{images/algoruntime3.png}
+\caption{Run-time in different clouds for 3 vms}
+\label{fig:bench1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.4]{images/algoruntime5.png}
+	\caption{Run-time in different clouds for 5 vms}
+	\label{fig:bench2}
+\end{figure}
 \subsection{Comparison of multiple algorithms in Spark MLlib vs scikit-learn}
 
-We can see from figure \ref{fig:accmllib} that accuracies between multiple algorithms in MLlib are almost smiliar. 
+
+Figures \ref{fig:bench1} and \ref{fig:bench2} shows the run-time comparison for machine learning algorithms using Spark MLlib in Jetstream and Chameleon, for predicting readmission likelihood, for 3 and 5 VMs.
+
 
 \begin{figure}[h]
 \centering
@@ -438,13 +423,30 @@ We can see from figure \ref{fig:accmllib} that accuracies between multiple algor
 \label{fig:accmllib}
 \end{figure}
 
-Figure \ref{fig:mllibvssklearn} shows accuracy results of multiple machine learning algorithms in scikit-learn vs MLlib.
+We compared the accuracies for different MLlib algorithms using pyspark.mllib package. We can see from figure \ref{fig:accmllib} the accuracies achieved for multiple algorithms in MLlib. While Kmeans gave the lowest accuracy, rest of the algorithms gave similar accuracies.
+
+
+
+We compared the accuracies achieved from Spark MLlib and scikit-learn algorithms. Figure \ref{fig:mllibvssklearn} shows accuracy results of multiple machine learning algorithms in scikit-learn vs MLlib.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth,scale=1]{images/mllibvssklearn}
 \caption{Accuracy Results: scikit-learn vs pyspark.mllib}
 \label{fig:mllibvssklearn}
+\end{figure}
+
+
+
+\subsection{Comparison of File Transfer Time}
+
+We uploaded two files of different sizes, 3 MB and 168 MB, to both Jetstream and Chameleon. We recorded the file transfer times for each of these clouds. We can see from figure \ref{fig:ftt} that the it took lesser time to transfer files to JetStream cloud machines than to Chameleon cloud machines.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.33]{images/Filetransfer.png}
+	\caption{Comparison of file transfer time}
+	\label{fig:ftt}
 \end{figure}
 
 \section{Troubleshooting}
@@ -460,7 +462,8 @@ We encountered several errors while running different commands in the Linux term
  \textbf{Resolution}: \\
  cm ssh-key delete <username>-001\\
  cm ssh-key delete <username>-001 cloud = chameleon\\
- cm ssh-key add\\
+ ssh-add\\
+ cm key add --ssh\\
  cm ssh-key upload\\
  cm key refresh
  
@@ -507,7 +510,7 @@ cm cluster define --count 3 --image CC-Ubuntu14.04
  \textbf{Resolution}: Exit from the current hadoop user using \textit{exit} command. The user will change to ‘cc’ that has the root privileges. Install  the package through the 'cc' user log-in back as the hadoop user to use the installed package .
 \end{enumerate}
 
-The "Cm refresh on" command can be used most of the times to resolve multiple errors.
+The "cm refresh on" command can be used most of the times to resolve multiple errors.
 
 
 
@@ -521,7 +524,7 @@ The "Cm refresh on" command can be used most of the times to resolve multiple er
     
 
 \section{Conclusion}
-We demonstrated the implementation of a big data based  predictive analytics solution using Hadoop, Spark and Spark’s MLlib machine learning algorithms. We predicted the readmission likelihood with an accuracy 90$\%$ by analyzing the data stored on HDFS.  While Hadoop provided us a distributed file system for storing large amounts of data, Spark provided us big data processing capabilities and several libraries to accomplish several common processing and analytics tasks. We used MLlib library’s algorithms to achieve similar results as obtained with scikit-learn library. These technologies can be used to build similar solutions for real world scenarios requiring processing and performing analytics over big data.  Similar applications can be built leveraging   Spark’s ability to process streams of data and support for machine learning algorithms. 
+We demonstrated the implementation of a big data based  predictive analytics solution using Hadoop, Spark and Spark’s MLlib machine learning algorithms. We predicted the readmission likelihood with an accuracy 90$\%$ by analyzing the data stored on HDFS.  While Hadoop provided us a distributed file system for storing large amounts of data, Spark provided us big data processing capabilities and several libraries to accomplish several common processing and analytics tasks. We used MLlib library’s algorithms to achieve similar results as obtained with scikit-learn library. We were succesfully able to deploy the Spark-Hadoop cluster infrastructure on Chameleon, Jetstream and on-premise virtual box clouds. We developed several shell scripts and Ansible playbooks to automate the deployment.  These technologies can be used to build similar solutions for real world scenarios requiring processing and performing analytics over big data.  Similar applications can be built leveraging   Spark’s ability to process streams of data and support for machine learning algorithms. 
 
 \section{Acknowledgments}
 This project was a part of the Big Data Software and Projects (INFO-I524) course. We would like to thank Professor Gregor von Laszewski and the associate instructors for their help and support during the course. 
