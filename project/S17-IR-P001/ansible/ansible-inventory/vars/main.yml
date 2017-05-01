@@ -1,6 +1,0 @@
----
-#variables for inventory task
-inv_file: inventory.txt
-node_list: tmp.txt
-node_list_1: tmp1.txt
-local_user_name: "{{ lookup('env','USER') }}"

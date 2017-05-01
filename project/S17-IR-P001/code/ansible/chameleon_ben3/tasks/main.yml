@@ -5,6 +5,7 @@
   shell : |
      chdir=/opt/spark-1.6.0-bin-hadoop2.6/ sudo ./sbin/start-master.sh
      echo 'export SPARK_WORKER_INSTANCES=2' | sudo tee --append /opt/spark-1.6.0-bin-hadoop2.6/conf/spark-env.sh
+# change master URl in the line below as explained in Readme.md
      chdir=/opt/spark-1.6.0-bin-hadoop2.6/ sudo ./sbin/start-slave.sh spark://stack-0050:7077 
 
 - name: Remove existing outputs
