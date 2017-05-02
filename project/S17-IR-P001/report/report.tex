@@ -105,8 +105,10 @@ Two lexicons were provided: Arguing Lexicon and MPQA subjectivity lexicon. Featu
 
 \begin{itemize}
 \item{\textbf{Arguing Lexicon:}
-Arguing lexicon \cite{somasundaran2007detecting} is a hand built lexicon built by Somasundaran, et al., contains 17 “.tff” files describing patterns that represent arguing. Each file contains patterns that are specific to one type of argument. For instance, “authority.tff” contains patterns that might occur in the text that involves a person or an entity exhibiting authority in some manner. There are certain areas in the pattern files that contain words that start with “@”. The corresponding definition for these words were given in 5 macro files. Modals, Spoken, Wordclasses, pronoun and intensifiers are included in the 5 macro files. For example, in “emphasis.tff” there is a pattern “(@GONNA)”, the value of which is present in the “modals.tff” macro file. \\
-"@GONNA": ["am going to"," are going to"," is going to"," am gonna"," are gonna"," is gonna"]\\
+Arguing lexicon \cite{somasundaran2007detecting} is a hand built lexicon built by Somasundaran, et al., contains 17 “.tff” files describing patterns that represent arguing. Each file contains patterns that are specific to one type of argument. For instance, “authority.tff” contains patterns that might occur in the text that involves a person or an entity exhibiting authority in some manner. There are certain areas in the pattern files that contain words that start with “@”. The corresponding definition for these words were given in 5 macro files. Modals, Spoken, Wordclasses, pronoun and intensifiers are included in the 5 macro files. For example, in “emphasis.tff” there is a pattern “(@GONNA)”, the value of which is present in the “modals.tff” macro file. 
+\begin{center}
+"@GONNA": ["am going to"," are going to"," is going to"," am gonna"," are gonna"," is gonna"]
+\end{center}
 Here, “@GONNA” was replaced by the corresponding list of values shown above. It can be any one the listed values. \\
 All the 17 files were read in python as a list of patterns. Macro files were used to replace the macros present in these 17 files wherever necessary. Regex package in python was used to read and compile each pattern in each of the 17 files as regular expressions. 17 new features were created and 0/1 values were assigned if a text contains at least one regular expression from the list for each lexicon file. The created feature would have the value 1 if any one of the regular expression has a match with the input tweet, otherwise 0. This process was repeated for all the targets’ train and test data-sets.}
 
@@ -241,18 +243,78 @@ Python was used to extract tweets from the twitter and the following packages of
 The version of Python used was 2.7x. \textbf{Ansible-node} role was used to install python and its dependencies, followed by the installation of pip which was used to install the python packages mentioned above.
 \subsection{Visualization components}
 Two components of visualization was deployed. One using nodejs and d3.js for visualizing the tweets in their geo location in a world map. Another is the set of charts and maps using Highcharts visualizing the results of the analysis performed in the previous step.Later part of the \textbf{Ansible-node} role was used to install nodejs and its dependencies, and start the python http server for viewing the visualizations.  
-
+\begin{table}[htb]
+\centering
+\caption{Chameleon cloud Specification}
+\label{tab-cham}
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Value}    & \multicolumn{1}{c}{\textbf{Chameleon}} \\ \midrule
+\textbf{group}    & default         \\
+\textbf{secgroup} & default  \\
+\textbf{image}    & Ubuntu-Server-14.04-LTS\\
+\textbf{flavor}   & m1.medium    \\ \bottomrule
+\end{tabular}
+\end{table}
 \section{Benchmarking}
-Benchmarking was done to evaluate and compare the performance of the system by varying the Cloud environment, cluster set-up, algorithms and data sizes. Benchmarking was also done on system performance in local machines. The configuration of the machines on which the analyses were run is as given below:\\
-
-The system was deployed in three cloud platforms, namely, Chameleon, Jetstream and Kilo. Xsede Chameleon virtual machines used for the analysis had the following configuration:\\  
-total memory 4 GB
-
-Sriram system config - 8 GB ram, 64 bit OS
+Benchmarking was done to evaluate and compare the performance of the system by varying the Cloud environment, cluster set-up, algorithms and data sizes. Benchmarking was also done on system performance in local machines. Local machine used was dual core machine with 8 GB RAM and 64bit OS. The configuration of the machines on which the analyses were run is as given below:
+The system was deployed in Chameleon cloud platform. The virtual machines used for the analysis had the following configuration:\\  
 
 \subsection{Naive Bayes vs NLTK-Textblob}
-Two different algorithms were used to classify the tweets based on positive, negative or neutral sentiment. Naive Bayes classifier was developed in PySpark and the model was used for the classification task. 
+Two different algorithms were used to classify the tweets based on positive, negative or neutral sentiment. Naive Bayes classifier was developed in PySpark and the saved model was used for the classification task. The model was built on annotated training data and tested on data extracted from Twitter. Textblob module of the NLTK package in Python was also used for classifying the tweets. The performance of both the machine learning models were verified on a common validation set. Table \ref{tab-acc} gives the accuracies of the two models on 10,000 tweets extracted from Twitter and annotated manually. Since Textblob had better accuracy than Naive Bayes classifier, all the analyses were done based on the sentiment scores determined using Textblob. 
+\begin{table}[htb]
+\centering
+\caption{Accuracy of ML models}
+\label{tab-acc}
+\begin{tabular}{@{}cc@{}}
+\toprule
+\textbf{Model}               & \textbf{Accuracy} \\ \midrule
+\textbf{NLTK-Textblob}       & 62.81\%           \\
+\textbf{PySpark-Naive Bayes} & 51.36\%           \\ \bottomrule
+\end{tabular}
+\end{table}
 \subsection{Chameleon}
+Chameleon cloud was one of the three platforms used for deploying the real-time system. The time taken for installation of dependencies and the time taken for execution of the algorithms were recorded. Textblob tweet analyses was done using Python in a single cloud virtual machine. To run this analyses all package dependencies like Pandas, TextBlob, Numpy, Zipcode, matplotlib, nltk and node.js had to be installed in the cluster. Time taken to determine the sentiment score of tweets using textblob is shown in Figure \ref{fig:tbrun}.\\
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth, height = 2     in]{images/tbrun}}
+\caption{Run time of Textblob}
+\label{fig:tbrun}
+\end{figure}
+The Naive Bayes classifier built in PySpark was implemented in multiple nodes within a cloud Virtual machine. To implement this model, Hadoop, Spark and HDFS had to be installed in each of the nodes in the cluster. As clearly seen from the Table \ref{tab-chamtime} PySpark takes longer time to to get executed as compared to Textblob due to the parallel processing of data. Also, the installation of dependencies take significant amount of time as compared to the system execution. Figures \ref{fig:chamstat1}, \ref{fig:chamstat2} and \ref{fig:chamstat3} give the run time of implementing the classifier in a cluster with 1,2 and 3 worker nodes respectively. It can be seen that the run-time decreases with the increase in number of nodes in the cluster. 
+\begin{table}[htb]
+\centering
+\caption{Run time for installation and execution}
+\label{tab-chamtime}
+\begin{tabular}{@{}ccc@{}}
+\toprule
+\textbf{Task}                                                                     & \textbf{Nodes} & \textbf{Runtime} \\ \midrule
+\textbf{\begin{tabular}[c]{@{}c@{}}Installation- \\ Python packages\end{tabular}} & 1              & 31s              \\
+\textbf{Node.js}                                                                  & 1              & 21s              \\
+\textbf{Tweet Pre-processing}                                                     & 1              & 46s              \\
+\textbf{Taxtblob-1000 tweets}                                                     & 1              & 0.21s            \\
+\textbf{PySpark dependencies}                                                     & 3              & 148s             \\
+\textbf{Naive Bayes}                                                              & 3              & 30s              \\ \bottomrule
+\end{tabular}
+\end{table}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth, height = 1.5     in]{images/bm2}}
+\caption{Run time of Naive Bayes in 1-node cluster}
+\label{fig:chamstat1}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth, height = 1.5     in]{images/bm1}}
+\caption{Run time of Naive Bayes in 2-node cluster}
+\label{fig:chamstat2}
+\end{figure}
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth, height = 1.5     in]{images/bm3}}
+\caption{Run time of Naive Bayes in 3-node cluster}
+\label{fig:chamstat3}
+\end{figure}
 \subsubsection{Textbob}
 \subsubsection{Naive Bayes}
 \subsection{Jetstream}
