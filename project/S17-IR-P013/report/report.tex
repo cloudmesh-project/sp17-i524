@@ -1,6 +1,10 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \usepackage{listings}
+
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{framextopmargin=0pt,frame=single}
+
 \journal{i524} 
 
 \title{Weather Data Analysis}
@@ -69,12 +73,12 @@ Following sources has been compiled for weather, natural disaster and geo magnet
 The design of the application is thought of leveraging power of Hadoop as main processing unit of
 analysis with deployment on the cluster environment where application requires multiple processing
 units for execution, database for persistence and visualization tools for graphical outputs.
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/weather_analysis_architecture}}
 \caption{Architecture}
 \label{Reference:false-color}
-\end{figure}
+\end{figure*}
 The project is divided into following steps:
 
 \begin{itemize}
@@ -98,20 +102,22 @@ performance for strong scaling. The report will be represented in tabular format
 
 \section{Data Curation}
 Getting data ready is the very first and basic step for analysis. We have chose NCDC \cite{www-ncdc} as our source of data. NCDC \cite{www-ncdc} exposes few rest apis for accessing weather data. Following will give you a brief understanding on the apis used for getting the required data.
-\begin{itemize}
-\item I) Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.  
-\item II) Data Categories: This groups data into data category like Temperature, Pressure etc. We will consider only few. ( URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories, Attributes : "TEMP" (Air Temperature) , "PRES" (Pressure) , "EVAP" (Evaporation) and "VELOCITY" (Velocity) ). For our project we will be using PRCP, SNOW, TMAX, TMIN and TAVG.
-\item III) Data Types: This group Data Categories into further smaller sub types. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datatypes?datasetid=GSOM\&datacategoryid=TEMP , Attributes : "TAVG" (Average Temperature), "TMAX" (Maximum Temperature) and "TMIN" (Minimum Temperature)    ) Other Data Categories does not have sub type.
-\item IV) Location Categories: This groups data in terms of location. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locationcategories , Attributes : "CITY" , "CLIM\_DIV" (Climate Division), "CLIM\_REG" (Climate Region) , "CNTRY" (Country) ,"ST" (State)). For this project we will be downloading data for India only.
-\item V)  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))  
-\item VI) Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.   
-\item VII)  Data : This collects actual weather data for the given stationId,
+
+\begin{enumerate}
+
+\item Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.  
+\item Data Categories: This groups data into data category like Temperature, Pressure etc. We will consider only few. ( URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories, Attributes : "TEMP" (Air Temperature) , "PRES" (Pressure) , "EVAP" (Evaporation) and "VELOCITY" (Velocity) ). For our project we will be using PRCP, SNOW, TMAX, TMIN and TAVG.
+\item Data Types: This group Data Categories into further smaller sub types. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datatypes?datasetid=GSOM\&datacategoryid=TEMP , Attributes : "TAVG" (Average Temperature), "TMAX" (Maximum Temperature) and "TMIN" (Minimum Temperature)    ) Other Data Categories does not have sub type.
+\item Location Categories: This groups data in terms of location. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locationcategories , Attributes : "CITY" , "CLIM\_DIV" (Climate Division), "CLIM\_REG" (Climate Region) , "CNTRY" (Country) ,"ST" (State)). For this project we will be downloading data for India only.
+\item  Location: Groups data in terms of country, state etc. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/locations?locationcategoryid=CNTRY, Attributes : "FIPS:IN" (INDIA) , "FIPS:IO" (Indian Ocean))  
+\item Station : This collects stations details based on the location id. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?locationid=FIPS:IN , Attributes: ids , mindate and maxdate). All of the stations details will be collected.   
+\item Data : This collects actual weather data for the given stationId,
  startdate and enddate. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/data 
  ?datasetid=GSOM\&stationId=GHCND:IN1NCBC0005
  \&startdate=1970-10-10\&enddate=1971-10-10).
  Since the project only requires only 5 attributes, 
  further filter is applied while invoking the API. The data received will be saved into database. 
-\end{itemize}
+\end{enumerate}
 
 \subsection{Collecting Data}
 NCDC uses token based authentication for security and with each token , no more than 10,000 hits are allowed per day. Well 10,000 seems huge but truly its not. We have targeted one country (India) and 5 attributes chiefly precipitation, snow, maximum temperature, minimum temperature and average temperature for each month. Total number of weather data stations in the country is around 3500 and each station has a data range of 30 to 50 years. This leads to a total of 100,000 hits or more. To handle this, we need to load data incrementally, i.e. the curation program should have the ability to resume the download from the last save point. Before we dive more into logical section , lets first see the technology stack for data collection.
@@ -119,23 +125,25 @@ NCDC uses token based authentication for security and with each token , no more 
 \subsection{Technology Stack}
 We have considered python , Apache thrift and Apache Hbase for data curation step. We will be covering a short introduction of the steps to configure the system, before diving into the core logic of curation. Since we are going to use Apache Hadoop for our analysis purpose, Hbase comes as a natural choice of NoSql database. Java is the default language for both Hadoop and Hbase. So now the question is how to connect to Hbase using python and the solution is Apache Thrift or thrift. Thrift is a library from apache which generates hbase client. Thrift supports many third party languages including python. The following steps will be required to install thrift first.
 \subsubsection{Install Apache Thrift \cite{thrift-python-install}}
-\begin{itemize}
-\item 1) Download Thrift from 
+
+\begin{enumerate}
+\item Download Thrift from 
 "http://redrockdigimark.com/apachemirror/thrift/0.10.0/thrift-0.10.0.tar.gz".
-\item 2) Extract the file and run ./configure.
-\item 3) Execute sudo make install or simply make to generate the binaries.
+\item Extract the file and run ./configure.
+\item Execute sudo make install or simply make to generate the binaries.
  If using make, the thrift binaries has to put into path manually 
  (can be found under compiler/cpp/).
-\item 4) After thrift is available in path , it can be tested by 
+\item After thrift is available in path , it can be tested by 
 running "thrift --version".
-\item 5) Then the python module has to be created to be used within python.
+\item Then the python module has to be created to be used within python.
  To do this download "https://github.com/apache/hbase/blob/master/hbase-thrift/
  src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift" file.
-\item 6) Then execute "thrift --gen py <path/to/Hbase.thrift>". This will 
+\item Then execute "thrift --gen py <path/to/Hbase.thrift>". This will 
 generate "gen-py" folder.
-\item 7) Add this folder to python path by export 
+\item Add this folder to python path by export 
 PYTHONPATH=<path/to>/gen-py/:\$PYTHONPATH.
-\end{itemize}
+\end{enumerate}
+
 For details you can check \href{https://acadgild.com/blog/connecting-hbase-with-python-application-using-thrift-server/}{Installation} steps.Installation of Hbase will be discussed later along with Hadoop.
 Now thrift is ready to use. Execute "/hbase thrift start" to start the thrift server. Hbase has to be started separately.
 \subsubsection{Install Happybase \cite{happybase-install}}
@@ -149,7 +157,8 @@ print connection.tables()
 \end{lstlisting}
 
 \section{Hbase and Table Structure}
-Hbase \cite{hbase} is a column based key-value database. We have considered two tables for weather data `wda\_stations` and `wda\_weather`. The structure of the tables are as follows\newline
+Hbase \cite{hbase} is a column based key-value database. We have considered two tables for weather data `wda\_stations` and `wda\_weather`. The structure of the tables are as follows
+
 \begin{lstlisting}[label=JSON,caption=WDA\_STATIONS Table,breaklines=true]
 [{station-id-key : {
     station : {name : {} , id : {}},
@@ -312,11 +321,11 @@ build the analysis , deploy and run the analysis module. Monitor the progress of
 In the project a separate directory structure is created for deployment.
 This folder consists of some key files and folders. We can dig into the details for each of them in below section.
 
-\begin{itemize}
-\item 1) Inventory.
-\item 2) Playbook.yml.
-\item 3) Roles —> Roles is a directory and we can going to explore the roles used in the project as we proceed.
-\end{itemize}
+\begin{enumerate}
+\item Inventory.
+\item Playbook.yml.
+\item Roles —> Roles is a directory and we can going to explore the roles used in the project as we proceed.
+\end{enumerate}
 
 \subsection{Inventory Configuration}
 
@@ -380,27 +389,27 @@ those needs to be executed on the nodes.
 Current project mentions 4 different task in java. All these task takes care of installing java on the remote node.
 
 Hadoop — Hadoop along with Hbase is the major role. The task file mentioned the below list of task
-\begin{itemize}
-\item 1. Download hadoop.
-\item 2. Extract hadoop.
-\item 3. Set java home/ Hadoop home configuration in bashrc.
-\item 4 Set Java home/Hadoop home path to env.rc
-\item 5. Create and Configure logging file.
-\item 6. Update core-site.xml
-\item 7. Configure slaves
-\item 8. Update other configuration files like core-site.xml, hdfs-site.xml, yarn-site, mapper- site.xml.
-\item 9. Replace hosts.
-\end{itemize}
+\begin{enumerate}
+\item Download hadoop.
+\item Extract hadoop.
+\item Set java home/ Hadoop home configuration in bashrc.
+\item Set Java home/Hadoop home path to env.rc
+\item Create and Configure logging file.
+\item Update core-site.xml
+\item Configure slaves
+\item Update other configuration files like core-site.xml, hdfs-site.xml, yarn-site, mapper- site.xml.
+\item Replace hosts.
+\end{enumerate}
 
 Sources fIle
 
 The sources folder consists of other key folders like
 
-\begin{itemize}
-\item 1. Vars This is yml file which maintains the mapping for placeholder names used in the configuration files.
-\item 2.Meta : This file can contain it dependency roles and other details.
-\item 3. Templates : This contains the template configuration file.
-\end{itemize}
+\begin{enumerate}
+\item Vars This is yml file which maintains the mapping for placeholder names used in the configuration files.
+\item Meta : This file can contain it dependency roles and other details.
+\item Templates : This contains the template configuration file.
+\end{enumerate}
 
 After Hadoop, HBase, Thrift is installed and configured using similar way. You can refer to the main.yml inside the task folder in for the script details.
 
