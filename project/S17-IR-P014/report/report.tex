@@ -542,11 +542,17 @@ and airlines dataset and by using broadcast, the lookup information is
 passed on to all workers and executors within them.
 
 The top ten airlines to avoid are found by computing the total minutes
-of delay per airline over a period of time. The analysis can
-be further improvised by using various Machine Learning techniques
-which helps in predicting the delays over a period of time ahead and
-provides various insights which are helpful in making better decisions
-in choosing airlines and airports to commute.
+of delay per airline over a period of time. Sample output of the
+analysis is shown in figure 4. The analysis can be further improvised
+by using various Machine Learning techniques which helps in predicting
+the delays over a period of time ahead and provides various insights
+which are helpful in making better decisions in choosing airlines and
+airports to commute.
+
+\begin{figure}[ht]
+  \includegraphics[scale=0.40]{images/airlinesAnalysis.eps}
+  \caption{Top ten airlines to avoid}
+\end{figure}
 
 
 \section{Benchmarking}
@@ -569,7 +575,7 @@ running the analysis is found out by determining timestamps both
 before and after running the code, named beforeTime and afterTime
 respectively. The required time is determined by subtracting
 beforeTime from afterTime. Due to Spark's lazy evaluation, the time
-module used is wrapped around the Spark actions. Figure 4 shows the
+module used is wrapped around the Spark actions. Figure 5 shows the
 time, in seconds, taken by the analysis in Jetstream cloud computing
 environment with different dataset sizes.
 
@@ -578,7 +584,7 @@ environment with different dataset sizes.
   \caption{Performance on Jetstream}
 \end{figure}
 
-Figure 5 shows the performance of the analysis on Chameleon cloud
+Figure 6 shows the performance of the analysis on Chameleon cloud
 environment.
 
 \begin{figure}[ht]
@@ -589,7 +595,7 @@ environment.
 As the analyis code, data and packages are installed on the clusters
 through Ansible playbook, the time taken for the automation on
 Chameleon and Jetstream clouds is determined and the values obtained
-on each cloud are compared. The comparison is shown in figure 6.
+on each cloud are compared. The comparison is shown in figure 7.
 
 \begin{figure}[ht]
   \includegraphics[scale=0.50]{images/CcVsJs.eps}
