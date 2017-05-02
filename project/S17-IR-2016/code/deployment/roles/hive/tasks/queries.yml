@@ -1,0 +1,60 @@
+# All the queries are automated in this file
+
+- name: Number of flights that are cancelled
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "SELECT year, month, count(cancelled) as Cancelled-flights
+    FROM Airline
+    WHERE cancelled = 1
+    GROUP BY YEAR, MONTH
+    ORDER BY YEAR, MONTH
+    LIMIT 20" 
+
+- name: Number of flights that are diverted
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c " SELECT year, count(diverted) as Diverted-flights
+    FROM Airline
+    WHERE diverted = 1
+    GROUP BY month
+    ORDER BY month
+    LIMIT 1; "
+
+- name: Effect of flight distance on cancellations
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "SELECT   DISTANCE,   COUNT
+  	   	(CANCELLED)   AS 
+		CANCELLED_COUNT
+		FROM Airline
+		WHERE CANCELLED = 1
+		GROUP BY DISTANCE	
+		ORDER BY CANCELLED_COUNT DESC; "
+
+- name: Effect of flight distance on average departure delay
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "SELECT DISTANCE, AVG(DEP_DELAY) AS AVG_DELAY
+	   	   FROM Airline
+     		   GROUP BY DISTANCE
+      		   ORDER BY AVG_DELAY DESC
+      		   LIMIT 1000; "
+
+
+- name: Monthly average departure delay
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "SELECT MONTH, AVG(DEP_DELAY) AS 
+   	   	   AVG_DELAY
+		   FROM Airline
+     		   GROUP BY MONTH
+      		   ORDER BY MONTH; "
+
+- name: yearly average departure delay
+  sudo: yes
+  sudo_user: postgres
+  command: psql -c "SELECT year, AVG(DEP_DELAY) AS 
+   	   	   AVG_DELAY
+		   FROM Airline
+     		   GROUP BY year
+      		   ; "

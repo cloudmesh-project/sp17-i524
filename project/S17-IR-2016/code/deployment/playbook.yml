@@ -1,1 +1,8 @@
-ok
+---
+- hosts: HiveAnalysis
+  remote_user: root
+  roles:
+    - java
+    - hadoop
+    - hive
+    - postgresql

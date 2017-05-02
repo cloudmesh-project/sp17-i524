@@ -1,0 +1,79 @@
+---
+#downloading the hadoop tar file from the internet
+
+- name: download hadoop tarball
+  get_url:
+    url: 'http://apache.osuosl.org/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz'
+    dest: 'home/cc/hadoop-2.7.1.tar.gz'
+  sudo: yes
+  sudo_user: 'cc'
+
+#extracting the hadoop tar file
+
+- name: extract hadoop tarball
+  command: '/usr/bin/env tar xf hadoop-2.7.1.tar.gz'
+  args:
+    chdir: 'home/cc'
+    creates: 'home/cc/hadoop-2.7.1'
+  sudo: yes
+  sudo_user: 'cc'
+
+#setting java home
+- name: set JAVA_HOME in .bashrc
+  lineinfile:
+    dest: '/home/cc/.bashrc'
+    line: 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle'
+    regexp: '^(# *)?export JAVA_HOME='
+
+- name: set HADOOP_HOME in .bashrc
+  lineinfile:
+    dest: '/home/cc/hadoop-2.7.1/.bashrc'
+    line: 'export HADOOP_HOME=/home/cc/hadoop-2.7.1 '
+    regexp: '^(# *)?export HADOOP_HOME='
+
+- name: add PATH to HADOOP_HOME/bin in .bashrc
+  lineinfile:
+    dest: '/home/cc/.bashrc'
+    line: 'export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin # HADOOP-BIN-PATH'
+    regexp: '# HADOOP-BIN-PATH'
+
+- name: set JAVA_HOME in hadoop-env.sh
+  lineinfile:
+    dest: '/home/cc/hadoop-2.7.1/etc/hadoop/hadoop-env.sh'
+    line: 'export JAVA_HOME=/usr/lib/jvm/java-8-oracle'
+    regexp: '^(# *)?export JAVA_HOME='
+
+- name: create hadoop log directory
+  file:
+    path: '/home/cc/hadoop-2.7.1/log/hadoop'
+    state: directory
+    owner: 'cc'
+    group: 'cc'
+
+- name: set hadoop log directory in hadoop-env.sh
+  lineinfile:
+    dest: '/home/cc/hadoop-2.7.1/etc/hadoop/hadoop-env.sh'
+    line: 'export HADOOP_LOG_DIR=home/cc/hadoop-2.7.1/log/hadoop'
+    regexp: '^(# *)?export HADOOP_LOG_DIR='
+
+- name: configure hadoop
+  template:
+    src: 'core-site.xml'
+    dest: 'home/cc/hadoop-2.7.1/etc/hadoop/core-site.xml'
+    owner: 'cc'
+    group: 'cc'
+
+- name: configure slaves
+  template:
+    src: 'slaves.j2'
+    dest: '/home/cc/hadoop-2.7.1/etc/hadoop/slaves'
+    owner: 'cc'
+    group: 'cc'
+
+- name: Add the service scripts
+  template: src='slaves.j2' dest='/home/cc/hadoop-2.7.1/etc/hadoop/slaves' owner=cc group=cc
+  with_items:
+    - {src: "core-site.xml", dest: "/home/cc/hadoop-2.7.1/etc/hadoop/core-site.xml"}
+    - {src: "hdfs-site.xml", dest: "/home/cc/hadoop-2.7.1/etc/hadoop/hdfs-site.xml"}
+    - {src: "yarn-site.xml", dest: "/home/cc/hadoop-2.7.1/etc/hadoop/yarn-site.xml"}
+    - {src: "mapred-site.xml", dest: "/home/cc/hadoop-2.7.1/etc/hadoop/mapred-site.xml"}
