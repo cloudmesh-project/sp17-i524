@@ -1,3 +1,6 @@
+compile:
+	python all.py
+
 all:
 	python projects.py > projects.tex
 	pdflatex projects
