@@ -1,37 +1,37 @@
 ---
-#- name: add nodejs GPG key into apt
-#  apt_key:
-#    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
-#    id: "68576280"
-#    state: present
-#  become: yes
-#  tags:
-#  - nodejs
+- name: add nodejs GPG key into apt
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+    id: "68576280"
+    state: present
+  become: yes
+  tags:
+  - nodejs
 
-#- name: add nodejs repository
-#  apt_repository:
-#    repo: "deb https://deb.nodesource.com/node_{{nodejs_version}} wheezy main"
-#    state: present
-#  become: yes
-#  register: nodejs_repo_added
-#  tags:
-#  - nodejs
+- name: add nodejs repository
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_{{nodejs_version}} wheezy main"
+    state: present
+  become: yes
+  register: nodejs_repo_added
+  tags:
+  - nodejs
 
-#- name: apt update cache
-#  apt:
-#    update_cache: yes
-#  become: yes
-#  when: nodejs_repo_added.changed
-#  tags:
-#  - nodejs
+- name: apt update cache
+  apt:
+    update_cache: yes
+  become: yes
+  when: nodejs_repo_added.changed
+  tags:
+  - nodejs
 
-#- name: install nodejs package
-#  apt:
-#    pkg: nodejs
-#    state: present
-#  become: yes
-#  tags:
-#  - nodejs
+- name: install nodejs package
+  apt:
+    pkg: nodejs
+    state: present
+  become: yes
+  tags:
+  - nodejs
 
 - name: install build_essentials
   apt: name={{item}} state=present update_cache=yes
@@ -57,35 +57,18 @@
     pip install tweepy
     pip install wordcloud
 
-#- name: install git       
-#  apt: name=git state=present update_cache=yes
-#  become: yes
-
-#- name: cloning twitter nodejs server directory
-#  become_user: root
-#  command: git clone https://github.com/sriramsitharaman/twitter-geo-server-js
-
-#- name: cloning d3js realtime twitter directory
-#  become_user: root
-#  command: git clone https://github.com/sriramsitharaman/d3-twitter-geo-stream
-
-#- name: clone the final vis repo
-#  become_user: root
-#  command: git clone https://github.com/sriramsitharaman/visualization
-
-- name: Go to the d3js directory and start a python server
-  sudo: yes
-  shell: chdir=/home/cc/d3-twitter-geo-stream /usr/bin/python -m SimpleHTTPServer 1234 &
-  async: 80
-  poll: 5
-
-- name: going into nodejs dir and installing npm 
+- name: install git       
+  apt: name=git state=present update_cache=yes
   become: yes
-  shell: chdir=/home/cc/twitter-geo-server-js {{item}}
-  with_items:
-  - npm install
-  - /usr/bin/node server.js -p=5025 &
 
-- name: going into vis folder and starting a server
-  become: yes
-  shell: chdir=/home/cc/visualization/Final /usr/bin/python -m SimpleHTTPServer 1240 &
+- name: cloning twitter nodejs server directory
+  become_user: root
+  command: git clone https://github.com/sriramsitharaman/twitter-geo-server-js
+
+- name: cloning d3js realtime twitter directory
+  become_user: root
+  command: git clone https://github.com/sriramsitharaman/d3-twitter-geo-stream
+
+- name: clone the final vis repo
+  become_user: root
+  command: git clone https://github.com/sriramsitharaman/visualization
