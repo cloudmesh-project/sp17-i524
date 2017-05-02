@@ -330,7 +330,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \setboolean{shortarticle}{false}
 \setboolean{displaycopyright}{true}
 \dates{Compiled \today}
-\doi{Report: \url{http://...}\\ Repository: \url{http://...}}
+\doi{Report: \url{http:...}\\ Repository: \url{http:...}}
 
 %% TODO
 \usepackage[colorinlistoftodos,prependcaption,textsize=normal]{todonotes}
