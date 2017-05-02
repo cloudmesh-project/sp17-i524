@@ -146,12 +146,15 @@ The performance of application was tested on the speed and latency while data in
   
 %\begin{left}
 \caption{\bf VM Configuration}
-\begin{tabular}{ m{5em} m{2cm} m{2cm} } 
+\begin{tabular}{ m{5em} m{2.25cm} m{2.25cm} } 
 \hline
 Cloud & Chameleon & Jetstream \\ 
 Image & Ubuntu-Server-14.04-LTS & ubuntu-14.04-trusty-server-cloudimg \\ 
-Group & pearth & pearth \\ 
+OS & Ubuntu 14.04 & Ubuntu 14.04 \\ 
+RAM CPU (Cores) & 2 GB & 2 GB \\ 
+HDD Size & 20 GB & 20 GB \\ 
 Flavour & m1.small & m1.small \\ 
+Group & pearth & pearth \\ 
 Assign Floating IP & True & True \\ 
 
 \hline
@@ -196,6 +199,26 @@ Performance tests are included in the python scripts themselves. As the scripts 
 \end{figure}
 
 \section {Result And Analysis}
+
+Table 3 shows the time taken to run ansible playbook successfully on various environments. It took maximum time to deploy the application on jetstream. Possible reason could be slow network connectivity.
+
+\begin{table}[htbp]
+%\begin{left}
+\caption{\bf Time taken for Deployment}
+\begin{tabular}{ m{6em} m{2.5cm} } 
+\hline
+Environment & Time (hh:mm:ss) \\ 
+\hline
+Local VM & 00:07:35 \\ 
+Chameleon & 00:08:12 \\
+Jetstream & 00:10:08 \\
+
+\hline
+\end{tabular}
+%\end{left}
+\end{table} 
+
+
 
 Figure \ref{fig:figure1} shows default page showing application usage. Output of K-Means clustering of magnitude and depth data is given in Figure 5. Figure 6 shows a closer look at scatter plot. Figure 7 is the output of DBSCAN clustering of earthquake locations. Both the graphs are interactive. On the 'Magnitude and Depth' graph one can choose one or more clusters. Mouse hover shows magnitude  and its corresponding depth. The 'Earthquake locations' globe shows lat-long information on mouse hover. The user can rotate the globe with mouse key press.
 
