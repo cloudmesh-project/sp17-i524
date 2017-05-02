@@ -1,0 +1,21 @@
+---
+- name: Go to the d3js directory and start a python server
+  sudo: yes
+  shell: chdir=/home/cc/d3-twitter-geo-stream /usr/bin/python -m SimpleHTTPServer 1234 &
+  async: 80
+  poll: 5
+
+- name: going into nodejs dir and installing npm 
+  become: yes
+  shell: chdir=/home/cc/twitter-geo-server-js {{item}}
+  with_items:
+  - npm install
+  - /usr/bin/node server.js -p=5025 &
+
+- name: going into vis folder and starting a server
+  become: yes
+  shell: chdir=/home/cc/visualization/Final /usr/bin/python -m SimpleHTTPServer 1240 &
+  
+- name: starting the python code
+  become: yes
+  shell: chdir=/home/cc/visualization/ /usr/bin/python FinalScript.py
