@@ -49,6 +49,7 @@ development at Twitter.
 
 \begin{document}
 
+\appendix
 \maketitle
 
 \tableofcontents
@@ -73,17 +74,21 @@ deployment:
   deployed on large clusters, and hardware components can fail.  The
   Storm cluster must continue processing existing topologies with a
   minimal performance impact.
-\item Extensible : Storm topologies may call arbitrary external functions
-  (e.g. looking up a MySQL service for the social graph), \cite{bronson2013tao} and
-  thus needs a framework that allows extensibility.
+\item Extensible : Storm topologies may call arbitrary external
+  functions (e.g. looking up a MySQL service for the social graph),
+  \cite{bronson2013tao} and thus needs a framework that allows
+  extensibility.
 \item  Efficient : Since Storm is used in
   real-time applications, it must have good performance
   characteristics. Storm uses a number of techniques, including
   keeping all its storage and computational data structures in memory.
-\item Easy to Administer : A critical part of storm features or development is that it should be easy to administer. Given that there a lot of computations going on at every stage, tools should be developed which warn the user and development team of any major conflicts arising.
+\item Easy to Administer : A critical part of storm features or
+  development is that it should be easy to administer. Given that
+  there a lot of computations going on at every stage, tools should be
+  developed which warn the user and development team of any major
+  conflicts arising.
 \end{enumerate}
 
-\section{Why Storm ?}
 
 \section{Data Model and Architecture}
 Storm data processing architecture consists of streams of tuples
@@ -98,7 +103,7 @@ Note that a Storm topology can have cycles. From the database systems
 perspective, one can think of a topology as a directed graph of
 operators.
 \begin{figure}
-  \includegraphics[width=\linewidth]{apache-storm.png}
+  \includegraphics[width=\linewidth]{images/apache-storm.png}
   \caption{Storm Architecture}
   \label{Storm Architecture}
 \end{figure}
@@ -129,11 +134,10 @@ Storm supports the following types of partitioning strategies \cite{storm}:
 \item Shuffle grouping, which randomly partitions the tuples.
 \item Fields grouping, which hashes on a subset of the tuple
   attributes or fields.
-\item All grouping, which replicates the entire stream to all the consumer
-tasks.
-\item Global grouping, which sends the entire stream to a single
-  bolt.
-\item Local grouping, which sends tuples to the consumer bolts in the 
+\item All grouping, which replicates the entire stream to all the
+  consumer tasks.
+\item Global grouping, which sends the entire stream to a single bolt.
+\item Local grouping, which sends tuples to the consumer bolts in the
   same executor.
   
 \end{enumerate}
@@ -282,7 +286,7 @@ which are:
 
   
 \section{Deployment Automation}
-\subsection{Ansible}
+\subsection{Automation with Ansible}
 Ansible Playbook is used as the application and configuration
 deployment tool. Deploying the hadoop and spark framework into the
 cluster environment. Ansible will help push configurations to the
@@ -290,7 +294,10 @@ environment automatically based on playbooks written for various
 configurations. For this project, we used Ansible to automate the
 deployment of storm, zookeeper and other prequisites. The Ansible
 script is written such that we can leverage the cloudmesh client
-technology to deploy the spark cluster.
+technology to deploy the spark cluster. When creating Zookeeper
+cluster we had a communication issue, similar issue was found when
+creating a Storm cluster, we resolved this issue by uploading a
+secgroup with the details necessary and added it to the cluster.
 
 The Ansible playbook package constitutes the following files.
 \begin{itemize}
@@ -316,13 +323,18 @@ The Ansible playbook package constitutes the following files.
 
 \item nimbus.sh: This script is intended to start the nimbus node to
   receive all the packets(data) for processing.
-\item startStorm.sh: This starts the storm cluster .
+\item startStorm.sh: This starts the storm cluster.
+\item submit.sh Used to submit jobs to run, in the storm cluster.
 \item start-zookeeper.yml: This file is still in developmental stage
   where we want to automate the above two steps, however, there is a
   small problem in exiting the storm cluster after once it has
   started. We are working on it to fix this.
-\item supervisor.sh
-\item ui.sh:
+\item supervisor.sh: This script file is used to start the worker
+  nodes on which the data processing can run
+\item ui.sh: Running this script file will open the localhost, where
+  we can view the current jobs running, topologies, cluster
+  information, spouts, bolts, etc. Sample screenshots showing the
+  working of this are shown in the benchmarking figures.
 \item In the templates folder, we have hosts.j2, myid.j2,
   storm.yaml.j2, zoo.cfg.j2, these files are necessary for proper
   deployment of storm and zookeeper cluster, so we created templates
@@ -373,42 +385,71 @@ we benchmarked our results on various cluster sizes.
 \section{Benchmarking}
 \subsection{Chameleon Cloud}
 Following are the results of our benchmarking on deploying the storm
-cluster on Chameleon cloud. Few things, we noticed that a 3node
+cluster on Chameleon cloud. Few things, we noticed that a 3-node
 cluster is not viable for running storm jobs and hence we ran all our
-jobs on 5nodes or above clusters. We ran a sample-storm job on a 5node
+jobs on 5-nodes or above clusters, this was one error we came across
+when we tried deploying a 3-node cluster and overcame this by
+following code blogs related to troubleshooting mentioned in the code
+references and solved the issue. We ran a sample-storm job on a 5node
 cluster to see if its working, following are the snapshots where in we
 can see the UI of storm, showing all the resources used among many
 other things. Similar tests were made on a 7-node and a 9-node cluster
 and results were stored in a log page.
 
 
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Hardware Specifications of Chameleon}
+
+ \begin{tabular} {| c | c |}
+\hline
+  & Chameleon   \\ [0.5ex] 
+ \hline
+
+    
+CPU   & Xeon X5550  \\
+ \hline
+cores & 1008   \\
+ \hline
+speed & 2.3GHz \\
+ \hline
+RAM   & 5376GB  \\
+ \hline
+storage & 1.5PB  \\ [1ex] 
+ \hline
+
+\end{tabular}
+  \label{tab:cloud-comparison}
+\end{table}
+
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{bench-1.png}
+  \includegraphics[width=\linewidth]{images/bench-1.png}
   \caption{Index Page}
   \label{Index Page}
 \end{figure}
 
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{bench-2.png}
+  \includegraphics[width=\linewidth]{images/bench-2.png}
   \caption{Sample Topology on a 5-node cluster }
   \label{Sample Topology on a 5-node cluster}
 \end{figure}
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{bench-3.png}
+  \includegraphics[width=\linewidth]{images/bench-3.png}
   \caption{Worker nodes and description on a 5-node cluster }
   \label{Worker nodes and description on a 5-node cluster}
 \end{figure}
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{bench-4.png}
+  \includegraphics[width=\linewidth]{images/bench-4.png}
   \caption{Toplogy Summer on a 5-node cluster }
   \label{Topology summary on a 5-node cluster}
 \end{figure}
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{bench-4.png}
+  \includegraphics[width=\linewidth]{images/bench-5.png}
   \caption{Spouts and bolts summary on a 5-node cluster }
   \label{Spouts and bolts summary on a 5-node cluster}
 \end{figure}
@@ -419,14 +460,14 @@ Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node clus
 
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{table-1.png}
+  \includegraphics[width=\linewidth]{images/table-1.png}
   \caption{Table showing the time taken to deploy }
   \label{Table showing the time taken to deploy}
 \end{figure}
 
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{bar-1.png}
+  \includegraphics[width=\linewidth]{images/bar-1.png}
   \caption{Bar diagram to compare the time taken to deploy }
   \label{Bar diagram to compare the time taken to deploy}
 \end{figure}
@@ -462,11 +503,17 @@ We have created, tested and demonstrated a fully automated program to
 configure and deploy a Storm cluster which can be deployed on cloud
 environments. We currently deployed it on Chameleon cloud and expect
 to do the same with any other cloud environment with slight changes in
-the ansible script. We used a combination of Python, bash, cloudmesh
-client and ansible in fully deploying the cluster. We did a benchmark
-test on Chameleon cloud to measure the time taken to deploy 5, 7 and 9
-node clusters, so far it has shown satisfactory results and we are
-striving to take it beyond to other cloud environments as well.
+the ansible script.Also, another thing we observed while deploying a
+Zookeeper cluster that installing it in standalone mode makes it prone
+to breakdown, since if the Zookeeper cluster fails in this scenario,
+the entire storm cluster fails to run, however installing it on server
+mode leads to the scenario where in if one or more clusters fail to
+run, the load is handled by the other nodes in the cluster. We used a
+combination of Python, bash, cloudmesh client and ansible in fully
+deploying the cluster. We did a benchmark test on Chameleon cloud to
+measure the time taken to deploy 5, 7 and 9 node clusters, so far it
+has shown satisfactory results and we are striving to take it beyond
+to other cloud environments as well.
 
 \section{Acknowledgments}
 This project was a part of the Big Data Software and Projects

@@ -1,0 +1,16 @@
+tickTime = 2000
+
+dataDir = /home/{{user}}/zookeeper-3.4.10/data
+dataLogDir = /home/{{user}}/zookeeper-3.4.10/logs
+
+clientPort = 2181
+initLimit = 10
+syncLimit = 5
+
+{% for server in groups['chameleon'] %}
+{% if server == inventory_hostname %}
+server.{{ loop.index }}=0.0.0.0:2888:3888
+{% else %}
+server.{{ loop.index }}={{ hostvars[server]['ansible_host'] }}:2888:3888
+{% endif %}
+{% endfor %}
