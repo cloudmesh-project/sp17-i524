@@ -1,0 +1,27 @@
+---
+- hosts: cham_cloud #comment: apache is the group name we just defined
+  become: yes #comment: this operation needs privilege access
+  tasks:
+    - copy:
+        src: /home/harshit/Downloads/DelayedFlights.csv
+        dest: /home/hadoop/DelayedFlights.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+
+    - copy:
+        src: /home/harshit/Downloads/airports.csv
+        dest: /home/hadoop/airports.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+
+    - copy:
+        src: /home/harshit/pig_program
+        dest: /home/hadoop/pig_program
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+
+
+

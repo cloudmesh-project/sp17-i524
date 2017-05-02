@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{Flight Price Prediction}
+\title{Aviation Data Analysis Using Apache Pig}
 
 \author[1,*]{Harshit Krishnakumar}
 \author[2]{Karthik Anbazhagan}
@@ -12,16 +12,16 @@
 
 \affil[*]{Corresponding authors: harkrish@iu.edu, kartanba@iu.edu}
 
-\dates{project-001, \today}
+\dates{Project-002, \today}
 
-\ociscodes{big data, apache hive}
+\ociscodes{big data, Apache Pig, Apache Hadoop, Chameleon Cloud, Avaiation Analysis}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/sp17-i524/project/S17-IR-P002/report/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IR-P002/report/report.pdf}}
 
 
 \begin{abstract}
-This project aims at tracking live flight status and flight pricing in the US. Live flight data streams are obtained using Python APIs and stored in Big Data Hadoop Distributed File Systems. This paper explores the use of Apache Hive to store data streams and analyse the data. The analyses will be presented in real time using d3.js.
+Data science is a challenging field which gives actionable insights into data, enabling businesses to take instant decisions. Big data techniques help and accelerate the analysis of data in real time. Big Data can be used to monitor things as diverse as flight data, traffic data, and financial transactions. With huge increase in the volume of air travel and drastic weather changes, flights delays and cancellation are on the rise. This project aims at tracking the aviation data and providing a list of the busiest airports by total flight traffic across the US. The system has been deployed in chameleon cloud platform. Apache Pig deployed on a Hadoop cluster is used to join multiple features across massive datasets to query and analyse the data across a Distributed File System.\\
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -36,7 +36,12 @@ This project aims at tracking live flight status and flight pricing in the US. L
 \maketitle
 
 \section{Introduction}
-Air travel is getting increasingly popular with the airlines providing cheaper fares and better services. More often, customers tend to look for flights in the last minute, which is exploited by third party vendors who look to gain more profits in the rush hour. Skyscanner is a travel fare aggregator website and travel metasearch engine which helps users find the lowest rates from multiple travel sites, as well as instant comparisons for hotels and car hire removing the need for customers to search across different airlines for prices \cite{paper-jansen}. \\
+Air travel is getting increasingly popular with the airlines providing cheaper fares and better services. However, owing to the increased congestion in traffic during and ever fluctuating weather conditions, there are a lot of cancellations and delays that happen to the flights. Cancellations tend to be costly for airline companies and pose difficulties for the customers who might have appointments or connecting flights. In the United States, we know that the December holiday period is the most busy time for airlines, and also owing to winter weather, it is the term where most of the cancellations occur. 
+
+The current project aims to deploy a Hadoop cluster with three nodes, run analysis on large data files related to airline cancellations and delays using Pig Scripts and benchmark the performance of the clusters for various data sizes and cluster configurations. We utilize Chameleon cloud to run the Hadoop cluster. 
+
+
+Skyscanner is a travel fare aggregator website and travel metasearch engine which helps users find the lowest rates from multiple travel sites, as well as instant comparisons for hotels and car hire removing the need for customers to search across different airlines for prices \cite{paper-jansen}. \\
 
 A metasearch engine (or aggregator) is a search tool that uses another search engine's data to produce their own results from the Internet \cite{book-sandy}. Metasearch \cite{conf-metasearch} engines take input from a user and simultaneously send out queries to third party search engines for results. Sufficient data is gathered, formatted by their ranks and presented to the users. The Skyscanner Live Pricing allows developers to access live pricing information on prices for different flights, by making requests to the Live Pricing API. \\
 
@@ -56,6 +61,148 @@ The schedule for completion of this project has been outlined below:
 \item {Apr 10-Apr 16, 2017} Presenting the work in D3.Js in real-time as a visualization of the analysis 
 \item {Apr 17-Apr 23, 2017} Complete the Project Report
 \end{enumerate}
+
+\section{Hadoop Deployment}
+The deployment was done from an Ubuntu14.04 instance running on Oracle Virtual Box. Hadoop instance with three nodes was deployed on Chameleon cloud using Cloudmesh Client was used to automatically create the cluster and deploy Hadoop software with Pig and Spark addons. Three virtual machines with Ubuntu14.04 version were installed on Chameleon Cloud, and Hadoop along with Pig and Spark addons was deployed to the clouds with one name node and two data nodes. 
+
+\section{Cluster Configurations}
+Hadoop was deployed on a cluster with three nodes. Three virtual machines were created on Chameleon Cloud for this purpose, with one instance as namenode (master) and rest of the instances as datanodes (slaves). All the three virtual machines were created with Ubuntu14.04 OS. Each of the vms had 20 GB space, with 2GB ram and one CPU. This configuration is called the "small" flavour in Chameleon Cloud. Each vm was assigned a separate floating public IP which could be used to SSH and connect. 
+
+\section{Ansible Playbook}
+Ansible was installed in the oracle virtual box and configured to automatically perform file transfers and to run Pig code on the cluster. All our interactions are with the namenode of  Hadoop, so the public IP of the namenode of our installation was given in the hosts file of Ansible for all purposes. 
+
+Five Ansible Playbooks were setup, each with the following purposes:
+
+\begin{enumerate}
+    \item Transfer data and Pig Script files to namenode from local location
+    \item Transfer data files to hdfs location on namenode using \textit{hdfs dfs} command
+    \item Run pig code using \textit{pig <any\_pig\_script>} shell command on the name node
+    \item Transfer the output files from hdfs back to namenode 
+    \item Transfer output files to local location
+\end{enumerate}
+
+Each of these would run on the locations mentioned in hosts file on usernames CC and hadoop, which were the default users created by cloudmesh client. 
+\section{Airline Analysis}
+\subsection{Datasets}
+The current project focuses on analysing flight cancellations and delays data to find trends. The dataset is taken from the US Department of Transportation's Bureau of Statistics. Their website releases monthly air travel statistics and summary report of all the flights information of previous month. Along with this report, they release the raw data which is openly available to be downloaded and analysed. The two datasets we use are taken from the raw data provided in the website. A brief description about the datasets is given below.
+\begin{enumerate}
+    \item \textbf{Delayed Flights} contains information about all the cancelled or delayed flights ranging across the years 1987 to 2008. It has 29 columns which are described in the Table 1.
+    
+    \begin{table}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Column Name} & \textbf{Description} \\ \hline
+        Year & 1987-2008  \\ \hline
+        Month & 1-12  \\ \hline
+        DayofMonth & 1-31  \\ \hline
+        DayOfWeek & 1 (Monday) - 7 (Sunday)  \\ \hline
+        DepTime & actual departure time   \\ \hline    
+        CRSDepTime & scheduled departure time  \\ \hline
+        ArrTime & actual arrival time \\ \hline
+        CRSArrTime & scheduled arrival time  \\ \hline
+        UniqueCarrier & unique carrier code  \\ \hline
+        FlightNum & flight number  \\ \hline
+        TailNum & plane tail number  \\ \hline
+        ActualElapsedTime & in minutes  \\ \hline
+        CRSElapsedTime & in minutes  \\ \hline
+        AirTime & in minutes  \\ \hline
+        ArrDelay & arrival delay in minutes  \\ \hline
+        DepDelay & departure delay in minutes  \\ \hline
+        Origin & origin IATA airport code  \\ \hline
+        Dest & destination IATA airport code  \\ \hline
+        Distance & in miles  \\ \hline
+        TaxiIn & taxi in time, in minutes  \\ \hline
+        TaxiOut & taxi out time in minutes  \\ \hline
+        Cancelled & was the flight cancelled?  \\ \hline
+        CancellationCode & reason for cancellation  \\ \hline
+        Diverted & 1 = yes, 0 = no  \\ \hline
+        CarrierDelay & in minutes  \\ \hline
+        WeatherDelay & in minutes  \\ \hline
+        NASDelay & in minutes  \\ \hline
+        SecurityDelay & in minutes  \\ \hline
+        LateAircraftDelay & in minutes  \\ \hline
+
+    \end{tabular}
+    \caption{Delayed Flights Column Information}
+    \end{table}
+    \item \textbf{Airports} is a reference dataset, which gives the airport names and locatons. The column description is shown in the Table 2.
+    
+    \begin{table}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Column Name} & \textbf{Description} \\ \hline
+        iata & Airport Code  \\ \hline
+        airport & Airport Name  \\ \hline
+        city & Airport City  \\ \hline
+        state & State Code  \\ \hline
+        country & Country Code  \\ \hline
+        lat & Lattitude  \\ \hline
+    long & Longitude  \\ \hline
+    \end{tabular}
+    \caption{Airports Column Information}
+    \end{table}
+    
+\end{enumerate}
+The Delayed Flights dataset is around 250 mb in size and the airports dataset is around 250 kb since it is reference data.
+\subsection{Pig Script}
+Pig installation runs on the Hadoop hdfs system. The script needed for this analysis was based out of the idea from the blog post written by Sumit Anand [\url{https://acadgild.com/blog/aviation-data-analysis-using-apache-pig/}]. It takes the two datasets, performs basic joins, orders the rows and returns top five airports which cause most delays in all the years. This script was run on the namenode on Pig hadoop mode, with the input files given from hdfs dfs locations. This script analyses the data and outputs into hdfs location. The codes are written in Pig Latin language and can be run in Pig grunt shell. 
+
+\section{Benchmarking}
+Benchmarking is a process in software development which allows developers to determine the performance of their systems. This can be done for multiple reasons including looking for improvements and future planning. The basic requirements of a benchmark are that the environmental conditions of test should be same each time it is run, and the test should be repeatable. 
+
+The current paper presents multiple levels of benchmarking, starting from the time taken to deploy Hadoop cluster with three nodes, the time taken to move files from local to namenode and hdfs, time taken to run the pig code and time taken to move files from hdfs to namenode and local. Deployment of Hadoop cluster is done using Cloudmesh Client, and the rest of the tasks are done using Ansible. For all Ansibls steps, there are individual playbook files which can be called from separate Ansible commands. Each of these steps has been timed using Ubuntu Shell's "\textit{time}" command. 
+
+Excluding the time taken to download, install and configure Cloudmesh Client, the time taken to create three vms with the "small" configuration, deploy Hadoop with three nodes, Spark and Pig addons is 8 minutes 46 seconds. This deployment was done from Oracle Virtual Box with a ram capacity of 8 GB. 
+
+The experiment was performed on the entire dataset, and the tests were repeated with 50\% and 25\% of the data. The results of the benchmarking tests are given in the tables 3, 4 and 5.
+
+\begin{table}[h!]
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Task} & \textbf{Time Taken} \\ \hline
+Copy Data to cloud & 1 min 33 sec  \\ \hline
+Copy Data to HDFS & 23 sec  \\ \hline
+run pig script & 3min 1 sec  \\ \hline
+Copy output to cloud & 25 sec  \\ \hline
+Copy output to local & 17 sec  \\ \hline
+\end{tabular}
+\caption{Benchmark Results for the entire data}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Task} & \textbf{Time Taken} \\ \hline
+Copy Data to cloud & 54 sec  \\ \hline
+Copy Data to HDFS & 20 sec  \\ \hline
+run pig script & 1 min 55 sec  \\ \hline
+Copy output to cloud & 24 sec  \\ \hline
+Copy output to local & 16 sec  \\ \hline
+\end{tabular}
+\caption{Benchmark Results for the 50\% of the data}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Task} & \textbf{Time Taken} \\ \hline
+Copy Data to cloud & 27 sec  \\ \hline
+Copy Data to HDFS & 19 sec  \\ \hline
+run pig script & 1 min 6 sec  \\ \hline
+Copy output to cloud & 22 sec  \\ \hline
+Copy output to local & 17 sec  \\ \hline
+\end{tabular}
+\caption{Benchmark Results for the 25\% of the data}
+\end{table}
+
+\section{Summary}
+Airline industry is rapidly growing as the customers who take flights are increasing. Considering this trend, the cancellations and delays come into focus. It is imperative that Big Data technologies are deployed in this sector for quick results. This project aims at using Hadoop and Pig to run a basic analysis on Flight Delays data and benckmark the clouds' performance. 
+
+As we can see from the benchmark results, there is a drastic decrease in the first three steps (copy data to cloud, copy data to hdfs and run pig script) when the input file size is decreased. This is expected since there is less data for Hadoop to crunch. However in each of these cases, the output is top 3 airports, which is a textfile with three records. Thus we do not see much of a change in the time to copy the output (last two steps).
+
+Overall, the time taken to run this entire process starting from copying data to namenode to getting output to local is taking less than 6 minutes for the entire dataset. Keeping in mind that our benchmark was for the "small" flavor of Chameleon Cloud (2GB ram) this is a good score, and if the cluster is vertically or horizontally scaled up, this analysis will yield results quicker. In order to take full advantage of Hadoop's parallel processing capabilities, it would be ideal if the number of nodes in the cluster were increased (horizontal scaling).
+
+
 
 \section*{Acknowledgements}
 
