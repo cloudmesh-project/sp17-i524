@@ -14,6 +14,6 @@ github: "lmundia"
 
 report: "report.pdf"
 
-proposal: "report.pdf"
+proposal: "proposal.pdf"
 
 --------------------------------------------------------------------------------
