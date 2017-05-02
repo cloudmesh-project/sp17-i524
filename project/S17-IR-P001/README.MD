@@ -44,7 +44,7 @@ The following modifications have to be made to run the bechmarks
 ..* code/ansible/chameleon_ben1 obtains the benchmark for running the code in "cluster mode" using YARN on a 3 node spark cluster. 
 ..* code/ansible/chameleon_ben2 has the role to run spark in standalone mode with one worker node. 
 ..* code/ansible/chameleon_ben3 has the role to run spark in standalone mode with one worker node. 
-..* Hadoop and spark jobs can be viewed in the web UI interface. While running spark in cluster mode, the application can be viewd in http://<ip_address>:8088/cluster/cluster where <ip_address> is the ip of the floating ip of the virtual machine.
+..* Hadoop and spark jobs can be viewed in the web UI interface. While running spark in cluster mode, the application can be viewed in http://<ip_address>:8088/cluster/cluster where <ip_address> is the ip of the floating ip of the virtual machine.
 
 ..*For running spark jobs in standalone mode, the master and the slave must be started manually which had been included in the ansible code. However, the URL of the master may vary depending on the system started. In order to run the role in code/ansible/chameleon_ben2 and code/ansible/chameleon_ben3 , The master URL must be changed. The portion of code to be change is commented in each file(main.yml). An example s shown below. 
 ```
