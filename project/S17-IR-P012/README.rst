@@ -1,19 +1,23 @@
 :orphan:
 
-submitted: "2017-03-13"
+title: "Optical Character Recognition"
+
+project_url: https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P012
+
+submitted: "2017-04-24"
 
 author: "Saber Sheybani,Sushmita Sivaprasad" 
         
-hid: "S17-ER-1001,S17-IR-2038"
+hid: "S17-ER-1001, S17-IR-2038"
 
 pid: "S17-IR-P012"
 
-github: "ssheybani"
+github: "ssheybani, SushmitaSivaprasad"
 
 report: "report.pdf"
 
-proposal: "report.pdf"
+proposal: "proposal.pdf"
 
-title: "OpticalCharacterRecognition"
+code_repo_url: https://github.com/cloudmesh/cloudmesh.ocr
 
 --------------------------------------------------------------------------------
