@@ -97,7 +97,7 @@ performance for strong scaling. The report will be represented in tabular format
 
 
 \section{Data Curation}
-Getting data ready is the very first and basic step for analysis. We have chose NCDC as our source of data. NCDC exposes few rest apis for accessing weather data. Following will give you a brief understanding on the apis used for getting the required data.
+Getting data ready is the very first and basic step for analysis. We have chose NCDC \cite{www-ncdc} as our source of data. NCDC \cite{www-ncdc} exposes few rest apis for accessing weather data. Following will give you a brief understanding on the apis used for getting the required data.
 \begin{itemize}
 \item I) Datasets : This groups data into monthly daily , yearly pattern. There are eleven different datasets. We will be choosing GSOM (Global Summary Of Monthly) as our primary datasets. (URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets ,Attributes : GSOM). For this project we will use GSOM only.  
 \item II) Data Categories: This groups data into data category like Temperature, Pressure etc. We will consider only few. ( URL : https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories, Attributes : "TEMP" (Air Temperature) , "PRES" (Pressure) , "EVAP" (Evaporation) and "VELOCITY" (Velocity) ). For our project we will be using PRCP, SNOW, TMAX, TMIN and TAVG.
