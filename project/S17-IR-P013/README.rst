@@ -15,3 +15,6 @@ report: "report.pdf"
 proposal: "proposal.pdf"
 
 --------------------------------------------------------------------------------
+
+WARNING: THIS PROJECT HAS PREVIOUSLY USED INSECURE KEY MANAGEMENT AND
+WE DO NOT RECOMMEND THAT YOU EXECUTE OR LEVERAGE FROM.
