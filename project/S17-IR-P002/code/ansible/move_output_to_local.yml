@@ -1,0 +1,11 @@
+---
+- hosts: cham_cloud #comment: apache is the group name we just defined
+  become: yes #comment: this operation needs privilege access
+  tasks:
+    - fetch:
+        src: /home/hadoop/harshit_output/part-r-00000
+        dest: /home/harshit/Downloads/part-r-00000
+        owner: harshit
+        group: harshit
+        mode: 0644
+

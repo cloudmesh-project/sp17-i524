@@ -1,0 +1,11 @@
+---
+- hosts: cham_cloud #comment: apache is the group name we just defined
+  become: yes
+  become_user: hadoop
+  tasks:
+    - name: Put Delayed Flights to HDFS
+      shell: "sh -lc 'hdfs dfs -put -f /home/hadoop/airports.csv /harshit/airports.csv'"
+    - name: Put Delayed Flights to HDFS
+      shell: "sh -lc 'hdfs dfs -put -f /home/hadoop/DelayedFlights.csv /harshit/DelayedFlights.csv'"
+
+ 
