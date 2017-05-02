@@ -1,0 +1,15 @@
+storm.zookeeper.servers:
+{% for server in groups['chameleon'] %}
+  - {{ hostvars[server]['ansible_host'] }}
+{% endfor %}
+
+storm.local.dir: "/home/{{user}}/apache-storm-1.1.0/data/"
+
+nimbus.seeds: ["{{ nimbus }}"]
+{% for server in groups['supervisors'] %}
+{% if server == inventory_hostname %}
+
+supervisor.slots.ports:
+  - 6700
+{% endif %}
+{% endfor %}
