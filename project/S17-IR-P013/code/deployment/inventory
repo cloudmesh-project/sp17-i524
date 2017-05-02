@@ -1,7 +1,7 @@
 [weatherClusterMaster]
-129.114.33.109 ansible_ssh_user=cc
+129.114.33.210 ansible_ssh_user=cc
 
 
 [weatherClusterSlave]
-129.114.33.165 ansible_ssh_user=cc
-129.114.33.179 ansible_ssh_user=cc
+129.114.32.228 ansible_ssh_user=cc
+129.114.33.212 ansible_ssh_user=cc
