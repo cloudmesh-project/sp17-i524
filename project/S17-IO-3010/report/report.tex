@@ -34,12 +34,14 @@ Our proof-of-concept program creates a two-robot swarm on a cluster of remotely-
 Simulating a single robot's actions and responses to its environment prior to real-world deployment mitigates risk and improves results at a relatively low cost. Therefore, it seems reasonable to conclude that simulating the actions and responses of a group of robots, e.g., a swarm, will also improve results at a low cost.  However, deployment of an interconnected swarm of virtual robots on a remotely-located cluster of computers imposes additional requirements versus a locally-hosted single- or multi-robot deployment.  For instance, accessing and configuring multiple computers presents a time and resource challenge in contrast to a single-host setup.  In addition, network security measures, such as ssh keys and port access, impede ROS' intra-cluster communication capabilities.  In order to address the unique requirements of a networked, remotely-located swarm, we create a multi-platform system to automate the creation and deployment of the virtual swarm. 
 
 \section{Virtual Robot Swarm Components}
+
 \subsection{Robot Operating System (ROS)} % \cite{www-ros-about}}
 % TBD; will include a discussion of a) how to obtain and install ROS and b) ROS graph concepts.  The latter topic will introduce ROS' core components, namely a node, publications, suscriptions, topics and services.  This section should probably cover ROS packages and ROS client libraries (primarily C++ and Python)
 
 \begin{figure*}[htbp]
 \centering
-\fbox{\includegraphics[width=\linewidth]{images/ros-is.png}}
+once figure is include in repo change this include to add images/ros-is.png 
+%\fbox{\includegraphics[width=\linewidth]{images/ros-is.png}}
 \caption{A Conceptualization of What ROS, the \textit{R}obot \textit{O}perating \textit{S}ystem, Offers to Roboticists \cite{www-ros-ros-is}}
 \label{fig:rosOverview}
 \end{figure*}
