@@ -1,0 +1,24 @@
+storage:
+  dbPath: /var/lib/mongodb
+  journal:
+    enabled: true
+
+
+security:
+  keyFile: {{mongo_dir}}/mongo.key
+
+#log
+logpath=/var/log/mongo/mongod-config.log
+
+logappend=true
+
+# fork and run in background
+fork = true
+
+port = {{mongoc_port}}
+
+dbpath={{mongo_dir}}configdb
+# location of pidfile
+pidfilepath = /var/run/mongo/mongoc.pid
+
+configsvr=true

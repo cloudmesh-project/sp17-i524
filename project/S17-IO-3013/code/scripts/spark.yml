@@ -1,0 +1,7 @@
+---
+
+- name: spark for mesos
+  hosts: spark_server
+  become: yes
+  roles:
+    - { role: ansible-role-spark }

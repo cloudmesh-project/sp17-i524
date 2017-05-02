@@ -1,0 +1,12 @@
+---
+# tasks file for ansible-role-spark
+
+- name: unarchive spark directly (new in ansible 2.0)
+  unarchive: src={{ spark_url }} dest={{ spark_dest }} copy=no
+
+- name: symlink to spark home
+  file: src=/opt/{{ spark_filename }} dest={{ spark_home }} state=link
+
+- name: spark configuration (spark-env.sh)
+  template: src=spark-env.sh.j2 dest={{ spark_home }}/conf/spark-env.sh
+  tags: spark_conf

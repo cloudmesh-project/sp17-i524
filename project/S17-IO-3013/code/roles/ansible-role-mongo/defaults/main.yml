@@ -1,0 +1,40 @@
+---
+# defaults file for ansible-role-dataset
+
+mongodb_package: mongodb-org
+
+mongo_dir: /data
+
+mongodb_force_wait_for_port: false
+mongodb_user_update_password: "on_create"   
+mongodb_manage_service: true
+
+mongodb_user: mongodb
+mongodb_daemon_name: "{{ 'mongod' if ('mongodb-org' in mongodb_package) else 'mongodb' }}"
+
+mongodb_processmanagement_fork: false            # Fork server process
+
+mongodb_security_authorization: "disabled"
+mongodb_security_keyfile: /etc/mongodb-keyfile   
+
+## net options 
+# mongodb_net_bindip: 129.114.33.87                   
+mongodb_net_http_enabled: false                  # Enable http interface
+mongodb_net_ipv6: false                          # Enable IPv6 support (disabled by default)
+mongodb_net_maxconns: 65536                      # Max number of simultaneous connections
+mongodb_net_port: 27017                          # Specify port number
+
+## storage Options
+mongodb_storage_dbpath: /data/db                 # Directory for datafiles
+mongodb_storage_engine: "{{ 'mmapv1' if mongodb_version[0:3] == '3.0' else 'wiredTiger' }}"
+# mmapv1 specific options
+mongodb_storage_quota_enforced: false            # Limits each database to a certain number of files
+mongodb_storage_quota_maxfiles: 8                # Number of quota files per DB
+mongodb_storage_smallfiles: false                # Very useful for non-data nodes
+mongodb_storage_journal_enabled: true            # Enable journaling
+mongodb_storage_prealloc: true                   # Enable data file preallocation
+mongodb_systemlog_destination: "file"
+mongodb_systemlog_logappend: true                                        # Append to logpath instead of over-writing
+mongodb_systemlog_path: /var/log/mongodb/{{ mongodb_daemon_name }}.log   # Log file to send write to instead of stdout
+
+## download pymongo 2.7

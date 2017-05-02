@@ -1,0 +1,7 @@
+---
+
+- include: scripts/spark.yml
+- include: scripts/mongo.yml
+- include: scripts/data.yml
+- include: scripts/mesos.yml
+

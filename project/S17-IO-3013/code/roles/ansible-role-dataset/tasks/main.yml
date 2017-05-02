@@ -1,0 +1,49 @@
+
+# tasks file for ansible-role-dataset
+
+- name: download million songs dataset
+  unarchive:
+   src: http://static.echonest.com/millionsongsubset_full.tar.gz
+   dest: "{{mongo_dir}}/db"
+   remote_src: True
+  become: true
+
+- name: create collection 
+  shell: mongo admin --eval "db.createCollection('music')"
+
+- name: create small file
+  shell: head -1000 "{{mongo_dir}}/db/MillionSongSubset/data/TRACCSW128F148C7C3.h5" > "{{mongo_dir}}/db/MillionSongSubset/data/TRACCSW128F148C7C3_small.h5"
+  become: true
+
+##- name: load sample data
+##  shell: mongoimport --db admin --collection music --drop --file "{{mongo_dir}}/db/MillionSongSubset/data/TRACCSW128F148C7C3_small.h5"
+##  become: true
+
+- name: copy python to mongo
+  copy:
+   src: ~/sp17-i524/project/S17-IO-3013/code/python/predict_myfiles.py
+   dest: "{{mongo_dir}}/db/MillionSongSubset/data"
+   mode: 0777
+
+- name: copy python getter to mongo
+  copy:
+   src: ~/sp17-i524/project/S17-IO-3013/code/python/predict_getters.py
+   dest: "{{mongo_dir}}/db/MillionSongSubset/data"
+   mode: 0777
+
+- name: install getters
+  shell: |
+     expect "predict_getters.py"
+     send "\n"
+  args:
+    executable: /data/db/MillionSongSubset/data
+    
+
+- name: excute file
+  shell: |
+     expect "predict_myfiles.py"
+     send "\n"
+  args:
+    executable: /data/db/MillionSongSubset/data
+   
+

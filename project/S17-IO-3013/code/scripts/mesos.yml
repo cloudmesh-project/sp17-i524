@@ -1,0 +1,7 @@
+---
+
+- name: mesos base
+  hosts: mesos_server
+  become: yes
+  roles:
+    - { role: ansible-role-mesos }

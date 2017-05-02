@@ -1,0 +1,5 @@
+---
+- hosts: mongo_server
+  remote_user: cc
+  roles:
+    - ansible-role-mongo

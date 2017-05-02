@@ -1,0 +1,55 @@
+---
+- name: Add apt-key
+  apt_key: id={{ apt_key_id }} keyserver={{ apt_key_server }} state=present
+
+- name: Remove mesosphere repo
+  apt_repository: repo='deb {{ mesosphere_apt_url }}/{{ DISTRO }} {{ CODENAME }} main' state=absent
+  tags:
+   - repo
+
+- name: Add mesosphere repo
+  apt_repository: repo='deb {{ mesosphere_apt_url }} {{ ansible_distribution_release | lower }} main' state=present update_cache=yes
+
+- name: install mesos
+  apt: pkg=mesos state=present update_cache=yes cache_valid_time=3600
+  register: apt_result
+  until: apt_result|success
+  retries: 3
+  delay: 1
+  sudo: yes
+  ignore_errors: yes
+
+- name: install zookeeperd if missing (on trusty)
+  apt: pkg=zookeeperd state=present
+  when: ansible_distribution_release == 'trusty'
+  tags:
+    - zookeeperd
+
+#- name: update /etc/hosts
+#  template: src=hosts.j2 dest=/etc/hosts backup=yes
+#  when: update_hosts == "yes"
+#  tags:
+#    - hosts
+
+- name: remove myid
+  file: path=/etc/zookeeper/conf/myid state=absent
+  tags: remove-myid
+
+- name: myid update from ansibleshipyad
+  template: src=myid.j2 dest=/etc/zookeeper/conf/myid
+  when: master_or_slave == "master"
+  tags: myid2
+  notify:
+    - Restart zookeeper
+
+- name: create dataDir if not exist
+  file: path={{ zookeeper_dataDir }} state=directory owner={{ zookeeper_owner }} group={{ zookeeper_group }}
+  when: master_or_slave == "master"
+  tags: dataDir
+  
+- name: myid update in dataDir
+  template: src=myid.j2 dest={{ zookeeper_dataDir }}/myid owner={{ zookeeper_owner }} group={{ zookeeper_group }}
+  when: master_or_slave == "master"
+  tags: myid2
+  notify:
+    - Restart zookeeper

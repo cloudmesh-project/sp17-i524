@@ -1,6 +1,6 @@
 :orphan:
 
-submitted: "2017-03-17"
+submitted: "2017-05-01"
 
 author: "Leonard Mwangi"
 
@@ -12,7 +12,7 @@ pid: "S17-IO-3013"
 
 github: "lmundia"
 
-report: "report_proj.pdf"
+report: "report.pdf"
 
 proposal: "report.pdf"
 

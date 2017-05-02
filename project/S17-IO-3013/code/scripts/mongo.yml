@@ -1,0 +1,12 @@
+---
+
+- name: install mongodb
+  hosts: mongo_server
+  remote_user: cc
+  become: yes
+  roles:
+    - { role: ansible-role-mongo }
+  handlers:
+    - name: start mongodb
+      service: name=mongod state=started
+
