@@ -1,0 +1,85 @@
+---
+
+- name: Deploy the dataset #NIST Example in cloudmesh for deploying data and code is used as a reference
+  tags: data
+  hosts: hadoopjet
+  vars:
+    download_dir: "/tmp"
+    db_dir: "/tmp/fltdata"
+    code_dir: "/tmp/airlines"
+    db_value: "fltdata.zip"
+    db4_path: "{{ db_dir }}/{{ databases.4.url | splitext | first }}"
+    databases:
+      4:
+        url: "https://iu.box.com/shared/static/r6b7d7koiehqqvl2dgq6ssci3fyz9u3e.zip"
+ 
+
+  tasks:
+
+    - name: Install packages
+      become: yes
+      apt: name={{item}} state=installed
+      with_items:
+      - python-pip
+      - python-dev
+      - git-all
+      - python-sip
+      - python-qt4
+      - python-tk
+      - python-matplotlib
+      - python-pandas     
+      - python-numpy
+      - python-scipy
+      - unzip
+
+    - name: prepare the data directory
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ download_dir }}"
+        - "{{ db_dir }}"
+        - "{{code_dir}}"
+    - name: download
+      get_url:
+        url: "{{ databases.4.url }}"
+        dest: "{{ download_dir }}"
+        timeout: 60
+
+    - name: extract
+      become: yes
+      unarchive:
+        src: "{{ download_dir }}/{{db_value }}"
+        dest: "{{ db_dir }}"
+        owner: hadoop
+        group: hadoop
+        creates: "{{ db4_path }}"
+        copy: false
+
+    - name: fix permissions
+      become: yes
+      file:
+        path: "{{ db_dir }}"
+        owner: hadoop
+        group: hadoop
+        recurse: yes
+
+   
+    -
+      args:
+        creates: "{{db_dir}}/.imported-to-hdfs"
+
+      name: import data into hdfs
+      become: yes
+      become_user: hadoop 
+      shell: "sh -lc 'hadoop fs -put {{ db_dir }} / && touch {{ db_dir }}/.imported-to-hdfs'"
+
+    - name: clone repo
+      git: >
+        repo=https://github.com/Niteesh01/projectairlines.git
+        update=no
+        dest=/tmp/airlines
+        version=master
+        accept_hostkey=yes
+
+   

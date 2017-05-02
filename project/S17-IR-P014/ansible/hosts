@@ -1,0 +1,7 @@
+[hadoopcham]
+129.114.32.217  ansible_ssh_user=cc
+
+
+[hadoopjet]
+149.165.156.220 ansible_ssh_user=ubuntu
+
