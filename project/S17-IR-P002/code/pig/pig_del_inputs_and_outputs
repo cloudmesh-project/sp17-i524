@@ -1,0 +1,13 @@
+hdfs dfs -put /home/hadoop/DelayedFlights.csv /harshit/DelayedFlights.csv
+hdfs dfs -put /home/hadoop/airports.csv /harshit/airports.csv
+
+hdfs dfs -get /harshit/harshit_output /home/hadoop/harshit_output 
+
+hdfs://<namenode local IP>:<namenode port>/harshit/DelayedFlights.csv
+hdfs://<namenode local IP>:<namenode port>/harshit/airports.csv
+
+
+hdfs dfs -rm /harshit/DelayedFlights.csv
+hdfs dfs -rm /harshit/airports.csv
+hdfs dfs  -rmr /harshit/harshit_output
+
