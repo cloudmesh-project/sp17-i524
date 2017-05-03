@@ -19,8 +19,8 @@
 \ociscodes{Hadoop, Spark, MLlib, Ansible, Cloudmesh Client, Predictive Analysis}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/diabetic}}
-
+\doi{Report: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P004/report}\\
+     Code: \url{https://github.com/cloudmesh/diabetic}}
 
 \begin{abstract}
 This project proposes and demonstrates the use of Hadoop and Spark on cloud to run predictive analytics using machine learning on large amount of data. Our case study is to predict the readmission likelihood for diabetes patients using their available medical history.
@@ -366,15 +366,8 @@ Similar analysis in a real world scenario can be utilized to predict the readmis
 
 
 \section{Benchmarking}
-
-We have recorded several metrics while running each of the four algorithms in different clouds. The four algorithms are SGD Classifier, Gaussian Naïve Bayes, kmeans and Decision Tree Classifier.
-The variations in run-time, deployment time and file transfer are caused due to factors like:
-
-\begin{enumerate}
- \item \textit{The complexity of the algorithm:} For example,  kmeans clustering has  O(n log n) time complexity which is worse than Gaussian Naïve Bayes and hence takes more time.
-
- \item \textit{The network latency between the hosts:} The VMs which are provisioned on clouds can be on different hosts spread across different racks of datacenters and even datacenters located in different geographies. This may result in network latency and affect the run-time of a program running in a distributed environment.
-\end{enumerate}
+ We performed benchmarking to assess the performance with respect to four different aspects. (1) Spark deployment time in multiple clouds with variation in number of virtual machines. (2) Run-time of different algorithms on multiple clouds with variation in number of virtual machines. (3) File transfer time of two files of different size in multiple clouds.
+ (4) Accuracy of multiple algorithms in Spark MLlib and scikit-learn.
 
 \subsection{Comparison of Spark Deployment Time}
 
@@ -387,6 +380,9 @@ We compared the Hadoop-Spark deployment time with different number of machines o
 	\label{fig:spd}
 \end{figure}
 
+\subsection{Computation time of algorithms in clouds}
+
+Figure \ref{fig:bench} shows the performance of multiple machine learning algorithms provided by Spark MLlib on clusters in Jetstream, Chameleon and Virtual Box.
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.85]{images/Benchmarking}
@@ -394,38 +390,52 @@ We compared the Hadoop-Spark deployment time with different number of machines o
 	\label{fig:bench}
 \end{figure}
 
-\subsection{Computation time of algorithms in clouds}
-Figure \ref{fig:bench} shows the performance of multiple machine learning algorithms provided by Spark MLlib on clusters in Jetstream, Chameleon and Virtual Box.
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{images/algoruntime3.png}
-\caption{Run-time in different clouds for 3 vms}
+\caption{Run-time in different clouds for 3 VMs}
 \label{fig:bench1}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.4]{images/algoruntime5.png}
-	\caption{Run-time in different clouds for 5 vms}
+	\caption{Run-time in different clouds for 5 VMs}
 	\label{fig:bench2}
 \end{figure}
-\subsection{Comparison of multiple algorithms in Spark MLlib vs scikit-learn}
 
 
 Figures \ref{fig:bench1} and \ref{fig:bench2} shows the run-time comparison for machine learning algorithms using Spark MLlib in Jetstream and Chameleon, for predicting readmission likelihood, for 3 and 5 VMs.
 
+\subsection{Comparison of File Transfer Time}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=\linewidth,scale=1]{images/accmllib}
-\caption{Accuracy Results with pyspark.mllib}
-\label{fig:accmllib}
+We uploaded two files of different sizes, 3 MB and 168 MB, to both Jetstream and Chameleon. We recorded the file transfer times for each of these clouds. We can see from figure \ref{fig:ftt} that the it took lesser time to transfer files to JetStream cloud machines than to Chameleon cloud machines.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{images/Filetransfer.png}
+	\caption{Comparison of file transfer time}
+	\label{fig:ftt}
 \end{figure}
+
+\subsection{Accuracy comparison of multiple algorithms in Spark MLlib vs scikit-learn}
+
+We have recorded several metrics while running each of the four algorithms in different clouds. The four algorithms are SGD Classifier, Gaussian Naïve Bayes, kmeans and Decision Tree Classifier.
+The variations in run-time, deployment time and file transfer are caused due to factors like:
+
+\begin{enumerate}
+ \item \textit{The complexity of the algorithm:} For example,  kmeans clustering has  O(n log n) time complexity which is worse than Gaussian Naïve Bayes and hence takes more time.
+
+ \item \textit{The network latency between the hosts:} The VMs which are provisioned on clouds can be on different hosts spread across different racks of datacenters and even datacenters located in different geographies. This may result in network latency and affect the run-time of a program running in a distributed environment.
+\end{enumerate}
 
 We compared the accuracies for different MLlib algorithms using pyspark.mllib package. We can see from figure \ref{fig:accmllib} the accuracies achieved for multiple algorithms in MLlib. While Kmeans gave the lowest accuracy, rest of the algorithms gave similar accuracies.
 
-
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{images/accmllib}
+\caption{Accuracy Results with pyspark.mllib}
+\label{fig:accmllib}
+\end{figure}
 
 We compared the accuracies achieved from Spark MLlib and scikit-learn algorithms. Figure \ref{fig:mllibvssklearn} shows accuracy results of multiple machine learning algorithms in scikit-learn vs MLlib.
 
@@ -434,19 +444,6 @@ We compared the accuracies achieved from Spark MLlib and scikit-learn algorithms
 \includegraphics[width=\linewidth,scale=1]{images/mllibvssklearn}
 \caption{Accuracy Results: scikit-learn vs pyspark.mllib}
 \label{fig:mllibvssklearn}
-\end{figure}
-
-
-
-\subsection{Comparison of File Transfer Time}
-
-We uploaded two files of different sizes, 3 MB and 168 MB, to both Jetstream and Chameleon. We recorded the file transfer times for each of these clouds. We can see from figure \ref{fig:ftt} that the it took lesser time to transfer files to JetStream cloud machines than to Chameleon cloud machines.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.33]{images/Filetransfer.png}
-	\caption{Comparison of file transfer time}
-	\label{fig:ftt}
 \end{figure}
 
 \section{Troubleshooting}
