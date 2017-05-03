@@ -1,4 +1,3 @@
-from pymongo import MongoClient
 import requests
 import time
 
@@ -11,6 +10,8 @@ import pandas as pd
 import numpy as np
 import random
 from sklearn.cluster import KMeans
+
+import testfile
 
 NUM_CLUSTER = 3
 
@@ -48,7 +49,6 @@ def showMagnitudesInCluster(data):
                        )
 
     fig = go.Figure(data=plot_data, layout=layout)
-    #plotly.offline.plot(fig, filename='mag_depth.html')
     div = plotly.offline.plot(fig, include_plotlyjs=True, output_type='div')
 
     return div
@@ -63,16 +63,17 @@ def mkMag():
     projection = [
         {"$project": {"_id": 0, "mag": "$properties.mag", "depth": {"$arrayElemAt": ["$geometry.coordinates", 2]}}}]
 
-    #dframe_mag = pd.DataFrame(list(dbobj.doaggregate(projection)))
     dframe_mag = pd.DataFrame(list(dbobj.doaggregate(projection)))
 
     #### TME: Elapsed time taken to read data from MongoDB
+    fileobj = testfile.classFileWrite()
+
     elapsed = time.time() - start_time
-    line = "=" * 60
-    print (line)
-    print ("Reading Magnitude and Depth data")
-    print(str(elapsed) + " secs required to read " + str(dframe_mag['depth'].count()) + " records from database.")
-    print (line)
+
+    fileobj.writeline()
+    str1 = str(elapsed) + " secs required to read " + str(dframe_mag['depth'].count()) + " records from database."
+    fileobj.writelog("Reading Magnitude and Depth data")
+    fileobj.writelog(str1)
     ####
 
     #### TME: Get start time
@@ -83,16 +84,13 @@ def mkMag():
 
     #### TME: Elapsed time taken to cluster and plot data
     elapsed = time.time() - start_time
-    line = "=" * 60
-    print (line)
-    print ("Applying K-Means clustering and plotting its output")
-    print("Time taken: " + str(elapsed))
-    print (line)
-    ####
+
+    fileobj.writeline()
+    str1 = "Applying K-Means clustering and plotting its output \n" + "Time taken: " + str(elapsed)
+    fileobj.writelog(str1)
+    fileobj.writeline()
+    fileobj.closefile()
+
 
     dbobj.closedb()
     return response
-
-#sess = requests.Session()
-#mkMag()
-# client.close()
