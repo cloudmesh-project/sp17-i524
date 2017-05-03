@@ -1,4 +1,3 @@
-from pymongo import MongoClient
 import requests
 import time
 
@@ -12,7 +11,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 import random
-
+import testfile
 # Create random colors in list
 color_list = []
 def generate_color(ncluster):
@@ -42,18 +41,17 @@ def showLatLongInCluster(data):
         layout = go.Layout(showlegend=False, title='Earthquakes In North and South America',
                            titlefont=dict(family='Courier New, monospace',size=20,color='#7f7f7f'),
                             geo=dict(scope=('north america', 'south america'),
-                                projection=dict(type='orthographic'),
+                                projection=dict(type='orthographic',rotation=dict(lon=-60)),
                                 showland=True, landcolor='#191919',
                                 showcountries=True,
                                 showocean=True, oceancolor='rgb(217,217,255)',
                                 showframe=False,
-
                                 ),
                                xaxis=dict(showgrid=False, zeroline=False),
                                yaxis=dict(showgrid=False, zeroline=False))
 
     fig = go.Figure(data=plot_data, layout=layout)
-    #plotly.offline.plot(fig, filename='lat_long.html')
+
     div = plotly.offline.plot(fig, include_plotlyjs=True, output_type='div')
 
     return div
@@ -74,13 +72,16 @@ def mkLatLong():
     df = df[['longitude', 'latitude']].copy()
 
     #### TME: Elapsed time taken to read data from MongoDB
+
+    fileobj = testfile.classFileWrite()
+
     elapsed = time.time() - start_time
-    line = "=" * 60
-    print (line)
-    print ("Reading Longitude and Latitude")
-    print(str(elapsed) + " secs required to read " + str(df['latitude'].count()) + " records from database.")
-    print (line)
-    ###
+
+    fileobj.writeline()
+    str1 = str(elapsed) + " secs required to read " + str(df['latitude'].count()) + " records from database."
+    fileobj.writelog("Reading Longitude and Latitude")
+    fileobj.writelog(str1)
+    ####
 
     #### TME: Get start time
     start_time = time.time()
@@ -93,17 +94,14 @@ def mkLatLong():
 
     #### TME: Elapsed time taken to cluster and plot data
     elapsed = time.time() - start_time
-    line = "=" * 60
-    print (line)
-    print ("Applying DBSCAN clustering and plotting its output")
-    print("Time taken: " + str(elapsed))
-    print (line)
-    ###
+
+    fileobj.writeline()
+    str1 = "Time taken: " + str(elapsed)
+    fileobj.writelog("Applying DBSCAN clustering and plotting its output")
+    fileobj.writelog(str1)
+    fileobj.writeline()
+    fileobj.closefile()
+    ####
 
     return response
 
-
-
-#sess = requests.Session()
-# mkLatLong()
-# client.close()

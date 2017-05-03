@@ -1,7 +1,7 @@
 ---
 
 -   hosts: dbserver
-    remote_user: cc
+    remote_user: "{{ uname }}"
     become: yes
     become_method: sudo
 
@@ -9,7 +9,7 @@
         - mongo
 
 -   hosts: appserver
-    remote_user: cc
+    remote_user: "{{ uname }}"
     become: yes
     become_method: sudo
     roles:
