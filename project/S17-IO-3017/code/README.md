@@ -53,7 +53,7 @@ See the analysis of magnitude and depth
     
     <ip of host VM>:8081/plotmag
 
-See the analysis of lat long of eqrthquake epicenter
+See the analysis of lat long of earthquake epicenter
 
     <ip of host VM>:8081/plotlatlong
 
