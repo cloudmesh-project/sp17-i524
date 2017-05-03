@@ -1,6 +1,20 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \usepackage{hyperref}
+\usepackage{color}
+\usepackage{listings}
+\lstdefinestyle{BashInputStyle}{
+  language=bash,
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{yellow!20},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
 \journal{i524} 
 
 \title{Remotely Visualizing and Controlling a Robot Swarm with ROS}
@@ -17,10 +31,11 @@
 \ociscodes{Cloud, I524, ROS, Gazebo, Robot, Swarm}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/cloudmesh.ros/master/report/report.pdf}}
+\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IO-3010/report/report.pdf}}
+% \doi{\url{https://github.com/cloudmesh/cloudmesh.ros/master/report/report.pdf}}
 
 \begin{abstract}
-Our proof-of-concept program creates a two-robot swarm on a cluster of remotely-located computers.  It then pushes a visual simulation of the robots to the remote user.  Finally, it sends a single command to the robots in order to demonstrate the feasibility of networked communication with the robots.  The project utilizes two software packages from the Open Source Robotics Foundation (OSRF).  Namely, it uses the \textit{Robot Operating System} to define, create and control the virtual robots.  The OSRF's \textit{Gazebo} simulation software provides visualization of the simulation.  We use \textit{cloudmesh}, \textit{Ansible} and a *nix shell script to deploy the software to a distributed computing environment.  Our project demonstrates the feasability of harnessing remotely-located distributed computing environments, i.e., "clouds", to simulate large-scale robot swarms.
+Our project demonstrates the feasability of harnessing remotely-located distributed computing environments, i.e., "clouds", to simulate large-scale robot swarms.  Our proof-of-concept program creates a two-robot swarm on a cluster of remotely-located computers.  It then pushes a visual simulation of the robots to the remote user.  Finally, it sends a single command to the robots in order to demonstrate the feasibility of networked communication with the robots.  The project utilizes two software packages from the Open Source Robotics Foundation (OSRF).  Namely, it uses the \textit{Robot Operating System} to define, create and control the virtual robots.  The OSRF's \textit{Gazebo} simulation software provides visualization of the simulation.  We use \textit{cloudmesh}, \textit{Ansible} and a *nix shell script to deploy the software to a distributed computing environment.
 \newline
 \end{abstract}
 
@@ -46,6 +61,13 @@ once figure is include in repo change this include to add images/ros-is.png
 \label{fig:rosOverview}
 \end{figure*}
 
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/deployWorkFlowCol.jpeg}}
+\caption{Deployment Workflow for the Virtual Robot Swarm Project}
+\label{fig:deployWorkflow}
+\end{figure}
+
 The Open Source Robotics Foundation's middleware product \textit{Robot Operating System}, or ROS, provides a framework for writing operating systems for robots.  ROS offers "a collection of tools, libraries, and conventions [meant to] simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms" \cite{www-ros-about}. The Open Source Robotics Foundation, hereinafter OSRF or the Foundation, attempts to meet the aforementioned objective by implementing ROS as a modular system.  That is, ROS offers a core set of features, such as inter-process communication, that work with or without pre-existing, self-contained components for other tasks.
 
 Figure 1 illustrates the ROS universe in three parts: a) the plumbing, ROS' communications infrastructure; b) the tools, such as ROS' visualization capabilities or its hardware drivers; and c) ROS' ecosystem, which represents ROS' core developers and maintainers, its contributors and its user base.
@@ -57,7 +79,7 @@ The modules or packages, which are analogous to packages in Linux repositories o
 
 The Foundation also supports \textit{Gazebo}, ROS' 3D virtual simulation software.  "Gazebo...simulate[s] populations of robots in complex indoor and outdoor environments. [It] offers physics simulation at a much higher degree of fidelity [than gaming engines], a suite of sensors, and interfaces for both users and programs \cite{www-gazebo-overview}."  Gazebo's usefulness center on three main features: a) physics engines compatibility; b) its graphics engine; and c) its sensor-data generators.  with respect to physics engine compatibility Gazebo interfaces well with \textit{Open Dynamics Engine} \cite{www-ode-homepage} (ODE), the default; b) \textit{Bullet} \cite{www-bullet-homepage}; \textit{SimBody} \cite{www-simbody-homepage}; and, \textit{DART} \cite{www-dart-homepage}. Roboticists also benefit from its 3D graphics engine, \textit{Object-oriented Graphics Rendering Engine} \cite{www-ogre-homepage} (OGRE), which provides a C++ class library to "[abstract away] the details of using the underlying [graphics] system libraries like Direct3D and OpenGL \cite{www-ogre-about}."  Finally, Gazebo can supply \textit{sensor} data to the virtual robot.  Virtual sensor support ranges from 2D cameras to Kinect-style sensors.  The system can also generate \textit{noisy} data to better simulate real-world results.
 
-Gazebo exists as a stand-alone project, suitable for use by programs other than ROS.  However, it couples tightly with ROS given its common ownership.  In fact, the version supplied with a ROS installation automatically establishes communications between Gazebo and ROS for the end-user \cite{www-gazebo-ros}.  
+Gazebo exists as a stand-alone project, suitable for use by programs other than ROS.  However, it integrates tightly with ROS given its common ownership.  In fact, the version supplied with a ROS installation automatically establishes communications between Gazebo and ROS for the end-user \cite{www-gazebo-ros}.  
 
 \subsection{Ansible}
 % TBD; briefly describe Ansible - what it is, salient features, etc.
@@ -78,20 +100,18 @@ The Chameleon project's cluster of 650+ multi-core computer nodes, a joint ventu
 \subsection{VR Swarm task}
 % TBD; discuss the task to be accomplished by the swarm, as well as how the information collected during task completion will be communicated back to the master node for collation and reporting.
 
-Although the swarm accomplishes the seemingly trivial task of driving in circles, the real accomplishment rests in proving the feasability of automating the deployment of multiple controllable virtual robots on a remote cluster of computers and then visualizing them on a local computer.
+Although the swarm accomplishes the seemingly-trivial task of driving in circles, the real accomplishment rests in proving the feasability of automating the deployment of multiple controllable virtual robots on a remote cluster of computers and then visualizing them on a local computer.
 
 \subsection{Deployment}
 % TBD; document the Ansible steps needed to successfully deploy ROS and Gazebo on multiple computers;  will include references for obtaining major components, including adding new repositories if needed.
-Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  In addition, the user must manually retrieve the shell script that initiates the deployment process.  
+Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  Only the initial step, retrieving and sourcing the shell script that begins the deployment process, requires user intervention.
 
-++On the Local Machine++ \newline
-| \newline
-|-> Retrieve deployment initiation script, \textit{begin} \newline
-|--> backup and replace user's known\_hosts file \newline
-|--> setup three-node cluster on Chameleon cloud \newline
-|---> define its characteristics, allocate the resources and then add each node's ssh key to the other two nodes' known\_hosts files \newline
-|--> capture each node's static and floating ip addresses \newline
-
+\paragraph{\textit{wget...begin} - Retrieve the Initalization Bash Script}
+Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command \newline
+{\color{green} \lstinline[style=BashInputStyle]!> ./begin! } \newline
+from the directory where the \textit{begin} bash script resides.  
+\paragraph{\textit{begin} bash script}
+The bash script calls three cloudmesh\_client commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster define -n rosA1 -c 3! }, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster allocate! } and {\color{green} \lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } in order to create and prepare the three-node cluster named \textit{rosA1}.  The script then uses two additional Cloudmesh commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster nodes! } and {\color{green} \lstinline[style=BashInputStyle]!> cm vm ip show! } to capture the public and private ip addresses of the cluster.
 
 \subsection{Modifications, Pitfalls}
 TBD; discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.
