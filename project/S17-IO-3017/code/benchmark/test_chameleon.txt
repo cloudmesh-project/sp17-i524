@@ -1,0 +1,41 @@
+Chameleon 1vm m1.small
+============================================================
+0.0757720470428 secs required to read 7034 records from database.
+============================================================
+Applying DBSCAN clustering and plotting its output
+Time taken: 0.315102100372
+============================================================
+============================================================
+Reading Magnitude and Depth data
+0.0995559692383 secs required to read 7034 records from database.
+============================================================
+Applying K-Means clustering and plotting its output 
+Time taken: 0.11940407753
+============================================================
+============================================================
+9.39961600304 secs required to download 7034 records from USGS.
+============================================================
+============================================================
+11.5729539394 secs required to download 7034 records from USGS.
+============================================================
+============================================================
+Reading Magnitude and Depth data
+============================================================
+Reading Magnitude and Depth data
+0.231059074402 secs required to read 7034 records from database.
+============================================================
+Applying K-Means clustering and plotting its output 
+Time taken: 0.466255903244
+============================================================
+0.3523042202 secs required to read 7034 records from database.
+============================================================
+Applying K-Means clustering and plotting its output 
+Time taken: 0.244060993195
+============================================================
+============================================================
+Reading Longitude and Latitude
+0.101022958755 secs required to read 7034 records from database.
+============================================================
+Applying DBSCAN clustering and plotting its output
+Time taken: 0.330735206604
+============================================================

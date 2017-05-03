@@ -1,0 +1,47 @@
+Jetstream 2VMs m1.small
+============================================================
+9.18451094627 secs required to download 7034 records from USGS.
+============================================================
+
+============================================================
+Reading Magnitude and Depth data
+0.0765130519867 secs required to read 7034 records from database.
+============================================================
+============================================================
+Applying K-Means clustering and plotting its output
+Time taken: 0.0867719650269
+============================================================
+
+============================================================
+Reading Longitude and Latitude
+0.0768620967865 secs required to read 7034 records from database.
+============================================================
+============================================================
+Applying DBSCAN clustering and plotting its output
+Time taken: 0.242939949036
+============================================================
+
+============================================================
+8.32640194893 secs required to download 7034 records from USGS.
+============================================================
+============================================================
+Reading Magnitude and Depth data
+0.0732550621033 secs required to read 7034 records from database.
+============================================================
+Applying K-Means clustering and plotting its output 
+Time taken: 0.0943150520325
+============================================================
+============================================================
+Reading Longitude and Latitude
+0.0836222171783 secs required to read 7034 records from database.
+============================================================
+Applying DBSCAN clustering and plotting its output
+Time taken: 0.20055603981
+============================================================
+============================================================
+Reading Longitude and Latitude
+0.0932619571686 secs required to read 7034 records from database.
+============================================================
+Applying DBSCAN clustering and plotting its output
+Time taken: 0.205931901932
+============================================================
