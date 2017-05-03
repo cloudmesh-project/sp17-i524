@@ -20,13 +20,13 @@
       git: >
         repo={{git_repo}}
         update=no
-        dest=/tmp/pearth
+        dest=/tmp/earth
         version=master
         accept_hostkey=yes
 
     - name: Copy projectearth code
       become: no
-      command: cp -R /tmp/pearth/code/projectearth ~/projectearth
+      command: cp -R /tmp/earth/projectearth ~/projectearth
 
     - name: Install libraries required for running projet
       action: pip name={{item}} state=present
