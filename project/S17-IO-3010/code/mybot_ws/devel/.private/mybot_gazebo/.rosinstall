@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_gazebo/setup.sh

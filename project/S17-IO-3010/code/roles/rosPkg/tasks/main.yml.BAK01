@@ -1,0 +1,12 @@
+---
+#- name: add ROS setup.bash file to ~/.bashrc
+#  shell: echo "source /opt/ros/kinetic/setup.bash" >> /home/cc/.bashrc
+
+#- name: source the ROS setup.bash file
+#  shell: source /opt/ros/kinetic/setup.bash
+
+- name: install rosinstall
+  apt:
+    pkg: python-rosinstall
+    state: present
+    update_cache: yes

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Relative to the directions here:
+http://answers.ros.org/question/41433/multiple-robots-simulation-and-navigation/
+this file corresponds to the simulation launch file -->
+
+<launch>
+  <machine name="host01" address="eunosm3-083" user="cc" env-loader="/media/storage/github/cloudmesh/cloudmesh.ros/rosProj2/rosbot08/devel/env.sh" />
+  
+  <machine name="host02" address="eunosm3-084" user="cc" env-loader="/media/storage/github/cloudmesh/cloudmesh.ros/rosProj2/rosbot08/devel/env.sh" />
+
+  <arg name="world" default="empty"/> 
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find mybot_gazebo)/worlds/mybot.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- create robot(s) -->
+  <include file="$(find mybot_gazebo)/launch/multi_robot.launch" />
+
+
+  <!-- The next bit of code now resides in multi_robot.launch
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find mybot_description)/urdf/mybot.xacro'"/> -->
+
+
+<!-- The next bit of code resides in single_robot.launch now
+<node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model mybot" /> -->
+
+</launch>

@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# wget https://raw.githubusercontent.com/cloudmesh/cloudmesh.ros/master/rosProjFinal/begin
+
+#set beginning value for script timer
+timeBgn=$SECONDS
+
+#manipulate the known_hosts file to avoid errors
+echo "Saving current known_hosts file as known_hosts.rosBAK"
+mv ~/.ssh/known_hosts ~/.ssh/known_hosts.rosBAK
+touch ~/.ssh/known_hosts
+
+#create and prepare a three-node cluster
+cm cluster define -n rosA1 -c 3
+cm cluster allocate
+cm cluster cross_ssh
+
+#capture info about cluster nodes
+cm cluster nodes > node.list
+cut -d' ' -f2 node.list > ~/ip.list
+cut -d' ' -f1 node.list > ~/name.list
+
+echo "INFO: Public IP Addresses and Names of Cluster Nodes:"
+node01_ip=$(head -1 ~/ip.list)
+echo "Node #1 IP Address: "$node01_ip
+node01_nm=$(head -1 ~/name.list)
+echo "Node #1 Name: "$node01_nm
+# echo $node01_ip > mainNodeIP.list
+
+node02_ip=$(sed -n '2p' ~/ip.list)
+echo "Node #2 IP Address: "$node02_ip
+node02_nm=$(sed -n '2p' ~/name.list)
+echo "Node #2 Name: "$node02_nm
+
+node03_ip=$(sed -n '3p' ~/ip.list)
+echo "Node #3 IP Address: "$node03_ip
+node03_nm=$(sed -n '3p' ~/name.list)
+echo "Node #3 Name: "$node03_nm
+
+#capture static ip addresses
+cm vm ip show $node01_nm > ~/static_ip_inter01
+cut -d'|' -f3 -s ~/static_ip_inter01 > ~/static_ip_inter02
+node01_stat_ip=$(sed -n '2p' ~/static_ip_inter02)
+
+cm vm ip show $node02_nm > ~/static_ip_inter01
+cut -d'|' -f3 -s ~/static_ip_inter01 > ~/static_ip_inter02
+node02_stat_ip=$(sed -n '2p' ~/static_ip_inter02)
+
+cm vm ip show $node03_nm > ~/static_ip_inter01
+cut -d'|' -f3 -s ~/static_ip_inter01 > ~/static_ip_inter02
+node03_stat_ip=$(sed -n '2p' ~/static_ip_inter02)
+
+echo $node01_stat_ip" "$node01_nm > ~/addMeToHostFiles.list
+echo $node02_stat_ip" "$node02_nm >> ~/addMeToHostFiles.list
+echo $node03_stat_ip" "$node03_nm >> ~/addMeToHostFiles.list
+
+#cm cluster inventory -o ~/inventoryInter.txt
+# echo "[master]" > ~/inventory.txt
+echo "[master]" > ~/inventory.txt
+echo "localhost ansible_connection=local" >> ~/inventory.txt
+echo "[all]" >> ~/inventory.txt
+echo "localhost ansible_connection=local" >> ~/inventory.txt
+echo $node02_stat_ip" ansible_ssh_user=\"cc\"" >> ~/inventory.txt
+echo $node03_stat_ip" ansible_ssh_user=\"cc\"" >> ~/inventory.txt
+#echo $(sed -n '2p' ~/inventoryInter.txt) >> ~/inventory.txt
+# echo "[servants]" >> ~/inventory.txt
+# echo $(sed -n '3p' ~/inventoryInter.txt) >> ~/inventory.txt
+# echo $(sed -n '4p' ~/inventoryInter.txt) >> ~/inventory.txt
+
+#add files necessary for upcoming steps to master node
+#use subversion to place the ansible files and the RoS robot files on the master node
+#use wget to place the rosSetup.yml file and inventory.txt file on the master node
+
+#add addMeToHostFiles.list to each cluster node
+rsync -e "ssh -o StrictHostKeyChecking=no" ~/addMeToHostFiles.list cc@$node01_ip:/home/cc
+rsync -e "ssh -o StrictHostKeyChecking=no" ~/addMeToHostFiles.list cc@$node02_ip:/home/cc
+rsync -e "ssh -o StrictHostKeyChecking=no" ~/addMeToHostFiles.list cc@$node03_ip:/home/cc
+
+#ROS robot files
+echo "README: Placing ROS files in ~/mybot_ws on master  node"
+ssh cc@$node01_ip svn export https://github.com/cloudmesh/cloudmesh.ros/trunk/code/mybot_ws /home/cc/mybot_ws/
+# https://github.com/cloudmesh/cloudmesh.ros/trunk/rosProjFinal/mybot_ws /home/cc/mybot_ws/
+# #Ansible files
+# mkdir ~/ansibleScript
+#add inventory.txt file to master node; also creates the ansibleScript directory
+echo "README: Placing Ansible files in ~/ansibleScript"
+rsync ~/inventory.txt cc@$node01_ip:/home/cc/ansibleScript/
+ssh cc@$node01_ip svn export https://github.com/cloudmesh/cloudmesh.ros/trunk/code/roles /home/cc/ansibleScript/roles/
+# cd ~/ansibleScript
+# ssh cc@$node01_ip wget -P /home/cc/ansibleScript https://raw.githubusercontent.com/cloudmesh/cloudmesh.ros/master/rosProjFinal/inventory.txt
+ssh cc@$node01_ip wget -P /home/cc/ansibleScript https://raw.githubusercontent.com/cloudmesh/cloudmesh.ros/master/code/rosSetup.yml
+
+#add the script for the second part of the setup process to the master node
+ssh cc@$node01_ip wget -P /home/cc/ https://raw.githubusercontent.com/cloudmesh/cloudmesh.ros/master/code/beginAgain
+ssh -o StrictHostKeyChecking=no cc@$node01_ip chmod +x /home/cc/beginAgain
+ssh -o StrictHostKeyChecking=no cc@$node01_ip ./beginAgain
+
+timeEnd=$SECONDS
+totTime=$timeEnd-$timeBgn
+#awk "BEGIN {print $totTime/60}"
+echo "Total Run Time:  $(($totTime % 60))sec" >> ~/timer.txt
+#times
+
+#connect to "master" node
+# cm vm ssh -H $node01_nm
+ssh -X -o StrictHostKeyChecking=no cc@$node01_ip
+
+#cleanup
+# rm {~/ip.list,~/name.list,~/inventoryInter.txt,~/inventory.txt,~/static_ip_inter01,~/static_ip_inter02,~/addMeToHostFiles.list}
+mv ~/.ssh/known_hosts.rosBAK ~/.ssh/known_hosts
+rm {~/ip.list,~/name.list,~/inventory.txt,~/static_ip_inter01,~/static_ip_inter02,~/addMeToHostFiles.list}

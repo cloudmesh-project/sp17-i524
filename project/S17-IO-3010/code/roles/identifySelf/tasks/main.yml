@@ -1,0 +1,31 @@
+---
+- name: update /etc/hosts w/ node's hostname step 1
+  become_user: cc
+  shell: cat /etc/hosts > /home/cc/hosts
+  become: yes
+  args:
+    chdir: /home/cc
+    executable: /bin/bash
+
+- name: update /etc/hosts w/ node's hostname step 2
+  become_user: cc
+  shell: echo "127.0.0.0 "${HOSTNAME} >> /home/cc/hosts
+  become: yes
+  args:
+    chdir: /home/cc
+    executable: /bin/bash
+
+- name: update /etc/hosts w/ node's hostname step 3
+  become_user: cc
+  shell: cat addMeToHostFiles.list >> /home/cc/hosts
+  become: yes
+  args:
+    chdir: /home/cc
+    executable: /bin/bash
+
+- name: update /etc/hosts w/ node's hostname step 4
+  become_user: cc
+  become: yes
+  shell: sudo mv /home/cc/hosts /etc/hosts
+  args:
+    executable: /bin/bash

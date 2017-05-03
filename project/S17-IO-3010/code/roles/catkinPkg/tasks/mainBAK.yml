@@ -1,0 +1,14 @@
+---
+- name: create directory for catkin tools source files
+  vars:
+    catkin_root: /tmp/catkinPkg
+  file: path={{ catkin_root }}  state=directory recurse=yes
+
+- name: create sources.list.d file for ROS if needed
+  copy:
+    content: ""
+    dest: /etc/apt/sources.list.d/ros-latest.list
+    force: no
+
+# - name: add catkin tools repo to /etc/apt/sources.list.d/ros-latest.list file
+#  command: $ echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list
