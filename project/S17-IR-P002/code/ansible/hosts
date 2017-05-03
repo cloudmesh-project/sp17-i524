@@ -1,0 +1,3 @@
+[cham_cloud]
+<namenode IP> ansible_ssh_user=cc
+

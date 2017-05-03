@@ -1,0 +1,51 @@
+---
+- hosts: chameleon
+  become: True
+  tasks:
+   - name: Update vms
+     apt:
+       update_cache: yes
+   - name: Install packages
+     apt:
+       name: "{{ item }}"
+       state: latest
+       install_recommends: no
+     with_items:
+        - openjdk-7-jre
+        - openjdk-7-jdk
+        - maven
+   - name: Create zookeeper and storm directories
+     file:
+       path: /home/{{user}}/{{item}}
+       state: directory
+       mode: "a+rwx"
+     with_items:
+        - zookeeper-3.4.10/data
+        - zookeeper-3.4.10/logs
+        - apache-storm-1.1.0
+   - name: Download and unarchive zookeeper files
+     unarchive:
+       src: http://www-us.apache.org/dist/zookeeper/stable/zookeeper-3.4.10.tar.gz
+       dest: /home/{{user}}/
+       remote_src: True
+   - name: Download and unarchive storm files
+     unarchive:
+       src: http://www-us.apache.org/dist/storm/apache-storm-1.1.0/apache-storm-1.1.0.tar.gz
+       dest: /home/{{user}}/
+       remote_src: True
+   - name: Update hosts file
+     template:
+       src: hosts.j2
+       dest: /etc/hosts
+   - name: Write myid file for zookeeper
+     template:
+       src: myid.j2
+       dest: /home/{{user}}/zookeeper-3.4.10/data/myid
+   - name: Create zookeeper config file
+     template:
+       src: zoo.cfg.j2
+       dest: /home/{{user}}/zookeeper-3.4.10/conf/zoo.cfg
+   - name: Create storm yaml file
+     template:
+       src: storm.yaml.j2
+       dest: /home/{{user}}/apache-storm-1.1.0/conf/storm.yaml

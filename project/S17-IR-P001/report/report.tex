@@ -19,7 +19,11 @@
 \ociscodes{Real-time streaming, data visualization, Twitter, Natural Language Processing}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P001/report/report.pdf}}
+\doi{Report:\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P001/report/report.pdf}\\
+Ansible:\url{https://github.com/sriramsitharaman/sp17-i524/tree/master/project/S17-IR-P001/code/ansible}\\
+PySpark:\url{https://github.com/sowravi/data_code.git}\\
+Visualization:\url{https://github.com/sriramsitharaman/visualization}
+}
 
 \begin{abstract}
 A real-time system has been developed which extracts live data from twitter, processes the data, calculates a sentiment score based on ensemble of Naive Bayes and Textblob and finally visualizes the sentiment across time and geographical locations. The system has been deployed in chameleon and jetstream cloud platforms. Live data from twitter is injected into the system using tweepy package in Python. Naive Bayes classifier was built in a two-node Apache Spark cluster by training on 3.5 Million tweets. An ensemble of the Naive Bayes classifier and the built-in classifier of Textblob module (Python) were used to determine the sentiment score. The results of the Natural Language processing algorithms were visualized in batches using d3.js and Highcharts.
