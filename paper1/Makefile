@@ -1,3 +1,7 @@
+compile:
+	python compile.py
+	make -f Makefile all
+
 all:
 	python proceedings.py > proceedings.tex
 	pdflatex proceedings
