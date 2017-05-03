@@ -1,17 +1,15 @@
 :orphan:
 
-submitted: "2017-03-11"
+submitted: "2017-05-02"
 
-author: "Matthw Lawson"
+author: "Matthew Lawson"
 
 hid: "S17-IO-3010"
 
-pid: "ENTER YOUR PID HERE"
+pid: "N/A"
 
 github: "eunosm3"
 
-report: "report.pdf"
-
-proposal: "proposal.pdf"
+report: "Remotely Visualizing, Deploying and Controlling a Virtual Robot Swarm with ROS"
 
 --------------------------------------------------------------------------------

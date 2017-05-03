@@ -1,0 +1,19 @@
+---
+- name: source the ROS setup.bash file
+  command: chdir=/opt/ros/kinetic 'source setup.bash'
+#  args:
+#     chdir: /opt/ros/kinetic
+  become: true
+#  command: mkdir -p success01/success arg1 arg2
+#  args:
+#    chdir: /tmp
+#    creates: /tmp/success01/success
+#  shell: . /home/cc/.bashrc
+
+#  vars:
+#    ros_package_path: /opt/ros/kinetic/share
+#  lineinfile:
+#    dest: /etc/environment
+#    state: present
+#    line: 'ROS_PACKAGE_PATH={{ ros_package_path }}'
+#    insertafter: EOF

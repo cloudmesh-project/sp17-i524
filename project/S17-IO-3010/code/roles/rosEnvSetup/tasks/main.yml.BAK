@@ -1,0 +1,41 @@
+---
+- name: workspace setup part 01
+#  command: mkdir -p ~/catkin_ws/{src,logs,install}
+  file: path=/home/cc/catkin_ws state=directory owner=www-data group=www-data
+
+- name: determine if ROS_PACKAGE_PATH exists
+  replace: 
+    dest: /etc/environment
+    regexp: 'ROS_PACKAGE_PATH=(.*)'
+    replace: 'ROS_PACKAGE_PATH=\1'
+    register: checkIfPATHIsHere
+
+- name: create ROS_PACKAGE_PATH entry if applicable
+  vars:
+    ros_package_path: /home/cc/catkin_ws
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    line: 'ROS_PACKAGE_PATH={{ ros_package_path }}'
+    regexp: ''
+    insertafter: EOF
+    when: checkIfPATHIsHere.changed==false
+
+- name: add {{ ros_package_path }} if one already exists
+  vars:
+    ros_package_path: /home/cc/catkin_ws
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    backrefs: no
+    regexp: 'ROS_PACKAGE_PATH=(["])((?!.?{{ ros_package_path }}).?)(["])$'
+    line: 'ROS_PACKAGE_PATH=\1\2:{{ ros_package_path }}\3'
+    when: checkIfPATHIsHere.changed
+
+
+#- name ws setup part 02
+#  command: bash 'export ROS_PACKAGE_PATH=${HOME}/catkin_ws:${ROS_PACKAGE_PATH}'
+
+
+- name: change to newly-created workspace
+  command: chdir=/home/cc/catkin_ws ls

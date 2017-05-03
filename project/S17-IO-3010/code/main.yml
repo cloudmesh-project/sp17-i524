@@ -1,0 +1,140 @@
+---
+- name: source ROS setup file
+  # hosts: master
+  become_user: cc
+  shell: source setup.bash
+  args:
+    chdir: /opt/ros/kinetic
+    executable: /bin/bash
+
+# - name: clean the workspace
+#   # hosts: master
+#   become_user: cc
+#   shell: catkin clean --yes
+#   args:
+#     chdir: /home/cc/mybot_ws
+#     executable: /bin/bash
+
+# - name: build the robot workspace
+#   # hosts: master
+#   become_user: cc
+#   shell: catkin build
+#   args:
+#     chdir: /home/cc/mybot_ws
+#     executable: /bin/bash
+
+# - name: source mybot_ws setup file
+#   # hosts: master
+#   become_user: cc
+#   shell: source setup.bash
+#   args:
+#     chdir: /home/cc/mybot_ws/devel
+#     executable: /bin/bash
+
+
+
+
+#===========superseded=======================
+# - name: catkin workspace setup main
+#   become_user: cc
+#   file: path=/tmp/catkin_ws state=directory
+# #  become_user: "{{ default_user }}"
+# #  file: path={{ catkin_wkspace }} state=directory
+# - name: catkin workspace setup src
+#   become_user: cc
+#   file: path=/tmp/catkin_ws/src state=directory
+# #  become_user: "{{ default_user }}"
+# #  file: path={{ catkin_wkspace }}/src state=directory
+# - name: catkin workspace setup logs
+#   become_user: cc
+#   file: path=/tmp/catkin_ws/logs state=directory
+# #  become_user: "{{ default_user }}"
+# #  file: path={{ catkin_wkspace }}/logs state=directory
+# - name: catkin worskspace setup install
+#   become_user: cc
+#   file: path=/tmp/catkin_ws/install state=directory
+# #  file: path={{ catkin_wkspace }}/install state=directory
+
+# - name: initialize  catkin workspace
+#   shell: catkin config --init --extend /opt/ros/kinetic
+#   become: yes
+# #  become_user: "{{ default_user }}"
+#   become_user: cc
+#   args:
+#     chdir: /tmp/catkin_ws
+# #    chdir: "{{ catkin_wkspace }}"
+# #    executable: "{{ shell_exec }}"
+#     executable: /bin/bash
+
+# - name: create catkin package
+#   shell: catkin create pkg i524ros --rosdistro kinetic --catkin-deps std_msgs rospy roscpp
+#   become: yes
+# #  become_user: "{{ default_user }}"
+#   become_user: cc
+#   args:
+# #    chdir: "{{ catkin_wkspace }}"/src
+# #    executable: "{{ shell_exec }}"
+#     chdir: /tmp/catkin_ws/src
+#     executable: /bin/bash
+
+# - name: build package(s)
+#   shell: catkin build
+#   become: yes
+#   become_user: cc
+# #  become_user: "{{ default_user }}"
+#   args:
+# #    chdir: "{{ catkin_wkspace }}"/src
+# #    executable: "{{ shell_exec }}"
+#     chdir: /tmp/catkin_ws/src
+#     executable: /bin/bash
+
+#- name: setup caktin workspace
+#  become: true
+#  become_user: "{{ default_user }}"
+#  shell: "{{ item }}"
+#  with_items:
+#   - source /opt/ros/kinetic/setup.bash
+#   - mkdir -p "{{ catkin_wkspace }}"/src  #,logs,install creates={{ catkin_wkspace }}03
+#   - mkdir "{{ catkin_wkspace }}"/logs
+#   - mkdir "{{ catkin_wkspace }}"/install
+#    - chdir={{ catkin_wkspace }}  catkin config --init --extend /opt/ros/kinetic
+#    - chdir={{ catkin_wkspace }}/src catkin create pkg i524ros --rosdistro kinetic --catkin-deps std_msgs rospy roscpp
+
+
+#- name: initialize newly-created workspace
+#  shell: chdir={{ catkin_wkspace }} catkin init
+
+#- name: create rosI524 package
+
+#- name: add catkin source package; a hack to move the process forward
+#  shell: chdir={{ catkin_wkspace }}/src git clone https://github.com/ros/catkin.git
+
+#- name: build rosI524  package
+#  shell: chdir={{ catkin_wkspace }}/src catkin build
+
+## if done manually, use ' source ~/catkin_ws/devel/setup.bash '
+## must add to .bashrc b/c Ansible creates a new shell for each command
+## as a result, if not in .bashrc, would need to source file with each ansible command
+#- name: setup .bashrc to add newly-created directory to ROS_PACKAGE_PATH for evey new shell
+#  shell: echo "export ROS_PACKAGE_PATH=/opt/ros/kinetic/share:/tmp/catkin_ws/src/rosI524" >> /tmp/.bashrc
+#  shell: echo "source /tmp/catkin_ws/devel/setup.bash" >> /tmp/.bashrc
+
+#~~============================================================
+#   - echo "Hello, world." >> addAFile.txt
+
+
+#- name: initialize catkin workspace
+#  shell: catkin init
+
+#- name: set ROS_PACKAGE_PATH
+#  vars:
+#    home_directory: /home/cc
+#  lineinfile: 
+#    dest: '{{ home_directory }}/.bashrc'
+#    regexp: '^export ROS_PACKAGE_PATH=\/home\/cc\/catkin_ws03'
+#    line: 'export ROS_PACKAGE_PATH=$HOME/catkin_ws03:$ROS_PACKAGE_PATH'
+
+#- name: initialize catkin workspace
+#  command: "{{ item }}"
+#  with_items:
+#   - catkin init  
