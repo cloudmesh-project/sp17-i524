@@ -36,9 +36,13 @@ It is necessary that the security groups are updated so that the ports "5025", "
 cm secgroup add groupName ruleName startPort endPort protocol 0.0.0.0/1
 ```
 
-1- In order to install cloudmesh client hadoop-spark-playbook.yml. It runs on the local host and it creates a hadoop cluster with spark and establishes connection between the nodes. 
+1- In order to install cloudmesh client hadoop-spark-playbook.yml. It runs on the local host and it creates a 
+hadoop cluster with spark and establishes connection between the nodes. 
+
 2- Then run the inv.yml playbook that generates the inventory file. This generates inventory file for the remaining playbooks
-3- The code/ansible/test.yml playbook runs the the tasks for setting up the environment for pyspark, analysis, benchmarking and installling pre requisites such as node-js.
+
+3- The code/ansible/test.yml playbook runs the the tasks for setting up the environment for pyspark, analysis, 
+benchmarking and installling pre requisites such as node-js.
 
 The following modifications have to be made to run the bechmarks
 ..* code/ansible/chameleon_ben1 obtains the benchmark for running the code in "cluster mode" using YARN on a 3 node spark cluster. 
