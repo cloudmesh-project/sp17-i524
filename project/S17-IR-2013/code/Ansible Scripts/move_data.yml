@@ -1,0 +1,68 @@
+---
+- hosts: cc_vm #comment: cc_vm is the group name we just defined
+  become: yes #comment: this operation needs privilege access
+  become_user: hadoop
+  tasks:
+    - copy:
+        src: /home/Outbrain/events.csv
+        dest: /home/hadoop/events.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/Outbrain/promoted_content.csv
+        dest: /home/hadoop/promoted_content.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/Outbrain/clicks_train.csv
+        dest: /home/hadoop/clicks_train.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/Outbrain/documents_entities.csv
+        dest: /home/hadoop/documents_entities.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/Outbrain/documents_topics.csv
+        dest: /home/hadoop/documents_topics.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/Outbrain/documents_categories.csv
+        dest: /home/hadoop/documents_categories.csv
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/Outbrain/outbrain_pig
+        dest: /home/hadoop/outbrain_pig
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - name: Change Permissions for the Pig Script
+      shell: "sh -lc 'cmhod 777 /home/hadoop/outbrain_pig'"
+
+    - name: Put events file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/files/events.csv /outbrain/events.csv'"
+    - name: Put clicks train file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/files/clicks_train.csv /outbrain/clicks_train.csv'"
+    - name: Put promoted_content file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/files/promoted_content.csv /outbrain/promoted_content.csv'"
+    - name: Put documents_categories file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/files/documents_categories.csv /outbrain/documents_categories.csv'"
+    - name: Put documents_entities file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/files/documents_entities.csv /outbrain/documents_entities.csv'"
+    - name: Put documents_topics file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/files/documents_topics.csv /outbrain/documents_topics.csv'"
+
+
+    - name: Run Pig Script
+      shell: "sh -lc 'pig /home/hadoop/outbrain_pig'"
+
+
