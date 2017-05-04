@@ -55,8 +55,7 @@ Simulating a single robot's actions and responses to its environment prior to re
 
 \begin{figure*}[htbp]
 \centering
-once figure is include in repo change this include to add images/ros-is.png 
-%\fbox{\includegraphics[width=\linewidth]{images/ros-is.png}}
+\fbox{\includegraphics[width=\linewidth]{images/ros-is.png}}
 \caption{A Conceptualization of What ROS, the \textit{R}obot \textit{O}perating \textit{S}ystem, Offers to Roboticists \cite{www-ros-ros-is}}
 \label{fig:rosOverview}
 \end{figure*}
@@ -112,12 +111,28 @@ Deployment begins when the user retrieves the initalization file, named \textit{
 from the directory where the \textit{begin} bash script resides.  
 
 \paragraph{\textit{begin} bash script}
-The bash script calls three cloudmesh\_client commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster define -n rosA1 -c 3! }, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster allocate! } and {\color{green} \lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } in order to create and prepare the three-node cluster named \textit{rosA1}.  The script then uses two additional Cloudmesh commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster nodes! } and {\color{green} \lstinline[style=BashInputStyle]!> cm vm ip show! } to capture the public and private ip addresses of the cluster.  The private ip addresses, termed static ips by Chameleon, must be used because ROS nodes communicate by binding to any available port.  That is, ROS does not specify the port beforehand, and it does not consider whether or not the firewall blocks the port for security purposes.  As a result, intra-cluster communication requires access to every port, i.e., the firewall cannot close any port on any computer running ROS when that computer needs to communicate with another computer in the cluster.  Obviously, this presents a major security concern, especially on shared resources. 
+The bash script calls three cloudmesh\_client commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster define -n rosA1 -c 3! }, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster allocate! } and {\color{green} \lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } in order to create and prepare the three-node cluster named \textit{rosA1}.  The script then uses two additional Cloudmesh commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster nodes! } and {\color{green} \lstinline[style=BashInputStyle]!> cm vm ip show! } to capture the public and private ip addresses of the cluster as well as the host names.  
 
-In order to maintain security and enable intra-cluster communication, two of the three computer nodes must have their public ip addresses removed, i.e., disassociated, using Chameleon's browser-based graphical user interface (GUI), Horizon.  Then, and only then, the ports can be opened by applying the \textit{ros} security group to the two nodes in question (the private nodes).  Since the third node, the main node, still has a public-facing ip address, the other two nodes can be accessed by ssh'ing to the main node and then ssh'ing to one of the private nodes.
+The private ip addresses, termed static ips by Chameleon, must be used because ROS nodes communicate by binding to any available port.  That is, ROS does not specify the port beforehand, and it does not consider whether or not the firewall blocks the port for security purposes.  As a result, intra-cluster communication requires access to every port, i.e., the firewall cannot close any port on any computer running ROS when that computer needs to communicate with another computer in the cluster.  Obviously, this presents a major security concern, especially on shared resources. 
 
+In order to maintain security and enable intra-cluster communication, two of the three computer nodes must have their public ip addresses removed, i.e., disassociated, using Chameleon's browser-based graphical user interface (GUI), Horizon.  Then, and only then, the ports can be opened by applying the \textit{ros} security group to the two nodes in question (the private nodes).  Since the third node, the main node, still has a public-facing ip address, the other two nodes can be accessed via an ssh connection (\textit{ssh'ing}) to the main node and then ssh'ing to one of the private nodes.
 
+The ip addresses and names are written to separate files for distinct purposes.  The host names and private ip addresses are used to create a file to append to each cluster node's \textit{known\_hosts} file.  The private ip addresses also end up in the inventory file Ansible references.  
 
+As its penultimate step, the \textit{begin} script places all the necessary files for the demonstration on the correct cluster nodes.  The ROS robot files and the Ansible files go onto the main node, while the script places a copy of the known\_hosts addendum onto each cluster node.  In addition, the script uses the \textit{wget} command to copy the bash script for the next step in the process onto the main node.
+
+The final lines of the file initiate the next step in the process and perform a few administrative duties.
+
+\paragraph{\textit{beginAgain} bash script}
+This script handles the software installation and initialization of the robots.  It first establishes the veracity of the main node and the other nodes by connecting to each one in turn via ssh connection.  If these steps do not occur before Ansible runs, the software installations never occur because Ansible hangs mid-process.  Ansible installs all the necessary software on each cluster node.  It installs Linux's \textit{tree} package because the author prefers to use it to view directory structures; the ROS package; the rosbash package; the rosinstall package; and, the catkin\_tools package. Ansible also creates a new known\_hosts file for each computer node.
+
+Upon completing the installation, the file's instructions initialize the robot workspace.  The \textit{catkin\_tools} package accomplishes this on behalf of ROS.  catkin\_tools represents an evolution of ROS' built-in \textit{catkin} family of commands.  Initializing the robot workspace essentially involves the addition of numerous hidden helper files, which assist in building the robot package.  Creating the robot package, referred to as \textit{building} the package, involves a series of automated \textit{CMake} commands.  
+
+With the robot package built, the script copies another script from github.  This small script starts ROS' \textit{talker} robot, a simple robot included as part of ROS' tutorial packages.  It relies upon Linux's \textit{byobu} program to set up usable working environment if the user chooses to start the listener robot on the third cluster node.
+
+Finally, execution of the last few lines of the script occurs.  These lines start ROS, start the two robots, create a simulated world for the robots and then issue a command for the robots to drive in circles.  Gazebo's simulation of the robots and their world come back through the ssh connection to the end user  so s/he can see the simulation in real time. 
+
+ before building the robot package that will be run in short order.  
 \subsection{Modifications, Pitfalls}
 TBD; discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.
 \subsection{Initializing the Swarm}

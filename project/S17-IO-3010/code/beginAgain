@@ -36,7 +36,7 @@ echo "source /home/cc/mybot_ws/devel/setup.bash" >> /home/cc/.bashrc
 
 # start talker.py on node #2
 ## start roscore
-ssh cc@$node_ip02 wget -P /home/cc/talkListen https://raw.githubusercontent.com/cloudmesh/cloudmesh.ros/master/code/talkListen
+ssh cc@$node_ip02 wget -P /home/cc/ https://raw.githubusercontent.com/cloudmesh/cloudmesh.ros/master/code/talkListen
 ssh -o StrictHostKeyChecking=no cc@$node_ip02 chmod +x /home/cc/talkListen
 ssh -o StrictHostKeyChecking=no cc@$node_ip02 ./talkListen
 
