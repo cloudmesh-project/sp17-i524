@@ -1,5 +1,5 @@
-\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
-\usepackage{fancyvrb}
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
+\usepackage{fancyvrb,appendix}
 \journal{i524} 
 
 \title{Using Hadoop and Spark for Big Data Analytics: Predicting Readmission of Diabetic patients}
@@ -36,21 +36,24 @@ This project proposes and demonstrates the use of Hadoop and Spark on cloud to r
 \tableofcontents % Print the contents section
 
 \section{Introduction}
-The idea behind this project is to introduce Hadoop/Spark over cloud infrastructure as a scalable and faster solution for predictive analysis using machine learning.
+The idea behind this project is to introduce Hadoop-Spark distributed cluster for building predictive analytics applications. Spark allows us to build applications that are scalable and faster when compared to standalone applications performing similar analytics tasks.
 
-We chose the case study of predicting the likelihood of a diabetes patient getting readmitted within 30 days from the date of discharge using his/her available medical data. We approached this problem as a classification problem to classify the patients into  ‘Yes’ or ‘No’  classes, indicating whether the patient is likely to be readmitted or not in the next 30 days. We used different machine learning algorithms on the available data, after some pre-processing, to predict the same. The accuracy percentages obtained for all the utilized classification algorithms are included in the report. We also compared the results of Spark's Mllib algorithms against scikit-learn's algorithms and found that both yielded similar results.	
+We chose the case study of predicting the likelihood of a diabetes patient getting readmitted within 30 days from the date of discharge using his/her available medical data. Predictive analytics based on medical data to provide healthcare is an active area of research.Predicting readmission likelihood is aimed to providing better care to patients. Readmissions happen due to deterioration of patients’ health.  Readmission predictions help doctors and patients to take preventive steps to avert medical emergencies that need hospitalization. 
 
-\begin{figure*}[h]\centering
+ We approached this problem as a classification problem to classify the patients into  ‘Yes’ or ‘No’  classes, indicating whether the patient is likely to be readmitted or not in the next 30 days. We used different machine learning algorithms on the available data, after some pre-processing, to predict the same. The accuracy percentages obtained for all the utilized classification algorithms are included in the report. 
+
+\begin{figure*}[h]
+\centering
 \includegraphics[width=\linewidth]{images/Workflow}
 \caption{Workflow of the project}
 \label{fig:workflow}
 \end{figure*}
 
-We approached the solution from a pure data perspective to address the challenge of lacking medical domain knowledge. For some basic information, we relied on the dataset description on UCI website \cite{www-dataset}, ICD-9 \cite{www-icd9} and earlier studies \cite{article-hindawi}. We followed a workflow as shown in figure \ref{fig:workflow}. 
+ 
 
-Our other important goal is to propose an end-to-end solution that is scalable and faster. While our dataset is about 100,000 records, anticipating real-world scenarios with huge amounts of data we are proposing a Hadoop based solution. We are utilizing Spark for its faster processing \cite{www-sparkfast} and  advanced analytics through packages like Mllib \cite{www-mllib}, which provides several commonly used machine learning algorithms. Finally we are implementing this solution over cloud infrastructure to meet our infrastructure requirements. This helped us demonstrate an end-to-end solution closer to real-world scenarios, where enterprises utilize cloud infrastructure in a pay per-use model. This helped us save time and resources in setting up the infrastructure.
+Our other important goal is to propose an end-to-end solution that is scalable and faster than a standalone predictive analytics application. While our dataset has about 100,000 records, anticipating real-world scenarios with huge amounts of data we are proposing a Hadoop based solution. We are utilizing Spark for its faster processing \cite{www-sparkfast} and  advanced analytics through packages like MLlib \cite{www-mllib}, which provides several commonly used machine learning algorithms. Finally we are implementing this solution over cloud infrastructure to meet our infrastructure requirements. This helped us demonstrate an end-to-end solution closer to real-world scenarios, where enterprises utilize cloud infrastructure in a pay per-use model. This helped us save time and resources in setting up the infrastructure.
 
-We deployed our solution on two different clouds and obtained metrics to assess the infrastructure performance with our solution.  We also deployed our solutions on a distributed Hadoop/Spark environment built on on-premise machines. We compared the performance metrics of all the three infrastructure choices, with respect to our solution  and included them in this report.
+We deployed our solution on two different clouds and obtained metrics to assess the infrastructure performance with our solution.  We also deployed our solutions on a distributed Hadoop/Spark environment built on on-premise machines. We also automated the deployment of Spark cluster on cloud virtual machines using Ansible. We compared the performance metrics of all the three infrastructure choices, with respect to our application and included them in this report. Our project workflow can be seen in the Figure \ref{fig:workflow}.
 
 \section{Architecture}
 
@@ -69,6 +72,7 @@ We then deployed Hadoop and Spark on these machines to setup a HDFS Spark cluste
 \section{Technologies}
 \begin{table}[h!]
 \centering
+ \caption{List of technologies used}
  \begin{tabular}[width=\linewidth]{|l l|}
  \hline
  \textit{Technology} & \textit{Usage}  \\  \hline
@@ -81,33 +85,33 @@ We then deployed Hadoop and Spark on these machines to setup a HDFS Spark cluste
  \hline
  \textbf{GitHub}\cite{www-github} & Project Repository \\
  \hline
- \textbf{Ansible}\cite{www-ansible} & Application Deployment \\ & $\&$ Configuration Management \\
+ \textbf{Ansible}\cite{www-ansible} & Application Deployment $\&$\\ & Configuration Management \\
  \hline
- \textbf{Chameleon}\cite{www-chameleon}, \textbf{JetStream}\cite{www-jetstream}, & Benchmarking \\
+ \textbf{Chameleon}\cite{www-chameleon}, & Benchmarking \\
+ \textbf{JetStream}\cite{www-jetstream}, & \\
  \textbf{VirtualBox}\cite{www-vm} &\\
  \hline
  \textbf{LaTex} \cite{www-latex} & Document Preparation \\
  \hline
 \end{tabular}
-\caption{List of technologies used}
 \label{table:techlist}
 \end{table}
 
-We used specific technologies for specific tasks in this project as listed in table \ref{table:techlist}:
+We used specific technologies for specific tasks in this project as listed in Table \ref{table:techlist}:
 \begin{itemize}
  \item \textbf{Hadoop}: Apache Hadoop is a framework for processing and storing huge amounts of data, commonly known as 'Big Data', in a distributed applications. It allows users to build scalable and highly available data applications. Hadoop has four modules: HDFS, YARN, MapReduce and Hadoop Common. Hadoop Distributed File System (HDFS) allows users to store large amounts of data.  YARN is the framework for job scheduling and resource management. MapReduce supports parallel processing of large data sets stored in the distributed environment through HDFS. Hadoop Common provides utilities that support other Hadoop modules.
  
  \item \textbf{Spark}: Spark runs on Hadoop and provides faster data processing capabilities for data on HDFS. It primarily uses a new data structure called Resilient Distributed Dataset (RDD) for processing. RDD is a read only multiset of data items distributed over cluster of virtual machines. Spark also has a new feature of fault tolerance and in the event of a primary master node failure, the secondary master takes over. Spark, unlike Hadoop applications, allows the iterative reading and writing in-memory. After processing it writes the data to HDFS.
  
  \item \textbf{Python}: We chose python as per our programming language. Python is one of the programming languages supported by Spark API through pyspark. We used it because of its simple syntax and data manipulation capabilities.
- \item scikit-learn: It is an open source Python library that provides Machine Learning algorithms and other utilities to preprocess and visualize data \cite{www-sklearn}.
+ \item \textbf{scikit-learn}: It is an open source Python library that provides Machine Learning algorithms and other utilities to preprocess and visualize data \cite{www-sklearn}.
  
  \item \textbf{MLlib}: Spark MLlib is the Spark’s machine learning library provides machine learning algorithms that can be applied on Resilient Distributed Datasets \cite{www-mllibguide}. It also provides other data manipulation utilities. MLlib has API available in Java, Python, Scala and R \cite{www-mllib}.
  
  
  
- \item \textbf{GitHub}: GitHub is 'a web-based Git or version control repository and Internet hosting service' \cite{www-wikigit}. We used Github repositories to store all the files related to documentation, ansible scripts and python code.
- \item \textbf{Ansible}: We are using ansible for automating deployment of our software on cloud. We used ansible scripts to automate deployment of cloudmesh client along with its pre-requisites like pip, virtualenv etc. We also used ansible for automating deployment of Hadoop and Spark.
+ \item \textbf{GitHub}: GitHub is 'a web-based Git or version control repository and Internet hosting service' \cite{www-wikigit}. We used Github repositories to store all the files related to documentation, Ansible scripts and python code.
+ \item \textbf{Ansible}: We are using Ansible for automating deployment of our software on cloud. We used Ansible scripts to automate deployment of cloudmesh client along with its pre-requisites like pip, virtualenv etc. We also used Ansible for automating deployment of Hadoop and Spark.
 \end{itemize}
 
 
@@ -122,17 +126,18 @@ Jetstream is a cloud service which aims to provide researchers Jetstream’s dev
 \subsection{Virtual Box}
 It is a fully virtualized hypervisor which gives the ability to spawn virtual machines in local commodity hardware. In fully virtualized environment, the guest OS  is not aware of the underlying  resources on which it is running as the hypervisor creates a complete simulation of the underlying hardware. 
 
-A brief comparison of multiple attributes of the clouds used are displayed in table \ref{table:clouds}.
+A brief comparison of multiple attributes of the clouds used are displayed in Table \ref{table:clouds}.
 
 \begin{table}[h!]
 \centering
+\caption{Comparison of cloud vendors}
  \begin{tabular}{|c|c c c|} 
  \hline
  \textit{Clouds} & \textit{Chameleon} & \textit{Jetstream} & \textit{VirtualBox}  \\ 
  \hline
  \hline 
  \textit{CPU} & Intel Xeon & Dual Intel & Intel Core  \\ 
- & X5550 & E-2680v3 "Haswell" & i5-6200U\\
+ & X5550 & E-2680v3 & i5-6200U\\
  \hline 
  \textit{RAM} & 2 GB & 2 GB & 2 GB \\ 
 \hline 
@@ -143,12 +148,13 @@ A brief comparison of multiple attributes of the clouds used are displayed in ta
 \textit{CPU Speed} & 2.3 GHz & 2.3 GHz & 2.3 GHz\\
 \hline 
 \end{tabular}
-\caption{Comparison of cloud vendors}
 \label{table:clouds}
 \end{table}
 
-\section{Automated Cloud Deployment: Ansible}
-For this project, we used Ansible to automate the deployment of spark and its prequisites. The Ansible script is written such that we can leverage the cloudmesh client technology to deploy the spark cluster. The steps involved in the script can be seen in figure \ref{fig:ansible}.
+\section{Automated Deployment: Ansible}
+The Ansible playbooks allow us to install and enable several packages in different VMs simultaneously. This removes the overhead of the logging into individual machine to install different packages and services.
+
+For this project, we used Ansible to automate the deployment of spark and its prequisites. The Ansible script is written such that we can leverage the cloudmesh client technology to deploy the spark cluster. The steps involved in the script can be seen in Figure \ref{fig:ansible}.
 
 \begin{figure}[h]
 \centering
@@ -157,30 +163,33 @@ For this project, we used Ansible to automate the deployment of spark and its pr
 \label{fig:ansible}
 \end{figure}
 
-The below listed ansible playbooks are invoked through shell scripts.
+We used the below listed Ansible playbooks for our project:
 \begin{enumerate}
 \item \textit{inventory}: This file is used by the playbook to install packages and services on target servers. This Inventory file consists of target servers and these servers can be categorized into groups like webservers, dbservers etc. Under each group, we can list the server which serves common purpose.
-\item \textit{playbook-cloudmesh-first-time-install.yml}: This file was used for deployment of cloudmesh client.
-\item \textit{cloudmesh-first-time-configure.yml} : Used for configuring the cloudmesh after installation
+\item \textit{playbook-cloudmesh-first-time-install.yml}: This file was used for deployment of cloudmesh client. It installs all the pre-requisite of cloudmesh client first, checks if the ssh keys are already present, and then deploys the cloudmesh client.
+\item \textit{cloudmesh-first-time-configure.yml} : It is used to configure the cloudmesh after installation. The main tasks for this playbook include configuring cloud provider name and cloud user name, adding the ssh-key to the cloudmesh database, and upload the ssh key to the cloud.
 
-\item \textit{deployment-playbook.yml:} used to deploy the hadoop-spark cluster in chameleon and jetstream
+\item \textit{deployment-playbook.yml:} It is used to deploy the hadoop-spark cluster in chameleon and jetstream clouds. The main tasks include defining a cluster, defining a hadoop-spark stack on the cluster, syncing the clustering with github and deploying the hadoop cluster.
 
-\item  \textit{tranfer-files-remotely.yml:} used to transfer pyspark codes and input files from local machine to report machines
+\item  \textit{tranfer-files-remotely.yml:} It is used to transfer pyspark codes and input files from local machine to report machines. The main tasks include reset of cloudmesh database, upgrade the python-pip, uninstall and install of cloudmesh client.
 
-\item \textit{upgrade-cloudmesh.yml:} it is used only when there is a need to upgrade
+\item \textit{upgrade-cloudmesh.yml:} It is used only when there is a need to upgrade.
 \end{enumerate}
 
+ We developed Ansible playbook for installation and configuration of cloudmesh client. We also developed playbook to deploy hadoop/spark cluster on different clouds. After successful deployment of Hadoop-Spark/hadoop cluster we require the python modules that perform data analysis and the data files in spark master node. For this, we developed an Ansible playbook to automate the manual process of uploading the file, authentication and downloading the file. We invoked the Ansible scripts through shell script, running on local Virtual Machines.
 
-\section{Data Cleansing and Pre-processing}
+
+\section{Data Cleaning and Pre-processing}
+We approached the problem from a pure data perspective to address the challenge of lacking medical domain knowledge. For some basic information, we relied on the dataset description on UCI website \cite{www-dataset}, ICD-9 \cite{www-icd9} and earlier studies \cite{article-hindawi}.
 The initial data set is publicly available on the UCI Machine Learning Repository \cite{www-dataset}.
 The initial data set has information extracted from the database satisfying the following criteria \cite{article-hindawi}:
-\begin{enumerate}
+\begin{itemize}
     \item Each row corresponds to an inpatient encounter (a hospital admission).
     \item All of the encounters are "diabetic" encounters, that is, one during which any kind of diabetes was entered to the system as a diagnosis.
     \item Each encounter also corresponds to a patient stay between 1 and 14 days.
     \item Laboratory tests were performed during the encounter.
     \item Medications were administered during the encounter.
-\end{enumerate}
+\end{itemize}
 
 101,766 encounters were present in  the data set that satisfy the above five inclusion criteria. Each encounter consists of 55 features describing the diabetic encounters, including demographics, diagnoses, diabetic medications, number of visits in the year preceding the encounter, and payer information. We defined the readmission  field with 2 values: “YES,” for cases where the patient was readmitted within 30 days of discharge and “NO,” for both readmission after 30 days scenario and no readmission at all.
 
@@ -209,26 +218,27 @@ The unit of our analysis is an encounter; to keep the observations independent, 
 We performed early data analysis in python in a local machine. We implemented four classification algorithms using scikit-learn library on each of the 3 data sets created. The data sets were first divided in training and testing set. The training set had about 80$\%$ observations (5000 observations approx.) whereas the testing set had the remaining 20$\%$ observations (12937 observations). 
 \begin{table}[h!]
 \centering
+\caption{Results from scikit-learn}
  \begin{tabular}{|c c c|} 
  \hline
- \textit{Classification Technique} & \textit{Number of Features} & \textit{Accuracy ($\%$)}\\ 
+ \textit{Classification Technique} & \textit{Number of} & \textit{Accuracy ($\%$)}\\ 
+ & \textit{Features} &\\
  \hline
  \hline 
-  SGDClassifier & 136 & 90.68 \\  & 26 & 86.31\\
+  SGDClassifier\cite{www-sgd} & 136 & 90.68 \\  & 26 & 86.31\\
   & 129 & 86.96\\
  \hline 
-  GaussianNB & 136 & 10.43 \\  & 26 & 88.30\\
+  GaussianNB\cite{www-gnb} & 136 & 10.43 \\  & 26 & 88.30\\
   & 129 & 9.96\\ 
  \hline 
-   KMeans & 136 & 55.26 \\ 
+   KMeans\cite{www-kmeans} & 136 & 55.26 \\ 
    & 26 & 55.24\\
   & 129 & 55.26\\ 
  \hline 
-DecisionTreeClassifier & 136 & 83.35 \\ & 26 & 82.50\\
+DecisionTreeClassifier\cite{www-dtc} & 136 & 83.35 \\ & 26 & 82.50\\
   & 129 & 83.28\\
 \hline 
 \end{tabular}
-\caption{Results from scikit-learn}
 \label{table:sklearn}
 \end{table}
 
@@ -275,7 +285,7 @@ Using the command 'jps' we get a list of the following services:
 
 
 \subsection{Data Storage}
- Uploading input data and code to Driver Node After the Spark setup is ready for the deployment, the data is pushed from the localhost to the remote spark master node. For this we used an ansible script.
+ Uploading input data and code to Driver Node After the Spark setup is ready for the deployment, the data is pushed from the localhost to the remote spark master node. For this we used an Ansible script.
 \begin{enumerate}
  \item Ansible script
 \begin{enumerate}
@@ -328,39 +338,38 @@ $ ./bin/spark-submit --class path.to.your.Class
  \end{itemize}
 
 \section{Results}
-
 \begin{table}[h!]
 \centering
+\caption{Results from Spark MLlib}
  \begin{tabular}{|c c c|} 
  \hline
- \textit{Classification Technique} & \textit{Number of Features} & \textit{Accuracy ($\%$)}\\ 
+ \textit{Classification Technique} & \textit{Number of} & \textit{Accuracy ($\%$)}\\
+ & \textit{Features} &\\
  \hline
  \hline 
-  SGDClassifier & 136 & 90.88
+  Logistic Regression SGD\cite{www-mllibsgd} & 136 & 90.88
  \\  & 26 & 90.99\\
   & 129 & 90.88\\
  \hline 
-  GaussianNB & 136 & 84.97
+  Naive Bayes\cite{www-mllibgnb} & 136 & 84.97
  \\  & 26 & 85.02\\
   & 129 & 84.987
 \\ 
  \hline 
-   KMeans & 136 & 55
+   K-means\cite{www-mllibkmeans} & 136 & 55
  \\ 
    & 26 & 55\\
   & 129 & 55\\ 
  \hline 
-DecisionTreeClassifier & 136 & 91.01 \\ & 26 & 90.75\\
+Decision Tree\cite{www-mllibdtc} & 136 & 91.01 \\ & 26 & 90.75\\
   & 129 & 90\\
 \hline 
 \end{tabular}
-\caption{Results from Spark MLlib}
 \label{table:mllib}
 \end{table}
 
-Kmeans did not successfully separate the data class wise as observed in scikit-learn library, as shown in table \ref{table:mllib}.  We used  supervised classification algorithms namely decision tree, logistic stochastic gradient descent and naïve bayes. We obtained good accuracies of 80-90$\%$ with classification algorithms.
+Kmeans did not successfully separate the data class wise as observed in scikit-learn library, as shown in Table \ref{table:mllib}.  We used  supervised classification algorithms namely decision tree, logistic stochastic gradient descent and naïve bayes. We obtained good accuracies of 80-90$\%$ with classification algorithms.
 
-These can be found in the below table.
 Similar analysis in a real world scenario can be utilized to predict the readmission likelihood using medical records of diabetes patients. This enables doctors to  pay special attention to those patients, identify the causal factors and give preventive care.
 
 
@@ -371,9 +380,30 @@ Similar analysis in a real world scenario can be utilized to predict the readmis
 
 \subsection{Comparison of Spark Deployment Time}
 
-We compared the Hadoop-Spark deployment time with different number of machines on each of the clouds, Jetstream and Chameleon. We can see from figure \ref{fig:spd} the Hadoop-Spark deployment times observed on Chameleon and Jetstream clouds. 
+We compared the Hadoop-Spark deployment time with different number of machines on each of the clouds, Jetstream and Chameleon. In Table \ref{table:finalspdeployment}, we can see  the Hadoop-Spark deployment times for clusters of different sizes on Chameleon and Jetstream clouds.
 
-\begin{figure}[h]
+\begin{table}[h!]
+\centering
+\caption{Hadoop-Spark deployment time}
+ \begin{tabular}{|c|c c|} 
+ \hline
+ \textit{Number of VMs}  & \textit{Chameleon (seconds)} & \textit{Jetstream (seconds)}\\
+ \hline
+ \hline 
+2 & 631.11 & 484.62\\
+3 & 657.86 & 496.15\\
+5 & 763.14 & 1399.54\\
+7 & 1089 & 806.36\\
+\hline 
+\end{tabular}
+\label{table:finalspdeployment}
+\end{table}
+
+
+The variation of Hadoop-Spark deployment times on Chameleon and Jetstream clouds is shown in Figure \ref{fig:spd}. We observed that Spark deployment times on Jetstream are lesser than those observed on Chameleon, with the exception of cluster with 5 VMs.
+This aberration was caused due to a network issue, which was confirmed from the deployment logs.The log files recorded several unsuccessful ping requests to the cluster nodes before successful completion of deployment.
+
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=\linewidth,scale=1]{images/finalspdeployment.png}
 	\caption{Comparison of Spark deployment results}
@@ -382,45 +412,64 @@ We compared the Hadoop-Spark deployment time with different number of machines o
 
 \subsection{Computation time of algorithms in clouds}
 
-Figure \ref{fig:bench} shows the performance of multiple machine learning algorithms provided by Spark MLlib on clusters in Jetstream, Chameleon and Virtual Box.
-\begin{figure}[h]
+We can see in Table \ref{table:bench} the computation time required for running different Spark MLlib algorithms in multiple VMs in Chameleon and JetStream clouds.
+
+\begin{table}[h!]
+\centering
+\caption{Computation time of algorithms in clouds in multiple VMs}
+ \begin{tabular}{|c|c|c c|} 
+ \hline
+\textit{Algorithms} & \textit{Number of}  & \textit{Chameleon} & \textit{Jetstream}\\
+& \textit{VMs} & \textit{(seconds)} & \textit{(seconds)}\\
+ \hline
+ \hline 
+Logistic   & 1 & 91.67 & 115.55\\
+Regression & 3 & 82.57 & 102.71\\
+SGD & 5 & 31.38 & 57.23\\
+\hline 
+Naive  & 1 & 66.09 & 58.48\\
+Bayes & 3 & 58.44 & 45.89\\
+& 5 & 23.2 & 36.47\\
+\hline
+Decision & 1 & 72.36 & 86.69\\
+Tree & 3 & 60.62 & 71.54\\
+& 5 & 30.25 & 50.37\\
+\hline
+\end{tabular}
+\label{table:bench}
+\end{table}
+
+Figure \ref{fig:bench} shows the performance of multiple machine learning algorithms provided by Spark MLlib on clusters in Chameleon, Jetstream and Virtual Box.
+\begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.85]{images/Benchmarking}
+	\includegraphics[width=\linewidth]{images/Benchmarking.png}
 	\caption{Run-time in different clouds.}
 	\label{fig:bench}
 \end{figure}
 
-\begin{figure}[h]
+Figures \ref{fig:bench1} and \ref{fig:bench2} shows the run-time comparison for machine learning algorithms using Spark MLlib in Jetstream and Chameleon, for predicting readmission likelihood, for 3 and 5 VMs. We can see that the run-time decreased with increase in the number of cluster nodes for all algorithms.
+
+
+
+\begin{figure}[h!]
 \centering
-\includegraphics[scale=0.4]{images/algoruntime3.png}
+\includegraphics[width=\linewidth]{images/algoruntime3.png}
 \caption{Run-time in different clouds for 3 VMs}
 \label{fig:bench1}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.4]{images/algoruntime5.png}
+	\includegraphics[width=\linewidth]{images/algoruntime5.png}
 	\caption{Run-time in different clouds for 5 VMs}
 	\label{fig:bench2}
 \end{figure}
 
 
-Figures \ref{fig:bench1} and \ref{fig:bench2} shows the run-time comparison for machine learning algorithms using Spark MLlib in Jetstream and Chameleon, for predicting readmission likelihood, for 3 and 5 VMs.
-
-\subsection{Comparison of File Transfer Time}
-
-We uploaded two files of different sizes, 3 MB and 168 MB, to both Jetstream and Chameleon. We recorded the file transfer times for each of these clouds. We can see from figure \ref{fig:ftt} that the it took lesser time to transfer files to JetStream cloud machines than to Chameleon cloud machines.
-
-\begin{figure}[h!]
-	\includegraphics[width=\linewidth]{images/Filetransfer.png}
-	\caption{Comparison of file transfer time}
-	\label{fig:ftt}
-\end{figure}
-
 \subsection{Accuracy comparison of multiple algorithms in Spark MLlib vs scikit-learn}
 
 We have recorded several metrics while running each of the four algorithms in different clouds. The four algorithms are SGD Classifier, Gaussian Naïve Bayes, kmeans and Decision Tree Classifier.
-The variations in run-time, deployment time and file transfer are caused due to factors like:
+The variations in run-time and deployment time are caused due to factors like:
 
 \begin{enumerate}
  \item \textit{The complexity of the algorithm:} For example,  kmeans clustering has  O(n log n) time complexity which is worse than Gaussian Naïve Bayes and hence takes more time.
@@ -428,11 +477,11 @@ The variations in run-time, deployment time and file transfer are caused due to 
  \item \textit{The network latency between the hosts:} The VMs which are provisioned on clouds can be on different hosts spread across different racks of datacenters and even datacenters located in different geographies. This may result in network latency and affect the run-time of a program running in a distributed environment.
 \end{enumerate}
 
-We compared the accuracies for different MLlib algorithms using pyspark.mllib package. We can see from figure \ref{fig:accmllib} the accuracies achieved for multiple algorithms in MLlib. While Kmeans gave the lowest accuracy, rest of the algorithms gave similar accuracies.
+We compared the accuracies for different MLlib algorithms using pyspark.mllib package. We can see from Figure \ref{fig:accmllib} the accuracies achieved for multiple algorithms in MLlib. While kmeans gave the lowest accuracy, rest of the algorithms gave similar higher accuracies.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\linewidth]{images/accmllib}
+\includegraphics[width=\linewidth]{images/accmllib.png}
 \caption{Accuracy Results with pyspark.mllib}
 \label{fig:accmllib}
 \end{figure}
@@ -441,91 +490,78 @@ We compared the accuracies achieved from Spark MLlib and scikit-learn algorithms
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\linewidth,scale=1]{images/mllibvssklearn}
+\includegraphics[width=\linewidth]{images/mllibvssklearn.png}
 \caption{Accuracy Results: scikit-learn vs pyspark.mllib}
 \label{fig:mllibvssklearn}
 \end{figure}
 
-\section{Troubleshooting}
-We encountered several errors while running different commands in the Linux terminal. We have listed some of the commands and errors encountered while executing them followed by the steps to resolve them.
-\begin{enumerate}
- \item \textbf{Command}: cm ssh key upload
- 
- \textbf{Error 1}: Permission denied (public key)
- 
- \textbf{Error 2}: Problem uploading key <username> to cloud chameleon:
- The request you have made requires authentication
- 
- \textbf{Resolution}: \\
- cm ssh-key delete <username>-001\\
- cm ssh-key delete <username>-001 cloud = chameleon\\
- ssh-add\\
- cm key add --ssh\\
- cm ssh-key upload\\
- cm key refresh
- 
- \item \textbf{Command}: cm hadoop deploy
- 
- \textbf{Error}: IndexError: list index out of range
-
- \textbf{Resolution}: Use the following image:
- 
-cm cluster define --count 3 --image CC-Ubuntu14.04
-
-\item \textbf{Command}: cm hadoop deploy
-
- \textbf{Error}: INFO: Waiting for cluster to be accessible
-DEBUG: Running cmd: ansible all -m ping -u ubuntu
-stack-0011 | UNREACHABLE! => $\{$
-"changed": false, 
-"msg": "SSH encountered an unknown error during the 
-connection. We recommend you re-run the command using 
--vvvv, which will enable SSH debugging output to help 
-diagnose the issue", 
-"unreachable": true
-$\}$
-
-\textbf{Resolution}: Use the following image:
-
-cm cluster define --count 3 --image CC-Ubuntu14.04
-
-
- \item \textbf{Command}: cm hadoop sync
- 
- \textbf{Error}: no github account associated
- 
- \textbf{Resolution}: 
- 
- git config --global user.name "username"
- git config --global user.email "emailid"
- 
-
- \item \textbf{Command}: apt-get install git
- 
- \textbf{Error}: Permission denied when running "apt-get install git" command
- 
- \textbf{Resolution}: Exit from the current hadoop user using \textit{exit} command. The user will change to ‘cc’ that has the root privileges. Install  the package through the 'cc' user log-in back as the hadoop user to use the installed package .
-\end{enumerate}
-
-The "cm refresh on" command can be used most of the times to resolve multiple errors.
-
-
-
-
-
-
-
-
-
-    
-    
-
 \section{Conclusion}
-We demonstrated the implementation of a big data based  predictive analytics solution using Hadoop, Spark and Spark’s MLlib machine learning algorithms. We predicted the readmission likelihood with an accuracy 90$\%$ by analyzing the data stored on HDFS.  While Hadoop provided us a distributed file system for storing large amounts of data, Spark provided us big data processing capabilities and several libraries to accomplish several common processing and analytics tasks. We used MLlib library’s algorithms to achieve similar results as obtained with scikit-learn library. We were succesfully able to deploy the Spark-Hadoop cluster infrastructure on Chameleon, Jetstream and on-premise virtual box clouds. We developed several shell scripts and Ansible playbooks to automate the deployment.  These technologies can be used to build similar solutions for real world scenarios requiring processing and performing analytics over big data.  Similar applications can be built leveraging   Spark’s ability to process streams of data and support for machine learning algorithms. 
+We demonstrated the implementation of a big data based  predictive analytics solution using Hadoop, Spark and Spark’s MLlib machine learning algorithms. We predicted the readmission likelihood using MLlib with an accuracy of 90$\%$ by analyzing the medical data stored on HDFS. We also compared the results of Spark's MLlib \cite{www-mllib} algorithms against scikit-learn's algorithms and found that both yielded similar results.	 
+
+While Hadoop provided us a distributed file system for storing large amounts of data, Spark provided us big data processing capabilities and several libraries to accomplish several common processing and analytics tasks. We were successfully able to deploy the Spark-Hadoop cluster infrastructure on Chameleon, Jetstream and on-premise virtual box clouds. We developed several shell scripts and Ansible playbooks to automate the deployment. These technologies can be used to build similar solutions for real world scenarios requiring processing and analytics of big data.  Our solution can also be extended to build analytics applications that process streams of data in real-time using Spark Streaming \cite{www-sparkstreaming} and MLlib. 
 
 \section{Acknowledgments}
 This project was a part of the Big Data Software and Projects (INFO-I524) course. We would like to thank Professor Gregor von Laszewski and the associate instructors for their help and support during the course. 
 
+
+
+
 \bibliography{references}
+
+\begin{appendices}
+\appendix
+\section{Appendix: Work Distribution}
+\label{appendix:wd}
+\begin{itemize}
+    \item Kumar Satyam [S17-IR-2031]
+    \begin{itemize}
+        \item Developed Ansible playbook for installation of cloudmesh client.
+        \item Developed Ansible playbook for automated deployment of Spark on different clouds.
+        \item Deployed the initial test of Spark cluster on 1 virtual machine of Jetstream cloud.
+        \item Deployed a Spark cluster  on 5 and 7 virtual machines of Chameleon cloud.
+        \item Developed Ansible script for file transfer from local VM to Spark master node on different clouds.
+        \item Executed K-means python script for predicting readmission and recorded the runtime on Spark cluster on 1 VM on Chameleon cloud.
+        \item Developed python code for predicting readmission using Spark MLlib algorithm  Decision Tree.
+        \item Developed python code for predicting readmission using Spark MLlib algorithm K-means.
+        \item Tested python code of predicting readmission using Spark MLlib algorithms on a single VM spark cluster deployed on Virtual Box.
+        \item Executed Naive Bayes python script for predicting readmission and recorded the runtime on Spark cluster of 1, 3 and 5 VMs on chameleon cloud.
+        \item Executed K-means python script for predicting readmission and recorded the runtime on Spark cluster on 1 VM on Jetstream cloud.
+        \item Executed Decision Tree classifier python script for predicting readmission and recorded the runtime on Spark cluster on 1, 3 and 5 VMs on Jetstream cloud.
+        \item Benchmarked the algorithm runtimes of chameleon and Jetstream clouds.
+        \item Documented the sections: benchmarking, conclusion and references.
+    \end{itemize}
+    \item Piyush Shinde [S17-IR-2035]
+    \begin{itemize}
+        \item Performed preliminary data analysis.
+\item Developed python code for preliminary analysis using sci-kit machine learning algorithm Gaussian Naive Bayes.
+\item Developed python code for preliminary analysis using sci-kit machine learning algorithm SGD classifier.
+\item Developed python code for preliminary analysis using sci-kit machine learning algorithm Decision Tree.
+\item Developed python code for preliminary analysis using sci-kit machine learning algorithm K-means.
+\item Developed Ansible playbook for configuration of cloudmesh client.
+\item Performed initial test deployment of Spark cluster on 1 virtual machine of Chameleon cloud.
+\item Deployed a Spark cluster on 2 and 3 virtual machines of Chameleon cloud.
+\item Executed Naive Bayes python script for predicting readmission and recorded the run-time on Spark cluster of 1, 3 and 5 VMs on Jetstream cloud.
+\item Documented the sections: introduction, technologies, architecture and preliminary data analysis. 
+\item Executed SGD classifier python script for predicting readmission and recorded the runtime on Spark cluster of 1, 3 and 5 VMs  on Jetstream cloud.
+    \end{itemize}
+    \item Srikant Ramanam [S17-IR-2028]
+    \begin{itemize}
+       \item Performed data cleaning.
+      \item Installed cloudmesh client using developed Ansible playbook.
+       
+\item Configured cloudmesh client using developed Ansible playbook.
+\item Performed initial test deployment of Spark cluster on 1 virtual machine of Virtual box.
+\item Deployed a Spark cluster on 2 and 3 virtual machines of Jetstream cloud.
+\item Deployed a Spark cluster  on 5 and 7 virtual machines of Jetstream cloud.
+\item Developed shell script for triggering spark deployment Ansible playbook. 
+\item Benchmarked spark deployment on chameleon and Jetstream clouds using shell script.
+\item Developed python code for predicting readmission using Spark MLlib's algorithm SGD classifier.
+\item Executed Decision Tree classifier python script for predicting readmission and recorded the runtime on Spark cluster on 1, 3 and 5 VMs on chameleon cloud.
+\item Developed python code for predicting readmission using Spark MLlib's algorithm Naive Bayes.
+\item Executed SGD classifier python script for predicting readmission and recorded the runtime on Spark cluster of 1, 3 and 5 VMs  on chameleon cloud.
+\item Documented the sections: automated deployment using Ansible, Data cleaning and Pre-processing. 
+    \end{itemize}
+\end{itemize}
+\end{appendices}
 
 \end{document}
