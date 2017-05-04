@@ -1,4 +1,0 @@
----
-- name: install pip package
-  become: yes
-  apt: name=python-pip  state=latest update_cache=yes

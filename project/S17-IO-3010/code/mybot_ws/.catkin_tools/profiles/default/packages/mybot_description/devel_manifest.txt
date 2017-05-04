@@ -1,4 +1,0 @@
-mybot_description
-/home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_description/lib/pkgconfig/mybot_description.pc /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/lib/pkgconfig/mybot_description.pc
-/home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_description/share/mybot_description/cmake/mybot_descriptionConfig-version.cmake /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/share/mybot_description/cmake/mybot_descriptionConfig-version.cmake
-/home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_description/share/mybot_description/cmake/mybot_descriptionConfig.cmake /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/share/mybot_description/cmake/mybot_descriptionConfig.cmake

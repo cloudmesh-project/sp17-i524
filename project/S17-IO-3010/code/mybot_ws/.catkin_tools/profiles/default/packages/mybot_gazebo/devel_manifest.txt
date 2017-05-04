@@ -1,4 +1,0 @@
-mybot_gazebo
-/home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_gazebo/lib/pkgconfig/mybot_gazebo.pc /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/lib/pkgconfig/mybot_gazebo.pc
-/home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_gazebo/share/mybot_gazebo/cmake/mybot_gazeboConfig-version.cmake /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/share/mybot_gazebo/cmake/mybot_gazeboConfig-version.cmake
-/home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/.private/mybot_gazebo/share/mybot_gazebo/cmake/mybot_gazeboConfig.cmake /home/eunosm3/rosProject/rosProjFinal/mybot_ws/devel/share/mybot_gazebo/cmake/mybot_gazeboConfig.cmake
