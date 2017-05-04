@@ -1,4 +1,4 @@
-\documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
+\documentclass[9pt,twocolumn,twoside]{styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
 
@@ -319,18 +319,29 @@ The Naive Bayes classifier built in PySpark was implemented in multiple nodes wi
 \caption{Run time of Naive Bayes in 3-node cluster}
 \label{fig:chamstat3}
 \end{figure}
-\subsubsection{Textbob}
-\subsubsection{Naive Bayes}
-\subsection{Jetstream}
-\subsubsection{Textbob}
-\subsubsection{Naive Bayes}
-\subsection{Kilo}
-\subsubsection{Textbob}
-\subsubsection{Naive Bayes}
+
+
 \section{Conclusion}
+A framework is  built for visualizing the analysis performed on the real time tweets. By obtaining the tweets from the twitter streaming API, different text analysis was performed on the tweets and the results were aggregated at multiple levels (geographically, time, etc.) and was projected using charts built using High charts and D3.Js. A Naive Bayes Classifier is built on a spark cluster which was used for classifying the sentiments. Finally, multiple benchmarks were performed pertaining to deployment of required software, analysis time vs data size, and time taken for building a classifier in spark based on the number of worker nodes and cluster size.
+
 \paragraph{Acknowledgement}
 
-Put in the information for this class and who may sponsor
-you. Examples will be given later
+This project was a part of the Big Data Software and Projects (INFO-I524) course. We would
+like to thank Prof. Gregor von Laszewski, Prof. Gregory Fox, the
+Associate Instructors of this course for their constant help and support. Results presented in
+this paper were obtained using the Chameleon testbed supported by the
+National Science Foundation.
+
+\section{WORK BREAKDOWN}
+	The work in this project was equally distributed between the following authors.
+	
+	\textbf{Sowmya Ravi}: Building Spark pipeline and using Pyspark for building Naive bayes Classifier algorithm, benchmarking \& troubleshooting and writing report.
+	
+	\textbf{Sriram Sitharaman}: Creating visualization using D3.JS \& NodeJs, building ansible scripts, Writing Python Scripts for Data analysis and writing report.
+	
+	\textbf{Shahidhya Ramachandran}: Writing report, Writing Python scripts for Data Analysis, Creating visualization usign HighCharts. 
+	
 \bibliography{references}
+
+
 \end{document}
