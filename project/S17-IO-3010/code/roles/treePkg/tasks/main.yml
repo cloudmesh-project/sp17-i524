@@ -1,3 +1,0 @@
----
-- name: install tree package for directory viewing
-  apt: name=tree state=latest
