@@ -1,0 +1,9 @@
+---
+- hosts: cham_cloud #comment: apache is the group name we just defined
+  become: yes #comment: this operation needs privilege access
+  become_user: hadoop
+  tasks:
+    - name: run pig script
+      shell: "sh -lc 'pig /home/hadoop/pig_program'"
+
+
