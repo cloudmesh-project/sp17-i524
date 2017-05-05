@@ -113,11 +113,7 @@ from the directory where the \textit{begin} bash script resides.
 \paragraph{\textit{begin} bash script}
 The bash script calls three cloudmesh\_client commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster define -n rosA1 -c 3! }, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster allocate! } and {\color{green} \lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } in order to create and prepare the three-node cluster named \textit{rosA1}.  The script then uses two additional Cloudmesh commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster nodes! } and {\color{green} \lstinline[style=BashInputStyle]!> cm vm ip show! } to capture the public and private ip addresses of the cluster as well as the host names.  
 
-The private ip addresses, termed static ips by Chameleon, must be used because ROS nodes communicate by binding to any available port.  That is, ROS does not specify the port beforehand, and it does not consider whether or not the firewall blocks the port for security purposes.  As a result, intra-cluster communication requires access to every port, i.e., the firewall cannot close any port on any computer running ROS when that computer needs to communicate with another computer in the cluster.  Obviously, this presents a major security concern, especially on shared resources. 
-
-In order to maintain security and enable intra-cluster communication, two of the three computer nodes must have their public ip addresses removed, i.e., disassociated, using Chameleon's browser-based graphical user interface (GUI), Horizon.  Then, and only then, the ports can be opened by applying the \textit{ros} security group to the two nodes in question (the private nodes).  Since the third node, the main node, still has a public-facing ip address, the other two nodes can be accessed via an ssh connection (\textit{ssh'ing}) to the main node and then ssh'ing to one of the private nodes.
-
-The ip addresses and names are written to separate files for distinct purposes.  The host names and private ip addresses are used to create a file to append to each cluster node's \textit{known\_hosts} file.  The private ip addresses also end up in the inventory file Ansible references.  
+The private ip addresses, termed static ips by Chameleon, must be used because ROS nodes communicate by binding to any available port.  That is, ROS does not specify the port beforehand, and it does not consider whether or not the firewall blocks the port for security purposes.  As a result, intra-cluster communication requires access to every port, i.e., the firewall cannot close any port on any computer running ROS when that computer needs to communicate with another computer in the cluster.  Obviously, this presents a major security concern, especially on shared resources. Refer to the \textit{Common Pitfalls} section below for the workaround used with this project.
 
 As its penultimate step, the \textit{begin} script places all the necessary files for the demonstration on the correct cluster nodes.  The ROS robot files and the Ansible files go onto the main node, while the script places a copy of the known\_hosts addendum onto each cluster node.  In addition, the script uses the \textit{wget} command to copy the bash script for the next step in the process onto the main node.
 
@@ -130,17 +126,31 @@ Upon completing the installation, the file's instructions initialize the robot w
 
 With the robot package built, the script copies another script from github.  This small script starts ROS' \textit{talker} robot, a simple robot included as part of ROS' tutorial packages.  It relies upon Linux's \textit{byobu} program to set up usable working environment if the user chooses to start the listener robot on the third cluster node.
 
-Finally, execution of the last few lines of the script occurs.  These lines start ROS, start the two robots, create a simulated world for the robots and then issue a command for the robots to drive in circles.  Gazebo's simulation of the robots and their world come back through the ssh connection to the end user  so s/he can see the simulation in real time. 
+Finally, execution of the last few lines of the script occurs.  These lines start ROS, start the two robots, create a simulated world for the robots and then issue a command for the robots to drive in circles.  Gazebo's simulation of the robots and their world come back through the ssh connection to the end user so s/he can see the simulation in real time. 
 
- before building the robot package that will be run in short order.  
-\subsection{Modifications, Pitfalls}
-TBD; discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.
+\paragraph{\textit{talkListen} bash script}
+The \textit{talkListen} script sets up a multiplexed terminal environment on the second node and starts ROS' talker robot, which ROS' maintainers include as a pre-built package with the distribution.  It relies upon Linux's \textit{byobu} terminal multiplexing program.  Using a series of {\color{green} \lstinline[style=BashInputStyle]!> byobu-tmux! } commands, it creates a terminal screen with three panels.  ROS's rosmaster program starts in panel 1, while the talker program/robot/node starts in Panel 2.  The final panel, panel 0, connects to the third node in the cluster in anticipation of the user starting the listener program (also included in the ROS distribution).
+
+\subsection{Common Pitfalls}
+% TBD; discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.
+\paragraph{Intra-Node Communication}
+In order to maintain security and enable intra-cluster communication, two of the three computer nodes must have their public ip addresses removed, i.e., disassociated, using Chameleon's browser-based graphical user interface (GUI), Horizon.  Then, and only then, the ports can be opened by applying the \textit{ros} security group to the two nodes in question (the private nodes).  Since the third node, the main node, still has a public-facing ip address, the other two nodes can be accessed via an ssh connection (\textit{ssh'ing}) to the main node and then ssh'ing to one of the private nodes.
+
+The ip addresses and names are written to separate files for distinct purposes.  The host names and private ip addresses are used to create a file to append to each cluster node's \textit{known\_hosts} file.  The private ip addresses also end up in the inventory file Ansible references.  
+
+\paragraph{Deployment Problems}
+Even if a script or a user completes each step correctly to set up a controllable virtual swarm on remotely-located resources, problems still occur that cause deployment failures.  Usually, the issues can be resolved with manual intervention, so the deployment can be completed.  
+
+\subparagraph{Adding ROS Repository Key}
+Most of the errors encountered occurred while attempting to add ROS' package repo key or while starting the simulation.  If the key cannot be installed on a cluster node,then ROS cannot be installed either.  Obviously, if the main node lacks ROS, the simulation will not launch either.  The solution: note which nodes do not have the key by scrolling back through the terminal output and then re-run the \textit{beginAgain} bash script.  This problem did not occur until the week the projects were due, so network traffic may play a role in causing the issue.
+
+\subparagraph{Starting the Robot Simulation}
+Receiving an error while starting the simulation occurred much more frequently during the development process than the key repo problem.  ROS prints error messages in red to the console, so they stand out.  The most common error: {\color{red} \lstinline[style=BashInputStyle]![gazebo_gui-3] process has died! }.  Sometimes, an almost identical error occurs, {\color{red} \lstinline[style=BashInputStyle]![gazebo-2] process has died! }, while other times the launch program cannot find parts of the robot model.  The latter error consists of on or both of the following: {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://ground_plane! } and / or {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://sun! }.  Unlike the previously-described error, this one requires more manual intervention.  The user needs to enter the following commands at the terminal prompt: a) {\color{green} \lstinline[style=BashInputStyle]!> killall roscore! }, b) {\color{green} \lstinline[style=BashInputStyle]!> killall rosmaster! }; c) {\color{green} \lstinline[style=BashInputStyle]!> killall gzclient! }; d) {\color{green} \lstinline[style=BashInputStyle]!> killall gzserver! }; e) {\color{green} \lstinline[style=BashInputStyle]!> source ~/.bashrc! }; and, {\color{green} \lstinline[style=BashInputStyle]!> ./beginAgain! }. Somewhat maddeningly, this process will need to be completed twice, usually, before the simulation will successfully start.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm} section.
+
 \subsection{Initializing the Swarm}
-TBD; starting ROS and Gazebo to create the virtual environment; testing swarm interconnectivity; designating master node, etc.
-\subsection{Begin Task and Monitor Swarm's Progress}
-TBD; discuss the steps to initiate task completion and monitor the swarm's progress;
-\subsection{Information Acquired}
-TBD; discuss the iformation obtained from the swarm wrt the task at hand as well as each node's vital signs, e.g., battery level;
+% TBD; starting ROS and Gazebo to create the virtual environment; testing swarm interconnectivity; designating master node, etc.
+If needed the user can manually start the simulation with the commands listed below.  You will need three terminals for the three commands, so ssh into the main node three times from three separate consoles or use \textit{byobu} to split the terminal into three panes.  The command {\color{green} \lstinline[style=BashInputStyle]!> roslaunch mybot_gazebo mybot_world.launch! } starts the simulation.  Entering {\color{green} \lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\color{green} \lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! } \newline in a free terminal will command the first robot to begin turning in a circle.  Likewise, {\color{green} \lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\color{green} \lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! } \newline moves the second robot.
+
 
 \section{VR Swarm Project Conclusions}
 TBD; present the data collected in some visualization format; discuss why this project advances robotics forward by utilizing distributed computing;
@@ -163,13 +173,6 @@ TBD; present the data collected in some visualization format; discuss why this p
 \endgroup
 
 \appendix
-
-\section{Work Breakdown}
-
-The work on this project was distributed as follows between the
-authors:
-
-
 \begin{description}
 
 \item[Matthew Lawson.] Designed the project in collaboration w/ Gregor von Laszewski, researched the material and implemented the project.  Slept far too little.
