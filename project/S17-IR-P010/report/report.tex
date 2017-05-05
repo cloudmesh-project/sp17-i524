@@ -72,7 +72,7 @@ stack deployment.  The vehicle detection application would then run remotely ont
 each iteration using some benchmarking technique.  
 
 \section{Requirements}
-The requirement was to deploy the Vehicle detection application onto the cloud's Virtual Machines (VMs).  The processing, which included detection of vehicles by drawing a red rectangle around them, had to be carried out on the cloud VMs.  The output image that was generated had to be then resent back to the local machine.  
+The requirement was to deploy the Vehicle detection application onto the cloud's Virtual Machines (VMs).  The processing, which included detection of vehicles by drawing a red rectangle around them, had to be carried out on the cloud VMs.  The output image that was generated had to be then re sent back to the local machine.  
 
 \section{Software stack}
 For this project, we have used the following software/applications:
@@ -90,7 +90,14 @@ the software/applications are installed in those VMs.  Thus, we are
 using Ansible to orchestrate the software deployment via playbooks
 using the inventory.txt file containing the IP addresses.
 
-Ansible forms connections to our cloud VMs and then pushes 'Ansible modules', which are nothing but small programs, to them.  Ansible executes these modules and then removes them upon completion.  Ansible thus helped us in lightweight development, in the sense that other than an editor and the terminal, it did not require any other components to be installed.  Although we used SSH keys for the connections and with Ansible, Ansible also supports the use of passwords.  
+Ansible forms connections to our cloud VMs and then pushes 'Ansible
+modules', which are nothing but small programs, to them.  Ansible
+executes these modules and then removes them upon completion.  Ansible
+thus helped us in lightweight development, in the sense that other
+than an editor and the terminal, it did not require any other
+components to be installed.  Although we used SSH keys for the
+connections and with Ansible, Ansible also supports the use of
+passwords.
 
 \item[$\bullet$] Cloudmesh client \cite{github-cloudmesh-client}: \\
 Cloudmesh is basically used for cloud VM management.  It provides
@@ -411,13 +418,13 @@ installation time.
 
 \subsection{Workload benchmarking}
 For Workload benchmarking, we found out the disk utilization of the
-various software from the software stack.  While software such as
-Git were pretty light, others like OpenCV were pretty heavy.  They not
+various software from the software stack.  While software such as Git
+were pretty light, others like OpenCV were pretty heavy.  They not
 only required a long time to install, but also consumed a lot of disk
-space.  The output of the 'df -h' command on the cloud VMs has been shown.  We, thus, had used only 1.3 GB of
-system space before installing OpenCV while we ended up consuming 4.4
-GB of it after its installation.  The usage thus increased from 7
-percent to 24 percent.
+space.  The output of the 'df -h' command on the cloud VMs has been
+shown.  We, thus, had used only 1.3 GB of system space before
+installing OpenCV while we ended up consuming 4.4 GB of it after its
+installation.  The usage thus increased from 7 percent to 24 percent.
 
 \begin{lstlisting}[
 basicstyle=\footnotesize,
@@ -509,10 +516,15 @@ software deployment.  We used Ansible scripts to install all our
 software along with the configuration of the project.  Once the
 software stack was installed, we installed the Vehicle detection
 application on top of it.  The Vehicle detection application running
-on OpenCV used haar-classifiers to detect the vehicles.  It created an image wherein the vehicles were marked with a red rectangle.  This image, which was generated on the cloud, was then redirected to the local machine, using ansible fetch.  On the local machine, it was saved deep inside the directory named with the IP address.  Once this end-to-end process was
-done, we did benchmarking of the system by using shell scripts.  We typically focused on the
-deployment, elasticity, installation capacity, workload, security,
-latency and reliability.
+on OpenCV used haar-classifiers to detect the vehicles.  It created an
+image wherein the vehicles were marked with a red rectangle.  This
+image, which was generated on the cloud, was then redirected to the
+local machine, using ansible fetch.  On the local machine, it was
+saved deep inside the directory named with the IP address.  Once this
+end-to-end process was done, we did benchmarking of the system by
+using shell scripts.  We typically focused on the deployment,
+elasticity, installation capacity, workload, security, latency and
+reliability.
 
 \section{Acknowledgments}
 This project was undertaken as a part of the course objective for
@@ -540,15 +552,24 @@ Detection application that we ran on the cloud VMs.
     \includegraphics[width=0.25\columnwidth]{images/govindmishra.jpeg}
   \end{wrapfigure}
   \noindent
-  {\bfseries Govind Mishra} is a graduate student at Indiana
-  University, Bloomington. He will receive his Masters degree in Computer Science in 2018. His
-  research interests include Big Data and Machine Learning.
+  {\bfseries Shree Govind Mishra} is a graduate student at Indiana
+  University, Bloomington.He has completed his bachelors in
+  Electronics and Communication from Birla Institute of Applied
+  Sciences. He will receive his Masters degree in Computer Science in
+  2018. His research interests include Big Data and Machine Learning.
 \end{minipage}
 \endgroup \appendix
 
 \section{Work breakdown}
-Abhishek Naik modified the Vehicle Detection application code so as to enable it to create a snapshot of the detected vehicles and save it as an image file.  This file was later re-routed back to the host machine.  He also wrote ansible scripts for the deployment of OpenCV, git and Vehicle Detection.  He also wrote the deployment, benchmarking and biography section of the report.\\
-\\
-Govind Mishra wrote down ansible scripts for the deployment of python and to carry out remote upgrade.  Besides this, we wrote down the introduction, requirements, software stack, execution, conclusion, acknowledgments, bibliography, biographies and the work breakdown sections of the report.
+Abhishek Naik modified the Vehicle Detection application code so as to
+enable it to create a snapshot of the detected vehicles and save it as
+an image file.  This file was later re-routed back to the host
+machine.  He also wrote ansible scripts for the deployment of OpenCV,
+git and Vehicle Detection.  He also wrote the deployment, benchmarking
+and biography section of the report.\\ \\  Govind Mishra wrote down
+ansible scripts for the deployment of python and to carry out remote
+upgrade.  He also  wrote down the introduction, requirements,
+software stack, execution, conclusion, acknowledgments, bibliography,
+biographies and the work breakdown sections of the report./
 
 \end{document}
