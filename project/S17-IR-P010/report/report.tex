@@ -39,8 +39,9 @@
 
 \ociscodes{Vehicle detection, Ansible, Cloudmesh, OpenCV, Haar Cascades, Cloud, I524}
 
-% replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/sp17-i524/blob/master/project/S17-IR-P010/report.pdf}}
+\doi{Report:
+  \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P010/report/report.pdf}\\
+Code: \url{https://github.com/cloudmesh/cloudmesh.vehicle}}
 
 \begin{abstract}
 This project focuses on the deployment of Vehicle Detection
@@ -170,7 +171,7 @@ would be required.  In order to understand this, we first deployed the
 software and application on the local machines and then on the
 clouds.  This step helped us understand the software needed as well
 as the dependencies amongst them.  Once we identified the software,
-we developed an ansible script to deploy these software and
+we developed an ansible script to deploy the software and
 applications dynamically in an automated way.
 
 Ansible is an open source automation platform.  It mainly uses .yml
@@ -334,16 +335,16 @@ Also, for measuring the time, we used a shell script Setup.py.  This script disp
 Deployment benchmarking included observing the software deployment
 times for each of the software in the software deployment stack.  We
 started off with the first software, Git.  On the local machine, it
-was installed in 2.567 seconds, while it took 10.447 seconds to be
-installed on the clouds.  The next command, upgrade, took 35.837
+was installed in 2.57 seconds, while it took 10.45 seconds to be
+installed on the clouds.  The next command, upgrade, took 35.84
 seconds on the local machine and 155.03 seconds on the clouds.  Python
-took 4.554 seconds to be installed on the local machine and 30.748
+took 4.55 seconds to be installed on the local machine and 30.75
 seconds to be installed on the clouds.  OpenCV, is a heavy software
 having lots of dependencies on other software.  We thus had to
 install it dependencies first before we could compile and install it.
-Due to all this, OpenCV took 1420.373 to be installed on the clouds
-and 276.014 seconds on the local machine.  Vehicle detection is a
-lightweight application and as such, it took 11.987 to install on the
+Due to all this, OpenCV took 1420.37 to be installed on the clouds
+and 276.01 seconds on the local machine.  Vehicle detection is a
+lightweight application and as such, it took 11.99 to install on the
 clouds and just 2.04 seconds to be installed on the local machine.
 All these values have been tabulated in Table 1.
 
@@ -354,11 +355,11 @@ All these values have been tabulated in Table 1.
 \begin{tabular}{|l|l|l|}
 \hline
  & Local VM avg time & Cloud VM avg time \\ \hline
-Git & 2.5863333333 & 10.494 \\ \hline
-Upgrade & 35.531 & 155.5903333333 \\ \hline
-Python & 4.2873333333 & 30.5766666667 \\ \hline
-OpenCV & 277.032 & 1419.5266666667 \\ \hline
-Vehicle Detection & 2.1833333333 & 11.7166666667 \\ \hline
+Git & 2.59 & 10.49 \\ \hline
+Upgrade & 35.53 & 155.59 \\ \hline
+Python & 4.29 & 30.58 \\ \hline
+OpenCV & 277.03 & 1419.53 \\ \hline
+Vehicle Detection & 2.18 & 11.72 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -413,23 +414,38 @@ For Workload benchmarking, we found out the disk utilization of the
 various software from the software stack.  While software such as
 Git were pretty light, others like OpenCV were pretty heavy.  They not
 only required a long time to install, but also consumed a lot of disk
-space.  Figures 2 and 3 denote the output of the 'df -h' command on
-the cloud VMs.  As shown in Figure 2, we had used only 1.3 GB of
+space.  The output of the 'df -h' command on the cloud VMs has been shown.  We, thus, had used only 1.3 GB of
 system space before installing OpenCV while we ended up consuming 4.4
 GB of it after its installation.  The usage thus increased from 7
 percent to 24 percent.
 
-\begin{figure}[htbp]
-  \centering
-  \fbox{\includegraphics[width=\linewidth]{images/BeforeOpenCV}}
-  \caption{Usage statics before OpenCV installation}
-\end{figure}
+\begin{lstlisting}[
+basicstyle=\footnotesize,
+]
+cc@abhinaik-011:~$ df -h
+Filesystem                          Size  Used Avail Use% Mounted on
+udev                                997M   12K  997M   1% /dev
+tmpfs                               201M  340K  200M   1% /run
+/dev/disk/by-label/                  20G  1.3G   18G   7% /
+none                                4.0K     0  4.0K   0% /sys/fs/cgroup
+none                                5.0M     0  5.0M   0% /run/lock
+none                               1002M     0 1002M   0% /run/shm
+none                                100M     0  100M   0% /run/user
+\end{lstlisting}
 
-\begin{figure}[htbp]
-  \centering
-  \fbox{\includegraphics[width=\linewidth]{images/AfterOpenCV}}
-  \caption{Usage statics after OpenCV installation}
-\end{figure}
+\begin{lstlisting}[
+basicstyle=\footnotesize,
+]
+cc@abhinaik-011:~$ df -h
+Filesystem                          Size  Used Avail Use% Mounted on
+udev                                997M   10M  987M   2% /dev
+tmpfs                               201M  340K  200M   1% /run
+/dev/disk/by-label/                  20G  4.4G   15G  24% /
+none                                4.0K     0  4.0K   0% /sys/fs/cgroup
+none                                5.0M     0  5.0M   0% /run/lock
+none                               1002M     0 1002M   0% /run/shm
+none                                100M     0  100M   0% /run/user
+\end{lstlisting}
 
 \subsection{Security and trust factors}
 In our project we have used cloudmesh client which in turn uses the
@@ -455,18 +471,34 @@ local host.  We used the following command to test this:
 	
 In this command, the '-c 10' option makes 10 requests to the cloud
 VMs.  In the end, it displays a summary of the results.  We can thus
-observe that the minimum round trip time (rtt) was 40.499 seconds,
-while the maximum was 72.198.  Along with all this, we also noticed
+observe that the minimum round trip time (rtt) was 43.729 seconds,
+while the maximum was 45.216.  During one of the experiments, we noticed
 that there was 10 percent packet loss, since out of the 10 packets
 that were sent, only 9 of them could make it back to the local host.
 However, repeated experiments showed that the system was indeed
-reliable and that this was a small exception.  Figure 4 shows the latency test results
+reliable and that this was a small one-time exception.  
 
-\begin{figure}[htbp]
-  \centering
-  \fbox{\includegraphics[width=\linewidth]{images/LatencyTest}}
-  \caption{Latency Test results}
-\end{figure}
+\begin{lstlisting}[
+basicstyle=\small,
+]
+abhishek@abhishek:~$ ping 129.114.33.88 -c 10
+PING 129.114.33.88 (129.114.33.88) 56(84) bytes of data.
+64 bytes from 129.114.33.88: icmp_seq=1 ttl=51 time=45.2 ms
+64 bytes from 129.114.33.88: icmp_seq=2 ttl=51 time=43.7 ms
+64 bytes from 129.114.33.88: icmp_seq=3 ttl=51 time=43.8 ms
+64 bytes from 129.114.33.88: icmp_seq=4 ttl=51 time=45.1 ms
+64 bytes from 129.114.33.88: icmp_seq=5 ttl=51 time=44.6 ms
+64 bytes from 129.114.33.88: icmp_seq=6 ttl=51 time=45.1 ms
+64 bytes from 129.114.33.88: icmp_seq=7 ttl=51 time=44.2 ms
+64 bytes from 129.114.33.88: icmp_seq=8 ttl=51 time=44.6 ms
+64 bytes from 129.114.33.88: icmp_seq=9 ttl=51 time=44.3 ms
+64 bytes from 129.114.33.88: icmp_seq=10 ttl=51 time=44.0 ms
+
+--- 129.114.33.88 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 9012ms
+rtt min/avg/max/mdev = 43.729/44.503/45.216/0.575 ms
+\end{lstlisting}
+
 
 \section{Conclusion}
 In this project, we used cloudmesh client which is a client that
@@ -482,7 +514,7 @@ done, we did benchmarking of the system by using shell scripts.  We typically fo
 deployment, elasticity, installation capacity, workload, security,
 latency and reliability.
 
-\section{Acknowledgements}
+\section{Acknowledgments}
 This project was undertaken as a part of the course objective for
 I524: Big Data and Open Source Software Projects at Indiana
 University, Bloomington.  We would like to thank Prof. Gregor Von
@@ -491,5 +523,32 @@ like to thank Andrews Sobral for providing us with the Vehicle
 Detection application that we ran on the cloud VMs.
 
 \bibliography{references}
+
+\section*{Author Biographies}
+\begingroup \setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth}
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/abhisheknaik.jpeg}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Abhishek Naik} is a graduate student at Indiana
+  University, Bloomington. He will receive his Masters degree in Computer Science in
+  2018. His research interests include Big Data and Artificial Intelligence.
+\end{minipage}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth}
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/govindmishra.jpeg}
+  \end{wrapfigure}
+  \noindent
+  {\bfseries Govind Mishra} is a graduate student at Indiana
+  University, Bloomington. He will receive his Masters degree in Computer Science in 2018. His
+  research interests include Big Data and Machine Learning.
+\end{minipage}
+\endgroup \appendix
+
+\section{Work breakdown}
+Abhishek Naik modified the Vehicle Detection application code so as to enable it to create a snapshot of the detected vehicles and save it as an image file.  This file was later re-routed back to the host machine.  He also wrote ansible scripts for the deployment of OpenCV, git and Vehicle Detection.  He also wrote the deployment, benchmarking and biography section of the report.\\
+\\
+Govind Mishra wrote down ansible scripts for the deployment of python and to carry out remote upgrade.  Besides this, we wrote down the introduction, requirements, software stack, execution, conclusion, acknowledgments, bibliography, biographies and the work breakdown sections of the report.
 
 \end{document}
