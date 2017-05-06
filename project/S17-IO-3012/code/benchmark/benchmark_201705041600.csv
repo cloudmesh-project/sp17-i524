@@ -1,0 +1,2 @@
+cloud,config_replicas,mongos_instances,shard_replicas,shards_per_replica,mongo_version,test_size,import_time,find_time,mapreduce_time
+kilo,1,1,1,2,34,small,40,1,5
