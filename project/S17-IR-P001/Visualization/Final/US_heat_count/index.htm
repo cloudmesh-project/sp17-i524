@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Statewise Tweets</title>
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<style type="text/css">
+#container {
+    max-width: 640px; 
+    height: 480px; 
+    margin: 0 auto;
+}
+#table-div {
+    max-width: 400px;
+    margin: 3em auto;
+}
+		</style>
+	</head>
+	<body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+<div id="container"></div>
+<script src="data.js"></script>
+
+		<script type="text/javascript">
+
+
+// Load the data from the HTML table and tag it with an upper case name used for joining
+//var data = [],
+    // Get the map data
+    mapData = Highcharts.geojson(Highcharts.maps['countries/us/us-all']);
+
+
+// Process mapdata
+$.each(mapData, function () {
+    var path = this.path,
+        copy = {
+            path: path
+        };
+
+    // This point has a square legend to the right
+    if (path[1] === 9727) {
+
+        // Identify the box
+        Highcharts.seriesTypes.map.prototype.getBox.call({}, [copy]);
+
+        // Place the center of the data label in the center of the point legend box
+        this.middleX = ((path[1] + path[4]) / 2 - copy._minX) / (copy._maxX - copy._minX); // eslint-disable-line no-underscore-dangle
+        this.middleY = ((path[2] + path[7]) / 2 - copy._minY) / (copy._maxY - copy._minY); // eslint-disable-line no-underscore-dangle
+
+    }
+    // Tag it for joining
+    this.ucName = this.name.toUpperCase();
+});
+
+
+console.log(data);
+
+// Initiate the chart
+Highcharts.mapChart('container', {
+
+    title: {
+        text: 'Tweets Across US in a day'
+    },
+
+    subtitle: {
+        text: 'Statewise Tweets'
+    },
+
+    mapNavigation: {
+        enabled: true,
+        enableButtons: false
+    },
+
+    xAxis: {
+        labels: {
+            enabled: false
+        }
+    },
+
+        colorAxis: {
+            min: 1,
+            type: 'logarithmic',
+            //minColor: '#c0deed',
+            //maxColor: '#0084b4',
+            stops: [
+                [0, '#c0deed'],
+                [0.67, '#00aced'],
+                [1, '#0084b4']
+            ],
+			        labels: {
+            format: '{value}'
+        }
+        },
+		        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                theme: {
+                    fill: 'white',
+                    'stroke-width': 1,
+                    stroke: 'silver',
+                    r: 0,
+                    states: {
+                        hover: {
+                            fill: '#a4edba'
+                        },
+                        select: {
+                            stroke: '#039',
+                            fill: '#a4edba'
+                        }
+                    }
+                },
+                verticalAlign: 'bottom'
+            }
+        },
+		                credits: {
+                    enabled: false
+                },
+    series: [{
+        mapData: mapData,
+        data: data,
+        joinBy: 'ucName',
+        name: '#Tweets',
+        states: {
+            hover: {
+                color: '#a4edba'
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: '10px'
+            }
+        },
+        tooltip: {
+            
+        }
+    }, {
+        type: 'mapline',
+        data:  Highcharts.geojson(Highcharts.maps['countries/us/us-all'], 'mapline'),
+        color: 'silver'
+    }]
+});
+		</script>
+	</body>
+</html>

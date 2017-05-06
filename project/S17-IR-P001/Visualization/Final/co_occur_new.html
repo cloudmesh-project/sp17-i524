@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Top Co-occurring word pairs</title>
+<style>
+@import url(style.css);
+.background {
+  fill: #eee;
+}
+line {
+  stroke: #fff;
+}
+text.active {
+  fill: red;
+  font-size: 120%;
+}
+rect.highlight {
+    fill: none;
+    stroke: red;
+    stroke-width: 2;
+}
+</style>
+<script src="http://jdfekete.github.io/reorder.js/lib/d3.v3.js"></script>
+<script src="http://jdfekete.github.io/reorder.js/lib/d3.parcoords.js"></script>
+<script src="http://jdfekete.github.io/reorder.js/lib/science.v1.js"></script>
+<script src="http://jdfekete.github.io/reorder.js/lib/tiny-queue.js"></script>
+<script src="http://jdfekete.github.io/reorder.js/reorder.v1.js"></script>
+<script src="http://jdfekete.github.io/reorder.js/examples/matrix.js"></script>
+
+
+
+<h1><i>Top Co-occurring word pairs</i></h1>
+
+<aside style="margin-top:20px;">
+<p>Order: <select id="order">
+  <option value="name">by Name</option>
+  <option value="count">by Frequency</option>
+  <option value="group">by Cluster</option>
+  <option value="leafOrder">by Leaf Order</option>
+  <option value="barycenter">by Crossing Reduction</option>
+  <option value="rcm">by Bandwidth Reduction (RCM)</option>
+  <option value="spectral">Spectral</option>
+</select>
+
+</select>
+
+<p>This matrix diagram visualizes word co-occurrences in Twitter data<i>.
+
+<p>Each colored cell represents two words that appeared in the tweets obtained till now; darker cells indicate words that co-occurred more frequently.
+
+<p>Use the drop-down menu to reorder the matrix and explore the data.
+
+</aside>
+
+<script>
+var margin = {top: 80, right: 0, bottom: 10, left: 80},
+    width = 720,
+    height = 720;
+var x = d3.scale.ordinal().rangeBands([0, width]),
+    z = d3.scale.linear().domain([0, 4]).clamp(true),
+    c = d3.scale.category10().domain(d3.range(10));
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .style("margin-left", -margin.left + "px")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    d3.json("cooccur_word.json", loadJson);
+</script>
+
