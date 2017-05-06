@@ -1,2 +1,0 @@
-cloud,config_replicas,mongos_instances,shard_replicas,shards_per_replica,mongo_version,test_size,import_time,find_time,mapreduce_time
-chameleon,3,2,3,3,32,large,1197,31,60

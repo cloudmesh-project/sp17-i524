@@ -227,7 +227,7 @@ The automated process fully deploys a sharded MongoDB environment with the Cloud
 
 \subsection{Computing Resources}
 
-In all cases, virtual machines are deployed with the Ubuntu 16.04 LTS (Xenial Xerus) operating system.  On Openstack the flavor or the machine determines the amount of computing resources (CPU, memory, storage) allocated to it.  In our testing, m1.small was used as the flavor for Chameleon Cloud and FutureSystems, while  m1.tiny was used on Jetstream.  Jetstream has more resources allocated to each flavor than Chameleon and FutureSystems, which are similar.  In order to perform similar tests on each cloud, flavors with identical CPU and memory were selected. Table \ref{tab:computing-resources} shows the comparative resources of the flavors used in our testing.  While storage is lower on Jetstream, it is sufficient for out tests and should not significantly impact performance.
+In all cases, virtual machines are deployed with the Ubuntu 16.04 LTS (Xenial Xerus) operating system.  On Openstack the flavor or the machine determines the amount of computing resources (CPU, memory, storage) allocated to it.  In our testing, m1.medium was used as the flavor for Chameleon Cloud and FutureSystems, while  m1.small was used on Jetstream.  Jetstream has more resources allocated to each flavor than Chameleon and FutureSystems, which are similar.  In order to perform similar tests on each cloud, flavors with identical CPU and memory were selected. Table \ref{tab:computing-resources} shows the comparative resources of the flavors used in our testing.  While storage is lower on Jetstream, it is sufficient for out tests and should not significantly impact performance.
 
 \begin{table}[htbp]
 \centering
@@ -239,11 +239,11 @@ In all cases, virtual machines are deployed with the Ubuntu 16.04 LTS (Xenial Xe
 Cloud &  Flavor & VCPU & RAM & Size \\ [0.5ex] 
  \hline
     
-Chameleon &  m1.small & 1 & 2 &	20 \\
+Chameleon &  m1.medium & 2 & 4 &	40 \\
  \hline
-FutureSystems &  m1.small &  1 &	2 &	20 \\ 
+FutureSystems &  m1.medium &  2 &	4 &	40 \\ 
  \hline
-Jetstream &  m1.tiny &  1 &	2 &	8 \\ 
+Jetstream &  m1.small &  2 &	4 &	20 \\ 
 \hline
 \end{tabular}
   \label{tab:computing-resources}
@@ -353,7 +353,7 @@ Config Servers &  Mongos & Shards & Replicas & Time in \\
   \label{tab:deploy-times2}
 \end{table}
 
-Due to Chameleon Cloud having the most reliable and consistent performance of the three clouds, performance numbers are presented only for selected runs on Chameleon.  While Chameleon has the best performance of the three clouds, these numbers are proportionately representative of deployment timings on Jetstream and FutureSystems.
+Due to Chameleon Cloud having the most reliable and consistent performance of the three clouds, performance numbers are presented only for selected runs on Chameleon.  These numbers are proportionately representative of deployment timings on Jetstream and FutureSystems.
 
 
 \section{Benchmarking}
@@ -389,7 +389,7 @@ To assess the performance of MongoDB version, sharding, and replication on reads
 
 The benchmarking process is invoked by running the benchmark function of the script project.py with the large parameter.  Results for each test are automatically captured in file benchmark\_datetime.csv.  This file included the configuration the test was run under (cloud, MongoDB version, config server replication factor, mongos instances, number of shards, and shard replication factor) along with the run times of the find, mongoimport, and MapReduce commands.  After all tests were run, a shell script, combine\_benchdeploy.sh combines all files into one file, benchmark\_combined.csv.
 
-The graphical depictions of the test results shown in the next section were created by running python programs to average the run times across the shard, replication, and version configurations shown.  For consistency, config server replication and mongos instances were both kept at one for all benchmarking tests.  Additionally, replication was kept at one for sharding and version tests and sharding at one for replication tests.  This methodologies allows us to isolate the variable we are assessing.
+The graphical depictions of the test results shown in the next section were created by running python programs to average the run times across the shard, replication, and version configurations shown.  For consistency, config server replication and mongos instances were both kept at one for all benchmarking tests.  Additionally, replication was kept at one for sharding and version tests and sharding at one for replication tests.  This methodologies allows us to isolate the variable we are assessing.  All sharding tests were run with one, two, three, five, seven, and nine shards.  All replication tests were run with one, two, three, five, and seven replicas.
 
 
 To setup for the test, a compressed version of file has been stored in an Amazon Web Services S3 directory.  This file is prestaged on a Mongos instance during the deployment (but excluded from the run time) and is loaded it to a collection named \emph{pitches} in MongoDB using mongoimport before running the find and MapReduce commands.
@@ -458,14 +458,12 @@ To explore how data was allocated among the shards, a function called distributi
 
 \subsubsection{Cloud Analysis}
 
-Chameleon Cloud was significantly more stable and reliable than FutureSystems and Jetstream Clouds for our testing.  Chameleon yields (some functions on Jetstream also perform well) the fastest and most consistent results with very few errors.  FutureSystem performance was the poorest with respect to run time.  Environmental errors were frequent, but tests could still be completed with moderate numbers of virtual machines.  JetStream performance was good, but the environment was very unstable.  Due to resource limitations and frequent errors, it was difficult to run high volume tests.  For these reason, higher levels of sharding and replication were tested on Chameleon Cloud and FutureSystems, as detailed in the subsequent sections.  Additionally, Chameleon was chosen as the enviroment to test MongoDB version 3.4 versus 3.2, due to its stability.
+Chameleon Cloud was significantly more stable and reliable than FutureSystems and Jetstream Clouds for our testing.  Chameleon yields the fastest and most consistent results with very few errors.  Jetstream initially had stability problems that were eventually resolved by the Jetstream support team.  Once these issues were resolved, Jetstream performance and stability was very close to Chameleon's.  FutureSystem performance was the poorest with respect to run time.  Environmental errors were initially frequent, but after allocating new floating IPs test would be completed successfully.  JetStream performance was good, but the environment was very unstable.  Due to its stability and performance, Chameleon was chosen as the environment to test MongoDB version 3.4 versus 3.2, due to its stability.
 
 \subsubsection{Impact of Sharding on Reads}
 
 
-
-
-Figure \ref{fig:shard-find} depicts the impact on performance of various numbers of shards on a find command in Chameleon, FutureSystems, and Jetstream Clouds.  All three clouds show a strong overall decline in run time as the number of shards increases, which shows the positive impact of sharding on performance.  For example, while the run time for one shard on Chameleon and FutureSystems is over 25 seconds (well over for FutureSystems), the time drops to around five seconds for seven shards for both.  This is a significant gain in performance. 
+gure \ref{fig:shard-find} depicts the impact on performance of various numbers of shards on a find command in Chameleon, FutureSystems, and Jetstream Clouds.  All three clouds show a strong overall decline in run time as the number of shards increases, which shows the positive impact of sharding on performance.  For all clouds, reads were over 35 seconds for one shard and less than 10 seconds for five shards.  This is a significant gain in performance. 
 
 \begin{figure}[htbp]
 \centering
@@ -475,11 +473,12 @@ Figure \ref{fig:shard-find} depicts the impact on performance of various numbers
 \end{figure}
 
 
-For small numbers of shards, performance gains are almost exact proportion to the number of shards added.  Two shards yields approximately half the run time of one shard.  Three shards yields around one third the run time of one shard.  From three to six chards, we still see still see significant improvement, but incrementally less than for the first three shards.  After six shards, we see only slight performance gains.
+All three clouds show a particularly large gain in performance when in increasing from one shard to two.  Run time for two shards is less than one third the run time of one shard.  Increases in shards beyond two show much smaller incremental gains.
 
-From the closeness of the Chameleon and Kilo lines we can see that performance in the two clouds is very similar for this find test.  This is an interesting observation as for both deployment and mongoimport, performance was much better on Chameleon Cloud than Kilo.  One difference from the mongoimport test is that much less data is being sent over the network.  Network speeds could be a factor in this discrepancy.  Jetstream performance is better than or equal to FutureSystems, but worse than Chameleon for all shard counts tested.
+Perfomance on Chameleon Cloud and Jetstream is very similar for the find test.  Kilo performance is worse, although proportunately better than on the mongoimport test.  This is an interesting observation as for both deployment and mongoimport, performance was much better on Chameleon and Futuresystems than Kilo.  One difference from the mongoimport test is that much less data is being sent over the network.  Network speeds could be a factor in this discrepancy.
 
 Figure \ref{fig:shard-find} can be recreated by running the program benchmark\_shards\_find.py passing the file benchmark\_combined.csv as a parameter.  It plots the average run time for each configuration as shown using matplotlib.  This report is run automatically by the report function of project.py.
+
 
 
 
@@ -499,7 +498,7 @@ Figure \ref{fig:shard-import} depicts the impact on performance of various numbe
 
 While sharding did not benefit a single threaded mongoimport command, it is likely it would benefit other heavy write operations, particularly coming through multiple mongos instances.  In a non-sharded environment, this would lead to a heavy load on the single data shard.  In a sharded environment, the load on each shard would drop as the number of shards increased.
 
-While performance on Chameleon and FutureSystems was very similar for the find command, performance of the mongoimport command was significantly better on Chameleon than on Kilo.  We see approximately 50\% better performance on both Chameleon and Jetstream Clouds compared to FutureSystems. Jetstream and Chameleon have nearly identical performance for the import test.
+While performance on Chameleon and FutureSystems was very similar for the find command, performance of the mongoimport command was significantly better on Chameleon than on Kilo.  We see approximately 50\% better performance on both Chameleon and Jetstream Clouds compared to FutureSystems. Jetstream performance is slightly better than Chameleon for the import test.
 
 Figure \ref{fig:shard-import} can be recreated by running the program benchmark\_shards\_import.py passing the file benchmark\_combined.csv as a parameter.  It plots the average run time for each configuration as shown using matplotlib.    This report is run automatically by the report function of project.py.
 
@@ -507,7 +506,7 @@ Figure \ref{fig:shard-import} can be recreated by running the program benchmark\
 
 
 
-Figure \ref{fig:shard-mapreduce} shows the performance of MapReduce across varous sharding configurations on our three clouds.  These results are relatively similar to the find results.  While results are inconsistent, likely due to environmental issues, all clouds show an overall decrease in processing time with addition of shards.  Relative to Mongoimport performance, performance is more similar across the three clouds for MapReduce.
+Figure \ref{fig:shard-mapreduce} shows the performance of MapReduce across varous sharding configurations on our three clouds.  These results are relatively similar to the find results.  While results are inconsistent, particularly on Futuresystems, likely due to environmental issues, all clouds show an overall decrease in processing time with addition of shards.  Relative to Mongoimport performance, performance is more similar across the three clouds for MapReduce.
 
 \begin{figure}[htbp]
 \centering
@@ -523,8 +522,7 @@ Figure \ref{fig:shard-mapreduce} can be recreated by running the program benchma
 
 
 
-
-Figure \ref{fig:replica-find} depicts the impact on performance of various numbers of replicas on a find command in Chameleon, FutureSystems, and Jetstream Clouds.  While it is clear that replication does not have the same performance impact on the find command that sharding does, it appears that there may be a performance penalty to high degrees of replication, particularly on Chameleon Cloud.  Replica sets up to three did not show this penalty, but four through seven replica sets caused a significant impact to run times on Chameleon Cloud.  Performance on FutureSystem showed no penalty up to five replicas, but Jetstream performance worsened with replication even at low levels.  Without a larger sample size it cannot be determined if this is a real effect or random variation.  We would not expect replication to have a significant performance degradation on the the find command since it only needs to read one copy of the data, but the increased communication necessary in a replica set may cause a small performance penalty in some cases.  Another possibility is that this is a timing issue and that there was more work being done on the clouds when the higher replication tests were run.
+Figure \ref{fig:replica-find} depicts the impact on performance of various numbers of replicas on a find command in Chameleon, FutureSystems, and Jetstream Clouds.  These results show no correlation between the number of replicas and find performance.
 
 \begin{figure}[htbp]
 \centering
@@ -533,7 +531,7 @@ Figure \ref{fig:replica-find} depicts the impact on performance of various numbe
 \label{fig:replica-find}
 \end{figure}
 
-Similarly to other tests, performance on Chameleon was best for the majority of the test runs in the find replication test.
+Similarly to other tests, performance on Chameleon was best for the majority of the test runs in the find replication test, followed by Jetstream, with Futuresystems performing the worst.
 
 Figure \ref{fig:replica-find} can be recreated by running the program benchmark\_replicas\_find.py passing the file benchmark\_combined.csv as a parameter.  It plots the average run time for each configuration as shown using matplotlib. This report is run automatically by the report function of project.py.
 
@@ -550,14 +548,15 @@ Figure \ref{fig:replica-find} can be recreated by running the program benchmark\
 \end{figure}
 
 
-Figure \ref{fig:replica-import} depicts the impact on performance of various numbers of replicas on a mongoimport command on our three Clouds.  The test results show negative impact on the mongoimport command for increase levels of replication.  On Chameleon, a replication factor of two leads to approximately a 20\% performance penalty and a replication factor of seven leads to around 40\% worse performance.  The results scales similarly for the lower replication levels tested on FutureSystems and Jetstream.  Given that an extra copy of data is written with each increase in the replication factor, this performance hit is expected.
+Figure \ref{fig:replica-import} depicts the impact on performance of various numbers of replicas on a mongoimport command on our three Clouds.  The results show poorer write performance as the number of replicas increase.  Given that an extra copy of data is written with each increase in the replication factor, this performance hit is expected.
 
 
 
 
-Performance on Jetstream and Chameleon was nearly identical for the tests that were successfully run.  FutureSystems import performance was by far the worst of the three clouds for this test.
+Performance on Jetstream and Chameleon were very close on this test with Chameleon only performing significantly better with four or more replicas.  FutureSystems import performance was by far the worst of the three clouds.
 
 Figure \ref{fig:replica-import} can be recreated by running the program benchmark\_shards\_import.py passing the file benchmark\_combined.csv as a parameter.  It plots the average run time for each configuration as shown using matplotlib.  This report is run automatically by the report function of project.py.
+
 
 \subsubsection{Impact of Replication on MapReduce}
 
@@ -588,8 +587,7 @@ Figure \ref{fig:replica-mapreduce} can be recreated by running the program bench
 \label{fig:version-find}
 \end{figure}
 
-Figure \ref{fig:version-find} shows the MongoDB version 3.4 and 3.2 find performance on Chameleon Cloud.  Results are mixed, with version 3.2 having the best performance for one shard, version 3.4 having significantly better performance between two and eight shards, with performance equal at nine.  Despite the mixed results at high and low levels, version 3.4 is the clear winner in this test.
-
+Figure \ref{fig:version-find} shows the MongoDB version 3.4 and 3.2 find performance on Chameleon Cloud.  Results are very close, with version 3.2 having the best performance for one shard and performance being similar for all other sharding levels.
 
 Figure \ref{fig:version-find} can be recreated by running the program benchmark\_verson\_find.py passing the file benchmark\_combined.csv as a parameter.  It plots the average run time for each configuration as shown using matplotlib.  This report is run automatically by the report function of project.py.
 
@@ -602,7 +600,8 @@ Figure \ref{fig:version-find} can be recreated by running the program benchmark\
 \label{fig:version-import}
 \end{figure}
 
-Figure \ref{fig:version-import} shows the MongoDB version 3.4 and 3.2 Mongoimport performance on Chameleon Cloud. For Mongoimport, version 3.4 performs better at all sharding levels, with nearly a 20\% reduction in import time compared to version 3.2.  Mongoimport performance appears to have been significantly improved in version 3.4.
+
+Figure \ref{fig:version-import} shows the MongoDB version 3.4 and 3.2 Mongoimport performance on Chameleon Cloud. Runtimes are similar for each version.  Version 3.2 is slightly faster at the lowest sharding levels and Version 3.4 is slightly faster at the highest sharding level.  Given the mixed results and close run times, neither version shows a significant advantage for write operations.
 
 Figure \ref{fig:version-import} can be recreated by running the program benchmark\_verson\_find.py passing the file benchmark\_combined.csv as a parameter.  It plots the average run time for each configuration as shown using matplotlib.  This report is run automatically by the report function of project.py.
 
@@ -610,7 +609,7 @@ Figure \ref{fig:version-import} can be recreated by running the program benchmar
 
 \subsubsection{Impact of Version and Sharding on MapReduce}
 
-Figure \ref{fig:version-mapreduce} shows the MongoDB version 3.4 and 3.2 Mongoimport performance on Chameleon Cloud.  Results are nearly identical for one, two, and nine shards, but surprisingly version 3.2 shows approximately 50\% better performance for between three and seven shards.  Given the lack of consistency across shard levels, it is possible this is environmental in a shared cloud environment, but it may be a valid finding that there is performance degredation in version 3.4 MapReduce operations.
+Figure \ref{fig:version-mapreduce} shows the MongoDB version 3.4 and 3.2 Mongoimport performance on Chameleon Cloud.  Runtimes are similar for each version and with each version being faster at some shard level, which appears to be random. Given the mixed results and close run times, neither version shows a significant advantage for MapReduce operations.
 
 \begin{figure}[htbp]
 \centering
@@ -627,8 +626,7 @@ Figure \ref{fig:version-mapreduce} can be recreated by running the program bench
 
 We have created, tested, and demonstrated a fully automated program to configure and deploy a sharded MongoDB cluster to three cloud environments: Chameleon, Jetstream, and FutureSystems.  Using a combination of Python, Bash, and Cloudmesh Client, the a cluster is dynamically deployed with a selected number of Config Server Replicas, Mongos Routers, Shards, and Shard Replicas and either MongoDB version 3.4 or 3.2. Functions also exist for terminating the environment, reporting on data distribution, benchmarking, and reporting on performance testing.
 
-An automated benchmarking process to show the impact of well distributed data across shards of a large data set has been run for various configurations. The impact of MongoDB version 3.4 versus 3.2, Sharding, and Replication on performance have been assessed.  Testing showed performance and stability on Chameleon Cloud to be the best of our three cloud environments.  A key finding is that read performance, typically a high priority for noSQL data stores and Big Data operations, increases significantly as shards are added.  Testing also showed that a predictable performance penalty is associated with replication.  Our comparison of version 3.4 and 3.2 showed improved Mongoimport and find performance in version 3.4, but slightly worse MapReduce performance. 
-
+An automated benchmarking process to show the impact of well distributed data across shards of a large data set has been run for various configurations. The impact of MongoDB version 3.4 versus 3.2, Sharding, and Replication on performance have been assessed.  Testing showed performance and stability on Chameleon Cloud to be the best of our three cloud environments with Jetstream a close second after an environmental issue was resolved by the support team.  Futuresystems performance consistently lagged behind the other two clouds.  A key finding is that read performance, typically a high priority for noSQL data stores and Big Data operations, increases significantly as shards are added.  Testing also showed that a predictable performance penalty is associated with replication.  Our comparison of version 3.4 and 3.2 showed no significant differences between version 3.2 and 3.4 performance across various sharding levels.
 
 \section*{Acknowledgements}
 

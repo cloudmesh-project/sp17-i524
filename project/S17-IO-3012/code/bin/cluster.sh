@@ -87,13 +87,14 @@ chmod 700 mongo.key
 
 if [ $cloud == "chameleon" ]
  then
-        cm cluster define --count $vm_count --image CC-Ubuntu16.04 --flavor m1.small
+        cm cluster define --count $vm_count --image CC-Ubuntu16.04 --flavor m1.medium
 elif [ $cloud == "jetstream" ]
  then
-        cm cluster define --count $vm_count --image \"Ubuntu 16.04 LTS\" --flavor m1.tiny
+#        cm cluster define --count $vm_count --image \"Ubuntu 16.04 LTS\" --flavor m1.tiny
+        cm cluster define --count $vm_count --image \"Ubuntu 16.04 LTS\" --flavor m1.small
 elif [ $cloud == "kilo" ]
  then
-        cm cluster define --count $vm_count --image Ubuntu-16.04-64 --flavor m1.small
+        cm cluster define --count $vm_count --image Ubuntu-16.04-64 --flavor m1.medium
 
 fi
 
