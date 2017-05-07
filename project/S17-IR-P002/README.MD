@@ -29,7 +29,7 @@ The code to run Ansible scripts to execute the project are present in https://gi
 Changes to be made
 ================
 In order for users to run this project without any interruptions, the following changes need to be made to the codes:
-1. If required, the flavour and operating system of the clouds can be changed in the cloudmesh_script.sh. This OS as to be compatible with cloudmesn client
+1. If required, the flavour and operating system of the clouds can be changed in the cloudmesh_script.sh. This OS as to be compatible with cloudmesh client
 2. ip address of namenode needs to be provided in pig script in order for the script to pick up the right input
 3. Hosts file needs to be changed in ansible and the ip address of name node and port needs to be provided in the ansible scripts move_data_to_hdfs.yml and move_output_to_cloud.yml in the ansible folder, in order for the ansible scripts to move the data to right location
 4. Other minor changes in locations might need to be done depending on the location of the input data files and folder structure on the users' local system.
