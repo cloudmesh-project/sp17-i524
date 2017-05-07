@@ -106,35 +106,25 @@ Ansible also attempts to ease the burden of the IT administrator by eschewing SS
 The \textit{cloudmesh client toolkit} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It provides an API, a command line client and a shell client.
 
 \subsection{Testing Environment}
-The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium} flavor of Ubuntu 16.04.  Deployment testing also utilized the \textit{m1.xlarge} and \textit{m1.xxlarge} flavors CC provides.
+The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium} flavor of Ubuntu 16.04.  Deployment testing also utilized the \textit{m1.small}, \textit{m1.xlarge} and \textit{m1.xxlarge} flavors CC provides.  
 
-% \begin{table} [htbp]
-%   \begin{threeparttable}
-%   \centering
-%   \caption{Deployment Resources}
-%     \begin{tabular}{cccc}
-%       \multicolumn{4}{c}{\bf Chameleon Cloud Flavor Specifications}\\ \hline Flavor & vCPU & RAM & Hard Drive \\ \hline m1.medium & 2 & 4 & 40\\ m1.large & 4 & 8 & 80 \\ m1.xlarge & 8 & 16 & 160 \\ \hline
-%     \end{tabular}
-%     \begin{tablenotes}
-%       \small
-%       \item \textit{vCPU}: count of virtual CPUs; RAM units: MB; Hard Drive units: GB 
-%     \end{tablenotes}
-%   \end{threeparttable}
-% \end{table}
+\begin{table} [htbp]
+  \begin{threeparttable}
+  \centering
+  \caption{Deployment Resources}
+    \begin{tabular}{cccc}
+      \multicolumn{4}{c}{\bf Chameleon Cloud Flavor Specifications}\\ \hline Flavor & vCPU & RAM & Hard Drive \\ \hline m1.small & 1 & 2 & 20\\ m1.medium & 2 & 4 & 40\\ m1.large & 4 & 8 & 80 \\ m1.xlarge & 8 & 16 & 160 \\ \hline
+    \end{tabular}
+    \begin{tablenotes}
+      \small
+      \item \textit{vCPU}: count of virtual CPUs; RAM units: MB; Hard Drive units: GB 
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
 
 \subsection{Robots and Worlds with ROS}
+
 A ROS robot may be extremely simple, such as the pre-built talker and listener robots supplied in the ROS distribution, or as complex as the roboticist desires.  If users desire to visualize the robot, s/he must define his / her ROS robot in \textit{\textbf{U}niversal \textbf{R}obot \textbf{D}escription \textbf{F}ormat}.  A ROS robot's specifications reside in a series of files with \textit{xacro} extensions, referred to as URDF files.  These files, which borrow XML's syntax structure, can include specifications for the basic shapes of the robot and its appendages (if applicable), e.g., rectangular box, cylinder, etc. with attached wheels; various kinds of joints, such as ones that rotate around an axis or extend along an axis; types and numbers of sensors; number of joints in an appendage; colors of the robot(s); etc., etc.  In addition, any file in the robot description stack may reference an external file to complete the description of the robot.  This capability allows the user to re-use code by incorporating previously-completed robot features into a new robot.  Finally, simulations include a world file to provide the setting, or environment, in which the robot simulation occurs.  As with the URDF files, the world file can be simple, like the \textit{empty\_world} file included in the ROS distribution or extremely complex.  
-
-Finally, a simulation package will include one or more \textit{launch} files.  These files coordinate the disparate aspects of the entire simulation package in a manner similar to that of Ansible's playbook file.  According to the OSRF, best practices for robot simulation dictate that the main launch file consist of little more than calls to other launch files in the package \cite{www-ros-launch}.  Continuing with the playbook analogy, the launch files called from the main launch file would correspond to the roles defined in Ansible.  This functionality significantly increases ROS' usability since managing even relatively straightforward robots, simulated or real, can prove unwieldy. For instance, this project, a proof-of-concept project, utilizes a .world file, four URDF files and four launch files in addition to the pre-compiled talker and listener robots.  
-
-This project uses two straightforward differential drive robots sourced from an online tutorial entitled \textit{Simulating Robot Models in ROS (part 1)} \cite{www-mybot-moore}
-
-\section{Virtual Robot Swarm Project Implementation}
-\subsection{VR Swarm task}
-Although the swarm accomplishes the seemingly-trivial task of driving in circles, the real accomplishment rests in proving the feasibility of automating the deployment of multiple controllable virtual robots on a remote cluster of computers and then visualizing them on a local computer.
-
-\subsection{Deployment}
-Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  Only the initial step, retrieving and sourcing the shell script that begins the deployment process, requires user intervention.  However, if the user wants to listen to the talker robot (\textit{talker.py and listener.py}), s/he needs to follow the steps described in the README file.
 
 \begin{figure}[htbp]
 \centering
@@ -143,12 +133,25 @@ Achieving the aforementioned task requires coordinating a modestly-complex mix o
 \label{fig:complexRobot}
 \end{figure}
 
+Finally, a simulation package will include one or more \textit{launch} files.  These files coordinate the disparate aspects of the entire simulation package in a manner similar to that of Ansible's playbook file.  According to the OSRF, best practices for robot simulation dictate that the main launch file consist of little more than calls to other launch files in the package \cite{www-ros-launch}.  Continuing with the playbook analogy, the launch files called from the main launch file would correspond to the roles defined in Ansible.  This functionality significantly increases ROS' usability since managing even relatively straightforward robots, simulated or real, can prove unwieldy. For instance, this project, a proof-of-concept project, utilizes a .world file, four URDF files and four launch files in addition to the pre-compiled talker and listener robots.  
+
+This project uses two straightforward differential drive robots sourced from an online tutorial entitled \textit{Simulating Robot Models in ROS (part 1)} \cite{www-mybot-moore}
+
+
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=\linewidth]{images/rosProjRobots.png}}
-\caption{An Example of Two Simpler Robots}
+\caption{Example of Two Simpler Robots}
 \label{fig:simplerRobots}
 \end{figure}
+
+
+\section{Virtual Robot Swarm Project Implementation}
+\subsection{VR Swarm task}
+Although the swarm accomplishes the seemingly-trivial task of driving in circles, the real accomplishment rests in proving the feasibility of automating the deployment of multiple controllable virtual robots on a remote cluster of computers and then visualizing them on a local computer.
+
+\subsection{Deployment}
+Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  Only the initial step, retrieving and sourcing the shell script that begins the deployment process, requires user intervention.  However, if the user wants to listen to the talker robot (\textit{talker.py and listener.py}), s/he needs to follow the steps described in the README file.
 
 \paragraph{\textit{wget...begin} - Retrieve the Initalization Bash Script}
 Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command
@@ -212,19 +215,19 @@ The total amount of time needed increased when using a higher-spec Chameleon Clo
 
 Furthermore, deployment failures seem to occur about 50\% of the time, independent of the CC flavor chosen.  Anecdotally, then, vCPU/RAM/HD combinations do not seem to be the first suspect to investigate with respect to failed deployments.
 
-% \begin{table} [htbp]
-%   \begin{threeparttable}
-%   \centering
-%   \caption{Virtual Swarm Deployment Times}
-%     \begin{tabular}{ccccc}
-%       \multicolumn{5}{c}{\bf Time Needed to Deploy (mean; seconds)}\\ \hline Flavor & Part 1 & Part 2 & Total & Notes\\ \hline m1.medium & 129 & 358 & 487 & 2/6 attempts succeeded \\ m1.large & 134 & 401 & 534 & 3/6 attempts succeeded \\ m1.xlarge & --- & --- & --- & no successes\\ \hline
-%     \end{tabular}
-%     \begin{tablenotes}
-%       \small
-%       \item Part 1: Consists of \textit{begin} shell script \newline  Part 2: Consists of \textit{beginAgain} shell script, which includes the Ansible playbook and installation of ROS 
-%     \end{tablenotes}
-%   \end{threeparttable}
-% \end{table}
+\begin{table} [htbp]
+  \begin{threeparttable}
+  \centering
+  \caption{Virtual Swarm Deployment Times}
+    \begin{tabular}{ccccc}
+      \multicolumn{5}{c}{\bf Time Needed to Deploy (mean; seconds)}\\ \hline Flavor & Part 1 & Part 2 & Total & Notes\\ \hline m1.small & 144 & 441 & 555 & 4/6 attempts succeeded \\ m1.medium & 129 & 358 & 487 & 2/6 attempts succeeded \\ m1.large & 134 & 401 & 534 & 3/6 attempts succeeded \\ m1.xlarge & --- & --- & --- & no successes\\ \hline
+    \end{tabular}
+    \begin{tablenotes}
+      \small
+      \item Part 1: Consists of \textit{begin} shell script \newline  Part 2: Consists of \textit{beginAgain} shell script, which includes the Ansible playbook and installation of ROS 
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
 
 
 \subsection{Deployment Obstacles}
@@ -255,9 +258,6 @@ ROS prints error messages in red to the console, so they stand out.  The most co
 Somewhat maddeningly, this process often needs to be completed twice before the simulation will start successfully.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm Maually} section.
 
 \subsection{Initializing the Swarm Manually}
-
-\TODO{starting ROS and Gazebo to create the virtual environment; testing swarm interconnectivity; designating master node, etc.}
-
 If needed the user can manually start the simulation with the commands listed below.  You will need three terminals for the three commands, so ssh into the main node three times from three separate consoles or use \textit{byobu} to split the terminal into three panes.  The command
 
  {\lstinline[style=BashInputStyle]!> roslaunch mybot_gazebo mybot_world.launch! } 
@@ -271,9 +271,6 @@ If needed the user can manually start the simulation with the commands listed be
 {\lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! }
 
 moves the second robot. Alternatively, one can delete the cluster and run the deployment script again.
-
-
-\section{VR Swarm Project Conclusions}
 
 \section{VR Swarm Project Conclusions}
 Automating the deployment of a virtual robot swarm on a cluster of remotely accessed computers should allow roboticists to more easily explore the benefits of collecting data from multiple sources at the same time over a give geogrpahy and timeframe.  The virtual swarm presented in this paper provides framework for obtaining those benefits. It also highlights the challenges presented with an automated deployment, including a) network communication issues like obtaining the ROS repo key for each cluster node; b) compute resource security concerns since ROS nodes bind to any available port; c) the exacting nature of the interplay between the host OS, ROS and Gazebo as shown by the high number of deployment failures despite seemingly-duplicate processes and resources.  The process developed for this project could perhaps benefit from the use of different tools and would undoubtedly benefit from a much-deeper understanding of how ROS functions.
