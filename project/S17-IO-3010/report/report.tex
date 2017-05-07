@@ -1,11 +1,9 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \usepackage{hyperref}
+\usepackage{booktabs,caption}
+\usepackage[flushleft]{threeparttable}
 \usepackage{color}
-
-%\usepackage{enumitem}
-%\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
-
 \usepackage{listings}
 \lstdefinestyle{BashInputStyle}{
   language=bash,
@@ -19,7 +17,6 @@
   linewidth=0.9\linewidth,
   xleftmargin=0.1\linewidth
 }
-% \graphicspath{ {images/} }
 \journal{i524} 
 
 \title{Remotely Deploying, Visualizing and Controlling a Robot Swarm with ROS and Cloudmesh}
@@ -56,11 +53,7 @@ However, deployment of an interconnected swarm of virtual robots in a cloud impo
 
 \section{Virtual Robot Swarm Components}
 
-\TODO{Provide intro section on what belongs to a virtual swarm. Possibly drawing. WHat OS do you use to write paper? Should we use ppt (windows)?, omnigraffle (osx)? other}
-
-\subsection{Robot Operating System (ROS)} 
-
-\TODO{Include a discussion of a) how to obtain and install ROS and b) ROS graph concepts.  The latter topic will introduce ROS' core components, namely a node, publications, suscriptions, topics and services.  This section should probably cover ROS packages and ROS client libraries (primarily C++ and Python) \cite{www-ros-about}}
+\subsection{Robot Operating System (ROS) \cite{paper2}}
 
 \begin{figure*}[htbp]
 \centering
@@ -82,56 +75,69 @@ Figure 1 depicts the three parts of the ROS universe: a) the plumbing, ROS' comm
 
 The modules or packages, which are analogous to packages in Linux repositories or libraries in other software distributions such as \textit{R}, provide solutions for numerous robot-related tasks and challenges.  General categories include a) drivers, such as sensor and actuator interfaces; b) platforms, for steering and image processing, etc.; c) algorithms, for task planning and obstacle avoidance; and, d) user interfaces, such as tele-operation and sensor data display. \cite{www-software-categories}
 
+\subsubsection{Communications Infrastructure}
+\paragraph{General}
+OSRF maintains three distinct communication methods for ROS: a) \textit{message passing}; b) \textit{services}; and, c) \textit{actions}.  Each method utilizes ROS' standard communication type, the \textit{message} \cite{www-ros-core-components}.  Messages, in turn, adhere to ROS' \textit{interface description language}, or IDL. The IDL dictates that messages should be in the form of a data structure comprised of typed fields \cite{www-ros-messages}. Finally, \textit{.msg} files store the structure of messages published by various nodes so that ROS' internal systems can generate source code automatically.  The virtual swarm and the talker/listener robots utilize ROS' message passing capabilities in project's this implementation.
+
+\paragraph{Message Passing}
+ROS implements a publish-subscribe anonymous message passing system for inter-process communication, hereinafter pubsub, as its most-basic solution for roboticists.  A pubsub system consists of two complementary pieces: a) a device, node or process, hereinafter node, publishing messages, i.e., information, to a \textit{topic}; and b) another node \textit{listening to} and ingesting the information from the associated topic.  Designating topics to which a node should subscribe and topics to which a node should publish falls to the roboticist.  ROS' \textit{rosnode} command line tool conveniently "display[s] a list of active topics, the publishers and subscribers of a specific topic, the publishing rate of a topic, the bandwidth of a topic, and messages published to a topic" \cite{www-ros-rostopic}.
+
+Pubsub's method of operation analogizes to terrestrial radio.  In the analogy, the radio station represents the publishing node, the radio receiver maps to the subscribing node and the frequency on which one transmits and the other receives represents the topic.  Unlike terrestrial radio, though, ROS provides a lookup mechanism versus "flipping through the dial."
+
+The OSRF touts the pubsub communications paradigm as the ideal method  primarily due to its anonymity and its requirement to communicate using its message format.  With respect to the first point, the nodes involved in bilateral or multilateral conversations need only know the topic on which to publish or subscribe in order to communicate.  As a result, nodes can be replaced, substituted or upgraded without changing a single line of code or reconfiguring the software in any manner.  The subscriber node can even be deleted entirely without affecting any aspect of the robot except those nodes that depend on the deleted node.
+
+In addition, ROS' pubsub requires well-defined interfaces between nodes in order to succeed.  For instance, if a node publishes a message without a crucial piece information a subscribing node requires or in an unexpected format, the message would be useless.  Alternatively, it would be pointless for an audio processing node to subscribe to a node publishing lidar data.  Therefore, a message's structure must be well-defined and available for reference as needed in order to ensure compatibility between publisher and subscriber nodes.  As a result, ROS has a modular communication system.  That is, a subscriber node may use all or only parts of a publishing node's message.  Further, the subscribing node can combine the data with information from another node before publishing the combined information to a different topic altogether for a third node's use.  At the same time, a fourth and fifth node could subscribe to the original topic for each node's respective purpose.  
+
+Finally, ROS' pubsub can natively replay messages by saving them as files.  Since a subscriber node processes messages received irrespective of the message's source, publishing a saved message from a subscriber node at a later time works just as well as an actual topic feed.  One use of asynchronous messaging: postmortem analysis and debugging.
+
 \subsection{Gazebo} 
-
-\TODO{introducing core Gazebo concepts.  In this case, will include a) world files, b) model files and c) its client-server model.  It should also include non-obvious limitation examples, e.g., a gripper arm driven by a single screw instead of multiple screws.  In addition, it should allude to any limitations that affect our simulation. \cite{www-software-categories}}
-
 The Foundation also supports \textit{Gazebo}, ROS' 3D virtual simulation software.  ``Gazebo...simulate[s] populations of robots in complex indoor and outdoor environments. [It] offers physics simulation at a much higher degree of fidelity [than gaming engines], a suite of sensors, and interfaces for both users and programs \cite{www-gazebo-overview}.''  Gazebo's usefulness center on three main features: a) physics engines compatibility; b) its graphics engine; and c) its sensor-data generators.  with respect to physics engine compatibility Gazebo interfaces well with \textit{Open Dynamics Engine} \cite{www-ode-homepage} (ODE), the default; b) \textit{Bullet} \cite{www-bullet-homepage}; \textit{SimBody} \cite{www-simbody-homepage}; and, \textit{DART} \cite{www-dart-homepage}. Roboticists also benefit from its 3D graphics engine, \textit{Object-oriented Graphics Rendering Engine} \cite{www-ogre-homepage} (OGRE), which provides a C++ class library to ``[abstract away] the details of using the underlying [graphics] system libraries like Direct3D and OpenGL \cite{www-ogre-about}.''  Finally, Gazebo can supply \textit{sensor} data to the virtual robot.  Virtual sensor support ranges from 2D cameras to Kinect-style sensors.  The system can also generate \textit{noisy} data to better simulate real-world results.
 
-Gazebo exists as a stand-alone project, suitable for use by programs other than ROS.  However, it integrates tightly with ROS given its common ownership.  In fact, the version supplied with a ROS installation automatically establishes communications between Gazebo and ROS for the end-user \cite{www-gazebo-ros}.  
+Gazebo exists as a stand-alone project, suitable for use by programs other than ROS.  However, it integrates tightly with ROS given its common ownership.  In fact, the version supplied with a ROS installation automatically establishes communications between Gazebo and ROS for the end-user \cite{www-gazebo-ros}.
 
 \subsection{Ansible}
-
-\TODO{briefly describe Ansible - what it is, salient features, etc.}
-
 Red Hat, Inc's \cite{www-redhat} \textit{Ansible} software purports to simplify numerous information technology tasks.  It claims to do so by a) relying upon a human-readable script syntax, YAML; and b) by automating definable and repeatable IT tasks, such as configuration management and application deployment.  Ansible's developers adopted a theater metaphor to describe the program's core functions.  Thus, a computer's main duty within an IT infrastructure corresponds to the \textit{role} an actor or actress might play in a theatrical production.  Ansible calls the script a \textit{playbook}, while the lines and directions within the script are referred to as \textit{tasks}.  Other aspects diverge from the metaphor, such as group vars and the config file (ansible.cfg).  However, the \textit{inventory} file hews to the metaphor - it represents the cast billing, the delineation of who plays what role.  When used with an Ansible playbook, the inventory file specifies which servers belong to which logical group(s), i.e., which role(s). 
 
 As a result the software's applicability extends well beyond simplistic tasks even though Ansible's designers strive for simplification.  In fact, an Ansible user can exercise fine-grained control over nearly every aspect of his or her IT infrastructure with a well-designed playbook.  
 
 Ansible also attempts to ease the burden of the IT administrator by eschewing SSL signing servers, daemons or client software.  It simply pushes small programs to the target computers through an SSH connection to execute the desired tasks.  When the task completes, Ansible removes the programs. 
 
-\subsection{Cloudmesh Client}
-
-The \textit{Cloudmesh Client} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It provides an API, a command line client and a shell client.
+\subsection{cloudmesh client toolkit}
+The \textit{cloudmesh client toolkit} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It provides an API, a command line client and a shell client.
 
 \subsection{Testing Environment}
+The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium} flavor of Ubuntu 16.04.  Deployment testing also utilized the \textit{m1.xlarge} and \textit{m1.xxlarge} flavors CC provides.
 
-The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium flavor} of Ubuntu 16.04.  The m1.medium flavor's resources consist of two virtual CPUs, 40GB of hard drive space and 4GB of RAM.  
+% \begin{table} [htbp]
+%   \begin{threeparttable}
+%   \centering
+%   \caption{Deployment Resources}
+%     \begin{tabular}{cccc}
+%       \multicolumn{4}{c}{\bf Chameleon Cloud Flavor Specifications}\\ \hline Flavor & vCPU & RAM & Hard Drive \\ \hline m1.medium & 2 & 4 & 40\\ m1.large & 4 & 8 & 80 \\ m1.xlarge & 8 & 16 & 160 \\ \hline
+%     \end{tabular}
+%     \begin{tablenotes}
+%       \small
+%       \item \textit{vCPU}: count of virtual CPUs; RAM units: MB; Hard Drive units: GB 
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
 
-\subsection{Robots and Worlds}
-A ROS robot may be extremely simple, such as the pre-built talker and listener robots supplied in the ROS distribution, or as complex as the roboticist desires.  If users desire to visualize the robot, s/he must define his / her ROS robot in \textit{\textbf{U}niversal \textbf{R}obot \textbf{D}escription \textbf{F}ormat}.  A ROS robot's specifications reside in a series of files with \textit{xacro} extensions, referred to as URDF files.  These files, which borrow XML's syntax structure, can include specifications for the basic shapes of the robot and its appendages (if applicable), e.g., rectangular box, cylinder, etc. with attached wheels, various kinds of joints, such as ones that rotate around an axis or extend along an axis, types and numbers of sensors, number of joints in an appendage, colors of the robot(s), etc., etc.  In addition, any file in the robot description stack may reference an external file to complete the description of the robot.  This capability allows the user to re-use code by incorporating previously-completed robot features into a new robot.  Finally, simulations include a world file to provide the setting, or environment, in which the robot simulation occurs.  As with the URDF files, the world file can be simple, like the \textit{empty\_world} file included in the ROS distribution or extremely complex.  
+\subsection{Robots and Worlds with ROS}
+A ROS robot may be extremely simple, such as the pre-built talker and listener robots supplied in the ROS distribution, or as complex as the roboticist desires.  If users desire to visualize the robot, s/he must define his / her ROS robot in \textit{\textbf{U}niversal \textbf{R}obot \textbf{D}escription \textbf{F}ormat}.  A ROS robot's specifications reside in a series of files with \textit{xacro} extensions, referred to as URDF files.  These files, which borrow XML's syntax structure, can include specifications for the basic shapes of the robot and its appendages (if applicable), e.g., rectangular box, cylinder, etc. with attached wheels; various kinds of joints, such as ones that rotate around an axis or extend along an axis; types and numbers of sensors; number of joints in an appendage; colors of the robot(s); etc., etc.  In addition, any file in the robot description stack may reference an external file to complete the description of the robot.  This capability allows the user to re-use code by incorporating previously-completed robot features into a new robot.  Finally, simulations include a world file to provide the setting, or environment, in which the robot simulation occurs.  As with the URDF files, the world file can be simple, like the \textit{empty\_world} file included in the ROS distribution or extremely complex.  
 
 Finally, a simulation package will include one or more \textit{launch} files.  These files coordinate the disparate aspects of the entire simulation package in a manner similar to that of Ansible's playbook file.  According to the OSRF, best practices for robot simulation dictate that the main launch file consist of little more than calls to other launch files in the package \cite{www-ros-launch}.  Continuing with the playbook analogy, the launch files called from the main launch file would correspond to the roles defined in Ansible.  This functionality significantly increases ROS' usability since managing even relatively straightforward robots, simulated or real, can prove unwieldy. For instance, this project, a proof-of-concept project, utilizes a .world file, four URDF files and four launch files in addition to the pre-compiled talker and listener robots.  
 
 This project uses two straightforward differential drive robots sourced from an online tutorial entitled \textit{Simulating Robot Models in ROS (part 1)} \cite{www-mybot-moore}
 
 \section{Virtual Robot Swarm Project Implementation}
-
 \subsection{VR Swarm task}
-
-\TODO{discuss the task to be accomplished by the swarm, as well as how the information collected during task completion will be communicated back to the master node for collation and reporting.}
-
 Although the swarm accomplishes the seemingly-trivial task of driving in circles, the real accomplishment rests in proving the feasibility of automating the deployment of multiple controllable virtual robots on a remote cluster of computers and then visualizing them on a local computer.
 
 \subsection{Deployment}
-
-\TODO{Document the Ansible steps needed to successfully deploy ROS and Gazebo on multiple computers;  will include references for obtaining major components, including adding new repositories if needed.}
-
 Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  Only the initial step, retrieving and sourcing the shell script that begins the deployment process, requires user intervention.  However, if the user wants to listen to the talker robot (\textit{talker.py and listener.py}), s/he needs to follow the steps described in the README file.
 
 \begin{figure}[htbp]
 \centering
-image missing
 \fbox{\includegraphics[width=\linewidth]{images/robotgeometry.png}}
 \caption{Example of a Complex Simulated Robot}
 \label{fig:complexRobot}
@@ -139,18 +145,17 @@ image missing
 
 \begin{figure}[htbp]
 \centering
-image missing
 \fbox{\includegraphics[width=\linewidth]{images/rosProjRobots.png}}
 \caption{An Example of Two Simpler Robots}
 \label{fig:simplerRobots}
 \end{figure}
 
 \paragraph{\textit{wget...begin} - Retrieve the Initalization Bash Script}
-Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command 
+Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command
 
-{\lstinline[style=BashInputStyle]!> ./begin! }
+{\color{black} \lstinline[style=BashInputStyle]!> ./begin! }
 
-\parindent0pt from the directory where the \textit{begin} bash script resides.  
+from the directory where the \textit{begin} bash script resides.  
 
 \paragraph{\textit{begin} bash script}
 The bash script calls three cloudmesh\_client commands: 
@@ -162,8 +167,8 @@ The bash script calls three cloudmesh\_client commands:
 \item {\lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } 
 \end{enumerate}
 
-These scripts create and prepare the three-node cluster named \textit{rosA1}.  
-We then uses two additional Cloudmesh commands:
+The script creates and prepares a three-node cluster named \textit{rosA1}.  
+We then use two additional Cloudmesh commands:
 
 \begin{enumerate}
 \setlength\itemsep{-6pt}
@@ -171,15 +176,15 @@ We then uses two additional Cloudmesh commands:
 \item  {\lstinline[style=BashInputStyle]!> cm vm ip show! } 
 \end{enumerate}
 
-to capture the public and private ip addresses of the cluster as well as the host names.  
+to capture the public and private ip addresses of the cluster, as well as the host names.  
 
 The ip addresses and names are written to separate files for distinct purposes.  The host names and private ip addresses are used to create a file to append to each cluster node's \textit{known\_hosts} file.  The private ip addresses also end up in a different file that serves as the basis for a custom Ansible inventory file.  
 
-The private ip addresses, termed static ips by Chameleon, must be used because ROS nodes communicate by binding to any available port.  That is, ROS does not specify the port beforehand, and it does not consider whether or not the firewall blocks the port for security purposes.  As a result, intra-cluster communication requires access to every port, i.e., the firewall cannot close any port on any computer running ROS when that computer needs to communicate with another computer in the cluster.  Obviously, this presents a major security concern, especially on shared resources. Refer to the \textit{Common Pitfalls} section below for the workaround used with this project.
+The private ip addresses, termed static ips by Chameleon, must be used because ROS nodes communicate by binding to any available port.  That is, ROS does not specify the port beforehand, and it does not consider whether or not the firewall blocks the port for security purposes.  As a result, intra-cluster communication requires access to every port, i.e., the firewall cannot close any port on any computer running ROS when that computer needs to communicate with another computer in the cluster.  Obviously, this presents a major security concern, especially on shared resources. Refer to the \textit{Deployment Obstacles} section below for the workaround used with this project.
 
 As its penultimate step, the \textit{begin} script places all the necessary files for the demonstration on the correct cluster nodes.  The ROS robot files and the Ansible files go onto the main node, while the script places a copy of the known\_hosts addendum onto each cluster node.  In addition, the script uses the \textit{wget} command to copy the bash script for the next step in the process onto the main node.
 
-The final lines of the file initiate the next step in the process and perform a few administrative duties.
+The final lines of the file initiate the next step in the process, running the \textit{beginAgain} script on the master node, and perform a few administrative duties.
 
 \paragraph{\textit{beginAgain} bash script}
 This script handles the software installation and initialization of the robots.  It first establishes the veracity of the main node and the other nodes by connecting to each one in turn via ssh connection.  If these steps do not occur before Ansible runs, the software installations never occur because Ansible hangs mid-process.  Ansible installs all the necessary software on each cluster node.  It installs Linux's \textit{tree} package because the author prefers to use it to view directory structures; the ROS package; the rosbash package; the rosinstall package; and, the catkin\_tools package. Ansible also creates a new known\_hosts file for each computer node.
@@ -200,10 +205,29 @@ The \textit{talkListen} script sets up a multiplexed terminal environment on the
 \label{fig:byobu}
 \end{figure*}
 
-\subsection{Common Pitfalls}
+\subsection{Deployment Performance}
+In general, completing the deployment process took around 500 seconds, or eight minutes and 20 seconds.  Much of that time, around five minutes, consisted of installing ROS on the cluster nodes.  Since Ansible completes each individual step of a playbook on each cluster node simultaneously, users should be able to provision a 5-, 10- or 100-node cluster as quickly as the three-node cluster used in this project, barring network communication bottlenecks, etc. 
 
-\TODO{discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.}
+The total amount of time needed increased when using a higher-spec Chameleon Cloud flavor, as shown in the nearby table.  However, the first portion of the process, handled by the \textit{begin} script consistently takes about 130 seconds, irrespective of the node's vCPU/RAM/HD combination.  
 
+Furthermore, deployment failures seem to occur about 50\% of the time, independent of the CC flavor chosen.  Anecdotally, then, vCPU/RAM/HD combinations do not seem to be the first suspect to investigate with respect to failed deployments.
+
+% \begin{table} [htbp]
+%   \begin{threeparttable}
+%   \centering
+%   \caption{Virtual Swarm Deployment Times}
+%     \begin{tabular}{ccccc}
+%       \multicolumn{5}{c}{\bf Time Needed to Deploy (mean; seconds)}\\ \hline Flavor & Part 1 & Part 2 & Total & Notes\\ \hline m1.medium & 129 & 358 & 487 & 2/6 attempts succeeded \\ m1.large & 134 & 401 & 534 & 3/6 attempts succeeded \\ m1.xlarge & --- & --- & --- & no successes\\ \hline
+%     \end{tabular}
+%     \begin{tablenotes}
+%       \small
+%       \item Part 1: Consists of \textit{begin} shell script \newline  Part 2: Consists of \textit{beginAgain} shell script, which includes the Ansible playbook and installation of ROS 
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
+
+
+\subsection{Deployment Obstacles}
 \paragraph{Intra-Node Communication}
 In order to maintain security and enable intra-cluster communication, two of the three computer nodes must have their public ip addresses removed, i.e., disassociated, using Chameleon's browser-based graphical user interface (GUI), Horizon.  Then, and only then, the ports can be opened by applying the \textit{ros} security group to the two nodes in question (the private nodes).  Since the third node, the main node, still has a public-facing ip address, the other two nodes can be accessed via an ssh connection (\textit{ssh'ing}) to the main node and then ssh'ing to one of the private nodes.
 
@@ -211,10 +235,12 @@ In order to maintain security and enable intra-cluster communication, two of the
 Even if a script or a user completes each step correctly to set up a controllable virtual swarm on remotely-located resources, problems still occur that cause deployment failures.  Usually, the issues can be resolved with manual intervention, so the deployment can be completed.  
 
 \subparagraph{Adding the ROS Repository Key}
-The deployment often goes awry during the Ansible script to retrieve the repository key for the ROS repo.  When the key retrieval failed, the ROS software installation would also fail.  Obviously, if the main node lacks ROS, the simulation will not launch either.  As a workaround, the script adds the repository to each machine with the \textit{deb [trusted=yes] ...} syntax.  Using this method obviates the need for the repo key.  Although it works, applying it to repos in general creates unnecessary risks.  Therefore, it should be used sparingly.  
+The deployment often went awry during the Ansible script step that retrieves the repository key for the ROS repo.  When the key retrieval would fail, the ROS software installation would also fail.  Obviously, if the main node lacks ROS, the simulation will not launch either.  As a workaround, the script adds the repository to each machine with the \textit{deb [trusted=yes] ...} syntax.  Using this method obviates the need for the repo key.  Although it works, applying it to repos in general creates unnecessary securirty risks.  Therefore, the workaround should be used sparingly.  
 
 \subparagraph{Starting the Robot Simulation}
-Receiving an error while starting the simulation occurred much more frequently during the development process than the key repo problem.  ROS prints error messages in red to the console, so they stand out.  The most common error: {\color{red} \lstinline[style=BashInputStyle]![gazebo_gui-3] process has died! }.  Sometimes, an almost identical error occurs, {\color{red} \lstinline[style=BashInputStyle]![gazebo-2] process has died! }, while other times the launch program cannot find parts of the robot model.  The latter error consists of one or both of the following: {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://ground_plane! } and / or {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://sun! }.  Unlike the previously-described error, this one requires manual intervention.  The user needs to enter the following commands at the terminal prompt: 
+Errors while starting the simulation occurred much more frequently during the development process than the key repo problem.  In fact, approximately 50\% of tested deployments failed, almost always at the final step when launching the simulation.  
+
+ROS prints error messages in red to the console, so they stand out.  The most common error: {\color{red} \lstinline[style=BashInputStyle]![gazebo_gui-3] process has died! }.  Sometimes, an almost identical error occurs, {\color{red} \lstinline[style=BashInputStyle]![gazebo-2] process has died! }, while other times the launch program cannot find parts of the robot model.  The latter error consists of one or both of the following: {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://ground_plane! } and / or {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://sun! }.  Unlike the previously-described error, this one requires manual intervention.  The user needs to enter the following commands at the terminal prompt: 
 
 \begin{enumerate}
 \setlength\itemsep{-6pt}
@@ -226,7 +252,7 @@ Receiving an error while starting the simulation occurred much more frequently d
 \item {\lstinline[style=BashInputStyle]!> ./beginAgain! }
 \end{enumerate}
 
-Somewhat maddeningly, this process often needs to be completed twice before the simulation will start successfully.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm} section.
+Somewhat maddeningly, this process often needs to be completed twice before the simulation will start successfully.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm Maually} section.
 
 \subsection{Initializing the Swarm Manually}
 
@@ -240,7 +266,7 @@ If needed the user can manually start the simulation with the commands listed be
 
 {\lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! }
 
-\parindent0ptin a free terminal will command the first robot to begin turning in a circle.  Likewise, 
+\parindent0pt in a free terminal will command the first robot to begin turning in a circle.  Likewise, 
 
 {\lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! }
 
@@ -249,7 +275,10 @@ moves the second robot. Alternatively, one can delete the cluster and run the de
 
 \section{VR Swarm Project Conclusions}
 
-\TODO{present the data collected in some visualization format; discuss why this project advances robotics forward by utilizing distributed computing;}
+\section{VR Swarm Project Conclusions}
+Automating the deployment of a virtual robot swarm on a cluster of remotely accessed computers should allow roboticists to more easily explore the benefits of collecting data from multiple sources at the same time over a give geogrpahy and timeframe.  The virtual swarm presented in this paper provides framework for obtaining those benefits. It also highlights the challenges presented with an automated deployment, including a) network communication issues like obtaining the ROS repo key for each cluster node; b) compute resource security concerns since ROS nodes bind to any available port; c) the exacting nature of the interplay between the host OS, ROS and Gazebo as shown by the high number of deployment failures despite seemingly-duplicate processes and resources.  The process developed for this project could perhaps benefit from the use of different tools and would undoubtedly benefit from a much-deeper understanding of how ROS functions.
+
+The logical next step in the automation development process would seem to be projecting a differential drive robot started on one of the secondary nodes into the world created by ROS on the main node.  The literature the technical feasibility of the task, although the implementation may prove more difficult than expected.
 
 \section{Supplemental Material}
 
@@ -271,9 +300,7 @@ moves the second robot. Alternatively, one can delete the cluster and run the de
 \appendix
 \begin{description}
 
-\item[Matthew Lawson.] Designed the project in collaboration w/ Gregor von Laszewski, researched the material and implemented the project.  Slept far too little.
-
-\item[Gregor von Laszewski.] Provided invaluable insights at key points during the process.
+\item The authors would like to thank Mark McCombe for his timely and useful contribution of code snippets  to the project.  We greatly appreciate his time-saving additions to the cause.
 
 \end{description}
 
