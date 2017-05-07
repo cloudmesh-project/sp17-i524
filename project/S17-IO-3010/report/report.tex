@@ -22,7 +22,7 @@
 % \graphicspath{ {images/} }
 \journal{i524} 
 
-\title{Remotely Deploying, Visualizing and Controlling a Robot Swarm with ROS}
+\title{Remotely Deploying, Visualizing and Controlling a Robot Swarm with ROS and Cloudmesh}
 
 \author[1]{Matthew Lawson}
 \author[1,*]{Gregor von Laszewski}
@@ -40,18 +40,19 @@
 Code: \url{https://github.com/cloudmesh/cloudmesh.ros}}
 
 \begin{abstract}
-Our project demonstrates the feasibility of harnessing remotely-located distributed computing environments, i.e., "clouds", to simulate large-scale robot swarms.  Our proof-of-concept program creates a two-robot swarm on a cluster of remotely-located computers.  It then pushes a visual simulation of the robots to the remote user.  Finally, it sends a single command to the robots in order to demonstrate the feasibility of networked communication with the robots.  The project utilizes two software packages from the Open Source Robotics Foundation (OSRF).  Namely, it uses the \textit{Robot Operating System} to define, create and control the virtual robots.  The OSRF's \textit{Gazebo} simulation software provides visualization of the simulation.  We use \textit{cloudmesh}, \textit{Ansible} and a *nix shell script to deploy the software to a distributed computing environment.
-\newline
+Working with robot swarms is one important research area of robotics. To educate the next generation experts we are in the need to simulate large such swarms as the cost to deploy them as real hardware may be prohibitive to a university with limited budget. Hence, we explore the the feasibility of simulating such swarms while harnessing remotely-located distributed computing environments to conduct such simulations. We are especially interested to reuse clouds to simulate large-scale robot swarms.  For this reason we created a proof-of-concept that creates a two-robot swarm on multiple clouds we have access to.  The important point is the the deployment is done automated and can be executed by non cloud experts so the environment is accessible and usable not only by advanced PhD students, but by freshmen and potentially even STEM students. The robots behaviour are streemed as a visual simulation the remote user.  We demonstrate that users can start up the behavior of a robot through a single command allowing us to benchmark the activity streams of the swarm in tehe cloud. The project uses opensource software and utilizes Open Source Robotics Foundation (OSRF) to define, create and control the virtual robots with \textit{Robot Operating System}.  \textit{Gazebo} provides the visualization of the simulation.  To simplify the interaction with various clouds we use \textit{cloudmesh}.
 \end{abstract}
 
-\setboolean{displaycopyright}{true}
+\setboolean{displaycopyright}{false}
 
 \begin{document}
 
 \maketitle
 
 \section{Introduction}
-Simulating a single robot's actions and responses to its environment prior to real-world deployment mitigates risk and improves results at a relatively low cost. Therefore, it seems reasonable to conclude that simulating the actions and responses of a group of robots, e.g., a swarm, will also improve results at a low cost.  However, deployment of an interconnected swarm of virtual robots on a remotely-located cluster of computers imposes additional requirements versus a locally-hosted single- or multi-robot deployment.  For instance, accessing and configuring multiple computers presents a time and resource challenge in contrast to a single-host setup.  In addition, network security measures, such as ssh keys and port access, impede ROS' intra-cluster communication capabilities.  In order to address the unique requirements of a networked, remotely-located swarm, we create a multi-platform system to automate the creation and deployment of the virtual swarm. 
+With the evolution of robotics and its increased influence in society we anticipate the need to deal with robot swarms. Thus, we need to educate the next generation of scientists by offering abilities to simulate a multitude and diverse set of robot swarms. Simulation allows safe interaction with the swarm while conducting actions and observing responses to its environment prior to real-world deployment to mitigates operational risk. Furthermore it allows to simulate such environments in a cost effective way that goes beyond the capabilities that are provided by a single workstation. The question we ask, would it be possible to simulate 10th of thausends of robots on a cloud environment?
+
+However, deployment of an interconnected swarm of virtual robots in a cloud imposes additional requirements to the scientist researching such swarms. Thus we try to also evaluate if it is possible to bring down the barrier of managing such a {\em virtual swarm} not only for an individual researcher but for potential inclusion in class settings on the freshmen and the STEM level. Although cloud environments are available today accessing and configuring multiple computers presents a time and resource challenge in contrast to a single-host setup.  In addition, network security measures, such as ssh keys and port access, impede ROS' intra-cluster communication capabilities.  These aspects are typically out of reach for such entry level educational communities. In order to address the unique requirements of a networked, remotely-located swarm, we create a multi-platform system to automate the creation and deployment of the virtual swarm with the help of cloudmesh \cite{??}.
 
 \section{Virtual Robot Swarm Components}
 
