@@ -56,8 +56,11 @@ However, deployment of an interconnected swarm of virtual robots in a cloud impo
 
 \section{Virtual Robot Swarm Components}
 
-\subsection{Robot Operating System (ROS)} % \cite{www-ros-about}}
-% TBD; will include a discussion of a) how to obtain and install ROS and b) ROS graph concepts.  The latter topic will introduce ROS' core components, namely a node, publications, suscriptions, topics and services.  This section should probably cover ROS packages and ROS client libraries (primarily C++ and Python)
+\TODO{Provide intro section on what belongs to a virtual swarm. Possibly drawing. WHat OS do you use to write paper? Should we use ppt (windows)?, omnigraffle (osx)? other}
+
+\subsection{Robot Operating System (ROS)} 
+
+\TODO{Include a discussion of a) how to obtain and install ROS and b) ROS graph concepts.  The latter topic will introduce ROS' core components, namely a node, publications, suscriptions, topics and services.  This section should probably cover ROS packages and ROS client libraries (primarily C++ and Python) \cite{www-ros-about}}
 
 \begin{figure*}[htbp]
 \centering
@@ -73,21 +76,23 @@ However, deployment of an interconnected swarm of virtual robots in a cloud impo
 \label{fig:deployWorkflow}
 \end{figure}
 
-The Open Source Robotics Foundation's middleware product \textit{Robot Operating System}, or ROS, provides a framework for writing operating systems for robots.  ROS offers "a collection of tools, libraries, and conventions [meant to] simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms" \cite{www-ros-about}. The Open Source Robotics Foundation, hereinafter OSRF or the Foundation, attempts to meet the aforementioned objective by implementing ROS as a modular system.  That is, ROS offers a core set of features, such as inter-process communication, that work with or without pre-existing, self-contained components for other tasks.
+The Open Source Robotics Foundation's middleware product \textit{Robot Operating System}, or ROS, provides a framework for writing operating systems for robots.  ROS offers ``a collection of tools, libraries, and conventions [meant to] simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms'' \cite{www-ros-about}. The Open Source Robotics Foundation, hereinafter OSRF or the Foundation, attempts to meet the aforementioned objective by implementing ROS as a modular system.  That is, ROS offers a core set of features, such as inter-process communication, that work with or without pre-existing, self-contained components for other tasks.
 
-Figure 1 illustrates the ROS universe in three parts: a) the plumbing, ROS' communications infrastructure; b) the tools, such as ROS' visualization capabilities or its hardware drivers; and c) ROS' ecosystem, which represents ROS' core developers and maintainers, its contributors and its user base.
+Figure 1 depicts the three parts of the ROS universe: a) the plumbing, ROS' communications infrastructure; b) the tools, such as ROS' visualization capabilities or its hardware drivers; and c) ROS' ecosystem, which represents ROS' core developers and maintainers, its contributors and its user base.
 
-The modules or packages, which are analogous to packages in Linux repositories or libraries in other software distributions such as \textit{R}, provide solutions for numerous robot-related challenges.  General categories include a) drivers, such as sensor and actuator interfaces; b) platforms, for steering and image processing, etc.; c) algorithms, for task planning and obstacle avoidance; and, d) user interfaces, such as tele-operation and sensor data display. \cite{www-software-categories}
+The modules or packages, which are analogous to packages in Linux repositories or libraries in other software distributions such as \textit{R}, provide solutions for numerous robot-related tasks and challenges.  General categories include a) drivers, such as sensor and actuator interfaces; b) platforms, for steering and image processing, etc.; c) algorithms, for task planning and obstacle avoidance; and, d) user interfaces, such as tele-operation and sensor data display. \cite{www-software-categories}
 
-\subsection{Gazebo} % \cite{www-software-categories}}
-% TBD; again, introducing core Gazebo concepts.  In this case, will include a) world files, b) model files and c) its client-server model.  It should also include non-obvious limitation examples, e.g., a gripper arm driven by a single screw instead of multiple screws.  In addition, it should allude to any limitations that affect our simulation.
+\subsection{Gazebo} 
 
-The Foundation also supports \textit{Gazebo}, ROS' 3D virtual simulation software.  "Gazebo...simulate[s] populations of robots in complex indoor and outdoor environments. [It] offers physics simulation at a much higher degree of fidelity [than gaming engines], a suite of sensors, and interfaces for both users and programs \cite{www-gazebo-overview}."  Gazebo's usefulness center on three main features: a) physics engines compatibility; b) its graphics engine; and c) its sensor-data generators.  with respect to physics engine compatibility Gazebo interfaces well with \textit{Open Dynamics Engine} \cite{www-ode-homepage} (ODE), the default; b) \textit{Bullet} \cite{www-bullet-homepage}; \textit{SimBody} \cite{www-simbody-homepage}; and, \textit{DART} \cite{www-dart-homepage}. Roboticists also benefit from its 3D graphics engine, \textit{Object-oriented Graphics Rendering Engine} \cite{www-ogre-homepage} (OGRE), which provides a C++ class library to "[abstract away] the details of using the underlying [graphics] system libraries like Direct3D and OpenGL \cite{www-ogre-about}."  Finally, Gazebo can supply \textit{sensor} data to the virtual robot.  Virtual sensor support ranges from 2D cameras to Kinect-style sensors.  The system can also generate \textit{noisy} data to better simulate real-world results.
+\TODO{introducing core Gazebo concepts.  In this case, will include a) world files, b) model files and c) its client-server model.  It should also include non-obvious limitation examples, e.g., a gripper arm driven by a single screw instead of multiple screws.  In addition, it should allude to any limitations that affect our simulation. \cite{www-software-categories}}
+
+The Foundation also supports \textit{Gazebo}, ROS' 3D virtual simulation software.  ``Gazebo...simulate[s] populations of robots in complex indoor and outdoor environments. [It] offers physics simulation at a much higher degree of fidelity [than gaming engines], a suite of sensors, and interfaces for both users and programs \cite{www-gazebo-overview}.''  Gazebo's usefulness center on three main features: a) physics engines compatibility; b) its graphics engine; and c) its sensor-data generators.  with respect to physics engine compatibility Gazebo interfaces well with \textit{Open Dynamics Engine} \cite{www-ode-homepage} (ODE), the default; b) \textit{Bullet} \cite{www-bullet-homepage}; \textit{SimBody} \cite{www-simbody-homepage}; and, \textit{DART} \cite{www-dart-homepage}. Roboticists also benefit from its 3D graphics engine, \textit{Object-oriented Graphics Rendering Engine} \cite{www-ogre-homepage} (OGRE), which provides a C++ class library to ``[abstract away] the details of using the underlying [graphics] system libraries like Direct3D and OpenGL \cite{www-ogre-about}.''  Finally, Gazebo can supply \textit{sensor} data to the virtual robot.  Virtual sensor support ranges from 2D cameras to Kinect-style sensors.  The system can also generate \textit{noisy} data to better simulate real-world results.
 
 Gazebo exists as a stand-alone project, suitable for use by programs other than ROS.  However, it integrates tightly with ROS given its common ownership.  In fact, the version supplied with a ROS installation automatically establishes communications between Gazebo and ROS for the end-user \cite{www-gazebo-ros}.  
 
 \subsection{Ansible}
-% TBD; briefly describe Ansible - what it is, salient features, etc.
+
+\TODO{briefly describe Ansible - what it is, salient features, etc.}
 
 Red Hat, Inc's \cite{www-redhat} \textit{Ansible} software purports to simplify numerous information technology tasks.  It claims to do so by a) relying upon a human-readable script syntax, YAML; and b) by automating definable and repeatable IT tasks, such as configuration management and application deployment.  Ansible's developers adopted a theater metaphor to describe the program's core functions.  Thus, a computer's main duty within an IT infrastructure corresponds to the \textit{role} an actor or actress might play in a theatrical production.  Ansible calls the script a \textit{playbook}, while the lines and directions within the script are referred to as \textit{tasks}.  Other aspects diverge from the metaphor, such as group vars and the config file (ansible.cfg).  However, the \textit{inventory} file hews to the metaphor - it represents the cast billing, the delineation of who plays what role.  When used with an Ansible playbook, the inventory file specifies which servers belong to which logical group(s), i.e., which role(s). 
 
@@ -95,10 +100,12 @@ As a result the software's applicability extends well beyond simplistic tasks ev
 
 Ansible also attempts to ease the burden of the IT administrator by eschewing SSL signing servers, daemons or client software.  It simply pushes small programs to the target computers through an SSH connection to execute the desired tasks.  When the task completes, Ansible removes the programs. 
 
-\subsection{cloudmesh client toolkit}
-The \textit{cloudmesh client toolkit} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It provides an API, a command line client and a shell client.
+\subsection{Cloudmesh Client}
+
+The \textit{Cloudmesh Client} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It provides an API, a command line client and a shell client.
 
 \subsection{Testing Environment}
+
 The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium flavor} of Ubuntu 16.04.  The m1.medium flavor's resources consist of two virtual CPUs, 40GB of hard drive space and 4GB of RAM.  
 
 \subsection{Robots and Worlds}
@@ -109,13 +116,17 @@ Finally, a simulation package will include one or more \textit{launch} files.  T
 This project uses two straightforward differential drive robots sourced from an online tutorial entitled \textit{Simulating Robot Models in ROS (part 1)} \cite{www-mybot-moore}
 
 \section{Virtual Robot Swarm Project Implementation}
+
 \subsection{VR Swarm task}
-% TBD; discuss the task to be accomplished by the swarm, as well as how the information collected during task completion will be communicated back to the master node for collation and reporting.
+
+\TODO{discuss the task to be accomplished by the swarm, as well as how the information collected during task completion will be communicated back to the master node for collation and reporting.}
 
 Although the swarm accomplishes the seemingly-trivial task of driving in circles, the real accomplishment rests in proving the feasibility of automating the deployment of multiple controllable virtual robots on a remote cluster of computers and then visualizing them on a local computer.
 
 \subsection{Deployment}
-% TBD; document the Ansible steps needed to successfully deploy ROS and Gazebo on multiple computers;  will include references for obtaining major components, including adding new repositories if needed.
+
+\TODO{Document the Ansible steps needed to successfully deploy ROS and Gazebo on multiple computers;  will include references for obtaining major components, including adding new repositories if needed.}
+
 Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  Only the initial step, retrieving and sourcing the shell script that begins the deployment process, requires user intervention.  However, if the user wants to listen to the talker robot (\textit{talker.py and listener.py}), s/he needs to follow the steps described in the README file.
 
 \begin{figure}[htbp]
@@ -190,7 +201,9 @@ The \textit{talkListen} script sets up a multiplexed terminal environment on the
 \end{figure*}
 
 \subsection{Common Pitfalls}
-% TBD; discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.
+
+\TODO{discuss any obstacles encountered with deployment due to dependency problems, connecting ROS and Gazebo, etc.}
+
 \paragraph{Intra-Node Communication}
 In order to maintain security and enable intra-cluster communication, two of the three computer nodes must have their public ip addresses removed, i.e., disassociated, using Chameleon's browser-based graphical user interface (GUI), Horizon.  Then, and only then, the ports can be opened by applying the \textit{ros} security group to the two nodes in question (the private nodes).  Since the third node, the main node, still has a public-facing ip address, the other two nodes can be accessed via an ssh connection (\textit{ssh'ing}) to the main node and then ssh'ing to one of the private nodes.
 
@@ -216,7 +229,9 @@ Receiving an error while starting the simulation occurred much more frequently d
 Somewhat maddeningly, this process often needs to be completed twice before the simulation will start successfully.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm} section.
 
 \subsection{Initializing the Swarm Manually}
-% TBD; starting ROS and Gazebo to create the virtual environment; testing swarm interconnectivity; designating master node, etc.
+
+\TODO{starting ROS and Gazebo to create the virtual environment; testing swarm interconnectivity; designating master node, etc.}
+
 If needed the user can manually start the simulation with the commands listed below.  You will need three terminals for the three commands, so ssh into the main node three times from three separate consoles or use \textit{byobu} to split the terminal into three panes.  The command
 
  {\lstinline[style=BashInputStyle]!> roslaunch mybot_gazebo mybot_world.launch! } 
@@ -233,7 +248,8 @@ moves the second robot. Alternatively, one can delete the cluster and run the de
 
 
 \section{VR Swarm Project Conclusions}
-TBD; present the data collected in some visualization format; discuss why this project advances robotics forward by utilizing distributed computing;
+
+\TODO{present the data collected in some visualization format; discuss why this project advances robotics forward by utilizing distributed computing;}
 
 \section{Supplemental Material}
 
