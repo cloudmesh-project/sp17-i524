@@ -1,0 +1,111 @@
+
+##Portrait Image
+++++Local Computer+++++
+| > ./begin           |
+| -sets up cluster    |
+| -captures cluster ip|
+|   addresses         |
+| -places ROS robot   |
+|   files on main node|
+| -places Ansible     |
+|   files on main node|
++++++++++++++++++++++++
+ |		  ^
+ | 		  |
+ |		  ^
+ |        |					
+ |	++++++++Git Repo+++++++
+ |	| Source for:         |	
+ |	| -wget...begin script| 
+ |	| -ROS robot files    | 
+ |	| -Ansible files      | 
+ |	| -beginAgain script  |
+ |	+++++++++++++++++++++++
+ |
+ |	  ++++++++Main Node+++++++
+ |	  | > ./beginAgain       |
+ |	  | -runs Ansible script |
+ |	  |  -installs catkin    |
+ |	  |  -installs ROS       |
+ |--> |  -modifies /etc/hosts|
+	  |  -sets up ROS env    |
+	  | -builds robot pkg    |
+	  | -initalizes robot sim|
+	  | -sends commands to   |
+	  |   virtual robots     |
+	  ++++++++++++++++++++++++
+	  		|			|
+	  		|			|
+++++++++Node #2+++++++	|
+| -installed software|	|
+|    -catkin		 |	|
+|    -ROS   		 |	|
+| -talker.py		 |	|
+++++++++++++++++++++++	|
+						|
+	++++++++Node #3+++++++
+	| -installed software|
+	|    -catkin		 |
+	|    -ROS   		 |
+	| -listener.py		 |
+	++++++++++++++++++++++
+
+
+
+##Landscape Image (deprecated)
+++++Local Computer+++++
+| > ./begin           |
+| -sets up cluster    |
+| -captures cluster ip|
+|   addresses         |
+| -places ROS robot   |
+|   files on main node|
+| -places Ansible     |
+|   files on main node|
++++++++++++++++++++++++
+          ^    |					++++++++Main Node+++++++
+		  |    |					| > ./beginAgain       |
+		  |    |					| -runs Ansible script |
+		  |    |					|  -installs catkin    |
+		  |    |------------------->|  -installs ROS       |
+		  |		    				|  -modifies /etc/hosts|
+		  |			    			|  -sets up ROS env,   |
+		  |				    		| -builds robot pkg    |
+		  |					    	| -initalizes robot sim|
+		  |							| -sends commands to   |
+		  |							|   simulated robots   |
+		  |						    ++++++++++++++++++++++++
+		  |								|				|_____________
+          |								|							  |
+++++++++Git Repo+++++++			++++++++Node #2+++++++		++++++++Node #3+++++++
+| Source for:         |			| -installed software|		| -installed software|
+| -wget...begin script|         |    -catkin		 |		|    -catkin		 |
+| -ROS robot files    |         |    -ROS   		 |		|    -ROS   		 |
+| -Ansible files      |         | -listener.py		 |		| -talker.py		 |
+| -beginAgain script  |			++++++++++++++++++++++		++++++++++++++++++++++
++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
