@@ -99,7 +99,7 @@ titlepagemacro = '''
 \\author{%
     Editor: \\\\
     Gregor von Laszewski\\\\
-    Department of Intelligent Systems Engeneering\\\\
+    Department of Intelligent Systems Engineering\\\\
     Indiana University \\\\
     \\texttt{laszewski@gmail.com}\\vspace{20pt} \\\\   
     }
