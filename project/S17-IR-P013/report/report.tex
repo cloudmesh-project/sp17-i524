@@ -22,8 +22,8 @@
 %replace this with your project or HID, e.g. whatever is used for the project
 \dates{Project: P013, \today}
 % replace this with your url in github/gitlab
-\doi{Report: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P013/code}\\
-     Code: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P013/report}\\
+\doi{Report: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P013/report/report.pdf}\\
+     Code: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P013/code}\\
 }
 
 \begin{abstract}
@@ -460,8 +460,17 @@ Apache thrift was connecting to the Base with the help of Apache
 
 
 HappyBase is a developer-friendly Python library to interact with Apache HBase. 
-Below the surface, HappyBase uses the Python Thrift library to connect to HBase.    
+Below the surface, HappyBase uses the Python Thrift library to connect to HBase.  
 
+\subsection{Security}  
+
+This project has been deployed and tested on FutureSystems. To create instances on futuresystems follow the \href{https://cloudmesh.github.io/classes/lesson/cloud/futuresystems.html}{link}. It uses nova client for managing instances. Now to run the Ansible playbook the key file has to be provided with --private-key or the default id\_rsa will be used. There are two ways to handle this \newline
+
+\begin{enumerate}
+\item The key used for creating the instances needs to be downloaded into your local file and pass the same key for running the ansible playbook. This can be done through scp command within india.futuresystems.org.
+\item Copy your local keys (~/.ssh/id\_rsa \& ~/.ssh/id\_rsa.pub) into india.futuresystems.org. Use the same key to create the instances. In this process you don't have to provide the key file explicitly as it would be using ~/.ssh/id\_rsa by default.
+\end{enumerate}
+The aforesaid process is manual. We have used the first option to carry out the project.
 
 \section{Conclusion}
 MapReduce (MR) with Hadoop is an efficient framework for distributed computing. It can be run on any commodity hardwares and virtual machines. It has also some useful plugins available for shared computing which can share dataset without doing any IO operations,ex - Twister and Spark. Python with Hadoop on other hand is not so great combination as the communication requires additional layer i,e Standard IO. We have seen earlier that there is no support for Hbase communication within the hadoop as well. FutureSystems and Jetstream works well with the framework. Chameleon VMs did not have all ports opened (except 22 for ssh) which is a must for Hadoop to work in cluster as Hadoop uses IPC protocol for inter node communication. 
