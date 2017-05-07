@@ -2,6 +2,10 @@
 \usepackage{fancyvrb}
 \usepackage{hyperref}
 \usepackage{color}
+
+%\usepackage{enumitem}
+%\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
 \usepackage{listings}
 \lstdefinestyle{BashInputStyle}{
   language=bash,
@@ -130,12 +134,32 @@ image missing
 \end{figure}
 
 \paragraph{\textit{wget...begin} - Retrieve the Initalization Bash Script}
-Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command \newline
-{\color{green} \lstinline[style=BashInputStyle]!> ./begin! } \newline
-from the directory where the \textit{begin} bash script resides.  
+Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command 
+
+{\lstinline[style=BashInputStyle]!> ./begin! }
+
+\parindent0pt from the directory where the \textit{begin} bash script resides.  
 
 \paragraph{\textit{begin} bash script}
-The bash script calls three cloudmesh\_client commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster define -n rosA1 -c 3! }, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster allocate! } and {\color{green} \lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } in order to create and prepare the three-node cluster named \textit{rosA1}.  The script then uses two additional Cloudmesh commands, {\color{green} \lstinline[style=BashInputStyle]!> cm cluster nodes! } and {\color{green} \lstinline[style=BashInputStyle]!> cm vm ip show! } to capture the public and private ip addresses of the cluster as well as the host names.  
+The bash script calls three cloudmesh\_client commands: 
+
+\begin{enumerate}
+\setlength\itemsep{-6pt}
+\item {\lstinline[style=BashInputStyle]!> cm cluster define -n rosA1 -c 3! }
+\item {\lstinline[style=BashInputStyle]!> cm cluster allocate! } 
+\item {\lstinline[style=BashInputStyle]!> cm cluster cross_ssh! } 
+\end{enumerate}
+
+These scripts create and prepare the three-node cluster named \textit{rosA1}.  
+We then uses two additional Cloudmesh commands:
+
+\begin{enumerate}
+\setlength\itemsep{-6pt}
+\item  {\lstinline[style=BashInputStyle]!> cm cluster nodes! } 
+\item  {\lstinline[style=BashInputStyle]!> cm vm ip show! } 
+\end{enumerate}
+
+to capture the public and private ip addresses of the cluster as well as the host names.  
 
 The ip addresses and names are written to separate files for distinct purposes.  The host names and private ip addresses are used to create a file to append to each cluster node's \textit{known\_hosts} file.  The private ip addresses also end up in a different file that serves as the basis for a custom Ansible inventory file.  
 
@@ -155,7 +179,7 @@ With the robot package built, the script copies another script from github.  Thi
 Finally, execution of the last few lines of the script occurs.  These lines start ROS, start the two robots, create a simulated world for the robots and then issue a command for the robots to drive in circles.  Gazebo's simulation of the robots and their world come back through the ssh connection to the end user so s/he can see the simulation in real time. 
 
 \paragraph{\textit{talkListen} bash script}
-The \textit{talkListen} script sets up a multiplexed terminal environment on the second node and starts ROS' talker robot, which ROS' maintainers include as a pre-built package with the distribution.  It relies upon Linux's \textit{byobu} terminal multiplexing program.  Using a series of {\color{green} \lstinline[style=BashInputStyle]!> byobu-tmux ...! } commands, it creates a terminal screen with three panels.  ROS's rosmaster program starts in panel 1, while the talker program/robot/node starts in Panel 2.  The final panel, panel 0, connects to the third node in the cluster in anticipation of the user starting the listener program (also included in the ROS distribution).
+The \textit{talkListen} script sets up a multiplexed terminal environment on the second node and starts ROS' talker robot, which ROS' maintainers include as a pre-built package with the distribution.  It relies upon Linux's \textit{byobu} terminal multiplexing program.  Using a series of { \lstinline[style=BashInputStyle]!> byobu-tmux ...! } commands, it creates a terminal screen with three panels.  ROS's rosmaster program starts in panel 1, while the talker program/robot/node starts in Panel 2.  The final panel, panel 0, connects to the third node in the cluster in anticipation of the user starting the listener program (also included in the ROS distribution).
 
 \begin{figure*}[htbp]
 \centering
@@ -176,11 +200,35 @@ Even if a script or a user completes each step correctly to set up a controllabl
 The deployment often goes awry during the Ansible script to retrieve the repository key for the ROS repo.  When the key retrieval failed, the ROS software installation would also fail.  Obviously, if the main node lacks ROS, the simulation will not launch either.  As a workaround, the script adds the repository to each machine with the \textit{deb [trusted=yes] ...} syntax.  Using this method obviates the need for the repo key.  Although it works, applying it to repos in general creates unnecessary risks.  Therefore, it should be used sparingly.  
 
 \subparagraph{Starting the Robot Simulation}
-Receiving an error while starting the simulation occurred much more frequently during the development process than the key repo problem.  ROS prints error messages in red to the console, so they stand out.  The most common error: {\color{red} \lstinline[style=BashInputStyle]![gazebo_gui-3] process has died! }.  Sometimes, an almost identical error occurs, {\color{red} \lstinline[style=BashInputStyle]![gazebo-2] process has died! }, while other times the launch program cannot find parts of the robot model.  The latter error consists of one or both of the following: {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://ground_plane! } and / or {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://sun! }.  Unlike the previously-described error, this one requires manual intervention.  The user needs to enter the following commands at the terminal prompt: a) {\color{green} \lstinline[style=BashInputStyle]!> killall roscore! }, b) {\color{green} \lstinline[style=BashInputStyle]!> killall rosmaster! }; c) {\color{green} \lstinline[style=BashInputStyle]!> killall gzclient! }; d) {\color{green} \lstinline[style=BashInputStyle]!> killall gzserver! }; e) {\color{green} \lstinline[style=BashInputStyle]!> source ~/.bashrc! }; and, {\color{green} \lstinline[style=BashInputStyle]!> ./beginAgain! }. Somewhat maddeningly, this process often needs to be completed twice before the simulation will start successfully.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm} section.
+Receiving an error while starting the simulation occurred much more frequently during the development process than the key repo problem.  ROS prints error messages in red to the console, so they stand out.  The most common error: {\color{red} \lstinline[style=BashInputStyle]![gazebo_gui-3] process has died! }.  Sometimes, an almost identical error occurs, {\color{red} \lstinline[style=BashInputStyle]![gazebo-2] process has died! }, while other times the launch program cannot find parts of the robot model.  The latter error consists of one or both of the following: {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://ground_plane! } and / or {\color{red} \lstinline[style=BashInputStyle]!Error [parser.cc:581]! }{\lstinline[style=BashInputStyle]!Unable to find uri[model://sun! }.  Unlike the previously-described error, this one requires manual intervention.  The user needs to enter the following commands at the terminal prompt: 
+
+\begin{enumerate}
+\setlength\itemsep{-6pt}
+\item {\lstinline[style=BashInputStyle]!> killall roscore! }
+\item {\lstinline[style=BashInputStyle]!> killall rosmaster! }
+\item {\lstinline[style=BashInputStyle]!> killall gzclient! } 
+\item {\lstinline[style=BashInputStyle]!> killall gzserver! }
+\item {\lstinline[style=BashInputStyle]!> source ~/.bashrc! } 
+\item {\lstinline[style=BashInputStyle]!> ./beginAgain! }
+\end{enumerate}
+
+Somewhat maddeningly, this process often needs to be completed twice before the simulation will start successfully.  If the simulation still will not start, refer to the instructions in the \textit{Initializing the Swarm} section.
 
 \subsection{Initializing the Swarm Manually}
 % TBD; starting ROS and Gazebo to create the virtual environment; testing swarm interconnectivity; designating master node, etc.
-If needed the user can manually start the simulation with the commands listed below.  You will need three terminals for the three commands, so ssh into the main node three times from three separate consoles or use \textit{byobu} to split the terminal into three panes.  The command {\color{green} \lstinline[style=BashInputStyle]!> roslaunch mybot_gazebo mybot_world.launch! } starts the simulation.  Entering {\color{green} \lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\color{green} \lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! } \newline in a free terminal will command the first robot to begin turning in a circle.  Likewise, {\color{green} \lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\color{green} \lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! } \newline moves the second robot. Alternatively, one can delete the cluster and run the deployment script again.
+If needed the user can manually start the simulation with the commands listed below.  You will need three terminals for the three commands, so ssh into the main node three times from three separate consoles or use \textit{byobu} to split the terminal into three panes.  The command
+
+ {\lstinline[style=BashInputStyle]!> roslaunch mybot_gazebo mybot_world.launch! } 
+
+\parindent0pt starts the simulation.  Entering 
+
+{\lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! }
+
+\parindent0ptin a free terminal will command the first robot to begin turning in a circle.  Likewise, 
+
+{\lstinline[style=BashInputStyle]!rostopic pub /robot1/cmd_vel geometry_msgs/Twist '{linear: { !} {\lstinline[style=BashInputStyle]!x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.1}}'! }
+
+moves the second robot. Alternatively, one can delete the cluster and run the deployment script again.
 
 
 \section{VR Swarm Project Conclusions}
