@@ -102,21 +102,16 @@ As a result the software's applicability extends well beyond simplistic tasks ev
 Ansible also attempts to ease the burden of the IT administrator by eschewing SSL signing servers, daemons or client software.  It simply pushes small programs to the target computers through an SSH connection to execute the desired tasks.  When the task completes, Ansible removes the programs. 
 
 \subsection{cloudmesh client toolkit}
-The \textit{cloudmesh client toolkit} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It provides an API, a command line client and a shell client.
-
-loudmesh is a cloud management client that provides seamless
-integration to multiple clouds from command line. Some of the
-features of cloudmesh include heterogenous cloud integration,
-deployment of hadoop cluster with add-ons such as spark and
-pig [? ]. It also enables automated builds
+The \textit{cloudmesh client toolkit} (cm) attempts to abstract away the complexities of establishing and utilizing different remotely-accessed computers and computer clusters \cite{www-cm}.  Users can create, access and destroy a virtual machine or cluster of machines by issuing a single line of commands from a terminal emulator.  cm supports access to clouds based on various back end-software stacks, including SLURM, SSH, Openstack and Heat.  It also provides an API, a command line client and a shell client.  Prof. Gregor von Laszewski and colleagues developed, and continue to develop, cm at Indiana University in Bloomington, IN.
 
 \subsection{Testing Environment}
-The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium} flavor of Ubuntu 16.04.  Deployment testing also utilized the \textit{m1.xlarge} and \textit{m1.xxlarge} flavors CC provides.  \begin{table} [htbp]
+The Chameleon project's cluster of 650+ multi-core computer nodes, a joint venture between the University of Chicago and the Texas Advanced Computing Center, provides the infrastructre for the project.  It is colloquially referred to as Chameleon Cloud or CC.  A 100Gbps connection runs between the two centers. Project development primarily occurred on three-node clusters created as needed using Chameleon Cloud's \textit{m1.medium} flavor of Ubuntu 16.04.  Deployment testing also utilized the \textit{m1.small}, \textit{m1.xlarge} and \textit{m1.xxlarge} flavors CC provides.  
+\begin{table} [htbp]
   \begin{threeparttable}
   \centering
   \caption{Deployment Resources}
     \begin{tabular}{cccc}
-      \multicolumn{4}{c}{\bf Chameleon Cloud Flavor Specifications}\\ \hline Flavor & vCPU & RAM & Hard Drive \\ \hline m1.medium & 2 & 4 & 40\\ m1.large & 4 & 8 & 80 \\ m1.xlarge & 8 & 16 & 160 \\ \hline
+      \multicolumn{4}{c}{\bf Chameleon Cloud Flavor Specifications}\\ \hline Flavor & vCPU & RAM & Hard Drive \\ \hline m1.small & 1 & 2 & 20\\ m1.medium & 2 & 4 & 40\\ m1.large & 4 & 8 & 80 \\ m1.xlarge & 8 & 16 & 160 \\ \hline
     \end{tabular}
     \begin{tablenotes}
       \small
@@ -126,7 +121,22 @@ The Chameleon project's cluster of 650+ multi-core computer nodes, a joint ventu
 \end{table}
 
 \subsection{Robots and Worlds with ROS}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/robotgeometry.png}}
+\caption{Example of a Complex Simulated Robot}
+\label{fig:complexRobot}
+\end{figure}
+
 A ROS robot may be extremely simple, such as the pre-built talker and listener robots supplied in the ROS distribution, or as complex as the roboticist desires.  If users desire to visualize the robot, s/he must define his / her ROS robot in \textit{\textbf{U}niversal \textbf{R}obot \textbf{D}escription \textbf{F}ormat}.  A ROS robot's specifications reside in a series of files with \textit{xacro} extensions, referred to as URDF files.  These files, which borrow XML's syntax structure, can include specifications for the basic shapes of the robot and its appendages (if applicable), e.g., rectangular box, cylinder, etc. with attached wheels; various kinds of joints, such as ones that rotate around an axis or extend along an axis; types and numbers of sensors; number of joints in an appendage; colors of the robot(s); etc., etc.  In addition, any file in the robot description stack may reference an external file to complete the description of the robot.  This capability allows the user to re-use code by incorporating previously-completed robot features into a new robot.  Finally, simulations include a world file to provide the setting, or environment, in which the robot simulation occurs.  As with the URDF files, the world file can be simple, like the \textit{empty\_world} file included in the ROS distribution or extremely complex.  
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=\linewidth]{images/rosProjRobots.png}}
+\caption{Example of Two Simpler Robots}
+\label{fig:simplerRobots}
+\end{figure}
 
 Finally, a simulation package will include one or more \textit{launch} files.  These files coordinate the disparate aspects of the entire simulation package in a manner similar to that of Ansible's playbook file.  According to the OSRF, best practices for robot simulation dictate that the main launch file consist of little more than calls to other launch files in the package \cite{www-ros-launch}.  Continuing with the playbook analogy, the launch files called from the main launch file would correspond to the roles defined in Ansible.  This functionality significantly increases ROS' usability since managing even relatively straightforward robots, simulated or real, can prove unwieldy. For instance, this project, a proof-of-concept project, utilizes a .world file, four URDF files and four launch files in addition to the pre-compiled talker and listener robots.  
 
@@ -138,20 +148,6 @@ Although the swarm accomplishes the seemingly-trivial task of driving in circles
 
 \subsection{Deployment}
 Achieving the aforementioned task requires coordinating a modestly-complex mix of shell commands, cloudmesh commands, Ansible commands and ROS / Gazebo commands. A shell script provides the automation for the shell, cloudmesh and ROS commands, while Ansible's \textit{playbook} functionality handles the Ansible-focused portion.  Only the initial step, retrieving and sourcing the shell script that begins the deployment process, requires user intervention.  However, if the user wants to listen to the talker robot (\textit{talker.py and listener.py}), s/he needs to follow the steps described in the README file.
-
-\begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/robotgeometry.png}}
-\caption{Example of a Complex Simulated Robot}
-\label{fig:complexRobot}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\fbox{\includegraphics[width=\linewidth]{images/rosProjRobots.png}}
-\caption{An Example of Two Simpler Robots}
-\label{fig:simplerRobots}
-\end{figure}
 
 \paragraph{\textit{wget...begin} - Retrieve the Initalization Bash Script}
 Deployment begins when the user retrieves the initalization file, named \textit{begin}, from the project's Github repository.  The user then starts the execution sequence by sourcing the file with the command \newline
@@ -174,12 +170,12 @@ This script handles the software installation and initialization of the robots. 
 
 Upon completing the installation, the file's instructions initialize the robot workspace.  The \textit{catkin\_tools} package accomplishes this on behalf of ROS.  catkin\_tools represents an evolution of ROS' built-in \textit{catkin} family of commands.  Initializing the robot workspace essentially involves the addition of numerous hidden helper files, which assist in building the robot package.  Creating the robot package, referred to as \textit{building} the package, involves a series of automated \textit{CMake} commands.  
 
-With the robot package built, the script copies another script from github.  This small script starts ROS' \textit{talker} robot, a simple robot included as part of ROS' tutorial packages.  It relies upon Linux's \textit{byobu} program to set up usable working environment if the user chooses to start the listener robot on the third cluster node.
+With the robot package built, the script copies another script from github.  This small script starts ROS' \textit{talker} robot.  It relies upon Linux's \textit{byobu} program to set up usable working environment if the user chooses to start the listener robot on the third cluster node.
 
 Finally, execution of the last few lines of the script occurs.  These lines start ROS, start the two robots, create a simulated world for the robots and then issue a command for the robots to drive in circles.  Gazebo's simulation of the robots and their world come back through the ssh connection to the end user so s/he can see the simulation in real time. 
 
 \paragraph{\textit{talkListen} bash script}
-The \textit{talkListen} script sets up a multiplexed terminal environment on the second node and starts ROS' talker robot, which ROS' maintainers include as a pre-built package with the distribution.  It relies upon Linux's \textit{byobu} terminal multiplexing program.  Using a series of {\color{green} \lstinline[style=BashInputStyle]!> byobu-tmux ...! } commands, it creates a terminal screen with three panels.  ROS's rosmaster program starts in panel 1, while the talker program/robot/node starts in Panel 2.  The final panel, panel 0, connects to the third node in the cluster in anticipation of the user starting the listener program (also included in the ROS distribution).
+The \textit{talkListen} script sets up a multiplexed terminal environment on the second node and starts ROS' talker robot.  It relies upon Linux's \textit{byobu} terminal multiplexing program.  Using a series of {\color{green} \lstinline[style=BashInputStyle]!> byobu-tmux ...! } commands, it creates a terminal screen with three panels.  ROS's rosmaster program starts in panel 1, while the talker program/robot/node starts in Panel 2.  The final panel, panel 0, connects to the third node in the cluster in anticipation of the user starting the listener program.
 
 \begin{figure*}[htbp]
 \centering
@@ -201,7 +197,7 @@ Furthermore, deployment failures seem to occur about 50\% of the time, independe
   \caption{Virtual Swarm Deployment Times}
     \begin{tabular}{ccccc}
       % \multicolumn{5}{c}{\bf Time Needed to Deploy (mean; seconds)}\\ \hline Flavor & Part 1 & Part 2 & Total & Notes\\ \hline m1.medium (all) & 130 & 372 & 502 & \\ m1.medium (clean) & 129 & 358 & 487 & \\ m1.large (all) & 134 & --- & --- & \\ m1.large (clean) & 134 & 401 & 534 & \\  m1.xlarge (all) & 131 & 414 & 545 & \\ m1.xlarge (clean) & --- & --- & --- & no successes\\ \hline
-      \multicolumn{5}{c}{\bf Time Needed to Deploy (mean; seconds)}\\ \hline Flavor & Part 1 & Part 2 & Total & Notes\\ \hline m1.medium & 129 & 358 & 487 & 2/6 attempts succeeded \\ m1.large & 134 & 401 & 534 & 3/6 attempts succeeded \\ m1.xlarge & --- & --- & --- & no successes\\ \hline
+      \multicolumn{5}{c}{\bf Time Needed to Deploy (mean; seconds)}\\ \hline Flavor & Part 1 & Part 2 & Total & Notes\\ \hline m1.small & 144 & 441 & 555 & 4/6 attempts succeeded \\ m1.medium & 129 & 358 & 487 & 2/6 attempts succeeded \\ m1.large & 134 & 401 & 534 & 3/6 attempts succeeded \\ m1.xlarge & --- & --- & --- & no successes\\ \hline
     \end{tabular}
     \begin{tablenotes}
       \small
