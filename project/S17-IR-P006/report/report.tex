@@ -6,6 +6,7 @@
 	filecolor=magenta,      
 	urlcolor=blue,
 }
+
 \journal{i524} 
 
 \title{Cloudmesh client extension for AWS}
@@ -114,6 +115,14 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     cms aws image refresh
 	\end{verbatim}
 	
+	\begin{figure}[h!]
+		\centering
+		\fbox{\includegraphics[width=\linewidth]{images/cms_aws_image_refresh.png}}
+		\caption{cms aws image refresh}
+		\label{fig:imagerefresh}
+	\end{figure}
+		
+
 	\item Image list: Depending on whether the value of 'refresh' is set to 'on' or 'off', the list is either fetched from the cloud or from the local database.
 	
 	\begin{verbatim}
@@ -125,6 +134,13 @@ The commands are implemented as methods of a class AwsCommand which is based on 
 	\begin{verbatim}
     cms aws flavor refresh
 	\end{verbatim}
+		
+	\begin{figure}[h!]
+		\centering
+		\fbox{\includegraphics[width=\linewidth]{images/cms_aws_flavor_refresh.png}}
+		\caption{aws flavor refresh }
+		\label{fig:flavorlist}
+	\end{figure}
 	
 	\item Flavor list: The flavor list is either fetched from the cloud or from the local database depending on whether the value of 'refresh' is set to 'on' or 'off'.
 	
@@ -138,6 +154,13 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     cms aws vm boot IMAGE_ID
     \end{verbatim}
     
+   	\begin{figure}[h!]
+	   	\centering
+	   	\fbox{\includegraphics[width=\linewidth]{images/vm_boot_ami-0183d861.png}}
+	   	\caption{cms aws vm boot ami-0183d861 }
+	   	\label{fig:vmboot}
+    \end{figure}
+
     \item Reboot vm: If vm is running and reboot command fired, running vm gets reboot. The state of the node gets changed from RUNNING to 	REBOOTING. The rebooting time of node depends on the configuration we selected, while creating it. \textit{vm reboot} required \textit{NODE\_UUID}. Once user fired vm list, all the running node \textit{NODE\_UUID} will be shown.
     
     \begin{verbatim}
@@ -156,12 +179,26 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     cms aws vm list
     \end{verbatim}
     
+     \begin{figure}[h!]
+    	\centering
+    	\fbox{\includegraphics[width=\linewidth]{images/vm_list.png}}
+    	\caption{cms aws vm list }
+    	\label{fig:vmlist}
+    \end{figure}
+
     \item Create keypair: To create the node, one of the essential component is \textit{key pair}. Amazon EC2 uses public key to encrypt and decrypt the password and then recipient uses private key to decrypt it. This public and private keys are know as a \textit{key pair}. User needs to give any (alpha numeric) name to that key.
     
     \begin{verbatim}
     cms aws keypair create NAME
     \end{verbatim}
     
+    \begin{figure}[h!]
+    	\centering
+    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_keypair_create.png}}
+    	\caption{cms aws keypair create AWSCLI}
+    	\label{fig:keypaircreate}
+    \end{figure}
+
     \item Delete keypair: Allows user to delete created \textit{key pair}, which is no longer in use.
     
     \begin{verbatim}
@@ -187,18 +224,38 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     cms aws location list
     \end{verbatim}
     
+    \begin{figure}[h!]
+    	\centering
+    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_location_list.png}}
+    	\caption{cms aws location list}
+    	\label{fig:locationlist}
+    \end{figure}
+
     \item Create volume: Creates the volume for vm, the size of volume is in GB, the default value is set to 1 GB. The maximum number of volumes that we can attach to vm will be depends on its operating system.
     
     \begin{verbatim}
     cms aws volume create VOLUME_NAME
     \end{verbatim}
     
+    \begin{figure}[h!]
+    	\centering
+    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_volume_create_VOL_TEST_1.png}}
+    	\caption{cms aws volume create VOL\_TEST\_1}
+    	\label{fig:createvolume}
+    \end{figure}
      
     \item List created volumes: Command shows the created volumes with the id, size and the driver name.
     
     \begin{verbatim}
     cms aws volume list
     \end{verbatim}
+    
+    \begin{figure}[h!]
+    	\centering
+    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_volume_list.png}}
+    	\caption{cms aws volume list}
+    	\label{fig:volumelist}
+    \end{figure}
     
     \item Delete volume: User can delete the unwanted volumes using the \textit{VOLUME\_ID}.
     
