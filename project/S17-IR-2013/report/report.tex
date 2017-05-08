@@ -2,7 +2,7 @@
 \usepackage{fancyvrb}
 \journal{i524} 
 
-\title{ On-line advertisement click prediction - Project proposal }
+\title{ On-line advertisement click prediction }
 
 \author[1,*]{Sahiti Korrapati}
 
@@ -15,10 +15,10 @@
 \ociscodes{Hadoop, Ad click Prediction, BigData, Ansible, Chameleon cloud, Apache Pig, HDFS, MapReduce}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/sakorrap/sp17-i524/tree/master/project/S17-IR-2013/report}}
+\doi{\url{https://github.com/laszewsk/sp17-i524/blob/master/project/S17-IR-2013/report/report.pdf}}
 
 \begin{abstract}
-This project aims at predicting the most suitable advertisements to be displayed on the web pages. Advertisements are selected based on the relevance. Relevance factor is calculated by ranking each ad based on the likelihood of clicking the ad if displayed. Data is obtained as CSV files from Kaggle Data sets and is stored in Hadoop Data File system(HDFS). In this project, Ansible along with Cloud mesh is used to deploy cloud architecture and the necessary soft wares on Chameleon cloud. For data exploration and analysis, as the dataset is huge in the order of 100s of gigabytes Apache Pig on Hadoop is chosen. The Pig engine in can execute the data flows in parallel by making use of Hadoop MapReduce framework.
+This project aims at predicting the most suitable advertisements to be displayed on the web pages from the available pool of advertisements. Each webpage has a window to display 6 Ads. Each window is mapped to a display\_id. So, Top 6 advertisements are selected based on the highest relevance from the pool. Relevance factor is calculated by ranking ads based on the likelihood of clicking the ad if displayed. Data is obtained as CSV files from Kaggle Data sets and is stored in Hadoop Data File system(HDFS). In this project, Ansible along with Cloud mesh is used to deploy cloud architecture and the necessary soft wares on Chameleon cloud. For data exploration and analysis, Apache Pig on Hadoop is chosen. The Pig engine can execute the data flows in parallel by making use of Hadoop MapReduce framework.
 \newline
 \end{abstract}
 \setboolean{displaycopyright}{true}
@@ -30,7 +30,7 @@ This project aims at predicting the most suitable advertisements to be displayed
 \section{Introduction}
 It has been analyzed that an average American spends about 23 hours per week surfing on-line \cite{news-social-media}. This on-line user activity is being captured by companies to perform analyzes for advertisement, recommendations and many other purposes. This has given rise to the field of "Web Analytics" and one such application is Ad Click prediction.
 
-Many measures are available to asses the ad performance. One popular measure to asses the immediate ad response is click-through rate (CTR) of the advertisement \cite{dictionary-clickThrough} which is defined as the ratio of number of clicks on an ad to the number of times the ad is shown, expressed as a percentage. In this project, I attempted to make use of CTR along with ranking each ad based on the level of relevance to the original web page. For calculating the CTR, historical data of user activity needed to be explored. \cite{wiki-clickThrough}.
+Many measures are available to asses the ad performance. One popular measure to asses the immediate ad response is click-through rate (CTR) of the advertisement \cite{dictionary-clickThrough} which is defined as the ratio of number of clicks on an ad to the number of times the ad is shown, expressed as a percentage. In this project, I attempted to make use of CTR along with ranking each ad based on the level of relevance to the original web page. For calculating the CTR, historical data of user activity needed to be explored \cite{wiki-clickThrough}.
 
 The user activity data from web that is used for prediction is enormous. Every page view, advertisement and click is being tracked by web browsers, and that level of data for millions of users potentially generates enormous volumes. The current internet giants use big data technologies to handle such large volumes of data. The current project uses Apache pig along with Hadoop for analyzing and for prediction. Hadoop is a large scale data processing system which runs on parallal processing to handle huge volumes of data. Pig is a high level language which runs on top of Hadoop's HDFS infrastructure. Pig Latin scripts are simple to comprehend and SQL-like queries which can process large volumes of data.
 
@@ -97,7 +97,7 @@ Chameleon Cloud is a cloud platform offered for research purposes free of charge
 The current project uses a cluster created on Chameleon cloud instance with three virtual machines on which Hadoop operates. Ubuntu 14.04 was installed on these machines with 20 GB disk space and 2 GB ram each.
 
 \subsection{Data Analysis}
-Data was analyzed using Pig in the MapReduce mode. The datasets clicks\_train and events were joined to get a list of documents to make the predictions. The above list was joined to documents\_events, documents\_categories and documents\_topics to generate a master dataset of all the required documents, their topics, categories and entities. The dataset promoted\_content was joined with documents\_events, documents\_categories and documents\_topics to generate a dataset which has all advertisement ids, and their related document entitiy, topic and category. A master join between the two datasets on the event, topic and category ID was performed to get matching document IDs. On this data, relevancy score for each match, by multiplying the confidence levels. The final dataset is grouped by document ID and select top 6 matching ads based on relevancy score. The top 6 ads are the recommendations to be shown on each page. This recommendation engine is purely based on the matching document properties.
+Even though we have page\_views data, I have excluded that from analysis. As the data was in orders of 100s of gigabytes for just 2 weeks. With the resources available, I can only take two days of data for analysis. The prediction will be of very low confidence if only two days are considered. Since, I wanted to produce a reliable prediction of Ad ids with given resources, I chose to predict the more linkely adS by relevance factor. For this data was analyzed using Apache Pig in the MapReduce mode. The datasets clicks\_train and events were joined to get a list of documents to make the predictions. The above list was joined to documents\_events, documents\_categories and documents\_topics to generate a master dataset of all the required documents, their topics, categories and entities. The dataset promoted\_content was joined with documents\_events, documents\_categories and documents\_topics to generate a dataset which has all advertisement ids, and their related document entitiy, topic and category. A master join between the two datasets on the event, topic and category ID was performed to get matching document IDs. On this data, relevancy score for each match, by multiplying the confidence levels. The final dataset is grouped by document ID and select top 6 matching ads based on relevancy score. The top 6 ads are the recommendations to be shown on each page. This recommendation engine is purely based on the matching document properties.
 
 \section{Setup and Configuration}
 This project was setup using Ansible and Cloudmesh Client. Cloudmesh client was used to install and deploy Hadoop clusters on Chameleon Cloud. Ansible was then configured to perform a set of tasks on the namenode of the server. File movement was handled using Ansible playbooks. The final Pig script was run on the namenode Hadoop server using automated Ansible scripts.
@@ -114,16 +114,15 @@ The configuration for the cluster deployed is given in Table 1. The project uses
 \end{tabular}
 \caption{Virtual Machine Configuration}
 \end{table}
-\section{Work Flow}
 
-The deployment of clusters was done using Cloudmesh client's "cm deploy" command. This automatically created a three node Hadoop cluster and enabled cross SSH between the nodes so that they will be able to communicate with each other. Next step was to use Ansible to transfer the data files and Pig script to cloud. Once this data transfer was done, Ansible scripts were used to move the files from cloud to hdfs dfs repository. The pig script was run using Ansible from local system and timed for benchmarking. The final step was to transfer the files back from hdfs to local system using Ansible.
+\section{Work Flow}
+The deployment of clusters was done using Cloudmesh client's "cm deploy" command. A three node Hadoop cluster is created and enabled cross SSH between the nodes so that they will be able to communicate with each other. Next step was to use Ansible to transfer the data files and Pig script to cloud. Once this data transfer was done, Ansible scripts were used to move the files from cloud to hdfs dfs repository. The pig script was run using Ansible from local system and timed for benchmarking. The final step was to transfer the output files back from hdfs to local system using Ansible.
 
 \section{Experiments and Results}
-Multiple experiments were conducted using different sizes of input data and the time results were used to benchmark Chameleon Client for this particular analysis. The data size was taken for predicting the most likely to be clicked for 100, 2000, 5000, 10000 webpages. Each document ID corresponds to a page that needs predictions and a list 6 Ad\_id are predicted for each document\_id based on relevance factor calculated.
-The results are presented in  \ref{fig:regular}, \ref{fig:log}, \ref{fig:squared}.  
+Multiple experiments were conducted using different sizes of input data and the time results were used to benchmark Chameleon Client for this particular analysis. The data size was taken for predicting the most likely to be clicked Ad for 100, 2000, 5000, 10000 webpages. Each document ID corresponds to a page that needs predictions and a list 6 Ad\_id are predicted for each document\_id based on relevance factor calculated.
+The results are presented in  \ref{fig:regular}.  
 
 The graphs are plotted for time versus number of webpages to which predictions are made (\# documents). It is evident from \ref{fig:regular}, the time required to predict is linearly proportional to number of webpages. This shows that the time complexity is O(n) where n is number of document ids.
-
 
 \begin{figure}[hptb]
 \centering
@@ -137,8 +136,10 @@ Apache Hadoop technologies can be used to process large volumes of data parallel
 
 As we can see from the results, Apache Pig was able to handle reasonably large sized files in short times. The processing time increases as the input query size increases. This is a small cluster of three nodes and it is able to process such large volumes of data efficiently. These nodes can be horizontally expanded to utilize the full extent of Hadoop's parallel processing capabilities in order to scale up. 
 
-\section*{Acknowledgements}
+\section{Future work}
+Planning to conduct predictions based on Ensemble methods. One way to predict is through click-through rate and one way is to predict by relevance factor. Using relevance factor as one of the attributes alng with platform, user id and geo-location, logistic regression can be run to predict if the top ad ids generated by relevance factor to be included in the list or not. Since, all that information is given in page\_views file which is in order of 100s of gigabytes for just 2 weeks data, we need large clusters. 
 
+\section*{Acknowledgements}
 The authors thank Professor Gregor Von Laszewski and all the AIs of big data class for the guidance and technical support.
 
 % Bibliography
