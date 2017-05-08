@@ -126,6 +126,82 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     cms aws flavor list
 	\end{verbatim}
 	
+    \item Start/Boot vm: Creates a new node instance and start that node automatically. The required parameter is \textit{IMAGE\_ID}. This command assumes user has created keypair with name \textit{AWS1}. The default values; flavor and location being take from cloudmesh.yaml (user need to set those value prior firing the command). You can see the create node instance on console, once it get created.
+    
+    \begin{verbatim}
+    cms aws vm boot IMAGE_ID
+    \end{verbatim}
+    
+    \item Reboot vm: If vm is running and reboot command fired, running vm gets reboot. The state of the node gets changed from RUNNING to 	REBOOTING. The rebooting time of node depends on the configuration we selected, while creating it. \textit{vm reboot} required \textit{NODE\_UUID}. Once user fired vm list, all the running node \textit{NODE\_UUID} will be shown.
+    
+    \begin{verbatim}
+    cms aws vm reboot NODE_UUID
+    \end{verbatim}
+    
+    \item Delete vm: Destoyes the instance of a node. Also destory all the associated data with that node, including backup. Node will take time to terminate and remove from the list. Once it fired, very first the state of the node changes to \textit{TERMINATED} and after certain time it will get remove from node list as well. 
+    
+    \begin{verbatim}
+    cms aws vm delete UUID
+    \end{verbatim}
+    
+    \item List created vm : List out all the created nodes present in different states for aws.
+    
+    \begin{verbatim}
+    cms aws vm list
+    \end{verbatim}
+    
+    \item Create keypair: To create the node, one of the essential component is \textit{key pair}. Amazon EC2 uses public key to encrypt and decrypt the password and then recipient uses private key to decrypt it. This public and private keys are know as a \textit{key pair}. User needs to give any (alpha numeric) name to that key.
+    
+    \begin{verbatim}
+    cms aws keypair create NAME
+    \end{verbatim}
+    
+    \item Delete keypair: Allows user to delete created \textit{key pair}, which is no longer in use.
+    
+    \begin{verbatim}
+    cms aws keypair delete NAME
+    \end{verbatim}
+    
+    \item List created keypairs: List out all the created \textit{key pairs}.
+    
+    \begin{verbatim}
+    cms aws keypair list
+    \end{verbatim}
+    
+    \item Get keypair: Returns the key pair object, which has the name of \textit{key pairs}, driver and hash key.
+    
+    \begin{verbatim}
+    cms aws keypair get NAME
+    \end{verbatim}
+    
+    
+    \item Get locations: It will show all the available locations associated with Amazon EC2 account. For free tier, user will get two locations. More locations will be available in paid service.
+    
+    \begin{verbatim}
+    cms aws location list
+    \end{verbatim}
+    
+    \item Create volume: Creates the volume for vm, the size of volume is in GB, the default value is set to 1 GB. The maximum number of volumes that we can attach to vm will be depends on its operating system.
+    
+    \begin{verbatim}
+    cms aws volume create VOLUME_NAME
+    \end{verbatim}
+    
+     
+    \item List created volumes: Command shows the created volumes with the id, size and the driver name.
+    
+    \begin{verbatim}
+    cms aws volume list
+    \end{verbatim}
+    
+    \item Delete volume: User can delete the unwanted volumes using the \textit{VOLUME\_ID}.
+    
+    \begin{verbatim}
+    cms aws volume delete VOLUME_ID
+    \end{verbatim}
+    
+    
+    
 \end{enumerate}
 \section*{Acknowledgements}
 
