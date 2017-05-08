@@ -1,5 +1,11 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue,
+}
 \journal{i524} 
 
 \title{Cloudmesh client extension for AWS}
@@ -201,8 +207,53 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     \end{verbatim}
     
     
-    
+\section{Create AWS Node}
+	To create own node instance, following steps need to be followed. 
+
+\subsection{Prerequisite}
+
+\begin{enumerate}
+	\item User should have a valid AWS account.
+	\item \href{https://console.aws.amazon.com/iam/home?#/users}{Create a IAM}  user for which the access and secret key being generated. After creating user, access key and secret key gets generated, copy that keys \cite{www-attach-policy}.
+	\item Once the user has created, now add permission to created user
+		\begin{enumerate}
+			
+			\item visit \href{https://console.aws.amazon.com/iam/home} {IAM home}
+			\item select \textbf{policie}s in left hand menu
+			\item create \textbf{administrator policy} from amazons existing policies
+			\item select \textbf{administrator checkbox} and \textbf{attach} to your user
+		\end{enumerate}
+	\item Open the ../cloudmesh.yaml configuration file and update with EC2\_ACCESS\_KEY, EC2\_SECRET\_KEY, you just copied. Now set default flavor, image and location, as t2.micro, ami-0183d861 and us-west-1 respectively in same file.
+	\item Mongodb server should be up and running (please refer section 2. Getting started)
+
+\subsection{Create Node}
+
+\begin{enumerate}
+	\item Create keypair name using command
+	
+	\begin{verbatim}
+	cms aws keypair create  AWS1
+	\end{verbatim}
+	
+	It will create the \textit{keypair name}, it is essential to create the \textit{node}. To verify it, \textit{cms aws keypair list} command will list down all created \textit{keypairs} so far.
+	
+	\item Now create the node 
+	
+	\begin{verbatim}
+	cms aws vm boot ami-0183d861
+	\end{verbatim}
+	
+	Above command will create a node instance with the image of ami-0183d8661.
+
+\end{enumerate}	
+	
 \end{enumerate}
+
+
+\subsection{Create Node}
+
+\end{enumerate}
+
 \section*{Acknowledgements}
 
 Prof. Gregor von Laszewski originally suggested this project and provided the objectives in simplistic form. He reviewd the code as it was developed during the course of this project. His inputs helped us to make the code more secure and efficient. He provided us with different resources to look for help and overcome the challenges faced during the course.
