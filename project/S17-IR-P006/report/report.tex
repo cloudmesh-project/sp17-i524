@@ -199,7 +199,7 @@ The commands are implemented as methods of a class AwsCommand which is based on 
     	\label{fig:keypaircreate}
     \end{figure}
 
-    \item Keypair delete: It allows user to delete created \textit{key pair}, which is no longer in use.
+    \item Keypair delete: It allows user to delete a created \textit{key pair} which is no longer in use.
     
     \begin{verbatim}
     cms aws keypair delete NAME
@@ -244,7 +244,7 @@ The commands are implemented as methods of a class AwsCommand which is based on 
 	cms aws location list
 	\end{verbatim}
 	
-    \item Volume create: It creates the volume for vm. The size of volume is specified in GB, the default value is set to 1 GB. The maximum number of volumes that can be attached to a vm will be depend on its operating system.
+    \item Volume create: It creates the volume for vm. The size of volume is specified in GB, the default value is set to 1 GB. The maximum number of volumes that can be attached to a vm will depend on its operating system.
     
     \begin{verbatim}
     cms aws volume create VOLUME_NAME
