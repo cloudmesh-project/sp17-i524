@@ -4,7 +4,7 @@
 1. Cluster with ip addresses
 2. Ansible software
 
-###Steps to create a storm cluster:
+## Steps to create a storm cluster:
 1. Go to hosts file in the ansible working directory and add the IP address under the group “chameleon”. Create the hosts file if necessary.
 1.a. Add a variable to each IP address with the host name under ‘host’
 
@@ -47,7 +47,7 @@ This job copies the jar file to the nimbus and runs the storm command to submit 
 
 The storm cluster is set up and a job is being run on the cluster.
 
-###To check cluster statistics, storm ui may be enabled.
+## To check cluster statistics, storm ui may be enabled.
 1. Type the IP address of the nimbus into a browser along with the port 8080.
 2. This opens the storm ui and the cluster details are mentioned.
 3. Currently running jobs are displayed.
