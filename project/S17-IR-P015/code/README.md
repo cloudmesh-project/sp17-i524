@@ -1,6 +1,6 @@
-##Deployment of Storm cluster 
+# Deployment of Storm cluster 
 
-###Prerequisites:
+## Prerequisites:
 1. Cluster with ip addresses
 2. Ansible software
 
