@@ -19,8 +19,9 @@
 \ociscodes{Storm, Ansible, Java, Python}
 
 % replace this with your url in github/gitlab
-\doi{\url{https://github.com/cloudmesh/classes/blob/master/project/S17-IR-P015/report/report.pdf}}
-\doi{\url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P015/code}}
+\doi{Report: \url{https://github.com/cloudmesh/classes/blob/master/project/S17-IR-P015/report/report.pdf}
+
+Code: \url{https://github.com/cloudmesh/cloudmesh.storm}}
 
 
 \begin{abstract}
@@ -104,7 +105,7 @@ Note that a Storm topology can have cycles. From the database systems
 perspective, one can think of a topology as a directed graph of
 operators.
 \begin{figure}
-  \includegraphics[width=\linewidth]{images/apache-storm.png}
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/apache-storm.png}
   \caption{Storm Architecture}
   \label{Storm Architecture}
 \end{figure}
@@ -116,7 +117,7 @@ distributing and coordinating the execution of the topology. The
 actual work is done on worker nodes. Each worker node runs one or more
 worker processes. At any point in time, a single machine may have more
 than one worker processes, but each worker process is mapped to a
-single topology. Note more than one worker process on the same machine
+single topology see Fig 1. Note more than one worker process on the same machine
 may be executing different part of the same topology. Each worker
 process runs a JVM, in which it runs one or more executors. Executors
 are made of one or more tasks. The actual work for a bolt or a spout
@@ -242,17 +243,6 @@ which are:
 
 
 
-\section{Milestones}
-
-\begin{itemize}
-\item Previous Project idea brainstorming
-\item Performing Analysis on local VM- April 17th, 2017
-\item Deploying Storm and Hadoop on Chameleon Cloud and Jetstream-
-  April 20th, 2017
-\item Analysis on the distributed cloud environment- April 27th, 2017
-\item Benchmarking- April 27th, 2017
-\item Final update with report- May 1st, 2017
-\end{itemize}
 
 
 \section{Technologies}
@@ -388,14 +378,15 @@ we benchmarked our results on various cluster sizes.
 Following are the results of our benchmarking on deploying the storm
 cluster on Chameleon cloud. Few things, we noticed that a 3-node
 cluster is not viable for running storm jobs and hence we ran all our
-jobs on 5-nodes or above clusters, this was one error we came across
-when we tried deploying a 3-node cluster and overcame this by
-following code blogs related to troubleshooting mentioned in the code
-references and solved the issue. We ran a sample-storm job on a 5node
-cluster to see if its working, following are the snapshots where in we
-can see the UI of storm, showing all the resources used among many
-other things. Similar tests were made on a 7-node and a 9-node cluster
-and results were stored in a log page.
+jobs on 5-nodes or above clusters see Fig 4, this was one error we
+came across when we tried deploying a 3-node cluster and overcame this
+by following code blogs related to troubleshooting mentioned in the
+code references and solved the issue see Fig 6. We ran a sample-storm job on a
+5node cluster to see if its working, following are the snapshots where
+in we can see the UI of storm, illustrated in see Fig 2, a sample
+toplogy is also shown in the UI in Fig 3, also showing the resources
+used among many other things. Similar tests were made on a 7-node and
+a 9-node cluster and results were stored in a log page see Fig 5.
 
 
 
@@ -425,50 +416,59 @@ storage & 1.5PB  \\ [1ex]
 \end{table}
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{images/bench-1.png}
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-1.png}
   \caption{Index Page}
   \label{Index Page}
 \end{figure}
 
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{images/bench-2.png}
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-2.png}
   \caption{Sample Topology on a 5-node cluster }
   \label{Sample Topology on a 5-node cluster}
 \end{figure}
 
-\begin{figure*}[!htb]
-  \includegraphics[width=\linewidth]{images/bench-3.png}
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-3.png}
   \caption{Worker nodes and description on a 5-node cluster }
   \label{Worker nodes and description on a 5-node cluster}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}[!htb]
-  \includegraphics[width=\linewidth]{images/bench-4.png}
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-4.png}
   \caption{Toplogy Summer on a 5-node cluster }
   \label{Topology summary on a 5-node cluster}
-\end{figure*}
+\end{figure}
 
-\begin{figure*}[!htb]
-  \includegraphics[width=\linewidth]{images/bench-5.png}
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-5.png}
   \caption{Spouts and bolts summary on a 5-node cluster }
   \label{Spouts and bolts summary on a 5-node cluster}
-\end{figure*}
+\end{figure}
 
 
 
 Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node cluster on the chameleon cloud. Following are the results obtained and can be illustrated below.
 
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+ Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
+ \hline\hline
+ Real: & 143.91 & 188.19 & 387.536 \\ 
+ \hline
+ User: & 13.928 & 28.432 & 36.192 \\
+ \hline
+ Sys: & 3.964 & 8.872 & 9.988\\
+ \hline
+\end{tabular}
+\end{center}
+
+
 
 \begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{images/table-1.png}
-  \caption{Table showing the time taken to deploy }
-  \label{Table showing the time taken to deploy}
-\end{figure}
-
-
-\begin{figure}[!htb]
-  \includegraphics[width=\linewidth]{images/bar-1.png}
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-1.png}
   \caption{Bar diagram to compare the time taken to deploy }
   \label{Bar diagram to compare the time taken to deploy}
 \end{figure}
@@ -486,15 +486,35 @@ Following were the code resources used in deploying the cluster at various
 stages.
 \begin{itemize}
 \item
+  While coding configurations related to Storm we used the following
+  resources, we have looked at the sample use cases of the storm
+  application at Twitter and Spotify. Code resources for
   Storm-\cite{www-storm1}\cite{www-storm2}\cite{www-storm3}\cite{www-storm4}\cite{www-storm5}\cite{www-storm6}\cite{www-storm7}\cite{www-storm8}\cite{www-storm9}\cite{www-storm10}
 \item
-  Zookeeper-\cite{www-zk1}\cite{www-zk2}\cite{www-zk3}\cite{www-zk4}\cite{www-zk5}\cite{www-zk6}\cite{www-zk7}\cite{www-zk8}
-\item Running Topologies on a
+ While configuring the Zookeeper cluster, we came across many
+ solutions, the important question we came across is whether to use a
+ stand-alone mode or a server mode configuration also while
+ researching for various cluster sizes, we have come to the conclusion
+ that storm is better deployed on cluster sizes more than 5. However,
+ the server mode configuration is quite relevant to our project, so
+ used many resources from below for coding the required
+ configurations. Zookeeper-\cite{www-zk1}\cite{www-zk2}\cite{www-zk3}\cite{www-zk4}\cite{www-zk5}\cite{www-zk6}\cite{www-zk7}\cite{www-zk8}
+\item The following code resources were used in analyzing the
+  toplogies which were created part of development of the storm
+  cluster. We went through many use-cases such as like in the case of
+  Spotify while researching this topic. Running Topologies on a
   cluster-\cite{www-rtc1}\cite{www-rtc2}\cite{www-rtc3}\cite{www-rtc4}\cite{www-rtc5}\cite{www-rtc6}
-\item Zookeeper
+\item While encountering various issues with Zookeeper, following code
+  resources were used, of these we examined whether dynamic toplogies
+  where possible to create, problems with running a 3 node cluster,
+  and other config files configuration. Zookeeper
   Troubleshooting-\cite{www-zt1}\cite{www-zt2}\cite{www-zt3}\cite{www-zt4}\cite{www-zt5}\cite{www-zt6}
-\item Storm Troubleshooting-\cite{www-nnf1}\cite{www-nnf2}\cite{www-nnf3}\cite{www-nnf4}
-\item Storm defaults yaml-\cite{www-sd1}
+\item While checking the log files to check if storm is working or
+  not, had to explore the below resources to make sure it was up and
+  running. Storm
+  Troubleshooting-\cite{www-nnf1}\cite{www-nnf2}\cite{www-nnf3}\cite{www-nnf4}
+\item Storm yaml defaults file details were obtained from the below
+  code resources.-\cite{www-sd1}
 \end{itemize}
 
 
@@ -528,9 +548,9 @@ of the gruelling taks straighforward.
 \begin{enumerate}
 \section{Work Breakdown}
 
-\item Ajit Balaga: Responsible for initial deplopyment of storm cluster on various clouds and clusters of different sizes, played an instrumental role in understanding the storm toplogy and its architecture. Also, responsible for finding out that a storm cluster is better deployed on a 5 node and found the same results, empirically.
+\item Ajit Balaga: Responsible for initial deployment of storm cluster on various clouds and clusters of different sizes, played an instrumental role in understanding the storm toplogy and its architecture. 
 
-\item Vasanth Methkupalli: Responsible for deployment of the storm cluster on various clouds of different cluster sizes using ansible, almost automated the entire deployment of storm cluster on cloud. Also responsible for writing the project report and task breakdown.
+\item Vasanth Methkupalli: Responsible for deployment of the storm cluster on various clouds of different cluster sizes using ansible, almost automated the entire deployment of storm cluster on cloud.
 
 \end{enumerate}
 \end{document}
