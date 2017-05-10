@@ -1,3 +1,4 @@
+
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
@@ -10,7 +11,7 @@
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
-\affil[*]{Corresponding authors:mvasanthiiit@gmail.com}
+\affil[*]{Corresponding authors: mvasanthiiit@gmail.com}
 \affil[**]{Corresponding authors: ajit.balaga@gmail.com}
 
 
@@ -238,17 +239,14 @@ which are:
   is being moved to this supervisor. Finally, a “disallowed ” worker
   means that the worker should not be running either because its
   topology has been killed, or the worker of the topology has been
-  moved to another node.
+  moved to another node.\\
 \end{enumerate}
 
 
 
 
-
+\enlargethispage{-\baselineskip}
 \section{Technologies}
-
-
-
 
 \begin{center}
  \begin{tabular}{||c c||} 
@@ -360,8 +358,7 @@ installation on Ubuntu 16.04.
 \section{Cloud Deployment}
 
 
-We selected two clouds for deployment our project: Chameleon Cloud,
-and Jetstream. In our automated deployment and benchmarking process,
+We selected three clouds for deployment of our project: Chameleon Cloud, Jetstream, and Kilo. In our automated deployment and benchmarking process,
 first we create a cluster of particular number of required nodes,
 update the ip addresses and the user id of all the clouds, then we run
 the ansible script to deploy the entire project on the cloud. However,
@@ -372,6 +369,40 @@ entire process of deploying the project on various clouds have been
 tried and tested, various times were measure on the context of
 installation time right from the beginning. Based on the above results
 we benchmarked our results on various cluster sizes.
+
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-1.png}
+  \caption{Index Page}
+  \label{Index Page}
+\end{figure}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-2.png}
+  \caption{Sample Topology on a 5-node cluster }
+  \label{Sample Topology on a 5-node cluster}
+\end{figure}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-3.png}
+  \caption{Worker nodes and description on a 5-node cluster }
+  \label{Worker nodes and description on a 5-node cluster}
+\end{figure}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-4.png}
+  \caption{Toplogy Summer on a 5-node cluster }
+  \label{Topology summary on a 5-node cluster}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-5.png}
+  \caption{Spouts and bolts summary on a 5-node cluster }
+  \label{Spouts and bolts summary on a 5-node cluster}
+\end{figure}
+
+
 
 \section{Benchmarking}
 \subsection{Chameleon Cloud}
@@ -415,38 +446,6 @@ storage & 1.5PB  \\ [1ex]
   \label{tab:cloud-comparison}
 \end{table}
 
-\begin{figure}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-1.png}
-  \caption{Index Page}
-  \label{Index Page}
-\end{figure}
-
-
-\begin{figure}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-2.png}
-  \caption{Sample Topology on a 5-node cluster }
-  \label{Sample Topology on a 5-node cluster}
-\end{figure}
-
-\begin{figure}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-3.png}
-  \caption{Worker nodes and description on a 5-node cluster }
-  \label{Worker nodes and description on a 5-node cluster}
-\end{figure}
-
-\begin{figure}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-4.png}
-  \caption{Toplogy Summer on a 5-node cluster }
-  \label{Topology summary on a 5-node cluster}
-\end{figure}
-
-\begin{figure}[!htb]
-  \centering
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-5.png}
-  \caption{Spouts and bolts summary on a 5-node cluster }
-  \label{Spouts and bolts summary on a 5-node cluster}
-\end{figure}
-
 
 
 Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node cluster on the chameleon cloud. Following are the results obtained and can be illustrated below.
@@ -469,17 +468,152 @@ Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node clus
 
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-1.png}
-  \caption{Bar diagram to compare the time taken to deploy }
-  \label{Bar diagram to compare the time taken to deploy}
+  \caption{Bar diagram to compare the time taken to deploy on Chameleon}
+  \label{Bar diagram to compare the time taken to deploy on Chameleon}
 \end{figure}
 
 \subsection{JetStream}
 
-We had slight issues booting the Virtual Machines on the jetstream
-cloud. In that scenario we decided to go ahead and deploy the cluster
-only on the chameleon cloud and test its performance. However, it can
-be noted that the deployment is fairly similar even in the case of
-JetStream using the Cloudmesh client.
+Automated the deployment of cloud on Jestream cloud resources on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. Below is a tabluar description of the image flavor used on Jetstream and time taken to deploy the cluster on Jetstream.
+
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Virtual Machine Configuration for Jestream}
+
+ \begin{tabular} {| c | c |}
+
+ \hline
+VM Flavor Name   & m1.medium  \\
+\hline
+vCPUs & 6  \\
+ \hline
+RAM & 16GB   \\
+ \hline
+Local Storage & 60GB \\
+\hline
+\end{tabular}
+  \label{tab:cloud-comparison}
+\end{table}
+
+
+
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+ Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
+ \hline\hline
+ Real: & 478.426 & 592.267 & 798.894 \\ 
+ \hline
+ User: & 24.232 & 38.14 & 46.208 \\
+ \hline
+ Sys: & 5.988 & 11.54 & 13.568 \\
+ \hline
+\end{tabular}
+\end{center}
+
+
+Below is the bar description of the various times it took in deploying various size clusters.
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-2.png}
+  \caption{Bar diagram to compare the time taken to deploy on Jetstream }
+  \label{Bar diagram to compare the time taken to deploy on Jetstream}
+\end{figure}
+
+
+\subsection{Kilo- FutureSystems}
+
+Automated the deployment of our project  on Kilo cloud based on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. Below is a tabluar description of the image flavor used on Kilo and time taken to deploy the cluster on Kilo.
+
+
+\begin{table}[htbp]
+\centering
+\caption{\bf Hardware Specifications of Kilo}
+
+ \begin{tabular} {| c | c |}
+\hline
+  & Kilo   \\ [0.5ex] 
+ \hline
+Image   & Ubuntu-14.04-64  \\
+\hline
+flavor  & m1.small  \\
+ \hline
+cores & 1024   \\
+ \hline
+speed & 2.66GHz \\
+ \hline
+RAM   & 3072GB  \\
+ \hline
+storage & 335TB  \\ [1ex] 
+ \hline
+
+\end{tabular}
+  \label{tab:cloud-comparison}
+\end{table}
+
+
+
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+ Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
+ \hline\hline
+ Real: & 478.426 & 592.267 & 798.894 \\ 
+ \hline
+ User: & 53.728 & 61.104 & 77.388 \\
+ \hline
+ Sys: & 7.048 & 11.224 & 16.116 \\
+ \hline
+\end{tabular}
+\end{center}
+
+
+Below is the bar description of the various times it took in deploying various size clusters.
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-3.png}
+  \caption{Bar diagram to compare the time taken to deploy on Kilo}
+  \label{Bar diagram to compare the time taken to deploy on Kilo}
+\end{figure}
+
+\section{Benchmarking on various clouds}
+
+Comparison between installation time on various clouds with different cluster sizes. From the above deployment, following inferences were made
+
+\begin{itemize}
+\item Kilo cloud relatively long time when it came to installing java and its related packages
+\item Fairly, all the clusters took the same time in starting the storm cluster and running the storm-starter job.
+\end{itemize}
+
+
+Also a plot has been made to illustrate the various installation times on different clouds at one place, below image illustrates that.
+
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-4.png}
+  \caption{Graph plot to compare the time taken to deploy on various clouds}
+  \label{Graph plot to compare the time taken to deploy on various clouds}
+\end{figure}
+
+
+
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+ Install Time & Chameleon  & Jetstream & Kilo \\ [0.5ex]
+ \hline\hline
+ 5 node: & 161.802 & 183.95 & 539.202\\
+ \hline
+ 7 node: & 305.494 & 282.603 & 664.595 \\
+ \hline
+ 9 node: & 393.716 & 316.451 & 892.398 \\
+ \hline
+\end{tabular}
+\end{center}
+
+
+
 
 \section{Code References}
 Following were the code resources used in deploying the cluster at various
@@ -521,20 +655,15 @@ stages.
 \section{Summary}
 
 We have created, tested and demonstrated a fully automated program to
-configure and deploy a Storm cluster which can be deployed on cloud
-environments. We currently deployed it on Chameleon cloud and expect
-to do the same with any other cloud environment with slight changes in
-the ansible script.Also, another thing we observed while deploying a
-Zookeeper cluster that installing it in standalone mode makes it prone
-to breakdown, since if the Zookeeper cluster fails in this scenario,
-the entire storm cluster fails to run, however installing it on server
-mode leads to the scenario where in if one or more clusters fail to
-run, the load is handled by the other nodes in the cluster. We used a
-combination of Python, bash, cloudmesh client and ansible in fully
-deploying the cluster. We did a benchmark test on Chameleon cloud to
-measure the time taken to deploy 5, 7 and 9 node clusters, so far it
-has shown satisfactory results and we are striving to take it beyond
-to other cloud environments as well.
+configure and deploy a Storm cluster which can be deployed on any
+cloud environment using cloudmesh. We currently deployed it on
+Chameleon, Jetstream and Kilo cloud. Benchmarking strategy is visioned
+by viewing the time it takes to deploy a particular cluster on various
+cloud environments. We did a benchmark test on Chameleon, Jetstream
+and Kilo cloud to measure the time taken to deploy 5, 7 and 9 node
+clusters, so far it has shown satisfactory results and we are striving
+to take it beyond to other cloud environments as well, outside the
+cloudmesh usage.
 
 \section{Acknowledgments}
 This project was a part of the Big Data Software and Projects
