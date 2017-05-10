@@ -53,7 +53,7 @@ development at Twitter.
 
 \maketitle
 
-\tableofcontents
+% \tableofcontents
 
 
 \section{Introduction}
@@ -241,12 +241,17 @@ which are:
 \end{enumerate}
 
 
+\TODO{table must be cited}
 
+%\enlargethispage{-\baselineskip}
 
-\enlargethispage{-\baselineskip}
 \section{Technologies}
 
-\begin{center}
+\begin{table}[htb]
+\caption{TABLE CAPTION MISSING} 
+\label{T:technologies}
+\centering
+\resizebox{\columnwidth}{!}{%
  \begin{tabular}{||c c||} 
  \hline
  Usage & Technologies Used\\ [0.5ex]
@@ -262,7 +267,8 @@ which are:
  Document Preparation: &LaTex\\ [1ex] 
  \hline
 \end{tabular}
-\end{center}
+}
+\end{table}
 
 
 
@@ -448,7 +454,12 @@ storage & 1.5PB  \\ [1ex]
 
 Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node cluster on the chameleon cloud. Following are the results obtained and can be illustrated below.
 
-\begin{center}
+\TODO{TABLE MUST BE CITED}
+
+\begin{table}[htb]
+\centering
+\caption{TABLE CAPTION}\label{T:bench1}
+\resizebox{\columnwidth}{!}{%
  \begin{tabular}{|c|| c c c|} 
  \hline
  Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
@@ -460,7 +471,8 @@ Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node clus
  Sys: & 3.964 & 8.872 & 9.988\\
  \hline
 \end{tabular}
-\end{center}
+}
+\end{table}
 
 
 
@@ -495,8 +507,9 @@ Local Storage & 60GB \\
 \end{table}
 
 
-
-\begin{center}
+\begin{table}[htbp]
+\centering
+\caption{CAPTION MISSING}\label{T:labelmissing}
  \begin{tabular}{|c|| c c c|} 
  \hline
  Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
@@ -508,7 +521,7 @@ Local Storage & 60GB \\
  Sys: & 5.988 & 11.54 & 13.568 \\
  \hline
 \end{tabular}
-\end{center}
+\end{table}
 
 
 Below is the bar description of the various times it took in deploying various size clusters.
@@ -550,7 +563,7 @@ storage & 335TB  \\ [1ex]
   \label{tab:cloud-comparison}
 \end{table}
 
-
+\TODO{THIS IS NOT HAW A TABLE GOES INTO A PAPER}
 
 \begin{center}
  \begin{tabular}{|c|| c c c|} 
@@ -672,12 +685,22 @@ of the gruelling taks straighforward.
 
 
 \bibliography{references}
-\begin{enumerate}
+
+\appendix
+
 \section{Work Breakdown}
 
-\item Ajit Balaga: Responsible for initial deployment of storm cluster on various clouds and clusters of different sizes, played an instrumental role in understanding the storm toplogy and its architecture. 
+\begin{itemize}
 
-\item Vasanth Methkupalli: Responsible for deployment of the storm cluster on various clouds of different cluster sizes using ansible, almost automated the entire deployment of storm cluster on cloud.
+\item Ajit Balaga: Responsible for initial deployment of storm cluster
+  on various clouds and clusters of different sizes, played an
+  instrumental role in understanding the storm toplogy and its
+  architecture.
 
-\end{enumerate}
+\item Vasanth Methkupalli: Responsible for deployment of the storm
+  cluster on various clouds of different cluster sizes using ansible,
+  almost automated the entire deployment of storm cluster on cloud.
+
+\end{itemize}
+
 \end{document}
