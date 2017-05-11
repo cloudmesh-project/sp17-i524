@@ -152,46 +152,47 @@ software components have been leveraged:
 
 \begin{description}
 
-\item [Libcloud EC2 driver:] The driver provides a number of functions
+\item [Libcloud EC2 driver \cite{??}:] The driver provides a number of functions
   for various functionalities such as listing the available nodes,
   generating a key pair and deploying a VM.
 
-\item [MongoDb:] MongoDB is an open source document store database. It's
+\item [MongoDb  \cite{??}:] MongoDB is an open source document store database. It's
   used by AWS client to store information about various VM
   configuration options available on the Amazon EC2 cloud. It's also
   used to store information regarding the VMs that are running on the
   cloud. The information in the database is refreshed whenever it's
   fetched from the cloud.
 
-\item [Cloudmesh.common:] A library of many commonly useful functions
-  and classes shared among all cloudmesh projects \cite{www-cloudmesh-common}.
+\item [Cloudmesh.common \cite{www-cloudmesh-common}:] A library of
+  many commonly useful functions and classes shared among all
+  cloudmesh projects.
 
 \item [Cloudmesh.cmd5:] The cmd5 is a dynamically extensible CMD based
   command shell \cite{www-cloudmesh-cmd5}.
 
-\item [Cloudmesh.evegenie:] The schema for the collections are specified
+\item [Cloudmesh.evegenie \cite{www-cloudmesh-evengine}:] The schema for the collections are specified
   in json files which are then converted to Eve syntax using
   evegenie. It creates the configuration file for starting up the rest
   services using cloudmesh rest framework.
 	 	
-\item [Cloudmesh.rest:] The cloudmesh rest framework is used to deploy
-  and start the mongodb and rest services. The schema for the objects
-  to be stored in the database is collectively specified in json file
-  called {\it all.json}. The schema defined in the file is closely
-  associated with the code in awsclient.py which is responsible for
-  fetching the information from cloud and passing it to mongodb
-  through rest services. From our experience during the development of
-  this project, we observed that rest services required the schema to
-  be precise and didn't handle null values for collection
-  fields. There's another file all.settings.py which contains the
-  configuration information for rest services such as port mongodb is
-  running on along with the database name. It contains the schema for
-  the collections and the list of methods to be provided by the rest
-  services. The database connectivity was intially developed using
-  pymongo library. However, during the review it was suggested that
-  the code based on pymongo is quite low level and does not have
-  adequate security features. This led to the use of Pyhthon Requests
-  library.
+\item [Cloudmesh.rest \cite{www-cloudmesh-rest}:] The cloudmesh rest
+  framework is used to deploy and start the mongodb and rest
+  services. The schema for the objects to be stored in the database is
+  collectively specified in json file called {\it all.json}. The
+  schema defined in the file is closely associated with the code in
+  awsclient.py which is responsible for fetching the information from
+  cloud and passing it to mongodb through rest services. From our
+  experience during the development of this project, we observed that
+  rest services required the schema to be precise and didn't handle
+  null values for collection fields. There's another file
+  all.settings.py which contains the configuration information for
+  rest services such as port mongodb is running on along with the
+  database name. It contains the schema for the collections and the
+  list of methods to be provided by the rest services. The database
+  connectivity was initially developed using pymongo library. However,
+  during the review it was suggested that the code based on pymongo is
+  quite low level and does not have adequate security features. This
+  led to the use of Pyhthon Requests library.
 	
 \end{description}
 
