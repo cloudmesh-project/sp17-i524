@@ -7,6 +7,7 @@
 	filecolor=magenta,      
 	urlcolor=blue,
 }
+\fvset{fontsize=\footnotesize}
 
 \journal{i524} 
 
@@ -204,7 +205,7 @@ client can easily be reused to implement such interfaces.\footnote{we
 \item{\bf Layered Architecture.} Cloudmesh client has a layered
 architecture that allows easy development of new features. This also
 allows contribution by the community while developing integrated and
-smaller sub components. Figure A depicts the various layers. A
+smaller sub components. Figure \ref{??} depicts the various layers. A
 resource abstraction layer allows the integration of a multitude of
 resources spanning HPC, Containers, and Cloud resources. (At this time
 we focus on OpenStack and Slurm resources. We are working on
@@ -418,6 +419,44 @@ commands e.g.:
 
 This will fetch the list of image sizes available on Amazon EC2 cloud.
 
+\section{Cloudmesh REST Service}
+
+\begin{figure}[htb]
+\VerbatimInput{specification/flavor.json}
+\vspace{-1.0\baselineskip}
+\caption{Specification for flavor.}\label{F:spec-flavor}
+\end{figure}
+
+\begin{figure}[htb]
+\VerbatimInput{specification/image.json}
+\vspace{-1.0\baselineskip}
+\caption{Specification for image.}\label{F:spec-image}
+\end{figure}
+
+\begin{figure}[htb]
+\VerbatimInput{specification/keypair.json}
+\vspace{-1.0\baselineskip}
+\caption{Specification for keypair.}\label{F:spec-keypair}
+\end{figure}
+
+\begin{figure}[htb]
+\VerbatimInput{specification/location.json}
+\vspace{-1.0\baselineskip}
+\caption{Specification for location.}\label{F:spec-location}
+\end{figure}
+
+\begin{figure}[htb]
+\VerbatimInput{specification/node.json}
+\vspace{-1.0\baselineskip}
+\caption{Specification for node.}\label{F:spec-node}
+\end{figure}
+
+\begin{figure}[htb]
+\VerbatimInput{specification/volume.json}
+\vspace{-1.0\baselineskip}
+\caption{Specification for volume.}\label{F:spec-volume}
+\end{figure}
+
 \section{AWS Commands}
 
 
@@ -618,13 +657,13 @@ Flavor list & The flavor list is either fetched from the
   \href{https://console.aws.amazon.com/iam/home?#/users}{Create a IAM}
   \cite{www-aws-iam} user for which the access and secret key will
   have to be generated \cite{www-attach-policy}. The keys will ahve to
-  added to the yaml cloudmesh configuraition file.
+  added to the yaml cloudmesh configuration file.
 	
 \item The required permissions are needed to be granted to the user.
   \begin{enumerate}
 			
   \item visit \href{https://console.aws.amazon.com/iam/home} {IAM
-      home}
+      home} \cite{www-aws-iam-home}
   \item select \textbf{policie}s in left hand menu
   \item create \textbf{administrator policy} from amazons existing
     policies
