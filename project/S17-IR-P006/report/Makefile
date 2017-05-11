@@ -21,6 +21,10 @@ real-clean: clean
 clean:
 	rm -rf *~ *.aux *.bbl *.dvi *.log *.out *.blg *.toc *.fdb_latexmk *.fls *.tdo *.bcf
 
+dot:
+	cd images; java -jar plantuml.jar -Tsvg arch.uml
+	cd images; cairosvg arch.svg -o arch.pdf
+
 view:
 	$(OPENCMD) ${FILE}.pdf
 

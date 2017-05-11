@@ -1,0 +1,8 @@
+{
+    "aws_node": {
+        "state": "RUNNING",
+        "provider": "provider",
+        "uuid": "e257efd0e6763e9fdc04b79a00f5147fcc21ee7a",
+        "name": "test1"
+    }
+}

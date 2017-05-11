@@ -1,0 +1,7 @@
+{
+    "aws_volume": {
+        "id": "vol-0c30e77f6ca2a263a",
+        "size": 1,
+        "driver": "Amazon EC2"
+       }
+}

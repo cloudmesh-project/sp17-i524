@@ -1,0 +1,7 @@
+{
+    "aws_image": {
+        "id": "ami-0180d261",
+        "name": "ubuntu/images-testing/ubuntu-precise-daily-i386-server-20170123",
+        "driver": "string"
+    }
+}

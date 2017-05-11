@@ -1,0 +1,11 @@
+{
+    "aws_location": {
+        "region_name": "us-west-1",
+        "availability_zone": "us-west-1a",
+        "country": "USA",
+        "zone_state": "available",
+        "id": 1,
+        "name": "us-west-1a"
+    }
+}
+
