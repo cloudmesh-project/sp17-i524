@@ -103,11 +103,174 @@ easily to use clouds.
 \end{figure}
 		
 
-\section{Design}
 
-\subsection{Requirements}
 
-\TODO{Requirements are missing}
+\section{Cloudmesh Design}
+\label{S:cmclient}
+
+The cloudmesh client toolkit is a lightweight client interface of
+accessing heterogeneous clouds, clusters, and workstations right from
+the users computer. The user can manage her own set of resources she
+would like to utilize. Thus the user has the freedom to customize the
+integration of a variety of cyber infrastructure resources into
+Cloudmesh. Cloudmesh client includes an API, a command-line client,
+and a command-line shell. It strives to abstract backends to databases
+that are used to manage the workflow utilizing different
+infrastructures and services. As explained earlier, switching to
+activate virtual machines from OpenStack clouds to Amazon is as simple
+as specifying the name of the cloud. Moreover, cloudmesh client can be
+installed on Linux, MacOSX, and in future Windows.
+
+\subsection{General Requirements and Goals}
+
+Cloudmesh has from its inception followed the following general design
+goals and requirements.
+
+\begin{description}
+\item [Technology agnostic.] An important aspect of cloudmesh is to
+  offer access to useful services APIs and interfaces in a technology
+  agnostic fashion. Thus it should be possible for example to switch
+  easily between different IaaS providers. CM has excellently protected
+  us during the changes of the OpenStack interfaces and libraries from
+  the very first version of OpenStack and other IaaS frameworks \cite{??-eucalyptus}. 
+
+\item[Easy to use.] Cloudmesh simplifies access of 
+  complex workflow to integrate with IaaS and deploy on them new
+  platforms and software stacks. This advanced feature is not only to
+  be performed by expert IT personal or programmers, but in fact by
+  data scientists which we found in practice have less experience in
+  such areas. As we deal often with many compute nodes it is often
+  insufficient to just provide a graphical user interface or portal, but
+  we need to provide APIs, REST interfaces and especially command-line
+  and shell access in an easy comprehensible fashion. 
+
+\item[Expandable.] While working over the last years in the area it is
+  obvious that the technology is rapidly evolving and new features
+  need to be integrated, Thus it is important that cloudmesh is easy
+  to expand and new features can be added while leveraging a core set
+  of functionality and services.
+
+\item[Documented.] It is important that we provide from the start
+  documentation to existing and new features and make it easy for the
+  developers to contribute documented add ons, but also allow users to
+  have access to documentation including examples. This will include
+  easy to follow documented installation and configuration steps to
+  guarantee successful deployment and use
+
+\item[Repeatable and automated deployment.] When we install software
+  stacks an a variety of platforms it is expected that that can easily
+  be replicated and repeated automatically.
+
+\item[Portable.] It is important to provide services in cross
+  platforms compatible fashion. It ensures working, executable
+  software deployment on multiple platforms. This includes not only
+  the installation of the software, but the integration of external
+  services and tools such as DevvOps or workflow frameworks that could
+  support the general mission of a data scientist.
+
+\item[Abstractions.] To address some of the design issues our
+  requirements implicitly asks for the existence of a number of
+  abstractions and interfaces that can be used to enable portable and
+  crossplatform services and tools.
+
+\end{description}
+
+\subsection{Architecture Requirements and Goals}
+
+In addition to the general requirements we set some specific
+architectural requirements and goals that have been growing from
+previous versions of cloudmesh and our earlier work in this area.
+
+\begin{description}
+
+\item{\bf Client based.} Cloudmesh client as the name indicates is a
+  client based toolkit that is installed and run on the users
+  computers. An add on component to use the client within a portal is
+  available. Thus we distinguish the client that contains most of the
+  functionality and the portal that can access the functionality
+  through a locally maintaine Web portal. Important to note is that
+  the user manages its own credentials and thus security and
+  credential management is done directly on the users machine instead
+  through a hosted Web portal. This increases the security as access
+  to any credential is managed by the user and is not part of a
+  credential management system.
+
+\item{\bf REST.} Although Cloudmesh provides a client interface, it
+will provide a REST interface to many of its services in order to
+support service based deployments. The basic APIs developed for the
+client can easily be reused to implement such interfaces.\footnote{we
+  have demonstrated that cloudmesh APIs can be used to implement REST
+  interfaces in a variety of frameworkks such as Flask, Django, and Cherypy}
+
+\item{\bf Layered Architecture.} Cloudmesh client has a layered
+architecture that allows easy development of new features. This also
+allows contribution by the community while developing integrated and
+smaller sub components. Figure A depicts the various layers. A
+resource abstraction layer allows the integration of a multitude of
+resources spanning HPC, Containers, and Cloud resources. (At this time
+we focus on OpenStack and Slurm resources. We are working on
+reintegrating resources such as Azure, AWS, Maui, Moab, and others
+which we previously supported, as well as new resources such as
+docker).
+
+\item{\bf Management Framework.} Cloudmesh client contains a
+management framework, and its components are depicted in Figure
+B. cloudmesh allows easy management of virtual machines, containers,
+and the data associated with them. We are currently developing a
+choreography framework that leverages Ansible, chef, and heat. All of
+the functionality is easily usable through a comand-shell that also
+can be used from the command-line, and a Python API. IN future we will
+be providing a REST API.
+
+\item{\bf Database Agnostic.} Cloudmesh contains some state about the
+resource and environment that a user may want to use. The information
+is managed in an database abstraction that would allow storing the
+data in a variety of databases such as SQL and MongoDB. At this time
+we have chosen SQLite to be the default database as it does not
+require any additional setup and is universally available on all
+operating systems without change.
+
+\item{\bf Command-shell and Command-line.} Cloudmesh contains a
+  comand-shell allowing scripts to be developed and run. However we
+  designed the comand-shell in such a way that each command can also
+  be called from the command-line. Through the cloudmesh state machine
+  the state between comand-shell, command-client, and the portal is
+  shared.
+
+\item{\bf Cloudmesh Client Portal.} Previously, we distributed
+cloudmesh with client, server, and a portal components in one
+package. This however turned out to be to complex to be installed for
+some of our less technically skilled user community. Thus we split up
+the install into two independent packages. The cloudmesh client and
+the cloudmesh portal. The portal provides some elementary features to
+manage virtual machines and HPC jobs. At this time the portal is
+considered to be alpha technology. Just as the client the portal is to
+be run on the local user machine in oredr to allow increased security
+by managing the credentials locally rather than on a server.
+
+\item{\bf Cloudmesh Two Factor Authentication.} We have an
+exploratory project in place that looks at the use of Yubikeys for
+cloudmesh, client and cloudmesh portal.
+
+\item{\bf Cloudmesh Comet.} We are actively developing the client
+interface for SDSC’s comet supercomputer allowing bare metal
+provisioning. The interface reuses cloudmesh components and
+technologies while interfacing with the comet cloud REST
+interface. The goal here is to manage virtual clusters.
+
+\end{description}
+
+\subsection{Architecture}
+
+
+\begin{figure}[htb]
+  \centering
+     \includegraphics[width=1.0\columnwidth]{images/cloudmesh-arch-1.pdf}
+  \caption{Cloudmesh layered architecture.} 
+  \label{F:NIST-arch}
+\end{figure}
+
+
 
 \section{Implementation considerations}
 
@@ -156,12 +319,12 @@ software components have been leveraged:
   for various functionalities such as listing the available nodes,
   generating a key pair and deploying a VM.
 
-\item [MongoDb  \cite{??}:] MongoDB is an open source document store database. It's
-  used by AWS client to store information about various VM
-  configuration options available on the Amazon EC2 cloud. It's also
-  used to store information regarding the VMs that are running on the
-  cloud. The information in the database is refreshed whenever it's
-  fetched from the cloud.
+\item [MongoDb \cite{??}:] MongoDB is an open source document store
+  database. It's used by AWS client to store information about various
+  VM configuration options available on the Amazon EC2 cloud. It's
+  also used to store information regarding the VMs that are running on
+  the cloud. The information in the database is refreshed whenever
+  it's fetched from the cloud.
 
 \item [Cloudmesh.common \cite{www-cloudmesh-common}:] A library of
   many commonly useful functions and classes shared among all
@@ -170,10 +333,11 @@ software components have been leveraged:
 \item [Cloudmesh.cmd5:] The cmd5 is a dynamically extensible CMD based
   command shell \cite{www-cloudmesh-cmd5}.
 
-\item [Cloudmesh.evegenie \cite{www-cloudmesh-evengine}:] The schema for the collections are specified
-  in json files which are then converted to Eve syntax using
-  evegenie. It creates the configuration file for starting up the rest
-  services using cloudmesh rest framework.
+\item [Cloudmesh.evegenie \cite{www-cloudmesh-evengine}:] The schema
+  for the collections are specified in json files which are then
+  converted to Eve syntax using evegenie. It creates the configuration
+  file for starting up the rest services using cloudmesh rest
+  framework.
 	 	
 \item [Cloudmesh.rest \cite{www-cloudmesh-rest}:] The cloudmesh rest
   framework is used to deploy and start the mongodb and rest
