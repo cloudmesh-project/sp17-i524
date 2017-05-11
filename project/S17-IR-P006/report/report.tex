@@ -105,15 +105,97 @@ easily to use clouds.
 
 \section{Design}
 
-The AWS client is based on cloudmesh.cmd5
-\cite{www-cloudmesh-cmd5} and cloudmesh.common \cite{www-cloudmesh-common}. It uses
-mongodb in the back-end to store the cloud information such as list of
-available images or instances running on the cloud. Requests library
+\subsection{Requirements}
+
+\TODO{Requirements are missing}
+
+\section{Implementation considerations}
+
+The AWS client is based on cloudmesh.cmd5 \cite{www-cloudmesh-cmd5}
+and cloudmesh.common \cite{www-cloudmesh-common}. It uses mongodb in
+the back-end to store the cloud information such as list of available
+images or instances running on the cloud. Requests library
 \cite{www-python-requests} is used to connect to the back-end through
 rest services. The rest service is deployed using cloudmesh REST
 framework \cite{www-cloudmesh-rest}.
 
-\section{Getting Started}
+\TODO{Design Diagram is missing}
+\begin{verbatim}
+client -> rest (eve) -> database (nosql)
+           ^ object definitions
+\end{verbatim}
+
+\section{Implementation}
+
+\TODO{Some details about REST service and auto creation from
+  examples. Gregor may have text.}
+
+
+\section{Architecture}
+
+The commands are implemented as methods of a class AwsCommand which is
+based on PluginCommand from cloudmesh shell. Depending on the
+arguments passed, corresponding routine is called from Aws client API
+which acts as a wrapper around the libcloud EC2 drivers
+\cite{www-libcloud-ec2} and is also responsible to connect with
+back-end database apart from reading the configuration from yaml
+file. The entire code is written in Python.
+
+\subsection{Technologies Used}
+
+To adhere to the principal of code reuse we are using a number of core
+technologies that allow us to keep the overall developed new code
+small. This includes leveraging our previous {\it cloudmesh} efforts, the
+reuse of {\it mongodb} and the automatic creation of a REST service based
+on example objects with {\it evengine}. Particularly the following
+software components have been leveraged:
+
+\begin{description}
+
+\item [Libcloud EC2 driver:] The driver provides a number of functions
+  for various functionalities such as listing the available nodes,
+  generating a key pair and deploying a VM.
+
+\item [MongoDb:] MongoDB is an open source document store database. It's
+  used by AWS client to store information about various VM
+  configuration options available on the Amazon EC2 cloud. It's also
+  used to store information regarding the VMs that are running on the
+  cloud. The information in the database is refreshed whenever it's
+  fetched from the cloud.
+
+\item [Cloudmesh.common:] A library of many commonly useful functions
+  and classes shared among all cloudmesh projects \cite{www-cloudmesh-common}.
+
+\item [Cloudmesh.cmd5:] The cmd5 is a dynamically extensible CMD based
+  command shell \cite{www-cloudmesh-cmd5}.
+
+\item [Cloudmesh.evegenie:] The schema for the collections are specified
+  in json files which are then converted to Eve syntax using
+  evegenie. It creates the configuration file for starting up the rest
+  services using cloudmesh rest framework.
+	 	
+\item [Cloudmesh.rest:] The cloudmesh rest framework is used to deploy
+  and start the mongodb and rest services. The schema for the objects
+  to be stored in the database is collectively specified in json file
+  called {\it all.json}. The schema defined in the file is closely
+  associated with the code in awsclient.py which is responsible for
+  fetching the information from cloud and passing it to mongodb
+  through rest services. From our experience during the development of
+  this project, we observed that rest services required the schema to
+  be precise and didn't handle null values for collection
+  fields. There's another file all.settings.py which contains the
+  configuration information for rest services such as port mongodb is
+  running on along with the database name. It contains the schema for
+  the collections and the list of methods to be provided by the rest
+  services. The database connectivity was intially developed using
+  pymongo library. However, during the review it was suggested that
+  the code based on pymongo is quite low level and does not have
+  adequate security features. This led to the use of Pyhthon Requests
+  library.
+	
+\end{description}
+
+\section{Usage}
 
 One needs to create an AWS account first to be able to access its
 cloud. The instructions for it are available at
@@ -122,8 +204,9 @@ required to be generated to authenticate into the cloud
 \cite{www-amazon-key}. These keys are required to be kept
 confidential. They are to be specified in a yaml configuration
 file. Default vm image and flavor can also be specified in the
-configuration file. Following are some of the configuration entries:
+configuration file (see FIgure \ref{F:conf}). 
 
+\begin{figure}[htb]
 \begin{verbatim} 
 cloudmesh:
   clouds:
@@ -131,15 +214,15 @@ cloudmesh:
       credentials:
         EC2_ACCESS_KEY: 'ACCESS KEY'
         EC2_SECRET_KEY: 'SECRET KEY'
-        .
-        .
-
+        . . .
     default:
       image: 'IMAGE ID'
       size: 'SIZE ID'
       location: 'LOCATION'
-	  
 \end{verbatim}
+\vspace{-1.0\baselineskip}
+\caption{Configuration}\label{F:conf}
+\end{figure}
 
 The user need to ensure that the combination of image, size and
 location is valid and that it's account has the required privileges
@@ -163,278 +246,199 @@ commands e.g.:
 
 This will fetch the list of image sizes available on Amazon EC2 cloud.
 
-\section{Architecture}
-
-The commands are implemented as methods of a class AwsCommand which is
-based on PluginCommand from cloudmesh shell. Depending on the
-arguments passed, corresponding routine is called from Aws client API
-which acts as a wrapper around the libcloud EC2 drivers
-\cite{www-libcloud-ec2} and is also responsible to connect with
-back-end database apart from reading the configuration from yaml
-file. The entire code is written in Python.
-
-\subsection{Technologies Used}
-
-\begin{enumerate}
-
-\item Cloudmesh.cmd5: The cmd5 is an "dynamically extensible CMD based
-  command shell" [2].
-
-\item Libcloud EC2 driver: The driver provides a number of functions
-  for various functionalities such as listing the available nodes,
-  generating a key pair and deploying a VM.
-
-\item MongoDb: MongoDB is an open source document store database. It's
-  used by AWS client to store information about various VM
-  configuration options available on the Amazon EC2 cloud. It's also
-  used to store information regarding the VMs that are running on the
-  cloud. The information in the database is refreshed whenever it's
-  fetched from the cloud.
-
-\item Cloudmesh.evegenie: The schema for the collections are specified
-  in json files which are then converted to Eve syntax using
-  evegenie. It creates the configuration file for starting up the rest
-  services using cloudmesh rest framework.
-	 	
-\item Cloudmesh.rest: The cloudmesh rest framework is used to deploy
-  and start the mongodb and rest services. The schema for the objects
-  to be stored in the database is collectively specified in json file
-  called 'all.json'. The schema defined in the file is closely
-  associated with the code in awsclient.py which is responsible for
-  fetching the information from cloud and passing it to mongodb
-  through rest services. From our experience during the development of
-  this project, we observed that rest services required the schema to
-  be precise and didn't handle null values for collection
-  fields. There's another file all.settings.py which contains the
-  configuration information for rest services such as port mongodb is
-  running on along with the database name. It contains the schema for
-  the collections and the list of methods to be provided by the rest
-  services. The database connectivity was intially developed using
-  pymongo library. However, during the review it was suggested that
-  the code based on pymongo is quite low level and does not have
-  adequate security features. This led to the use of Pyhthon Requests
-  library.
-	
-\end{enumerate}
-
 \section{AWS Commands}
 
-\begin{enumerate}
-	
-\item Refresh: Whether to always fetch the information from the cloud
-  over the network or display it from the local database when asked
-  can be configured by setting the configuration variable 'refresh' to
-  either 'on' or 'off'. When the value is set to on, the information
-  will always be fetched from the cloud.This functionality is
-  implemented for only some of the commands as of now.
-	
-	\begin{verbatim}
-    cms aws refresh on
-	\end{verbatim}
-	
-\item Image refresh: The images available on the cloud could be listed
-  using this command. The database will also be updated with the newly
-  fetched list. The command may take up to minutes to run as the list
-  contains more than 24,000 images.
-	
-	\begin{verbatim}
-    cms aws image refresh
-	\end{verbatim}
-	
-	\begin{figure}[h!]
-		\centering
-		\fbox{\includegraphics[width=\linewidth]{images/cms_aws_image_refresh.png}}
-		\caption{cms aws image refresh}
-		\label{fig:imagerefresh}
-	\end{figure}
-		
-\item Image list: Depending on whether the value of 'refresh' is
-      set to 'on' or 'off', the list is either fetched from the
-      cloud or from the local database.
-	
-	\begin{verbatim}
-    cms aws image list
-	\end{verbatim}
-	
-    \item Flavor refresh: This will list the different sizes of VMs
-      that are available on the cloud. The information is fetched from
-      the cloud and stored locally.
-	
-	\begin{verbatim}
-    cms aws flavor refresh
-	\end{verbatim}
-		
-	\begin{figure}[h!]
-		\centering
-		\fbox{\includegraphics[width=\linewidth]{images/cms_aws_flavor_refresh.png}}
-		\caption{aws flavor refresh }
-		\label{fig:flavorlist}
-	\end{figure}
-	
-\item Flavor list: The flavor list is either fetched from the
+
+\begin{table*}[htb]
+\caption{Cloudmesh AWS Commands}\label{T:aws-commands} 
+\begin{center}
+\begin{tabular}{p{2cm}p{10cm}p{5cm}}
+  Function & Description & Command \\
+  \hline
+  Refresh &
+            Whether to always fetch the information from the cloud
+            over the network or display it from the local database when asked
+            can be configured by setting the configuration variable {\it refresh} to
+            either {\it on} or {\it off}. When the value is set to on, the information
+            will always be fetched from the cloud.This functionality is
+            implemented for only some of the commands as of now.
+                         & \verb+aws refresh on+ \\
+  \hline
+  Image refresh&
+                 The images available on the cloud could be listed
+                 using this command. The database will also be updated with the newly
+                 fetched list. The command may take up to minutes to run as the list
+                 contains more than 24,000 images. 
+    & \verb+aws image refresh+ \\
+\hline
+Image list & Depending on whether the value of {\it refresh} is
+      set to {\it on} or {\it off}, the list is either fetched from the
+      cloud or from the local database. &
+    \verb+aws image list+\\
+\hline	
+Flavor refresh & This will list the different sizes of VMs
+                   that are available on the cloud. The information is fetched from
+                   the cloud and stored locally. & 
+                                                   \verb+aws flavor refresh+ \\ 
+\hline
+Flavor list & The flavor list is either fetched from the
       cloud or from the local database depending on whether the
-      value of 'refresh' is set to 'on' or 'off'.
+      value of {\it refresh} is set to {\it on} or {\it off}.
 	
-	\begin{verbatim}
-    cms aws flavor list
-	\end{verbatim}
+    \verb+aws flavor list+ \\
 	
-\item Start/Boot vm: It creates a new node instance and start that
-  node automatically. The required parameter is
-  \textit{IMAGE\_ID}. This command assumes user has created keypair
-  with name \textit{AWS1}. The default values; flavor and location are
-  taken from cloudmesh.yaml. Those values are required to be set
-  before executing this command. Once it has been created, it can be
-  seen using vm list.
-    
-    \begin{verbatim}
-    cms aws vm boot IMAGE_ID
-    \end{verbatim}
-    
-   	\begin{figure}[h!]
-	   	\centering
-	   	\fbox{\includegraphics[width=\linewidth]{images/vm_boot_ami-0183d861.png}}
-	   	\caption{cms aws vm boot ami-0183d861 }
-	   	\label{fig:vmboot}
-    \end{figure}
-
-  \item Reboot vm: This command is used to reboot a running vm
-    instance. The state of the node gets changed from RUNNING to
-    REBOOTING while its restart. The rebooting time of node depends on
-    the configuration the configuration that was selected while its
-    creation. \textit{vm reboot} requires \textit{NODE\_UUID} of the
-    node to be rebooted which can be retrieved using either \textit{vm
-      list} or \textit{vm refresh}.
-    
-    \begin{verbatim}
-    cms aws vm reboot NODE_UUID
-    \end{verbatim}
-    
-  \item VM delete: It destroys the instance of a node and all the data
-    associated with it including backup. It takes few seconds to
-    terminated the instance. At first, the state of the node changes
-    to \textit{TERMINATED} which can be observed using \textit{vm
-      refresh} . The node gets removed from the list subsequently.
-    
-    \begin{verbatim}
-    cms aws vm delete UUID
-    \end{verbatim}
-    
-    \item VM list : It lists out all the nodes along with their status as stored in the database.
-    
-    \begin{verbatim}
-    cms aws vm list
-    \end{verbatim}
-    
-     \begin{figure}[h!]
-    	\centering
-    	\fbox{\includegraphics[width=\linewidth]{images/vm_list.png}}
-    	\caption{cms aws vm list }
-    	\label{fig:vmlist}
-    \end{figure}
-
-    \item Keypair create: To create the node, one of the essential component is \textit{key pair}. Amazon EC2 uses public key of the user to encrypt the password and then recipient uses private key to decrypt it. These public and private keys are know as a \textit{key pair}. They are required to be given a name.
-    
-    \begin{verbatim}
-    cms aws keypair create NAME
-    \end{verbatim}
-    
-    \begin{figure}[h!]
-    	\centering
-    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_keypair_create.png}}
-    	\caption{cms aws keypair create AWSCLI}
-    	\label{fig:keypaircreate}
-    \end{figure}
-
-    \item Keypair delete: It allows user to delete a created \textit{key pair} which is no longer in use.
-    
-    \begin{verbatim}
-    cms aws keypair delete NAME
-    \end{verbatim}
-    
-    \item Keypair refresh: It refreshes the list of created \textit{key pairs} in the database and also displays it on the screen.
-    
-    \begin{verbatim}
-	     cms aws keypair refresh
-    \end{verbatim}
-    
-    \item Keypairs list: It lists out all the \textit{key pairs} information stored locally in the database.
-           
-    \begin{verbatim}
-    cms aws keypair list
-    \end{verbatim}
-    
-    \item Keypair get: It returns the key pair object, which has the name of \textit{key pairs}, driver and hash key.
-    
-    \begin{verbatim}
-    cms aws keypair get NAME
-    \end{verbatim}
-    
-    
-    \item Locations refresh: It will show all the available locations associated with Amazon EC2 account. For free tier, user will get two locations. More locations will be available in paid service. The database records are also updated with this command.
-    
-    \begin{verbatim}
-    cms aws location refresh
-    \end{verbatim}
-    
-    \begin{figure}[h!]
-    	\centering
-    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_location_list.png}}
-    	\caption{cms aws location refresh}
-    	\label{fig:locationlist}
-    \end{figure}
+  \hline
+  Start/Boot vm & It creates a new node instance and start that
+                  node automatically. The required parameter is
+                  \textit{IMAGE\_ID}. This command assumes user has created keypair
+                  with name \textit{AWS1}. The default values; flavor and location are
+                  taken from cloudmesh.yaml. Those values are required to be set
+                  before executing this command. Once it has been created, it can be
+                  seen using vm list.
+                         & \verb+aws vm boot IMAGE_ID+ \\
+  \hline
+  Reboot vm & This command is used to reboot a running vm
+              instance. The state of the node gets changed from RUNNING to
+              REBOOTING while its restart. The rebooting time of node depends on
+              the configuration the configuration that was selected while its
+              creation. \textit{vm reboot} requires \textit{NODE\_UUID} of the
+              node to be rebooted which can be retrieved using either \textit{vm
+              list} or \textit{vm refresh}.
+                         & \verb+aws vm reboot NODE_UUID+ \\
+  \hline
+  VM delete & It destroys the instance of a node and all the data
+              associated with it including backup. It takes few seconds to
+              terminated the instance. At first, the state of the node changes
+              to \textit{TERMINATED} which can be observed using \textit{vm
+              refresh} . The node gets removed from the list subsequently.
+                         & \verb+aws vm delete UUID+ \\
+  \hline
+  VM list  & It lists out all the nodes along with their status as stored in the database.
+                         & \verb+aws vm list+ \\
+  \hline
+  Keypair create & To create the node, one of the essential component is \textit{key pair}. Amazon EC2 uses public key of the user to encrypt the password and then recipient uses private key to decrypt it. These public and private keys are know as a \textit{key pair}. They are required to be given a name.
+                         & \verb+aws keypair create NAME+ \\
+  \hline
+  Keypair delete & It allows user to delete a created \textit{key pair} which is no longer in use.
+                         & \verb+aws keypair delete NAME+ \\
+  \hline
+  Keypair refresh & It refreshes the list of created \textit{key pairs} in the database and also displays it on the screen.
+                         & \verb+aws keypair refresh+ \\
+  \hline
+  Keypairs list & It lists out all the \textit{key pairs} information stored locally in the database.
+                         & \verb+aws keypair list+ \\
+  \hline
+  Keypair get & It returns the key pair object, which has the name of \textit{key pairs}, driver and hash key.
+                         & \verb+aws keypair get NAME+ \\
+  \hline
+\end{tabular}
+\end{center}
+\end{table*}
 
 
-	\item Locations list: It lists the locations information stored in the database.
+\begin{table*}[htb]
+\caption{Cloudmesh AWS Commands}\label{T:aws-commands} 
+\begin{center}
+\begin{tabular}{p{2cm}p{10cm}p{5cm}}
+  Locations refresh & It will show all the available locations associated with Amazon EC2 account. For free tier, user will get two locations. More locations will be available in paid service. The database records are also updated with this command.
+                         & \verb+aws location refresh+ \\
+  \hline
+  Locations list & It lists the locations information stored in the database.
+                         & \verb+aws location list+ \\
+  \hline
+  Volume create & It creates the volume for vm. The size of volume is specified in GB, the default value is set to 1 GB. The maximum number of volumes that can be attached to a vm will depend on its operating system.
+                         & \verb+aws volume create VOLUME_NAME+ \\
+  \hline
+  Volume refresh & This command shows the created volumes with the id, size and the driver name. It also updates the database.
+                         & \verb+aws volume refresh+ \\
+  \hline
+  Volume list & This command displays the volume information stored in the database.
+                         & \verb+aws volume list+ \\
+  \hline
+  Volume delete & User can delete the unwanted volumes using the \textit{VOLUME\_ID}.
+                         & \verb+aws volume delete VOLUME_ID+ \\
+\end{tabular}
+\end{center}
+\end{table*}
+
+
+
+
 	
-	\begin{verbatim}
-	cms aws location list
-	\end{verbatim}
 	
-    \item Volume create: It creates the volume for vm. The size of volume is specified in GB, the default value is set to 1 GB. The maximum number of volumes that can be attached to a vm will depend on its operating system.
+\begin{figure}[htb]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/cms_aws_image_refresh.png}}
+  \caption{aws image refresh}
+  \label{fig:imagerefresh}
+~\newline
+%\end{figure}
+
+%\begin{figure}[h!]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/cms_aws_flavor_refresh.png}}
+  \caption{aws flavor refresh }
+  \label{fig:flavorlist}
+~\newline
+% \end{figure}
+
+% \begin{figure}[htb]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/vm_boot_ami-0183d861.png}}
+  \caption{aws vm boot ami-0183d861 }
+  \label{fig:vmboot}
+~\newline
+% \end{figure}
+
+% \begin{figure}[htb]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/vm_list.png}}
+  \caption{aws vm list }
+  \label{fig:vmlist}
+~\newline
+% \end{figure}
+
+% \begin{figure}[h!]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/cms_aws_keypair_create.png}}
+  \caption{aws keypair create AWSCLI}
+  \label{fig:keypaircreate}
+~\newline
+% \end{figure}
+
+% \begin{figure}[h!]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/cms_aws_location_list.png}}
+  \caption{aws location refresh}
+  \label{fig:locationlist}
+~\newline
+%\end{figure}
+
+%\begin{figure}[htb]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/cms_aws_volume_create_VOL_TEST_1.png}}
+  \caption{aws volume create VOL\_TEST\_1}
+  \label{fig:createvolume}
+~\newline
+%\end{figure}
+
+%\begin{figure}[htb]
+  \centering
+  \fbox{\includegraphics[width=\linewidth]{images/cms_aws_volume_list.png}}
+  \caption{aws volume refresh}
+  \label{fig:volumelist}
+\end{figure}
     
-    \begin{verbatim}
-    cms aws volume create VOLUME_NAME
-    \end{verbatim}
-    
-    \begin{figure}[h!]
-    	\centering
-    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_volume_create_VOL_TEST_1.png}}
-    	\caption{cms aws volume create VOL\_TEST\_1}
-    	\label{fig:createvolume}
-    \end{figure}
-     
-    \item Volume refresh: This command shows the created volumes with the id, size and the driver name. It also updates the database.
-    
-    \begin{verbatim}
-    cms aws volume refresh
-    \end{verbatim}
-    
-    \begin{figure}[h!]
-    	\centering
-    	\fbox{\includegraphics[width=\linewidth]{images/cms_aws_volume_list.png}}
-    	\caption{cms aws volume refresh}
-    	\label{fig:volumelist}
-    \end{figure}
-    
-    \item Volume list: This command displays the volume information stored in the database.
-        
-        \begin{verbatim}
-        cms aws volume list
-        \end{verbatim}
-        
-    \item Volume delete: User can delete the unwanted volumes using the \textit{VOLUME\_ID}.
-    
-    \begin{verbatim}
-    cms aws volume delete VOLUME_ID
-    \end{verbatim}
-    
-\end{enumerate}
+\section{Benchmark}
+
+\TODO{Benchmarks missing}
 
 \section{Use Case: Create an AWS Node}
 	The following are the pre-requisites to be able to create an EC2 node.
 
 \subsection{Prerequisite}
+
+\TODO{URLS IN REFRENCES}
 
 \begin{enumerate}
 	\item User should have a valid AWS account.
@@ -472,8 +476,8 @@ file. The entire code is written in Python.
 	Above command will create a node instance with the image of ami-0183d8661.
 
 \end{enumerate}	
+\end{enumerate}	
 	
-\end{enumerate}
 
 \begin{comment}
 \section*{Acknowledgements}
