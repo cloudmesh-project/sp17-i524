@@ -20,7 +20,16 @@
 
 \begin{abstract}
  
-In the last few decades, online spam has become one of the major problem for the sustainability of the Internet. Due to the excessive amount of spams, the quality of information available on the Internet has reduce drastically. Moreover spam messages are also creating problems among the various search engines available and the web users. This report aims at developing an application which would detect spam messages from actual meaningful messages using Pandas and R. For the purpose for parallelizing the process, we would deploy the application using Docker containers on the Kubernetes cluster using ansible scripts which would automate the deployment.
+In the last few decades, online spam has become one of the major
+problem for the sustainability of the Internet. Due to the excessive
+amount of spams, the quality of information available on the Internet
+has reduce drastically. Moreover spam messages are also creating
+problems among the various search engines available and the web
+users. This report aims at developing an application which would
+detect spam messages from actual meaningful messages using Pandas and
+R. For the purpose for parallelizing the process, we would deploy the
+application using Docker containers on the Kubernetes cluster using
+ansible scripts which would automate the deployment.
  
 
 \end{abstract}
@@ -90,16 +99,9 @@ application on the target machines \\[1ex]
   \caption{Technologies used in the Project}
 \end{figure}
 
-\section{Why Kubernetes}
-<write why we choose Kubernetes>
+\section{ELEMENTS OF THE PROJECT}
 
-\section{What is Kubernetes}
-<what is Kubernetes>
-
-\section{Architecture}
-<Architecture of Kubernetes>
-
-\section{Ansible}
+\subsection{Ansible}
 No one likes repetitive tasks, so with Ansible \cite{www-ansible}, IT
 admins can begin automating away the drudgery from their daily routine
 tasks. Ansible is a simple automation language that can perfectly
@@ -112,7 +114,7 @@ rolling out updates with zero downtime.
 A major difference in Ansible and many other tools in the
 space is its architecture.
 
-\subsection{Architecture}
+\subsubsection{Architecture}
 Ansible is an agentless tool,it doesn't requires any software to be
 installed on the remote machines to make them manageable. By default
 is manages remote machines over SSH or WinRM, which are natively
@@ -129,7 +131,7 @@ Ansible modules are deployed by Ansible over SSH. These modules are
 temporarily stored in the nodes and communicate with the controlling
 machine through a JSON protocol over the standard output
 
-\subsection{Playbooks}
+\subsubsection{Playbooks}
 
 Playbooks \cite{www-ansible-playbook} are Ansible’s configuration,
 deployment, and orchestration language. They let us control the remote
@@ -141,18 +143,7 @@ deployments to remote machines. They can sequence multi-tier rollouts
 involving rolling updates, and can delegate actions to other hosts,
 interacting with monitoring servers and load balancers.
 
-\subsection{Ansible Galaxy}
-
-
-
-
-
-\subsection{Pandas}
-Pandas is an opensource Python library that provides data analysis
-functionality with Python. Python initially lacked data analysis and
-modeling capability. Pandas filled out this gap by providing essential
-analytic functions thus saving the need to switch to a more domain
-specific language for data analysis.
+\subsubsection{Ansible Galaxy}
 
 \subsection{R}
 R is a language and environment for statistical computing and graphics
@@ -164,28 +155,197 @@ environment. Integrating Python's efficiency with R's capability
 allows us to build a highly a desirable analysis model for our
 application.
 
+
 \subsection{Docker}
+
+\emph{Docker} is an open-source project that automates application
+deployment by packaging the application in
+\emph{containers}. Containers provide application portability by
+bundling together an application and its needed resources in a package
+so that they can be deployed on different platforms without worrying
+about resource dependencies. Application containerization is an OS
+(Operating System) level emph{virtualization} for deploying and
+running an application instance without launching a virtual mahine for
+each application \cite{www-containerization}. A container has its own environment
+variables, filesystem and libraries that is needed by the application,
+thus eliminating OS or hardware dependency. Containers abstract the OS
+kernel while a \emph{VM (Virtual Machine)} hypervisor abstracts an
+entire device.
+
 Docker allows application developers to package their applications
-into isolated containers. A container comprises of only the libraries
-and settings that are required to make the software work.  Docker
-automates the repetitive tasks of setting up and configuring
-development environments thus allowing developers to focus only on
-building software. A dockerized application
-can simply ship between platforms as the complexity of software
-depencies is handled by the container.
+into isolated containers. Docker automates the repetitive tasks of
+setting up and configuring development environments thus allowing
+developers to focus only on building software. A dockerized
+application can simply ship between platforms as the complexity of
+software dependencies is handled by the container.  Docker
+standardizes container creation and can be used to pack, ship and run
+an application as a lightweight container that can run in any
+environment. Docker can be integrated with other devops applications
+like Puppet, Chef, Vagrant, Ansible and Kubernetes. We shall use
+Docker with Ansible and Kubernetes in our project.
+
+\subsubsection{Dockerfile and DockerImage}
+To package an application and its dependencies in a single file,
+docker introduces the concept of a \emph{docker image}. The docker
+engine creates a docker image by parsing contents of a
+\emph{dockerfile}. A dockerfile is a script composed of various
+commands to build a container in a step-by-step, layer-by-layer manner
+\cite{www-docker-digitalocean}. Once an image has been built it can be shared with other
+users by pushing it to a public repository on \emph{DockerHub} or
+\emph{GoogleCloudPlatform}. In this manner, an image once built by the
+docker engine can be used across the organization by making a docker
+pull request.
 
 \subsection{Kubernetes}
-Kubernetes is an open-source platform which helps
-in automating deployment, scaling, and operations of application
-containers across clusters of hosts. Kubernetes helps in faster
-deployment of application and scaling them on the fly. Moreover it
-optimizes the use of hardware by using the resources which are
-needed. A Kubernetes cluster can be deployed on either physical or
-virtual machines. We will be using Minikube which is a lightweight
-Kubernetes implementation which creates a VM on the local machine and
-deploys a simple cluster containing only one node. The Minikube CLI
-provides basic bootstrapping operations for working with the cluster,
-including start, stop, status, and delete commands.
+Kubernetes is an open-source platform for automating deployment,
+management and scaling of containerized applications across a cluster
+\cite{www-wiki-kubernetes}. The more granular an application is, the more components it
+consists of and thus requires management of these
+components. Kubernetes helps in faster deployment of applications and
+scaling them on the fly. Moreover it optimizes the use of hardware by
+using the resources which are needed. Kubernetes provides container
+management features like component replication, load-balancing,
+service-discovery and logging across components \cite{www-kubernetes-architecture}. A Kubernetes
+cluster can be deployed on either physical or virtual machines. We
+shall be deploying a kubernetes cluster using \emph{kubeadm} - the
+kubernetes command line tool and \emph{Minikube} which is a
+lightweight Kubernetes implementation which creates a VM on the local
+machine and deploys a simple cluster containing only one node. The
+Minikube CLI provides basic bootstrapping operations for working with
+the cluster, including start, stop, status, and delete commands.
+
+\subsection{Kubernetes Terminologies}
+Kubernetes defines the following set of primitives which provide
+mechanisms for deploying and scaling applications.
+
+\subsubsection{Pods}
+A pod is the smallest unit of a kubernetes cluster and has a unique
+ip-address within the cluster. A pod consists of one or more
+containers that can share resources and can be controlled as a single
+application \cite{www-wiki-kubernetes} \cite{www-kubernetes-digitalocean}. Thus all the involved containers in a
+pod are scheduled on the same host. A pod can be thought of as a
+single virtual machine in terms of resource sharing and scheduling.
+Pods can be managed manually using the \emph{Kubernetes API} or can be
+managed by a controller.
+
+\subsubsection{Services}
+A kubernetes service is a collection of pods that perform the same
+function and are presented as a single entity. This way a service can
+be emphasized as a one tier of a multi-tier application. Service act
+as an interface to a group of containers so that service-consumers
+need only reference the single access location. Kubernetes facilitates
+service discovery by assigning a stable IP address and a namespace to
+a service. This idea abstracts the change of IP addresses of pods
+within a service that result due to pod failure or pod rescheduling.
+
+\subsubsection{Replication Controllers}
+A replication controller is a framework for horizontal scaling of
+pods. Semantics of a pod are defined in a <pod\textunderscore name>.yaml file which
+also defines the replication details that need to be done. The
+replication controller performs replication by scaling a number of
+pods across a cluster based on the pod definition file \cite{www-wiki-kubernetes}. The
+replication controller has to make sure that a certain number of
+copies of a pod are always up and running. Thus, in event of a pod
+failure it replaces the failed pod with a new replica.
+
+\subsubsection{Labels and Selectors}
+Kubernetes allows users or internal components to assign a key-value
+pair tag to any API object in the system. An object can have one or
+more labels associated with it, but each with a unique key. eg:
+appversion = 1.0, development\textunderscore stage = 4.  Label selectors are queries
+against labels that return matching objects \cite{www-kubernetes-digitalocean}. This way each
+object in the system can be referenced with a single label or a
+combination of multiple labels for fine grained control.
+
+\subsection{Kubernetes architecture}
+Kubernetes exhibits the master-slave architecture. The components can
+be split into those that manage an individual node(slave) and those
+that manage the master or control plane.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=60mm,height=60mm]{images/kubernetesArchitecture.JPG}}
+\caption{Kubernetes architecure \cite{www-kubernetes-architecture}}
+\label{fig:Kubernetes Minimum Architecture}
+\end{figure}
+
+
+\textbf{Kubernetes Master Node/Control plane}
+\newline
+The Kubernetes master node is responsible for managing the kubernetes
+cluster and orchestrating the worker nodes, where the actual pods are
+scheduled. The master node can work as a single node cluster where it
+can schedule pods to work on the master node itself by tainting the
+schedule policy rule on the node. The master node also referred as
+the control plane consists of several components:
+
+\subsubsection{API Server}
+The API server is the most fundamental component of the Kubernetes
+master and serves as the entry point for all the REST commands used to
+control the cluster. The API server serves up the Kubernetes API using
+JSON over HTTP, providing both internal and external interface to the
+cluster \cite{www-kubernetes-digitalocean} \cite{www-apiserver-kmblog}. It validates the REST requests, executes
+them and updates the status of the objects in the \emph{etcd} storage.
+
+\subsubsection{etcd storage}
+\emph{etcd} is a simple, distributed and consistent key-value store
+that stores configuration data of the cluster and represents the state
+of the cluster at any point of time \cite{www-wiki-kubernetes}. Kubernetes uses etcd for
+service discovery and provides a simple HTTP/JSON API as an interface
+for setting or retrieving values from the store. Other components
+watch the state of the etcd store to bring themselves up to the
+desired state. Data being stored in the etcd store are deployed
+services, pods, replication information etc.
+
+\subsubsection{Scheduler}
+The scheduler component is responsible for the deployment of pods and
+services on the cluster nodes. The scheduler has the information about
+the availability of resources on a node and schedules unscheduled pods
+on the nodes accordingly. Along with scheduling, the scheduler also
+tracks resource utilization of each node and ensures that workload
+scheduled is not in excess to the resources available \cite{www-wiki-kubernetes}.
+
+\subsubsection{Controller-manager}
+The controller manager is the process embedding the different types of
+controllers like the Replication Controller or the DaemonSet
+Controller on a kubernetes master. The controllers query the API
+Server to manipulate the resources like pods,services etc. which they
+manage.
+
+\subsection{Worker Node}
+The worker node also called as minion node is where the containers are
+actually deployed. The worker contains all the necessary services
+needed to manage the networking between containers, communicate with
+the master node and assign resources to the scheduled containers
+\cite{www-kubernetes-architecture}.  Every worker node must run the container runtime i.e docker
+and other components stated below to ensure proper communication with
+the master.
+
+\subsubsection{Docker}
+Docker runs on each of the worker nodes. It is responsible for
+downloading the docker images and running the configured pods by
+starting the container.
+
+\subsubsection{Kubelet}
+\emph{Kubelet} gets the pod definition from the api-server and is
+responsible for maintaining the pod in the desired state. Kubelet is
+the worker service that monitors the health of each pod and
+communicates the status of each node via a heartbeat message to the
+master.  If the pod is not in the desired state, it is redeployed to
+the same node \cite{www-wiki-kubernetes}. Kubelet is also responsible for communicating
+with the etcd storage to get information about the services and update
+the storage about newly created ones.
+
+\subsubsection{Kube-Proxy}
+\emph{Kube-proxy} acts as a network proxy and a load balancer. It is
+responsible for networking of TCP and UDP packets to the appropriate
+container based on the IP address of each packet \cite{www-wiki-kubernetes} \cite{www-kubernetes-architecture}.
+
+\subsubsection{Kubectl}
+\emph{kubectl} is a command line tool that communicated with the API
+server to fetch important information about the nodes, pods, services
+and events in the cluster.
+
 
 \section{Design}
 \subsection{Building the Classification model}
@@ -203,7 +363,6 @@ model consists of 5574 message records. Dataset taken from
 cross-validation feature provided by R to build the classification
 model and use Bayes theorem of conditional probability to predict the
 class of each incoming message.
-< I just copy pasted the above paragrah here> Donno what will come here.
 
 To develop an efficient training model, we shall partition the data
 into 2 subsets - training data and classification data. We shall
@@ -259,17 +418,31 @@ a message from a particular sender is repeatedly marked as spam by the
 user, the classifier need not evaluate the message body if it is from
 the same sender.
 
-
-\section{Discussion}
-TBD
-
-
-\section{Deployment}
+\section{DEPLOYMENT}
 Our application will be deployed using Ansible \cite{www-ansible}
 playbook. Automated deployment should happen on two or more nodes
 clouds or on multiple clusters of a single cloud. Deployment script
 should install all necessary software along with the project code to
 Kubernetes cluster nodes using the Docker image.
+
+\subsection{Deployment process - Ansible}
+<TODO - describe the ansible deployment and scripts>
+
+\subsection{Dockerizing the application}
+<TODO - create a docker image, setting up registry and run the application>
+
+\subsection{Deployment via Minikube}
+<TODO - install minikube, deploy image on minikube created kubernetes cluster>
+
+\subsection{Deployment via kubeadm}
+<TODO - install kubectl,kubeadm, deploy the application and check status>
+
+\section{Issues tackled with Kubernetes setup and deployment}
+<TODO: describe IMAGEPULLBACKOFF, CRASHLOOPBACKOFF,
+Weave-net daemon set, master taint issue, issues with ubuntu 14.04>
+
+\section{Discussion}
+TBD
 
 \section{Conclusion}
 
