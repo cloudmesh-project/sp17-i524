@@ -640,9 +640,34 @@ Flavor list & The flavor list is either fetched from the
   \label{fig:volumelist}
 \end{figure}
     
-\section{Benchmark}
+\section{Benchmarking Cloudmesh AWS}
 
-\TODO{Benchmarks missing}
+We benchmarked the aws commands that fetch information either from the cloud over the network or from the local database. The information is then displayed to the user. The informations that is fetched over the network is also updated in the database. The performance statistics observed give us the overview of the difference in execution time of the two kind of commands. Each command was run 50 times with its execution time reocrded.  The mean and standard deviation of the timings were calculated using statistical methods in R. Table \ref{tab:awsbanchmark}  shows the observed values in seconds.
+
+\begin{table}[h!]
+	\caption{\bf Banchmarking of AWS commands}
+	\begin{tabular}{ | m{3cm} | m{1.7cm} | m{2.7cm} |} 
+		\hline
+		Commands & Mean & Standard Deviation\\
+		\hline
+		flavor refresh & 0.612 & 0.059 \\
+		flavor list & 0.207 & 0.024\\
+		keypair refresh & 1.967 & 0.964 \\
+		keypair list & 0.240 & 0.062 \\
+		location refresh & 1.933 & 1.246 \\
+		location list & 0.172 & 0.039 \\
+		vm refresh & 2.342 & 1.876 \\
+		vm list & 0.160 & 0.023 \\
+		volume refresh & 2.184 & 1.878 \\
+		volume list & 0.170 & 0.020 \\
+		
+		\hline
+	\end{tabular}
+	\label{tab:awsbanchmark}
+\end{table}
+
+The commands that fetch the information from local database are on an average 85\% faster than the commands that fetch information from the cloud and also have lesser variation in their timings. The difference in performance tends to decrease when the information to be fetched is more. This may be due to the limitation of the machine on which it was tested. 
+
 
 \section{Use Case: Create an AWS Node}
 	The following are the pre-requisites to be able to create an EC2 node.
