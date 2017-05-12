@@ -448,7 +448,7 @@ run on a command line to build an image \cite{www-dockerfile-documentation}.
 Instructions within a Dockerfile have the following format:
 
 \begin{verbatim}
-INSTRUCTION  arguments
+ INSTRUCTION  arguments
 \end{verbatim}
 
 Docker reads the instructions from a dockerfile in the order they are
@@ -485,7 +485,7 @@ Once the Dockerfile is built, we can build the image using docker
 build command as follows :
 
 \begin{verbatim}
-docker build -t myscript /path/to/Dockerfile
+ docker build -t myscript /path/to/Dockerfile
 \end{verbatim}
 
 \begin{figure}[htbp]
@@ -512,7 +512,7 @@ can be viewed with the 'docker images' command.
 We shall run our application using the docker run command.
 
 \begin{verbatim}
-docker run spamdetection
+ docker run spamdetection
 \end{verbatim}
 
 We can check the container id of our application along with other
@@ -532,7 +532,7 @@ to inform the docker engine to point to our registry. To do so, we
 shall use login command provided by the docker CLI.
 
 \begin{verbatim}
-docker login
+ docker login
 \end{verbatim}
 
 The login request shall ask for a valid docker account userid and
@@ -542,7 +542,8 @@ image to the repository, we need to tag the image. Docker provides the
 'tag' command to do so.
 
 \begin{verbatim}
-docker tag image_name <username>/<repository_name>:<tag>
+ docker tag image_name <username>/<repository_name>:
+ <tag>
 \end{verbatim}
 
 The <tag> can be any name given by the user to uniquely identify the
@@ -550,7 +551,7 @@ image. Once tagged, we need to push the image to the repository using
 the command line 'docker push' command.
 
 \begin{verbatim}
-  docker push rahpsing/kubernetesi524:spamdetection
+ docker push rahpsing/kubernetesi524:spamdetection
 \end{verbatim}
 
 
@@ -565,11 +566,228 @@ the latest version of R available on dockerhub's library.
 <TODO - install minikube, deploy image on minikube created kubernetes cluster>
 
 \subsection{Deployment via kubeadm}
-<TODO - install kubectl,kubeadm, deploy the application and check status>
+
+Kubeadm is a part of kubernetes 1.4 distribution that allows users to
+install and set up a Kubernetes cluster. Kubeadm works with local
+VM's, cloud servers or physical servers \cite{www-kubernetes-kubeadm}.
+
+\subsubsection{Creating a cluster}
+To create a kubernetes cluster, it is essential to install docker,
+kubelet, kubectl and kubeadm on all the machines that are to be a part
+of the network. Kubelet shall help to start pods and containers on all
+the machines of the network.  kubectl allows us to monitor the
+activities of the cluster once it is up and running. Primarily, it is
+used only on the master node. Kubeadm is used to setup the cluster by
+allowing multiple worker nodes to bind with the master on a unique
+network identifier token.
+
+Once the mentioned components are installed, we need to initialize the
+master so that it can accept requests from other service nodes to join
+the cluster. Master initialization is done with the 'init' command.
+
+\begin{verbatim}
+ kubeadm init
+\end{verbatim}
+
+Executing the above command tells kubernetes that the host machine
+shall serve as the master in the cluster. Kubeadm initializes all the
+other dependent components like the API server and generates a unique
+key that identifies the master in the network. Client nodes can issue
+a join request with the master by using the unique identifier as a
+part of the join command.
+
+\begin{verbatim}
+ kubeadm join <unique_token>
+\end{verbatim}
+
+A few seconds after running the join command we can query the master
+to list the available nodes in the cluster using 'kubectl get nodes' command.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=80mm,height=20mm]{images/getnodes.JPG}}
+\caption{Nodes running in the cluster}
+\label{Nodes running in the cluster}
+\end{figure}
+
+Before the master is ready to schedule pods, it is imperative that the
+API server and the kubedns service are up and running. We can check
+the status of all the services of the system using the
+'--all-namespaces' agrument along with the "get nodes" command.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=80mm,height=40mm]{images/dnsnotrunning.JPG}}
+\caption{Services running in the cluster}
+\label{Services running in the cluster}
+\end{figure}
+
+
+The kubedns service is responsible for networking with its client
+nodes. Without the kubedns service, the kubernetes master shall be
+unable to schedule pods on the worker nodes as pods cannot communicate
+with each other. To get the service up and running, we need to install
+a pod network.  Kubernetes provides many addon services that can be
+used to setup the cluster network policy and enable networking. Of the
+list of available addons we shall use 'weave-net' as it provides us
+with a network policy and does not require an external database
+\cite{www-kubernetes-addons}.
+
+\begin{verbatim}
+ kubectl apply -f https://git.io/weave-kube
+\end{verbatim}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=80mm,height=40mm]{images/allpodsworking.JPG}}
+\caption{kubedns service running after installation of pod-network}
+\label{kubedns service running after installation of pod-network}
+\end{figure}
+
+\subsubsection{Creating a pod}
+A pod as described initially is the smallest unit of work in a
+kubernetes cluster. Semantics of a pod are defined in a pod.yaml file
+which is then passed to the kubectl CLI to initialize the pod and
+maintain its desired state.
+
+The pod.yaml file specifies the containers that compose a pod. Each
+container works on top of a docker image that it runs once
+instantiated. We shall use the spamdetection image for our container
+that we created by dockering our application and pushing the image to
+the repository. By default, kubernetes searches for image tags
+specified in the pod.yaml file on docker's public repository. If the
+matching image is found, the pod is created successfully or it results
+in a pod failure.
+
+Once the semantics of a pod are fixed we can use kubectl to
+instantiate the pod. We can also use 'kubectly apply' if we wish to
+make changes to the definition of the pod and want the implementation
+to reflect it.
+
+\begin{verbatim}
+ kubectl create -f pod.yaml
+\end{verbatim}
+
+kubectl provides 'get XXX' commands to query status of any type of
+object in the system. We can check the status of our pods by using the
+API's get pods command.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=80mm,height=10mm]{images/podrunning.JPG}}
+\caption{Status of pods in the cluster}
+\label{Status of pods in the cluster}
+\end{figure}
+
+To get a detailed view of each element we can use the 'describe
+<element\textunderscore name>' command where <element\textunderscore
+name> is unique under each type of component in the system.
+
+
+\subsubsection{Creating a deployment}
+Similar to creating a pod, a deployment can be created in Kubernetes
+using the same yaml file syntax. The only notable difference in this
+case is the value of the 'type' and the 'apiVersion' field in the yaml
+file. The 'type' field is set to 'deployment' in case of creating a
+deployment while the apiVersion field is set to 'extension/v1beta1' as
+version 'v1' which was used for pod creation does not support
+deployments.  With the deployment file, we have the flexibility of
+specifying the number of replicas we want to deploy. We set the number
+of replicas to 2, which means that kubernetes will ensure that at any
+given point in time the system will have 2 replicas of our application
+running. After defining the number, we define the containers whose
+replicas we wish to maintain.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=60mm,height=40mm]{images/deploymentfile.JPG}}
+\caption{The application deployment file}
+\label{The application deployment file}
+\end{figure}
+
+kubectl command to create a deployment is the same as the one we used
+to create a pod. The Kube Control API parses the yaml file and
+understands the type of object it is expected to create.
+
+As with pods, the command to list the deployments running on the
+cluster is 'kubectl get deployments'. Now that our deployment is
+created we can check its status by using various kubectl commands. As
+we set the number of replicas to be 2, there should be atleast 2 pods
+running our application which can be verified as below.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=80mm,height=10mm]{images/podreplicas.JPG}}
+\caption{Pod replicas created as per the deployment file}
+\label{Pod replicas created as per the deployment file}
+\end{figure}
+
+\subsubsection{Scheduling pods on the master}
+By default, kubernetes does not allow pods to be
+scheduled on the master node for security purposes. However, this
+setting can be overridden by removing the taint on the master node and
+allowing pod execution.
+
+\begin{verbatim}
+ kubectl taint nodes --all node-role.kubernetes.io/
+ master-
+\end{verbatim}
+
+Execution of the above statement shall remove the taint
+'node-role.kubernetes.io/master' from all the nodes in the network
+including the master node and thus allowing the scheduler to schedule
+pods across the network \cite{www-kubernetes-kubeadm}. This feature
+also allows us to create a single node cluster.
 
 \section{Issues tackled with Kubernetes setup and deployment}
-<TODO: describe IMAGEPULLBACKOFF, CRASHLOOPBACKOFF,
-Weave-net daemon set, master taint issue, issues with ubuntu 14.04>
+
+\subsection{ImagePullBackOff}
+The ImagePullBackOff error indicates that the container was unable to
+fetch the desired image from the repository specified. This happens in
+case of improper tag names associated with the application image or
+reference to a repository that doesnt exist.  By default, any text
+specified against the 'image' key in the pod or deployment file makes
+a direct lookup on dockerhub. Thus any docker image that has been
+built on the system cannot be referenced by the kubernetes engine
+unless it is tagged an uploaded to a public repository on
+dockerhub. Dockerhub allows users to create public repositories for no
+charges. Thus, the only way to use your custom created image is to
+register for an account on dockerhub, create a public repository,
+upload your local image with a unique tag name and use the repository
+and tag name in the yaml file. This issue took a lot of our
+development time as there is no clear documentation which explicitly
+describes the kubernetes interpretation of the value of the 'image'
+key specified in the pod yaml file.
+
+\subsection{CrashLoopBackOff}
+Kubernetes allows us to execute instructions after a container has
+been deployed successfully. The output of these instructions is
+visible in the container's logs which can be accessed by using the
+'get logs' primitive of the kubectl CLI. Commands to be executed can
+be specified under the 'args' key of the container specification in
+the pod definition file. However, kubernetes defines strict parsing
+for those arguments with no pointers to indicate where the execution
+failed. Any issues with the yaml file shall trigger a crashloopbackoff
+error with no traces of line numbers or clear log messages to guess
+what went wrong. It was after considerable research and trial and
+error that we figured out that an extra space between arguments to the
+sleep command was causing the error.
+
+
+\subsection{Kube DNS service not working}
+Kubedns is an integral part of the kubernetes master setup as it
+enables pods to communicate with each other. Before creating any pods
+or deployments we need to setup a pod-network. The pod network defines
+security policies and establishes networking within the
+cluster. Kubernetes provides various addons to be used as its pod
+network. We tried to use \emph{flannel} but were unable to bind it to
+our network and get the dns service working. After numerous attempts
+we figured out that \emph{weave-net} is the best pod-network that we
+could use as its network was updated to work with the CNI networking
+policy introduced in Kubernetes 1.4. Also, using weave net as our pod
+network allows us to use the weave-kube service where we can observe
+our cluster components and their configurations on a GUI accessible by
+a web browser.
 
 \section{Discussion}
 TBD
