@@ -101,7 +101,40 @@ easily to use clouds.
 \end{figure}
 		
 
+\section{Getting Started}
 
+One needs to create an aws account first to be able to access its cloud. The instructions for it are available at \cite{www-amazon-aws}. A pair of access key and secret keys are required to be generated to authenticate into the cloud \cite{www-amazon-key}. These keys are required to be kept confidential. They are to be specified in a yaml configuration file. Default vm image and flavor can also be specified in the configuration file. Following are some of the configuration entries:
+
+\begin{verbatim} 
+cloudmesh:
+clouds:
+aws:
+credentials:
+EC2_ACCESS_KEY: 'ACCESS KEY'
+EC2_SECRET_KEY: 'SECRET KEY'
+.
+.
+
+default:
+image: 'IMAGE ID'
+size: 'SIZE ID'
+location: 'LOCATION'
+
+\end{verbatim}
+
+The user need to ensure that the combination of image, size and location is valid and that it's account has the required privileges for it. The instructions for installation of AWS client can be found at \cite{www-cloudmesh-aws}. Once, the client has been installed and configurations settings enabled, the mongodb and the rest services to access the database can be started by following command from the root directory of the code:
+
+\begin{verbatim}
+make rest
+\end{verbatim}
+
+The above services will be required by AWS client to store cloud related information locally. The user can now execute the client commands e.g.:
+
+\begin{verbatim}
+cms aws flavor refresh
+\end{verbatim}
+
+This will fetch the list of image sizes available on Amazon EC2 cloud.
 
 \section{Cloudmesh Design}
 \label{S:cmclient}
