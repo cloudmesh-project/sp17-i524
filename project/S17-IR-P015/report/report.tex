@@ -1,4 +1,3 @@
-
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
@@ -15,7 +14,7 @@
 \affil[**]{Corresponding authors: ajit.balaga@gmail.com}
 
 
-\dates{project-P015, \today}
+\dates{Project-P015, \today}
 
 \ociscodes{Storm, Ansible, Java, Python}
 
@@ -44,19 +43,23 @@ on various data, doing real time processing on sample datasets. First,
 we describe the architecture of Storm, its deployment and its methods
 for distributed scaleout and fault-tolerance. Storm is in active
 development at Twitter.
-\newline
+
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
 
 \begin{document}
 
+
 \maketitle
 
-% \tableofcontents
+%\tableofcontents
+
+\maketitle
 
 
-\section{Introduction}
+
+\section*{Introduction}
 
 Currently modern data processing environments require processing
 complex computation on streaming data in real-time. Places like
@@ -67,7 +70,7 @@ delivers on this account and provides many other services which we
 will see in the coming sections. Storm is designed to be, some of
 these things we observed while running our sample projects for
 deployment:
-\begin{enumerate}
+\begin{description}
 \item Scalable : Nodes may be easily added or removed
   from the Storm cluster without disrupting existing data flows
   through Storm topologies see Fig 3.
@@ -88,7 +91,7 @@ deployment:
   there a lot of computations going on at every stage, tools should be
   developed which warn the user and development team of any major
   conflicts arising.
-\end{enumerate}
+\end{description}
 
 
 \section{Data Model and Architecture}
@@ -116,7 +119,7 @@ distributing and coordinating the execution of the topology. The
 actual work is done on worker nodes. Each worker node runs one or more
 worker processes. At any point in time, a single machine may have more
 than one worker processes, but each worker process is mapped to a
-single topology see Fig 1. Note more than one worker process on the same machine
+single topology see Fig \ref{Storm Architecture}. Note more than one worker process on the same machine
 may be executing different part of the same topology. Each worker
 process runs a JVM, in which it runs one or more executors. Executors
 are made of one or more tasks. The actual work for a bolt or a spout
@@ -241,14 +244,12 @@ which are:
 \end{enumerate}
 
 
-\TODO{table must be cited}
 
-%\enlargethispage{-\baselineskip}
 
 \section{Technologies}
-
+Following are the technologies used as a part of development of the entire project see Table \ref{T:technologies}.
 \begin{table}[htb]
-\caption{TABLE CAPTION MISSING} 
+\caption{Technologies} 
 \label{T:technologies}
 \centering
 \resizebox{\columnwidth}{!}{%
@@ -293,7 +294,7 @@ creating a Storm cluster, we resolved this issue by uploading a
 secgroup with the details necessary and added it to the cluster.
 
 The Ansible playbook package constitutes the following files.
-\begin{itemize}
+\begin{description}
 \item ansible.cfg: This file contains all the configuration
   information necesasary for the storm deployment. In our project we
   refer to the hosts file to look up for the ips necessary for
@@ -332,7 +333,7 @@ The Ansible playbook package constitutes the following files.
   storm.yaml.j2, zoo.cfg.j2, these files are necessary for proper
   deployment of storm and zookeeper cluster, so we created templates
   of the configuration files and intend to use them.
-\end{itemize}  
+\end{description}  
 
 
 
@@ -375,36 +376,59 @@ installation time right from the beginning. Based on the above results
 we benchmarked our results on various cluster sizes.
 
 
-\begin{figure}[!htb]
+\begin{figure*}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-1.png}
   \caption{Index Page}
   \label{Index Page}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!htb]
+\begin{figure*}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-2.png}
   \caption{Sample Topology on a 5-node cluster }
   \label{Sample Topology on a 5-node cluster}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!htb]
+\begin{figure*}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-3.png}
   \caption{Worker nodes and description on a 5-node cluster }
   \label{Worker nodes and description on a 5-node cluster}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!htb]
+\begin{figure*}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-4.png}
   \caption{Toplogy Summer on a 5-node cluster }
   \label{Topology summary on a 5-node cluster}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[!htb]
+\begin{figure*}[!htb]
   \centering
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-5.png}
   \caption{Spouts and bolts summary on a 5-node cluster }
   \label{Spouts and bolts summary on a 5-node cluster}
-\end{figure}
+\end{figure*}
+
+\clearpage
+
+\section{Cloud Flavor and Image Comparison}
+
+
+Following table shows a comparison of key computing resources on Chameleon, FutureSystems, and Jetstream cloud environments see Table \ref{tab:cloud-comparison}.
+
+\begin{table}[h!]
+\centering
+\caption{\bf Cloud Hardware Specification Comparison }
+
+\begin{tabular} {|c||c||c||c|}
+\hline Cloud & Kilo & Chameleon & Jetstream \\ [0.5ex] \hline Image &
+Ubuntu-14.04 & Ubuntu-14.04 &
+ubuntu-14.04 \\
+\hline Flavor &m1.small &m1.small & m1.medium \\ \hline CPU & Xeon E5-2670 & Xeon X5550 &
+Haswell E-2680 \\ \hline cores & 1024 & 1008 & 7680 \\ \hline speed &
+2.66GHz & 2.3GHz & 2.5GHz\\ \hline RAM & 3072GB & 5376GB &
+40TBr\\ \hline storage & 335TB & 1.5PB & 2 TB\\ [1ex] \hline
+\end{tabular}
+  \label{tab:cloud-comparison}
+\end{table}
 
 
 
@@ -416,49 +440,21 @@ cluster is not viable for running storm jobs and hence we ran all our
 jobs on 5-nodes or above clusters see Fig 4, this was one error we
 came across when we tried deploying a 3-node cluster and overcame this
 by following code blogs related to troubleshooting mentioned in the
-code references and solved the issue see Fig 6. We ran a sample-storm job on a
-5node cluster to see if its working, following are the snapshots where
-in we can see the UI of storm, illustrated in see Fig 2, a sample
-toplogy is also shown in the UI in Fig 3, also showing the resources
-used among many other things. Similar tests were made on a 7-node and
-a 9-node cluster and results were stored in a log page see Fig 5.
+code references and solved the issue see Fig 6. We ran a sample-storm
+job on a 5-node cluster to see if its working, following are the
+snapshots where in we can see the UI of storm, illustrated in see Fig
+2, a sample toplogy is also shown in the UI in Fig 3, also showing the
+resources used among many other things. Similar tests were made on a
+7-node and a 9-node cluster and results were stored in a log page see
+Fig 5.  Also we calculated the time it took to deploy a 5-node, 7-node
+and a 9-node cluster on the chameleon cloud. Following are the results
+obtained see Table \ref{T:bench1} and can be illustrated in the form of a bar plot see Fig \ref{barc} .
 
 
-
-\begin{table}[htbp]
-\centering
-\caption{\bf Hardware Specifications of Chameleon}
-
- \begin{tabular} {| c | c |}
-\hline
-  & Chameleon   \\ [0.5ex] 
- \hline
-
-    
-CPU   & Xeon X5550  \\
- \hline
-cores & 1008   \\
- \hline
-speed & 2.3GHz \\
- \hline
-RAM   & 5376GB  \\
- \hline
-storage & 1.5PB  \\ [1ex] 
- \hline
-
-\end{tabular}
-  \label{tab:cloud-comparison}
-\end{table}
-
-
-
-Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node cluster on the chameleon cloud. Following are the results obtained and can be illustrated below.
-
-\TODO{TABLE MUST BE CITED}
 
 \begin{table}[htb]
 \centering
-\caption{TABLE CAPTION}\label{T:bench1}
+\caption{Table illustrating the various times it took to deploy on Chameleon cloud}\label{T:bench1}
 \resizebox{\columnwidth}{!}{%
  \begin{tabular}{|c|| c c c|} 
  \hline
@@ -479,92 +475,49 @@ Also we calculated the time it took to deploy a 5-node, 7-node and a 9-node clus
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-1.png}
   \caption{Bar diagram to compare the time taken to deploy on Chameleon}
-  \label{Bar diagram to compare the time taken to deploy on Chameleon}
+  \label{barc}
 \end{figure}
+
+\clearpage
 
 \subsection{JetStream}
 
-Automated the deployment of cloud on Jestream cloud resources on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. Below is a tabluar description of the image flavor used on Jetstream and time taken to deploy the cluster on Jetstream.
+Automated the deployment of cloud on Jestream cloud resources on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. The time taken to deploy the cluster on Jetstream see Table \ref{T:timejet}.
 
 
-\begin{table}[htbp]
+\begin{table}[!htb]
 \centering
-\caption{\bf Virtual Machine Configuration for Jestream}
-
- \begin{tabular} {| c | c |}
-
- \hline
-VM Flavor Name   & m1.medium  \\
-\hline
-vCPUs & 6  \\
- \hline
-RAM & 16GB   \\
- \hline
-Local Storage & 60GB \\
-\hline
-\end{tabular}
-  \label{tab:cloud-comparison}
-\end{table}
-
-
-\begin{table}[htbp]
-\centering
-\caption{CAPTION MISSING}\label{T:labelmissing}
+\caption{Illustrating the various times it took to deploy on Jetstream}\label{T:timejet}
  \begin{tabular}{|c|| c c c|} 
  \hline
  Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
  \hline\hline
- Real: & 478.426 & 592.267 & 798.894 \\ 
+ Real: &153.73 &232.923 & 256.675 \\ 
  \hline
  User: & 24.232 & 38.14 & 46.208 \\
  \hline
- Sys: & 5.988 & 11.54 & 13.568 \\
+ Sys: & 5.988 &11.54 & 13.568  \\
  \hline
 \end{tabular}
 \end{table}
 
 
-Below is the bar description of the various times it took in deploying various size clusters.
+Below is a bar description of the various times it took in deploying various size clusters see Fig \ref{i:barjet}.
 
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-2.png}
   \caption{Bar diagram to compare the time taken to deploy on Jetstream }
-  \label{Bar diagram to compare the time taken to deploy on Jetstream}
+  \label{i:barjet}
 \end{figure}
 
 
 \subsection{Kilo- FutureSystems}
 
-Automated the deployment of our project  on Kilo cloud based on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. Below is a tabluar description of the image flavor used on Kilo and time taken to deploy the cluster on Kilo.
+Automated the deployment of our project  on Kilo cloud based on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. Below we tabularize time taken to deploy the cluster on Kilo see Table \ref{T:timekilo}.
 
-
-\begin{table}[htbp]
+\begin{table}[!htb]
 \centering
-\caption{\bf Hardware Specifications of Kilo}
-
- \begin{tabular} {| c | c |}
-\hline
-  & Kilo   \\ [0.5ex] 
- \hline
-Image   & Ubuntu-14.04-64  \\
-\hline
-flavor  & m1.small  \\
- \hline
-cores & 1024   \\
- \hline
-speed & 2.66GHz \\
- \hline
-RAM   & 3072GB  \\
- \hline
-storage & 335TB  \\ [1ex] 
- \hline
-
-\end{tabular}
-  \label{tab:cloud-comparison}
-\end{table}
-
-\TODO{THIS IS NOT HAW A TABLE GOES INTO A PAPER}
-
+\caption{Illustrating the various times it took to deploy on Kilo}\label{T:timekilo}
 \begin{center}
  \begin{tabular}{|c|| c c c|} 
  \hline
@@ -578,19 +531,19 @@ storage & 335TB  \\ [1ex]
  \hline
 \end{tabular}
 \end{center}
+\end{table}
 
-
-Below is the bar description of the various times it took in deploying various size clusters.
+Below is the bar description of the various times it took in deploying various size clusters see Fig \ref{i:timekilo}.
 
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-3.png}
   \caption{Bar diagram to compare the time taken to deploy on Kilo}
-  \label{Bar diagram to compare the time taken to deploy on Kilo}
+  \label{i:timekilo}
 \end{figure}
 
 \section{Benchmarking on various clouds}
 
-Comparison between installation time on various clouds with different cluster sizes. From the above deployment, following inferences were made
+Comparison between installation time on various clouds with different cluster sizes. From the above deployment, following inferences were made:
 
 \begin{itemize}
 \item Kilo cloud relatively long time when it came to installing java and its related packages
@@ -598,18 +551,22 @@ Comparison between installation time on various clouds with different cluster si
 \end{itemize}
 
 
-Also a plot has been made to illustrate the various installation times on different clouds at one place, below image illustrates that.
+Also a plot has been made to illustrate the various installation times on different clouds at one place, below image illustrates that see Fig \ref{gvc}.
 
 
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-4.png}
   \caption{Graph plot to compare the time taken to deploy on various clouds}
-  \label{Graph plot to compare the time taken to deploy on various clouds}
+  \label{gvc}
 \end{figure}
 
+Also, the below table gives us the final time it takes on each cloud of varying cluster size to deploy the storm cluster see Table \ref{T:gvc}
 
-
+\begin{table}[h]
 \begin{center}
+  \centering
+  \caption{ Time to deploy various cluster sizes on various clouds}
+  \label{T:gvc}
  \begin{tabular}{|c|| c c c|} 
  \hline
  Install Time & Chameleon  & Jetstream & Kilo \\ [0.5ex]
@@ -622,7 +579,7 @@ Also a plot has been made to illustrate the various installation times on differ
  \hline
 \end{tabular}
 \end{center}
-
+\end{table}
 
 
 
