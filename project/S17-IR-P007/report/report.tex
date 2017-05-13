@@ -1,5 +1,8 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{hyperref}
+
 \journal{i524} 
 
 \title{Deploying a spam message detection application using R over Docker and Kubernetes}
@@ -284,18 +287,20 @@ The API server is the most fundamental component of the Kubernetes
 master and serves as the entry point for all the REST commands used to
 control the cluster. The API server serves up the Kubernetes API using
 JSON over HTTP, providing both internal and external interface to the
-cluster \cite{www-kubernetes-digitalocean} \cite{www-apiserver-kmblog}. It validates the REST requests, executes
+cluster \cite{www-kubernetes-digitalocean}
+\cite{www-apiserver-kmblog}. It validates the REST requests, executes
 them and updates the status of the objects in the \emph{etcd} storage.
 
 \subsubsection{etcd storage}
 \emph{etcd} is a simple, distributed and consistent key-value store
 that stores configuration data of the cluster and represents the state
-of the cluster at any point of time \cite{www-wiki-kubernetes}. Kubernetes uses etcd for
-service discovery and provides a simple HTTP/JSON API as an interface
-for setting or retrieving values from the store. Other components
-watch the state of the etcd store to bring themselves up to the
-desired state. Data being stored in the etcd store are deployed
-services, pods, replication information etc.
+of the cluster at any point of time
+\cite{www-wiki-kubernetes}. Kubernetes uses etcd for service discovery
+and provides a simple HTTP/JSON API as an interface for setting or
+retrieving values from the store. Other components watch the state of
+the etcd store to bring themselves up to the desired state. Data being
+stored in the etcd store are deployed services, pods, replication
+information etc.
 
 \subsubsection{Scheduler}
 The scheduler component is responsible for the deployment of pods and
@@ -339,7 +344,8 @@ the storage about newly created ones.
 \subsubsection{Kube-Proxy}
 \emph{Kube-proxy} acts as a network proxy and a load balancer. It is
 responsible for networking of TCP and UDP packets to the appropriate
-container based on the IP address of each packet \cite{www-wiki-kubernetes} \cite{www-kubernetes-architecture}.
+container based on the IP address of each packet
+\cite{www-wiki-kubernetes} \cite{www-kubernetes-architecture}.
 
 \subsubsection{Kubectl}
 \emph{kubectl} is a command line tool that communicated with the API
@@ -429,10 +435,159 @@ Kubernetes cluster nodes using the Docker image.
 <TODO - describe the ansible deployment and scripts>
 
 \subsection{Dockerizing the application}
-<TODO - create a docker image, setting up registry and run the application>
+To containerize our application, we need to create a docker image for
+it. To create a docker image we need to create a docker file that
+describes the semantics to create the docker image. Docker version
+used for this process is 1.12.6.
+
+\subsubsection{The Dockerfile}
+Docker can build images automatically by reading instructions from a
+Dockerfile. A dockerfile is a series of text commands that a user can
+run on a command line to build an image \cite{www-dockerfile-documentation}.
+\newline
+Instructions within a Dockerfile have the following format:
+
+\begin{verbatim}
+ INSTRUCTION  arguments
+\end{verbatim}
+
+Docker reads the instructions from a dockerfile in the order they are
+written. The very first line of a docker file must be a 'FROM' clause
+which specifies the base image from which the image is being built. As
+our application works with R, we need to specify the base package as
+one that shall help us run our R application. \emph{DockerHub} has a
+r-base package that binds the latest version of R and its libraries
+together that we shall use \cite{www-rbase-docker}.  The argument
+following the FROM clause is a repository/tag name that the docker
+engine automatically looks up on \url{http://hub.docker.com}.
+
+Following the FROM statement, we can specify all actions we need to
+perform like specifying the work directory for building the image or
+copying files into our work directory so that every resource is
+available under a single folder. Lastly, our docker file ends with a
+CMD statement that specifies the command that the container is
+supposed to execute on successful instantiation. CMD accepts an array
+of command names followed by the parameters. Since we want our image
+to execute our R application we shall specify the cmd as stated in the
+dockerfile below.
+
+\begin{verbatim}
+FROM r-base
+COPY . ~/dockerDirectory/
+WORKDIR ~/dockerDirectory/
+CMD ["Rscript", "spamdetection.r"]
+\end{verbatim}
+
+
+
+\subsubsection{Creating a docker image}
+
+Once the Dockerfile is built, we can build the image using docker
+build command as follows :
+
+\begin{verbatim}
+cc@rahpsing-055:~/dockerDirectory$ sudo docker build 
+-t  spamdetectionapplication  ~/dockerDirectory/
+
+Sending build context to Docker daemon 490.5 kB
+Step 1 : FROM r-base
+latest: Pulling from library/r-base
+
+5d797a4cfc3e: Already exists 
+19c2f092956c: Already exists 
+93a6e2a5f4fa: Already exists 
+8f6ce7170232: Already exists 
+d1474396bacc: Already exists 
+e729120880f2: Already exists 
+Digest: sha256:e192edf861d61caff0b329436...
+Status: Downloaded newer image for r-base:latest
+ ---> 16fe32463daa
+
+Step 2 : COPY . ~/dockerDirectory/
+ ---> a6717da2ec47
+Removing intermediate container 8fb4aaaec0d8
+
+Step 3 : WORKDIR ~/dockerDirectory/
+ ---> Running in 0220b193ed11
+ ---> a3c4d57e23c9
+Removing intermediate container 0220b193ed11
+
+Step 4 : CMD Rscript spamdetection.r
+ ---> Running in 4edb44f2ffb6
+ ---> a4814eeadf35
+Removing intermediate container 4edb44f2ffb6
+Successfully built a4814eeadf35
+\end{verbatim}
+
+
+
+The built image is placed in our machine's local docker registry and
+can be viewed with the 'docker images' command.
+
+\begin{verbatim}
+$ docker images
+REPOSITORY                TAG     IMAGE ID      SIZE
+spamdetectionapplication  latest  a4814eeadf  646.1 MB
+r-base                    latest  16fe32463d  645.6 MB
+\end{verbatim}                   
+
+
+\subsubsection{Running the application}
+
+We shall run our application using the docker run command.
+
+\begin{verbatim}
+ docker run spamdetection
+\end{verbatim}
+
+We can check the container id of our application along with other
+important information using the 'docker ps' command.
+ 
+\subsubsection{Sharing the docker image}
+
+By default, the docker CLI points to docker's public registry which is
+located at \url{http://hub.docker.com}. We need to create a docker
+account to upload our application image so that it could be directly
+referenced by kubernetes later. Once a docker account is registered,
+create a public repository and give it a name. The repository shall be
+accessible by the format '<username>/repositoryname'.
+
+To tag the current docker image that we created on our system we need
+to inform the docker engine to point to our registry. To do so, we
+shall use login command provided by the docker CLI.
+
+\begin{verbatim}
+ docker login
+\end{verbatim}
+
+The login request shall ask for a valid docker account userid and
+password. Once authenticated, the docker engine shall establish a link
+with the registry associated with the username.  To upload our docker
+image to the repository, we need to tag the image. Docker provides the
+'tag' command to do so.
+
+\begin{verbatim}
+ docker tag image_name <username>/<repository_name>:
+ <tag>
+\end{verbatim}
+
+The <tag> can be any name given by the user to uniquely identify the
+image. Once tagged, we need to push the image to the repository using
+the command line 'docker push' command.
+
+\begin{verbatim}
+ docker push rahpsing/kubernetesi524:spamdetection
+\end{verbatim}
+
+As the image is now publicly available on the repository, we can do a
+simple 'docker pull' from any machine to deploy the container with no
+dependencies. This is possible as the image wraps together the
+application code file, the data file and dependent r-base package from
+the latest version of R available on dockerhub's library.
+
 
 \subsection{Deployment via Minikube}
-<TODO - install minikube, deploy image on minikube created kubernetes cluster>
+TODO
 
 \subsection{Deployment via kubeadm}
 <TODO - install kubectl,kubeadm, deploy the application and check status>
