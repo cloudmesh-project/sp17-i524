@@ -101,7 +101,40 @@ easily to use clouds.
 \end{figure}
 		
 
+\section{Getting Started}
 
+One needs to create an aws account first to be able to access its cloud. The instructions for it are available at \cite{www-amazon-aws}. A pair of access key and secret keys are required to be generated to authenticate into the cloud \cite{www-amazon-key}. These keys are required to be kept confidential. They are to be specified in a yaml configuration file. Default vm image and flavor can also be specified in the configuration file. Following are some of the configuration entries:
+
+\begin{verbatim} 
+cloudmesh:
+clouds:
+aws:
+credentials:
+EC2_ACCESS_KEY: 'ACCESS KEY'
+EC2_SECRET_KEY: 'SECRET KEY'
+.
+.
+
+default:
+image: 'IMAGE ID'
+size: 'SIZE ID'
+location: 'LOCATION'
+
+\end{verbatim}
+
+The user need to ensure that the combination of image, size and location is valid and that it's account has the required privileges for it. The instructions for installation of AWS client can be found at \cite{www-cloudmesh-aws}. Once, the client has been installed and configurations settings enabled, the mongodb and the rest services to access the database can be started by following command from the root directory of the code:
+
+\begin{verbatim}
+make rest
+\end{verbatim}
+
+The above services will be required by AWS client to store cloud related information locally. The user can now execute the client commands e.g.:
+
+\begin{verbatim}
+cms aws flavor refresh
+\end{verbatim}
+
+This will fetch the list of image sizes available on Amazon EC2 cloud.
 
 \section{Cloudmesh Design}
 \label{S:cmclient}
@@ -566,110 +599,65 @@ Flavor list & The flavor list is either fetched from the
   Volume list & This command displays the volume information stored in the database.
                          & \verb+aws volume list+ \\
   \hline
-  Volume delete & User can delete the unwanted volumes using the \textit{VOLUME\_ID}.
-                         & \verb+aws volume delete VOLUME_ID+ \\
+  Volume delete & User can delete the unwanted volumes using the \textit{VOLUME\_NAME}.
+                         & \verb+aws volume delete VOLUME_NAME+ \\
 \end{tabular}
 \end{center}
 \end{table*}
 
-
-
-
 	
-	
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=\linewidth]{images/cms_aws_image_refresh.png}
-  \vspace{-1.5\baselineskip}
-  \caption{aws image refresh}
-  \label{fig:imagerefresh}
-%\end{figure}
-~\newline
-%\begin{figure}[h!]
-  \centering
-  \includegraphics[width=\linewidth]{images/cms_aws_flavor_refresh.png}
-  \vspace{-1.5\baselineskip}
-  \caption{aws flavor refresh }
-  \label{fig:flavorlist}
-% \end{figure}
-~\newline
-% \begin{figure}[htb]
-  \centering
-  \includegraphics[width=\linewidth]{images/vm_boot_ami-0183d861.png}
-  \vspace{-1.5\baselineskip}
-  \caption{aws vm boot ami-0183d861 }
-  \label{fig:vmboot}
-% \end{figure}
-~\newline
-% \begin{figure}[htb]
-  \centering
-  \includegraphics[width=\linewidth]{images/vm_list.png}
-  \vspace{-1.5\baselineskip}
-  \caption{aws vm list }
-  \label{fig:vmlist}
-% \end{figure}
-~\newline
-% \begin{figure}[h!]
-  \centering
-  \includegraphics[width=\linewidth]{images/cms_aws_keypair_create.png}
-  \vspace{-1.5\baselineskip}
-  \caption{aws keypair create AWSCLI}
-  \label{fig:keypaircreate}
-% \end{figure}
-~\newline
-% \begin{figure}[h!]
-  \centering
-  \includegraphics[width=\linewidth]{images/cms_aws_location_list.png}
-  \vspace{-1.5\baselineskip}
-  \caption{aws location refresh}
-  \label{fig:locationlist}
-%\end{figure}
-~\newline
-%\begin{figure}[htb]
-  \centering
-  \includegraphics[width=0.5\linewidth]{images/cms_aws_volume_create_VOL_TEST_1.png}
-  \vspace{-0.5\baselineskip}
-  \caption{aws volume create VOL\_TEST\_1}
-  \label{fig:createvolume}
-%\end{figure}
-~\newline
-%\begin{figure}[htb]
-  \centering
-  \includegraphics[width=0.5\linewidth]{images/cms_aws_volume_list.png}
-  \caption{aws volume refresh}
-  \label{fig:volumelist}
-\end{figure}
-    
-\section{Benchmark}
+\section{Benchmarking Cloudmesh AWS}
 
-\TODO{Benchmarks missing}
+We benchmarked the aws commands that fetch information either from the cloud over the network or from the local database. The information is then displayed to the user. The informations that is fetched over the network is also updated in the database. The performance statistics observed give us the overview of the difference in execution time of the two kind of commands. Each command was run 50 times with its execution time reocrded.  The mean and standard deviation of the timings were calculated using statistical methods in R. Table \ref{tab:awsbanchmark}  shows the observed values in seconds.
+
+\begin{table}[h!]
+	\caption{\bf Banchmarking of AWS commands}
+	\begin{tabular}{ | m{3cm} | m{1.7cm} | m{2.7cm} |} 
+		\hline
+		Commands & Mean & Standard Deviation\\
+		\hline
+		flavor refresh & 0.612 & 0.059 \\
+		flavor list & 0.207 & 0.024\\
+		keypair refresh & 1.967 & 0.964 \\
+		keypair list & 0.240 & 0.062 \\
+		location refresh & 1.933 & 1.246 \\
+		location list & 0.172 & 0.039 \\
+		vm refresh & 2.342 & 1.876 \\
+		vm list & 0.160 & 0.023 \\
+		volume refresh & 2.184 & 1.878 \\
+		volume list & 0.170 & 0.020 \\
+		
+		\hline
+	\end{tabular}
+	\label{tab:awsbanchmark}
+\end{table}
+
+The commands that fetch the information from local database are on an average 85\% faster than the commands that fetch information from the cloud and also have lesser variation in their timings. The difference in performance tends to decrease when the information to be fetched is more. This may be due to the limitation of the machine on which it was tested. 
+
 
 \section{Use Case: Create an AWS Node}
 	The following are the pre-requisites to be able to create an EC2 node.
 
 \subsection{Prerequisite}
 
-\TODO{URLS IN REFRENCES}
-
 \begin{enumerate}
 
-\item User should have a valid AWS account.  ` \item
-  \href{https://console.aws.amazon.com/iam/home?#/users}{Create a IAM}
+\item User should have a valid AWS account.\item
+  users Create a IAM
   \cite{www-aws-iam} user for which the access and secret key will
   have to be generated \cite{www-attach-policy}. The keys will ahve to
   added to the yaml cloudmesh configuration file.
 	
 \item The required permissions are needed to be granted to the user.
-  \begin{enumerate}
-			
-  \item visit \href{https://console.aws.amazon.com/iam/home} {IAM
-      home} \cite{www-aws-iam-home}
+  
+  \begin{itemize}			
+  \item visit IAM home \cite{www-aws-iam-home}
   \item select \textbf{policie}s in left hand menu
   \item create \textbf{administrator policy} from amazons existing
     policies
   \item select \textbf{administrator checkbox} and \textbf{attach} to
     your user
-  \end{enumerate}
+  \end{itemize}
 		
 \item Open the ../cloudmesh.yaml configuration file and update with
   EC2\_ACCESS\_KEY, EC2\_SECRET\_KEY, you just copied. Now set default
@@ -706,6 +694,114 @@ Flavor list & The flavor list is either fetched from the
   ami-0183d8661.
 
 \end{enumerate}	
+
+\begin{table}[h!]
+	\caption{\bf cms aws image refresh }
+	\begin{tabular}{ | m{1.5cm} | m{3.8cm} | m{2.2cm} |} 
+		\hline
+		id & name & driver\\
+		\hline
+		aki-02b79b47  & pv-grub-hd00\_1.03-i386 & 627 \\
+		aki-033c6d46 & & <libcloud.compu te.drivers.ec2. EC2NodeDriver object at 0x105898a90>  \\
+		aki-037a5e46 & ubuntu/kernels-testing/ubuntu-lucid-i386-linux-image-2.6.32-347-ec2-v-2.6.32-347.52-kernel &  <libcloud.comp ute.drivers.ec2 .EC2NodeDriver object at 0x105898a90>\\
+		. & . & .   \\
+		\hline
+	\end{tabular}
+	\label{tab:imagerefresh}
+\end{table}
+
+\begin{table}[h!]
+	\caption{\bf aws flavor refresh }
+	\begin{tabular}{ | m{1.2cm} | m{2.5cm} | m{1.1cm} | m{1.1cm} |m{0.8cm} |} 
+		\hline
+		id & name & ram & disk & price..\\
+		\hline
+		t1.micro & Micro Instance & 627 & 15 & 0.025 \\
+		m1.small & Small Instance & 1740 & 160 & 0.047 \\
+		m1.large & Large Instance & 3840 & 410 & 0.095 \\
+		. & . & . & . & . \\
+		\hline
+	\end{tabular}
+	\label{tab:flavorlist}
+\end{table}
+
+	\begin{table}[h!]
+	\caption{\bf cms aws vm boot ami-0183d861 }
+	\begin{tabular}{ | m{5.2cm} | m{1.1cm} | m{1.2cm} |} 
+		\hline
+		uuid & name & states ..\\
+		\hline
+		eec0cb8ddb3a17764c6658278162496 81cec1f67 & test1 & running \\
+		
+		\hline
+	\end{tabular}
+	\label{tab:vmboot}
+\end{table}
+
+\begin{table}[h!]
+	\caption{\bf cms aws vm list }
+	\begin{tabular}{ | m{5.1cm} | m{1.2cm} | m{1.2cm} |} 
+		\hline
+		uuid & name & states ..\\
+		\hline
+		eec0cb8ddb3a17764c6658278162496 81cec1f67 & test1 & running \\
+		
+		\hline
+	\end{tabular}
+	\label{tab:vmlist}
+\end{table}
+
+
+\begin{table}[h!]
+	\caption{\bf cms aws keypair create AWSCLI }
+	\begin{tabular}{ | m{0.8cm} | m{7.3cm} |} 
+		\hline
+		name & fingureprint\\
+		\hline
+		AWS1 & 17:20:41:93:1d:b1:e1:a6:84:44:99:0d:87:d2:ab:72:3d:a1 :f0:a7 \\
+		AWS2 & 72:31:87:fc:2b:0f:93:1a:24:f7:9a:01:91:29:f7:eb:27:6a :2d:fa \\
+		\hline
+	\end{tabular}
+	\label{tab:keypaircreate}
+\end{table}
+
+	\begin{table}[h!]
+	\caption{\bf cms aws location refresh }
+	\begin{tabular}{ | m{0.7em} | m{1.7cm}| m{1cm} | m{2.2cm} |m{1.7cm} |} 
+		\hline
+		id & name & country & availability\_zone & zone\_state ..\\
+		\hline
+		0 & us-west-1a & USA & us-west-1a & available \\
+		1 & us-west-1b & USA & us-west-1b & available \\
+		\hline
+	\end{tabular}
+	\label{tab:locationlist}
+\end{table}
+
+\begin{table}[h!]
+	\caption{\bf cms aws volume create VOL\_TEST\_1 }
+	\begin{tabular}{ | m{3.8cm} | m{1.8cm} | m{2cm} |}
+		\hline
+		id & size & driver \\
+		\hline
+		vol-009775889a2d50154 & 1 & Amazon EC2\\
+		\hline
+	\end{tabular}
+	\label{tab:createvolume}
+\end{table}
+
+	\begin{table}[h!]
+	\caption{\bf cms aws volume refresh }
+	\begin{tabular}{ | m{4.2cm} | m{1cm} | m{2.4cm} |}
+		\hline
+		Id & Size & Driver \\
+		\hline
+		vol-009775889a2d50154 & 1 & Amazon EC2\\
+		vol-0c30e77f6a2a263a & 1 & Amazon EC2\\
+		\hline
+	\end{tabular}
+	\label{tab:tab8}
+\end{table}
 
 	
 
