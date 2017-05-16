@@ -65,16 +65,11 @@
      source ~/.bashrc
   args:
     executable: /bin/bash 
-
-- name: git config
-  become_user: "{{ ubuntu_user_name }}"
-  shell: |
-     sudo mkdir /git/
-     cd /git/
-     sudo git init
-     sudo git config --global user.name "Sowmya Ravi"
-     sudo git config --global user.email sowravi@iu.edu
-     sudo git clone https://github.com/sowravi/data_code.git
+  
+- name: Copy code files from local to master
+  copy: src={{ item }} dest=/git/data_code/
+  with_fileglob:
+     - files/*
 
 - name: Copy the extracted files 
   become_user: "{{ ubuntu_user_name }}"

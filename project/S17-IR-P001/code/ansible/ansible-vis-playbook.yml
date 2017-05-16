@@ -1,0 +1,6 @@
+---
+- hosts: master
+  remote_user: true
+  roles:
+   - ansible-vis
+
