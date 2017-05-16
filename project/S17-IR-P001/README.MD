@@ -56,7 +56,7 @@ The following modifications have to be made to run the bechmarks
 ```
 In the code above, change the "stack-0050" to the the stack that was deployed in master node of spark.
 
-4- To extract the data from twitter, first obtain the API keys from twitter https://apps.twitter.com/. Log in to the virtual machine under [master] in inventory.txt and go to /home/cc/visualization folder. Open Finalscript.py and update the API keys in lines 24-27.
+4- To extract the data from twitter, first obtain the API keys from twitter https://apps.twitter.com/. Log in to the virtual machine under [master] in inventory.txt and go to /home/cc/visualization folder. Open Finalscript.py and update the API keys in lines 24-27. Similarly, update the API keys in lines 6-9 of twitter-credentials.js file in /home/cc/twitter-geo-server-js folder for authenticating the twitter API for realtime visualization of tweets.
 
 5- Run ansible-vis-playbook.yml to enable the visualizations in the corresponding ports inside the virtual machine
 
