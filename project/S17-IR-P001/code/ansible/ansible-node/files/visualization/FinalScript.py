@@ -21,10 +21,10 @@ nltk.download('stopwords')
 
 runCount=0
 #Variables that contains the user credentials to access Twitter API 
-access_token = "141817420-ViMO9ic2MuVmjw4u04CACINnCA0MIJEs2uaPbkYX"
-access_token_secret = "LWNQKJYkHJnrAjNsH7LnrkKWmnf5qZ9akizidiWjbLhOy"
-consumer_key = "SyLwuJP6pzy4FevmLMOmcWdpf"
-consumer_secret = "XfZkuRRj5yqVmReRkAVvVFm9t6vaPHVeoXEdg85Iuqb8k524pU"
+access_token = ""
+access_token_secret = ""
+consumer_key = ""
+consumer_secret = ""
 
 tweets_data = []
 
@@ -380,20 +380,20 @@ def analyze(tweets_data):
 	print (usState_new.head())
 	usStateJson=usState_new.to_json(orient = "records")
 	usStateJsonfinalOutput=usStateJson[33:len(usStateJson)-1].upper().replace("\"STATE\"","ucName").replace("\"VALUE\"","value")
-	with open(outputFolder+'usStates-tweetCount.json', 'w') as outfile:
+	with open('Final\\US_heat_count\\data.js', 'w') as outfile:
 		outfile.write(usStateJsonfinalOutput)
 	
 	
 	#UsStatewise Sentiment
 	usStateSentiOld=pd.read_csv(oldFolder+"usStates-SentiCount.csv")
 	statesentiout=state_senti(newFolder,usStateSentiOld,tweetsFinal)
-	with open(outputFolder+'usStates-SenitCount.js', 'w') as outfile:
+	with open('Final\\map-pies\\data.js', 'w') as outfile:
 		outfile.write(statesentiout)
 	
 	#TimeSeries Chart
 	timeOld=pd.read_csv(oldFolder+"timeseries.csv")
 	timedata=create_timechart(newFolder,timeOld,tweets)
-	with open(outputFolder+'tweet_cnt-1.js', 'w') as outfile:
+	with open('Final\\dynamic-master-detail\\time_series.js', 'w') as outfile:
 		outfile.write(timedata)
 
 	
@@ -405,7 +405,7 @@ def analyze(tweets_data):
 	#Heat World Grid
 	worldOld=pd.read_csv(oldFolder+"Continent-hour-senti.csv")
 	heatjson=heatworldgrid(newFolder,worldOld,tweets)
-	with open(outputFolder+'heatchart_data-1.js', 'w') as outfile:
+	with open('Final\\heatmap\\heatchart_data-1.js', 'w') as outfile:
 		outfile.write(heatjson)
 	#WordCloud
 	createwordcloud(tweets)
