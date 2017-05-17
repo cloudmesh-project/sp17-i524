@@ -61,14 +61,7 @@
   apt: name=git state=present update_cache=yes
   become: yes
 
-- name: cloning twitter nodejs server directory
-  become_user: root
-  command: git clone https://github.com/sriramsitharaman/twitter-geo-server-js
-
-- name: cloning d3js realtime twitter directory
-  become_user: root
-  command: git clone https://github.com/sriramsitharaman/d3-twitter-geo-stream
-
-- name: clone the final vis repo
-  become_user: root
-  command: git clone https://github.com/sriramsitharaman/visualization
+- name: Copy code files from local to master
+  copy: src={{ item }} dest=/home/cc/
+  with_fileglob:
+     - files/*
