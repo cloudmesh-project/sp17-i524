@@ -1,0 +1,10 @@
+\select@language {english}
+\contentsline {table}{\numberline {1}{\ignorespaces Technologies\relax }}{3}{table.caption.2}
+\contentsline {table}{\numberline {2}{\ignorespaces Cloud Hardware Specification Comparison \relax }}{3}{table.caption.3}
+\contentsline {table}{\numberline {3}{\ignorespaces Table illustrating the various times it took to deploy on Chameleon cloud\relax }}{4}{table.caption.4}
+\contentsline {table}{\numberline {4}{\ignorespaces Illustrating the various times it took to deploy on Jetstream\relax }}{4}{table.caption.6}
+\contentsline {table}{\numberline {5}{\ignorespaces Illustrating the various times it took to deploy on Kilo\relax }}{4}{table.caption.8}
+\contentsline {table}{\numberline {6}{\ignorespaces Time to deploy various cluster sizes on various clouds\relax }}{5}{table.caption.10}
+\contentsline {table}{\numberline {7}{\ignorespaces Throughput vs Latency on all 5 node clusters on 3 clouds:\relax }}{6}{table.caption.12}
+\contentsline {table}{\numberline {8}{\ignorespaces Throughput vs Latency on all 7 node clusters on 3 clouds:\relax }}{6}{table.caption.13}
+\contentsline {table}{\numberline {9}{\ignorespaces Throughput vs Latency on all 9 node clusters on 3 clouds:\relax }}{6}{table.caption.14}

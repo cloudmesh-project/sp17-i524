@@ -1,0 +1,10 @@
+\select@language {english}
+\contentsline {figure}{\numberline {1}{\ignorespaces Storm Architecture\relax }}{2}{figure.caption.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Bar diagram to compare the time taken to deploy on Chameleon\relax }}{4}{figure.caption.5}
+\contentsline {figure}{\numberline {3}{\ignorespaces Bar diagram to compare the time taken to deploy on Jetstream \relax }}{4}{figure.caption.7}
+\contentsline {figure}{\numberline {4}{\ignorespaces Bar diagram to compare the time taken to deploy on Kilo\relax }}{5}{figure.caption.9}
+\contentsline {figure}{\numberline {5}{\ignorespaces Graph plot to compare the time taken to deploy on various clouds\relax }}{5}{figure.caption.11}
+\contentsline {figure}{\numberline {6}{\ignorespaces Graph plot to compare the peformance on 5 nodes across various clouds\relax }}{6}{figure.caption.15}
+\contentsline {figure}{\numberline {7}{\ignorespaces Graph plot to compare the performance on 7 nodes across various clouds\relax }}{7}{figure.caption.16}
+\contentsline {figure}{\numberline {8}{\ignorespaces Graph plot to compare the performance on 9 nodes across various clouds\relax }}{7}{figure.caption.17}
+\contentsline {figure}{\numberline {9}{\ignorespaces Graph plot to compare the performance on all the nodes across various clouds\relax }}{7}{figure.caption.18}

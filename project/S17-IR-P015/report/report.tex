@@ -1,6 +1,16 @@
 \documentclass[9pt,twocolumn,twoside]{../../styles/osajnl}
 \usepackage{fancyvrb}
 \journal{i524} 
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage[section]{placeins}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+
+
 
 \title{Deployment of a Storm cluster}
 
@@ -24,7 +34,6 @@ Code: \url{https://github.com/cloudmesh/cloudmesh.storm}}
 
 
 \begin{abstract}
-
 Apache Storm is a free and open source distributed realtime
 computation system. Storm makes it easy to reliably process unbounded
 streams of data, doing for realtime processing what Hadoop did for
@@ -38,18 +47,17 @@ set up and operate. Storm integrates with the queueing and database
 technologies we already use. Storm is currently being used to run
 various critical computations in Twitter at scale, and in real-time,
 this led us to explore and deploy it on various cloud. In this paper
-we try to deploy storm on various clouds and benchmark the performance
-on various data, doing real time processing on sample datasets. First,
-we describe the architecture of Storm, its deployment and its methods
-for distributed scaleout and fault-tolerance. Storm is in active
-development at Twitter.
-
+we deploy storm on various clouds and benchmark the performance, doing real time 
+processing on sample datasets. First, we describe the architecture of Storm, its 
+deployment and its methods for distributed scaleout and fault-tolerance. We 
+performed a deployment and performance benchmarking to realise the storm on
+various clouds. We identified and examined the best clouds for
+storm in terms of deployment and performance.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
 
 \begin{document}
-
 
 \maketitle
 
@@ -57,10 +65,7 @@ development at Twitter.
 
 \maketitle
 
-
-
-\section*{Introduction}
-
+\section{Introduction}
 Currently modern data processing environments require processing
 complex computation on streaming data in real-time. Places like
 Twitter where each interaction with a user requires making a number of
@@ -70,6 +75,7 @@ delivers on this account and provides many other services which we
 will see in the coming sections. Storm is designed to be, some of
 these things we observed while running our sample projects for
 deployment:
+
 \begin{description}
 \item Scalable : Nodes may be easily added or removed
   from the Storm cluster without disrupting existing data flows
@@ -93,7 +99,6 @@ deployment:
   conflicts arising.
 \end{description}
 
-
 \section{Data Model and Architecture}
 Storm data processing architecture consists of streams of tuples
 flowing through topologies \cite{storm} . A topology is a directed
@@ -106,6 +111,7 @@ incoming tuples and pass them to the next set of bolts downstream.
 Note that a Storm topology can have cycles. From the database systems
 perspective, one can think of a topology as a directed graph of
 operators.
+
 \begin{figure}
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/apache-storm.png}
   \caption{Storm Architecture}
@@ -119,22 +125,22 @@ distributing and coordinating the execution of the topology. The
 actual work is done on worker nodes. Each worker node runs one or more
 worker processes. At any point in time, a single machine may have more
 than one worker processes, but each worker process is mapped to a
-single topology see Fig \ref{Storm Architecture}. Note more than one worker process on the same machine
-may be executing different part of the same topology. Each worker
-process runs a JVM, in which it runs one or more executors. Executors
-are made of one or more tasks. The actual work for a bolt or a spout
-is done in the task. Thus, tasks provide intrabolt or intraspout
-parallelism, and the executors provide intratopology
-parallelism. Worker processes serve as containers on the host machines
-to run Storm topologies. Note that associated with each spout or bolt
-is a set of tasks running in a set of executors across machines in a
-cluster. Data is shuffled from a producer spout or bolt to a consumer
-bolt (both producer and consumer may have multiple tasks). This
-shuffling is like the exchange op erator in parallel databases.
+single topology see Fig \ref{Storm Architecture}. Note more than one
+worker process on the same machine may be executing different part of
+the same topology. Each worker process runs a JVM, in which it runs
+one or more executors.  Executors are made of one or more tasks. The
+actual work for a bolt or a spout is done in the task. Thus, tasks
+provide intrabolt or intraspout parallelism, and the executors provide
+intratopology parallelism. Worker processes serve as containers on the
+host machines to run Storm topologies. Note that associated with each
+spout or bolt is a set of tasks running in a set of executors across
+machines in a cluster. Data is shuffled from a producer spout or bolt
+to a consumer bolt (both producer and consumer may have multiple
+tasks). This shuffling is like the exchange op erator in parallel
+databases.
 
 Storm supports the following types of partitioning strategies \cite{storm}:
-
-\begin{enumerate}  
+\begin{description}  
 \item Shuffle grouping, which randomly partitions the tuples.
 \item Fields grouping, which hashes on a subset of the tuple
   attributes or fields.
@@ -143,8 +149,8 @@ Storm supports the following types of partitioning strategies \cite{storm}:
 \item Global grouping, which sends the entire stream to a single bolt.
 \item Local grouping, which sends tuples to the consumer bolts in the
   same executor.
-  
-\end{enumerate}
+\end{description}
+
 The partitioning strategy is extensible and a topology can define and
 use its own partitioning strategy.  Each worker node runs a Supervisor
 that communicates with Nimbus.  The cluster state is maintained in
@@ -161,12 +167,10 @@ automatically pick and dynamically changes this number based on some
 higher-level objective, such as a target performance objective.
 
 \subsubsection{Storm Internal Architecture}
-
 In this section, we describe the key components of Storm), and how
 these components interact with each other.
 
 \subsubsection{Nimbus and Zookeeper}
-
 Nimbus plays a similar role as the “JobTracker” in Hadoop, and is the
 touchpoint between the user and the Storm system. Nimbus is an Apache
 Thrift service and Storm topology definitions are Thrift objects.  To
@@ -175,13 +179,11 @@ the topology as a Thrift object and sends that object to Nimbus. With
 this design, any programming language can be used to create a Storm
 topology.
 
-
 As part of submitting the topology, the user also uploads the user
 code as a JAR file to Nimbus. Nimbus uses a combination of the local
 disk(s) and Zookeeper to store state about the topology. Currently the
 user code is stored on the local disk(s) of the Nimbus machine, and
 the topology Thrift objects are stored in Zoo keeper.
-
 
 The Supervisors contact Nimbus with a periodic heartbeat protocol,
 this comes in very handy so we can periodically verify ifthe nodes are
@@ -206,18 +208,17 @@ limitations to make Storm even more resilient and reactive to
 failures. All the above workings, whether Nimbus and Zookeeper are
 working properly are viewed in the UI of the storm deployment, and can
 be viewed from the localhost of that particular node.
+
 \subsubsection{Supervisor}
-
-
 The supervisor runs on each Storm node. It receives assignments from
 Nimbus and spawns workers based on the assignment. It also monitors
 the he alth of the workers and respawns them if necessary. The main
-thread reads the Storm configuration, initializes the S upervisor’s
+thread reads the Storm configuration, initializes the Supervisor’s
 global map, creates a persistent local state in the file system, and
 schedules recurring timer events. There are three types of events,
 which are:
 
-\begin{enumerate}
+\begin{description}
 \item The heart beat event, which is scheduled to run every 15
   seconds, and is runs in the context of the main thread. It reports
   to Nimbus that the supervisor is alive.
@@ -232,22 +233,18 @@ which are:
   responsib le for managing worker processes that run a fragment of
   the topology on the same node as the supervisor. It reads worker
   heartbeats from the local state and classifies those workers as
-  either valid, timed out, not started, or disallowed. A “timed out”
-  work er implies that the worker did not provide a heart beat in the
-  specified time frame, and is now assumed to be dead. A “not started
-  ” worker indicates that it is yet to be started because it belongs
-  to a newly submitted topology, or an existing topology who se worker
-  is being moved to this supervisor. Finally, a “disallowed ” worker
-  means that the worker should not be running either because its
-  topology has been killed, or the worker of the topology has been
-  moved to another node.\\
-\end{enumerate}
-
-
-
+  either valid, timed out, not started, or disallowed. Timed out
+  worker implies that the worker did not provide a heart beat in the
+  specified time frame. Not started worker indicates that it is yet to
+  be started because it belongs to a newly submitted topology. A
+  disallowed worker means that the worker should not be running either
+  because its topology has been killed, or the worker of the topology
+  has been moved to another node.
+\end{description}
 
 \section{Technologies}
-Following are the technologies used as a part of development of the entire project see Table \ref{T:technologies}.
+Following are the technologies used as a part of development of the entire 
+project see Table \ref{T:technologies}.
 \begin{table}[htb]
 \caption{Technologies} 
 \label{T:technologies}
@@ -271,158 +268,41 @@ Following are the technologies used as a part of development of the entire proje
 }
 \end{table}
 
-
-
-
-
-
-
-
-  
-\section{Deployment Automation}
-\subsection{Automation with Ansible}
-Ansible Playbook is used as the application and configuration
-deployment tool. Deploying the hadoop and spark framework into the
-cluster environment. Ansible will help push configurations to the
-environment automatically based on playbooks written for various
-configurations. For this project, we used Ansible to automate the
-deployment of storm, zookeeper and other prequisites. The Ansible
-script is written such that we can leverage the cloudmesh client
-technology to deploy the spark cluster. When creating Zookeeper
-cluster we had a communication issue, similar issue was found when
-creating a Storm cluster, we resolved this issue by uploading a
-secgroup with the details necessary and added it to the cluster.
-
-The Ansible playbook package constitutes the following files.
-\begin{description}
-\item ansible.cfg: This file contains all the configuration
-  information necesasary for the storm deployment. In our project we
-  refer to the hosts file to look up for the ips necessary for
-  deployment.
-  
-\item hosts: Efforts are made to automate the generation of this file,
-  however currently the user after creating a cluster in the cloudmesh
-  client has to update the information the user ip addresses and id's
-  in three columns, chameleon, nimbus and supervisors fields. This
-  enables the user to select the ip address in which they desire to
-  have the nimbus node and all other configuration.
-
-\item install.yml: However, the above step is one of the few steps we
-  had to configure manually, however, running the command
-  ansible-playbook install.yml, installs all the dependencies and
-  packages necessary for strom deployment. However, the install sets
-  up the cluster with supervisor and nimbus nodes. The startup of
-  these services however are to be done manually by the below bash
-  scripts.
-
-\item nimbus.sh: This script is intended to start the nimbus node to
-  receive all the packets(data) for processing.
-\item startStorm.sh: This starts the storm cluster.
-\item submit.sh Used to submit jobs to run, in the storm cluster.
-\item start-zookeeper.yml: This file is still in developmental stage
-  where we want to automate the above two steps, however, there is a
-  small problem in exiting the storm cluster after once it has
-  started. We are working on it to fix this.
-\item supervisor.sh: This script file is used to start the worker
-  nodes on which the data processing can run
-\item ui.sh: Running this script file will open the localhost, where
-  we can view the current jobs running, topologies, cluster
-  information, spouts, bolts, etc. Sample screenshots showing the
-  working of this are shown in the benchmarking figures.
-\item In the templates folder, we have hosts.j2, myid.j2,
-  storm.yaml.j2, zoo.cfg.j2, these files are necessary for proper
-  deployment of storm and zookeeper cluster, so we created templates
-  of the configuration files and intend to use them.
-\end{description}  
-
-
-
-\subsection{Bash Shell Script}
-
-First we automated the entire deployment using python shell script,
-and later changed the deployment by using Ansible playbooks. In the
-python shell script, we have mainly used 4 files(.sh) to automate the
-entire process, from updating the apps directory to configuring the
-host file in the zookeeper cluster. As a part of our project we are
-submitting even the python shell script files for everyone to view the
-initial stages of project development.
-  
 \section{Cloudmesh}
 Cloudmesh client is a simple client to enable access to multiple cloud
-environments form a command shell and commandline[reference for
-  cloudmesh].The entire application is built on python which
-essentially needs no prerequisite knowledge and hence could see this
-as a ready-to-use tool. For our project since we need access to clouds
-for deployment purposes this comes as a welcome tool to ease us with
-the entire deployment process. Many thanks to Gregor von Laszewski and
-others collaborators for supporting our project directly and
-indirectly in the form of this tool which enabled us to deploy the
-project easier without any hassles. For this project, have tested the
-installation on Ubuntu 16.04.
+environments form a command shell and commandline. The entire
+application is built on python which essentially needs no prerequisite
+knowledge and is as a ready-to-use tool. For our project, as we need
+access to clouds for deployment, this comes as a welcome as it helps
+us with the entire deployment process. Many thanks to our professor,
+Gregor von Laszewski and others collaborators for supporting our
+project directly and indirectly in the form of this tool which enabled
+us to deploy the project easier without any hassles.
 
 \section{Cloud Deployment}
-
-
-We selected three clouds for deployment of our project: Chameleon Cloud, Jetstream, and Kilo. In our automated deployment and benchmarking process,
-first we create a cluster of particular number of required nodes,
-update the ip addresses and the user id of all the clouds, then we run
-the ansible script to deploy the entire project on the cloud. However,
-lot of improvements can be made, such as automating the process of ip
-addresses for the cluster deployment and exiting the cloud by deleting
-the files and the cloud resources once deployed and benchmarked. The
-entire process of deploying the project on various clouds have been
-tried and tested, various times were measure on the context of
-installation time right from the beginning. Based on the above results
-we benchmarked our results on various cluster sizes.
-
-
-\begin{figure*}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-1.png}
-  \caption{Index Page}
-  \label{Index Page}
-\end{figure*}
-
-\begin{figure*}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-2.png}
-  \caption{Sample Topology on a 5-node cluster }
-  \label{Sample Topology on a 5-node cluster}
-\end{figure*}
-
-\begin{figure*}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-3.png}
-  \caption{Worker nodes and description on a 5-node cluster }
-  \label{Worker nodes and description on a 5-node cluster}
-\end{figure*}
-
-\begin{figure*}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-4.png}
-  \caption{Toplogy Summer on a 5-node cluster }
-  \label{Topology summary on a 5-node cluster}
-\end{figure*}
-
-\begin{figure*}[!htb]
-  \centering
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench-5.png}
-  \caption{Spouts and bolts summary on a 5-node cluster }
-  \label{Spouts and bolts summary on a 5-node cluster}
-\end{figure*}
-
-\clearpage
+We selected three clouds for deployment of our project: Chameleon
+Cloud, Jetstream, and Kilo. In our automated deployment and
+benchmarking process, first we create a cluster of a particular size,
+update the ansible hosts file and run the ansible script to deploy the
+entire project on the cloud. The entire process of deploying the
+project on various clouds have been tried and tested, and the results
+have been collected for benchmarking. The results of benchmarking have
+been presented below, after a brief comparision and deployment
+strategy.
 
 \section{Cloud Flavor and Image Comparison}
-
-
-Following table shows a comparison of key computing resources on Chameleon, FutureSystems, and Jetstream cloud environments see Table \ref{tab:cloud-comparison}.
+The following table shows a comparison of key computing resources on Chameleon, 
+FutureSystems, and Jetstream cloud environments. See Table 
+\ref{tab:cloud-comparison} for the comparison.
 
 \begin{table}[h!]
 \centering
-\caption{\bf Cloud Hardware Specification Comparison }
+\caption{ Cloud Hardware Specification Comparison }
 
 \begin{tabular} {|c||c||c||c|}
 \hline Cloud & Kilo & Chameleon & Jetstream \\ [0.5ex] \hline Image &
-Ubuntu-14.04 & Ubuntu-14.04 &
-ubuntu-14.04 \\
-\hline Flavor &m1.small &m1.small & m1.medium \\ \hline CPU & Xeon E5-2670 & Xeon X5550 &
+Ubuntu-14.04 & Ubuntu-14.04 & ubuntu-14.04 \\ \hline Flavor &m1.small
+&m1.small & m1.small \\ \hline CPU & Xeon E5-2670 & Xeon X5550 &
 Haswell E-2680 \\ \hline cores & 1024 & 1008 & 7680 \\ \hline speed &
 2.66GHz & 2.3GHz & 2.5GHz\\ \hline RAM & 3072GB & 5376GB &
 40TBr\\ \hline storage & 335TB & 1.5PB & 2 TB\\ [1ex] \hline
@@ -430,27 +310,74 @@ Haswell E-2680 \\ \hline cores & 1024 & 1008 & 7680 \\ \hline speed &
   \label{tab:cloud-comparison}
 \end{table}
 
+\section{Deployment Automation}
 
+\subsection{Automation with Ansible}
+Ansible Playbook is the primary tool used for deployment. Ansible will
+help push configurations to the environment automatically based on
+playbooks written. For this project, we have used Ansible Roles to
+automate the deployment of storm and zookeeper clusters. The Ansible
+script installs the zookeeper and storm on all nodes and starts the
+cluster dynamically using handlers. These tasks are handled by the
+respective roles. CMD5 provided by the cloudmesh client is used to
+create a secgroup, a cluster and deploying the software automatically.
 
-\section{Benchmarking}
+The following commands are provided with the CMD5 storm extension:
+\begin{description}
+\item cloud: Set the cloud on which to deploy the cluster
+\item name: Set the name of the cluster
+\item size: Set the size of the cluster
+\item flavor: Set the flavor to use
+\item image: Set the image to use
+\item cluster info: Displays the information to be used to create the cluster
+\item cluster deploy: Does a multitude of tasks, creates a secgroup
+  and uploads it, leverages cloudmesh client to create vms on the
+  cloud and create a hosts file, runs the ansible script to install
+  software and manage handlers to ensure that processes have been
+  started.
+\item cluster status: Checks the ports to ensure that zookeeper and
+  storm nimbus have been started and are running.
+\item cluster delete: deletes the cluster vms and deletes the secgroup
+  from the cloud
+\item submit: Submits the jar file to nimbus. The jar file has to be
+  included in the same folder as the script to run it.
+\end{description}
+
+The important command in the above is the "storm cluster deploy"
+command. It utilizes four roles created using ansible, namely, setup,
+zookeeper, nimbus and supervisors. The roles are explained below:
+\begin{description}
+\item Setup: Installs software packages, java jdk, java jre,
+  supervisord on all nodes in the cluster. Creates the folders for
+  zookeeper and storm for installation, and supervisord logs. Updates
+  the hosts file so the nodes can communicate with each other.
+\item Zookeeper: Downloads and unpackages zookeeper files into the
+  folder created above. Creates a "myid" file updates the config file
+  on each node. Creates a supervisord config file to run the process
+  in the background. Finally, starts the zookeeper cluster.
+\item Nimbus: Installs maven on nimbus nodes. Downloads and unpackages
+  storm files into the folder created above. Updates the storm config
+  files and creates supervisord config file to run nimbus and ui in
+  the background. Starts the storm nimbus and ui on the master node.
+\item Supervisors: Downloads and unpackages storm files into the
+  folder created above. Updates the storm config files and creates
+  supervisord config file to run storm workers (supervisors) in the
+  background. Starts the storm workers on the slave nodes.
+\end{description}
+
+\section{Deployment Benchmarking}
+Following zookeeper recommendations, deployment testing was done
+starting with a cluster size of 5. Zookeeper recommends a minimum
+cluster size of 5 and scale the clusters in odd numbers. This way, the
+server cluster can ensure reliability.
+
 \subsection{Chameleon Cloud}
-Following are the results of our benchmarking on deploying the storm
-cluster on Chameleon cloud. Few things, we noticed that a 3-node
-cluster is not viable for running storm jobs and hence we ran all our
-jobs on 5-nodes or above clusters see Fig 4, this was one error we
-came across when we tried deploying a 3-node cluster and overcame this
-by following code blogs related to troubleshooting mentioned in the
-code references and solved the issue see Fig 6. We ran a sample-storm
-job on a 5-node cluster to see if its working, following are the
-snapshots where in we can see the UI of storm, illustrated in see Fig
-2, a sample toplogy is also shown in the UI in Fig 3, also showing the
-resources used among many other things. Similar tests were made on a
-7-node and a 9-node cluster and results were stored in a log page see
-Fig 5.  Also we calculated the time it took to deploy a 5-node, 7-node
-and a 9-node cluster on the chameleon cloud. Following are the results
-obtained see Table \ref{T:bench1} and can be illustrated in the form of a bar plot see Fig \ref{barc} .
-
-
+Chameleon cloud was used for development and most of the scripts were
+run on this cloud. The ansible scripts developed on this cloud were
+then tested on the remaining clouds to ensure they are platform
+independent. The results of deployment are presented in the table
+\ref{T:bench1} and illustrated in the form of a bar plot (Fig
+\ref{barc}) below.
 
 \begin{table}[htb]
 \centering
@@ -470,20 +397,16 @@ obtained see Table \ref{T:bench1} and can be illustrated in the form of a bar pl
 }
 \end{table}
 
-
-
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-1.png}
   \caption{Bar diagram to compare the time taken to deploy on Chameleon}
   \label{barc}
 \end{figure}
 
-\clearpage
-
-\subsection{JetStream}
-
-Automated the deployment of cloud on Jestream cloud resources on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. The time taken to deploy the cluster on Jetstream see Table \ref{T:timejet}.
-
+\subsection{JetStream Cloud}
+Automated deployment on Jestream cloud of various cluster node sizes of 5, 7 and 
+9 and results are presented below, in the form of a table \ref{T:timejet} and 
+illustrated as a figure \ref{i:barjet}.
 
 \begin{table}[!htb]
 \centering
@@ -501,8 +424,8 @@ Automated the deployment of cloud on Jestream cloud resources on various cluster
 \end{tabular}
 \end{table}
 
-
-Below is a bar description of the various times it took in deploying various size clusters see Fig \ref{i:barjet}.
+Below is a bar description of the time taken for deployment on different size 
+clusters see Fig \ref{i:barjet}.
 
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-2.png}
@@ -510,10 +433,10 @@ Below is a bar description of the various times it took in deploying various siz
   \label{i:barjet}
 \end{figure}
 
-
-\subsection{Kilo- FutureSystems}
-
-Automated the deployment of our project  on Kilo cloud based on various cluster node sizes of 5, 7 and 9 just like we did in the case of chameleon cloud. Below we tabularize time taken to deploy the cluster on Kilo see Table \ref{T:timekilo}.
+\subsection{Kilo Cloud - FutureSystems}
+Automated deployment on Jestream cloud of various cluster node sizes of 5, 7 and 
+9 and results are presented below, in the form of a table \ref{T:timekilo} and 
+illustrated as a figure \ref{i:timekilo}
 
 \begin{table}[!htb]
 \centering
@@ -521,7 +444,7 @@ Automated the deployment of our project  on Kilo cloud based on various cluster 
 \begin{center}
  \begin{tabular}{|c|| c c c|} 
  \hline
- Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
+ Install Time & 5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
  \hline\hline
  Real: & 478.426 & 592.267 & 798.894 \\ 
  \hline
@@ -533,7 +456,8 @@ Automated the deployment of our project  on Kilo cloud based on various cluster 
 \end{center}
 \end{table}
 
-Below is the bar description of the various times it took in deploying various size clusters see Fig \ref{i:timekilo}.
+Below is a bar description of the time taken for deployment on different size 
+clusters see Fig \ref{i:timekilo}.
 
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-3.png}
@@ -541,27 +465,20 @@ Below is the bar description of the various times it took in deploying various s
   \label{i:timekilo}
 \end{figure}
 
-\section{Benchmarking on various clouds}
-
-Comparison between installation time on various clouds with different cluster sizes. From the above deployment, following inferences were made:
-
+\section{Deployment Summary on various clouds}
+Comparison between installation time on the three clouds with differing
+cluster sizes is done in the figure below \ref{gvc}. The following inferences 
+were made:
 \begin{itemize}
-\item Kilo cloud relatively long time when it came to installing java and its related packages
-\item Fairly, all the clusters took the same time in starting the storm cluster and running the storm-starter job.
+\item Kilo cloud - Not conducive to development or production as the creation of 
+vms on the cloud and the installation of software took a relatively long time.
+\item Chameleon and Jetstream clouds have similar rates of deployment. As 
+observed below, jetstream is more suitable for production.
+\item All the clusters took similar amount of time for starting the zookeeper 
+and storm processes.
 \end{itemize}
 
-
-Also a plot has been made to illustrate the various installation times on different clouds at one place, below image illustrates that see Fig \ref{gvc}.
-
-
-\begin{figure}[!htb]
-  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-4.png}
-  \caption{Graph plot to compare the time taken to deploy on various clouds}
-  \label{gvc}
-\end{figure}
-
-Also, the below table gives us the final time it takes on each cloud of varying cluster size to deploy the storm cluster see Table \ref{T:gvc}
-
+The table showcases the times plotted below. see Table \ref{T:gvc}
 \begin{table}[h]
 \begin{center}
   \centering
@@ -581,7 +498,196 @@ Also, the below table gives us the final time it takes on each cloud of varying 
 \end{center}
 \end{table}
 
+A plot has been illustrated to distinguish the installation time on the different 
+clouds \ref{gvc}.
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-4.png}
+  \caption{Graph plot to compare the time taken to deploy on various clouds}
+  \label{gvc}
+\end{figure}
 
+\section{Performance Benchmarking on various clouds:}
+As a part of this Project we would like to examine the difference in terms of 
+performance between clouds and analyze the results to discern the advantages of 
+one cloud over the other. To test the perfoemance, a topology from the 
+storm-starter project was used. The topology is based on the basic word count 
+topology with a few changes. The first difference is the rate of production of 
+sentences. The rate may be set using arguments. This enable us to perform stress 
+testing on clusters of different sizes and clouds. The second difference is the 
+number of worker nodes to be used. This property allows us to accurately define 
+the number of storm supervisor nodes to run the topology on and gather the results 
+effectively. The final difference is the time for which the topology runs. This 
+is an important feature as the metrics are printed with a period of 30 secs. This 
+implies that every 30s, the number of sentences that have been executed successfully 
+is printed and a new set of sentences are generated for the next 30 secs. We have 
+chosen a value of 5 minutes as this gives us an accurate idea of the 
+effectiveness of the cluster. The definitions of throughput and latency are 
+mentioned below:
+\textbf{\textit{Latency}} is the time required to perform some action or produce a result.
+\textbf{\textit{Throughput}} is the number os such actions performed per unit of time
+
+A result is produced/completed on a storm cluster when an "ack" is received. The 
+number of such acks defines the throughput of the cluster. For example, if we 
+have received 12,600 acks during a 30s time period, then the throughput rate is 
+420/sec. Higher throughput rates are desired for better computing capability 
+with lower latency.
+
+\subsection{Hardware:}
+All the nodes on each of the clouds deployed had the following things
+in common:
+\begin{description}
+\item Image: Ubuntu-14.04-64
+\item Flavor: m1.small
+\item Nodes: Depending on the cluster size various node sizes are deployed
+\end{description}
+
+\subsection{Experimental Results and Analysis:}
+Following were the inferences and conclusions derived from the performance
+benchmarking, with respect to the ThroughputVsLatency topology.
+\begin{itemize}
+\item 5 node cluster: The throughput graph starts small and rises equally upto a 
+rate of 150000, at which point, the throughput on chameleon cloud falls rapidly. 
+The results on kilo cloud indicate that a 5 node cluster is sub-optimal for this 
+cloud. Jetstream cloud scaled very well with increase in throughput. The results 
+are tabulated here \ref{T:bench-5} and illustrated here \ref{5c}.
+\item 7 node cluster: Chameleon cloud performed better on a 7 node cluster but 
+the throughput falls rapidly after 300000. Kilo cloud performed sub-optimally at 
+all throughout levels. Jetstream cloud scaled exceptionally well with an increase 
+in throughput. The results are tabulated here \ref{T:bench-7} and illustrated 
+here \ref{7c}.
+\item 9 node cluster: The difference in performance between chameleon cloud and 
+jetstream cloud are negligible.Kilo cloud performs well upto a throughout value 
+of 150000 and falls afterwards. Jetstream cloud is consistent at all throughput 
+levels and chameleon cloud performed equally well. The results are tabulated here 
+\ref{T:bench-9} and illustrated here \ref{9c}
+\item While significant improvements were observed on clusters of larger sizes, 
+the results are not consistent at all times for chameleon cloud. Jetstream cloud 
+provided consistent results and can be used for production clusters as shown by 
+its performance results. Kilo cloud is not suitable for deployment or for 
+production. The results are consolidated in the form of a graph below \ref{ac}.
+\end{itemize}
+
+\begin{table}[!htb]
+\centering
+\caption{Throughput vs Latency on all 5 node clusters on 3 clouds:}\label{T:bench-5}
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+  &   &5 node cluster & \\ [0.5ex]
+ \hline\hline
+ Throughput: & Chameleon & Jetstream & Kilo \\ 
+ \hline
+ 3000: & 2940 & 2760 & 2906 \\
+ \hline
+ 15000: & 13958 & 13654 & 15093 \\
+ \hline
+ 30000: & 27946 & 28178 & 30095 \\
+ \hline
+ 150000: & 140454& 142084 &137352 \\
+ \hline
+ 300000: & 35417.5 & 275074 & 10506 \\
+ \hline
+ 450000: & 14946.667 & 414982 & 6268 \\
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[!htb]
+\centering
+\caption{Throughput vs Latency on all 7 node clusters on 3 clouds:}\label{T:bench-7}
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+  &   &7 node cluster & \\ [0.5ex]
+ \hline\hline
+ Throughput: & Chameleon & Jetstream & Kilo \\ 
+ \hline
+ 3000: & 2702 & 2734 & 2875 \\
+ \hline
+ 15000: & 13502 & 13766 & 14348 \\
+ \hline
+ 30000: & 27364 & 28110 & 29160 \\
+ \hline
+ 150000: & 140124& 141894 &41275 \\
+ \hline
+ 300000: & 280170 & 284356 & 431.25\\
+ \hline
+ 450000: & 67857.5 & 412488 & 435 \\
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\begin{table}[!htb]
+\centering
+\caption{Throughput vs Latency on all 9 node clusters on 3 clouds:}\label{T:bench-9}
+\begin{center}
+ \begin{tabular}{|c|| c c c|} 
+ \hline
+  &   &9 node cluster & \\ [0.5ex]
+ \hline\hline
+ Throughput: & Chameleon & Jetstream & Kilo \\ 
+ \hline
+ 3000: & 2700 & 2754 & 2848 \\
+ \hline
+ 15000: & 14722.22 & 13784 & 14337 \\
+ \hline
+ 30000: & 27724 & 27282 & 29455 \\
+ \hline
+ 150000: & 151562.22& 141580 & 149440 \\
+ \hline
+ 300000: & 305566.667 &286708 & 8832 \\
+ \hline
+ 450000: & 418002 & 427174 & 7312 \\
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench2-1.PNG}
+  \caption{Graph plot to compare the peformance on 5 nodes across various clouds}
+  \label{5c}
+\end{figure}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench2-2.PNG}
+  \caption{Graph plot to compare the performance on 7 nodes across various clouds}
+  \label{7c}
+\end{figure}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench2-3.PNG}
+  \caption{Graph plot to compare the performance on 9 nodes across various clouds}
+  \label{9c}
+\end{figure}
+
+\begin{figure}[!htb]
+  \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bench2-4.PNG}
+  \caption{Graph plot to compare the performance on all the nodes across various clouds}
+  \label{ac}
+\end{figure}
+
+\section{Summary}
+We have created, tested and demonstrated a fully automated program to
+configure and deploy a Storm cluster which can be deployed on any
+cloud environment using cloudmesh. We deployed it on
+Chameleon, Jetstream and Kilo cloud. Benchmarking strategy is visualized
+by viewing the time it takes to deploy a particular cluster on various
+cloud environments. We did a benchmark test on Chameleon, Jetstream
+and Kilo cloud to measure the time taken to deploy 5, 7 and 9 node
+clusters, so far it has shown satisfactory results and we are striving
+to take it beyond to other cloud environments as well, outside the
+cloudmesh usage.
+
+\section{Acknowledgments}
+This project was a part of the Big Data Software and Projects
+(INFO-I524) course. We would like to thank Professor Gregor von
+Laszewski and the associate instructors for their help and support
+during the course. Special mention to cloudmesh client which made most
+of the gruelling taks straighforward.
 
 \section{Code References}
 Following were the code resources used in deploying the cluster at various
@@ -619,45 +725,27 @@ stages.
   code resources.-\cite{www-sd1}
 \end{itemize}
 
-
-\section{Summary}
-
-We have created, tested and demonstrated a fully automated program to
-configure and deploy a Storm cluster which can be deployed on any
-cloud environment using cloudmesh. We currently deployed it on
-Chameleon, Jetstream and Kilo cloud. Benchmarking strategy is visioned
-by viewing the time it takes to deploy a particular cluster on various
-cloud environments. We did a benchmark test on Chameleon, Jetstream
-and Kilo cloud to measure the time taken to deploy 5, 7 and 9 node
-clusters, so far it has shown satisfactory results and we are striving
-to take it beyond to other cloud environments as well, outside the
-cloudmesh usage.
-
-\section{Acknowledgments}
-This project was a part of the Big Data Software and Projects
-(INFO-I524) course. We would like to thank Professor Gregor von
-Laszewski and the associate instructors for their help and support
-during the course. Special mention to cloudmesh client which made most
-of the gruelling taks straighforward.
-
-
 \bibliography{references}
 
 \appendix
 
 \section{Work Breakdown}
-
 \begin{itemize}
-
-\item Ajit Balaga: Responsible for initial deployment of storm cluster
-  on various clouds and clusters of different sizes, played an
-  instrumental role in understanding the storm toplogy and its
-  architecture.
-
+\item Ajit Balaga: Responsible for deployment of storm cluster on
+  various clouds and clusters of different sizes, played an
+  instrumental role in understanding the storm and its
+  architecture. Developed the cmd5 storm commands extension and
+  ansible scripts for deployment, responsible for perfomance
+  benchmarking on chameleon cloud, jetstream and 9 node cluster on
+  kilo cloud.
 \item Vasanth Methkupalli: Responsible for deployment of the storm
   cluster on various clouds of different cluster sizes using ansible,
-  almost automated the entire deployment of storm cluster on cloud.
-
+  almost automated the entire deployment of storm cluster on
+  cloud. Performed deployment benchmarking on various clouds and
+  analysis. Also, responsible for performance benchmarking on Kilo
+  cloud and analysis of the entire Performance bencmarking.
 \end{itemize}
 
+\listoffigures
+\listoftables
 \end{document}
