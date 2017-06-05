@@ -1,31 +1,30 @@
 ### copy files from code to $HOME/outbrain
 1. cd <code_directory>/
 2. sh copy_repository_files.sh
-3. Download dataset from https://iu.box.com/s/3mb9aiegh6boswlbbe3yg14if8fcfkfq 
-4. Copy downloaded dataset.tgz to $HOME/outbrain
-5. cd $HOME/outbrain
+3. cd $HOME/outbrain/
 ### deploy/redeploy cluster
   # for deploying fresh and provide #nodes as argument
-6.  sh install_hadoop_pig.sh <#nodes>
+3.  sh install_hadoop_pig.sh <#nodes>
   # for deploying another cluster
-6.  sh re_deploy_cluster.sh <#nodes>
+3.  sh re_deploy_cluster.sh <#nodes>
 ### replace ipadress in hosts and outbrain_pig files
-7. sh replace_nameNode.sh
+4. sh replace_nameNode.sh
 ### move data using ansible palybook
-8. time ansible-playbook -i hosts move_data.yml
+5. time ansible-playbook -i hosts move_data.yml
 
-### login to namenode and execute following command
-	sudo su - hadoop
-9.	tar -xzvf dataset.tgz
+### login to namenode in a new terminal and execute following command
+6.  cm vm ssh <namenode>
+7.  sudo su - hadoop 
+8.  tar -xzvf dataset.tgz
 	
 ### move data to hdfs using ansible palybook
 ### run the following command from local machine
-10. time ansible-playbook -i hosts move_data_hdfs.yml
+9. time ansible-playbook -i hosts move_data_hdfs.yml
 
 #pig -4 log4j.properties outbrain_pig
 ### Run the benchmark_pig.sh script in the background using 
 # 1)chek nohup for time lapase
 # 2)check time_outputs.txt for pig console log
-11. nohup bash benchmark_pig.sh &
+10. nohup bash benchmark_pig.sh &
 
 
