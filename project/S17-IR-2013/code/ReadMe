@@ -1,5 +1,5 @@
 ### copy files from code to $HOME/outbrain
-1. cd <code_directory>/utils/
+1. cd <code_directory>/
 2. sh copy_repository_files.sh
 3. Download dataset from https://iu.box.com/s/3mb9aiegh6boswlbbe3yg14if8fcfkfq 
 4. Copy downloaded dataset.tgz to $HOME/outbrain
