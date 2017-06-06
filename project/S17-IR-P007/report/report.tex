@@ -469,19 +469,29 @@ engine automatically looks up on \url{http://hub.docker.com}.
 Following the FROM statement, we can specify all actions we need to
 perform like specifying the work directory for building the image or
 copying files into our work directory so that every resource is
-available under a single folder. Lastly, our docker file ends with a
-CMD statement that specifies the command that the container is
-supposed to execute on successful instantiation. CMD accepts an array
-of command names followed by the parameters. Since we want our image
-to execute our R application we shall specify the cmd as stated in the
-dockerfile below.
+available under a single folder. Our application needs several text
+mining packages to be available as a part of the installation and thus
+we use the docker RUN command to download these dependencies and make
+them part of the docker image. The R library in the docker container
+shall pre-install all the dependencies as the image is built and we
+shall only care about running the application logic. Lastly, our
+docker file ends with a CMD statement that specifies the command that
+the container is supposed to execute on successful instantiation. CMD
+accepts an array of command names followed by the parameters. Since we
+want our image to execute our R application we shall specify the command
+as stated in the dockerfile below.
 
 \begin{figure}[H]
 \begin{verbatim}
 FROM r-base
-COPY . ~/dockerDirectory/
-WORKDIR ~/dockerDirectory/
-CMD ["Rscript", "spamdetection.r"]
+COPY . ~/myscripts
+WORKDIR ~/myscripts
+RUN Rscript -e "install.packages('tm')"
+RUN Rscript -e "install.packages('e1071')"
+RUN Rscript -e "install.packages('RWeka')"
+RUN Rscript -e "install.packages('ada')"
+RUN Rscript -e "install.packages('rbenchmark')"
+CMD ["Rscript","spamdetection.r"]
 \end{verbatim}
 \caption{Dockerfile of the application}
 \label{Dockerfile of the application}
@@ -521,7 +531,11 @@ Step 3 : WORKDIR ~/dockerDirectory/
  ---> a3c4d57e23c9
 Removing intermediate container 0220b193ed11
 
-Step 4 : CMD Rscript spamdetection.r
+Step 4 : RUN Rscript -e "install.packages('tm')
+       .
+       . <installation_logs>
+       .
+Step 9 : CMD Rscript spamdetection.r
  ---> Running in 4edb44f2ffb6
  ---> a4814eeadf35
 Removing intermediate container 4edb44f2ffb6
@@ -824,9 +838,45 @@ spamdetectionapplication-1   1/1       Running
 spamdetectionapplication-2   1/1       Running
 \end{verbatim}
 \caption{Deployment with 2 replicas}
-\vspace{-3mm}
 \label{Deployment with 2 replicas}
 \end{figure}
+
+\subsubsection{Fetching the application output}
+As stated previously, a pod is a collection of multiple related
+containers. Our application executes in of the containers within the
+pod. Since our application prints output to the console, we shall be
+able to view it by accessing logs of the relevant pod.
+
+\begin{figure}[H]
+\begin{verbatim}
+kubectl get pods | grep spamdetectionapplication*
+
+kubectl logs <pod_name>
+\end{verbatim}
+\caption{Fetching logs for the application}
+\vspace{-4mm}
+\label{Fetching logs for the application}
+\end{figure}
+
+As each pod is hosted on a separate node with a unique ip address, we
+can issue a curl or a wget request to the node to fetch the output.
+Since our application output spans over multiple lines we shall
+redirect and save the output to a file so that it can be referenced at
+any point of time with ease.
+\begin{figure}[H]
+\begin{verbatim}
+curl https://<node_ip>:<node_port>/containerLogs/
+default/<pod_name>/spamdetectionapplication 
+--insecure > output.txt
+\end{verbatim}
+\caption{Saving container logs to a file}
+\vspace{-4mm}
+\label{Saving container logs to a file}
+\end{figure}
+
+Following the above steps, the application output shall be available
+in the file 'output.txt' in the current directory.
+
 
 \subsubsection{Scheduling pods on the master}
 By default, kubernetes does not allow pods to be
@@ -938,6 +988,34 @@ policy introduced in Kubernetes 1.4. Also, using weave net as our pod
 network allows us to use the weave-kube service where we can observe
 our cluster components and their configurations on a GUI accessible by
 a web browser.
+
+\subsection{Unsuccessful download requests from within a kubernetes pod}
+
+Initially, our R application program started with many download and
+install-package statements as we needed several text mining packages
+to implement the respective algorithms. Even after successful
+deployment, we couldn't find the application output in the container
+logs. It took us a fair amount of time to figure out that something
+wasn't working correctly as the pod logs failed to highlight the
+issue. To debug in deeply, we started deploying applications with
+simple print statements to check their behavior. After several
+attempts, we could draw a conclusion that deployment would result in a
+failure if the program included package import statements that needed
+to be downloaded from an external repository. We ran the same
+application image with docker only to find it working perfectly. Thus,
+we could state that, from within a kubernetes pod, an application is
+unable to reach the network and download the desired packages. We
+could find no precise explanation of this behavior on the kubernetes
+forum or issues opened on stack overflow or kubernetes git page.
+
+As a workaround, we segregated the download statements from the R
+program and included it within our docker file. This modification
+would download and install the R libraries and packages as a part of
+the build process of the docker image, eliminating the need to install
+it post deployment. With the dependent libraries as a part of the
+docker container, the application program would run successfully and
+generate the output as a part of the logs for the pod it is associated
+with.
 
 
 \section{Discussion}
