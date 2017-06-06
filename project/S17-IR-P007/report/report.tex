@@ -989,6 +989,34 @@ network allows us to use the weave-kube service where we can observe
 our cluster components and their configurations on a GUI accessible by
 a web browser.
 
+\subsection{Unsuccessful download requests from within a kubernetes pod}
+
+Initially, our R application program started with many download and
+install-package statements as we needed several text mining packages
+to implement the respective algorithms. Even after successful
+deployment, we couldn't find the application output in the container
+logs. It took us a fair amount of time to figure out that something
+wasn't working correctly as the pod logs failed to highlight the
+issue. To debug in deeply, we started deploying applications with
+simple print statements to check their behavior. After several
+attempts, we could draw a conclusion that deployment would result in a
+failure if the program included package import statements that needed
+to be downloaded from an external repository. We ran the same
+application image with docker only to find it working perfectly. Thus,
+we could state that, from within a kubernetes pod, an application is
+unable to reach the network and download the desired packages. We
+could find no precise explanation of this behavior on the kubernetes
+forum or issues opened on stack overflow or kubernetes git page.
+
+As a workaround, we segregated the download statements from the R
+program and included it within our docker file. This modification
+would download and install the R libraries and packages as a part of
+the build process of the docker image, eliminating the need to install
+it post deployment. With the dependent libraries as a part of the
+docker container, the application program would run successfully and
+generate the output as a part of the logs for the pod it is associated
+with.
+
 
 \section{Discussion}
 TBD
