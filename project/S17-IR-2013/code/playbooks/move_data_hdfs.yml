@@ -1,0 +1,20 @@
+---
+- hosts: cc_vm #comment: cc_vm is the group name we just defined
+  become: yes #comment: this operation needs privilege access
+  become_user: hadoop
+  tasks:
+    - name: Create a directory in hdfs
+      shell: "sh -lc 'hdfs dfs -mkdir /outbrain'"
+    - name: Put events file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/events.csv /outbrain/events.csv'"
+    - name: Put clicks train file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/clicks_train.csv /outbrain/clicks_train.csv'"
+    - name: Put promoted_content file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/promoted_content.csv /outbrain/promoted_content.csv'"
+    - name: Put documents_categories file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/documents_categories.csv /outbrain/documents_categories.csv'"
+    - name: Put documents_entities file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/documents_entities.csv /outbrain/documents_entities.csv'"
+    - name: Put documents_topics file on HDFS
+      shell: "sh -lc 'hdfs dfs -put /home/hadoop/documents_topics.csv /outbrain/documents_topics.csv'"
+

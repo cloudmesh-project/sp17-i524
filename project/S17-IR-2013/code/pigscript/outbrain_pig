@@ -1,29 +1,30 @@
 
-A = load 'hdfs://<IP>.<host>/outbrain_data/clicks_train.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+A = load 'hdfs://<IP>:<port>/outbrain/clicks_train.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
 B = foreach A generate (int)$0 as display_id;
-C = load 'hdfs://<IP>.<host>/outbrain_data/events.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+C = load 'hdfs://<IP>:<port>/outbrain/events.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
 D = foreach C generate (int)$0 as display_id, (int)$2 as doc_id;
 E = join B by display_id, D by display_id;
 F = foreach E generate (int)$2 as doc_id;
 G = distinct F;
-H = load 'hdfs://<IP>.<host>/outbrain_data/documents_entities.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+G = LIMIT G $num;
+H = load 'hdfs://<IP>:<port>/outbrain/documents_entities.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
 I = foreach H generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
 J = join I by doc_id, G by doc_id;
 J = foreach J generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
 
-K = load 'hdfs://<IP>.<host>/outbrain_data/documents_topics.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+K = load 'hdfs://<IP>:<port>/outbrain/documents_topics.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
 L = foreach K generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
 M = join L by doc_id, G by doc_id;
 M = foreach M generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
 
-N = load 'hdfs://<IP>.<host>/outbrain_data/documents_categories.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+N = load 'hdfs://<IP>:<port>/outbrain/documents_categories.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
 O = foreach N generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
 P = join O by doc_id, G by doc_id;
 P = foreach P generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
 
 Q = UNION J, M, P;
 
-R = load 'hdfs://<IP>.<host>/outbrain_data/promoted_content.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+R = load 'hdfs://<IP>:<port>/outbrain/promoted_content.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
 S = foreach R generate (int)$0 as ad_id, (int)$1 as ad_doc_id;
 
 T = join S by ad_doc_id, I by doc_id;
@@ -51,6 +52,6 @@ top6 = foreach grpDocumntid {
 
 output_top = foreach top6 generate doc_id, ad_id;
 
-STORE top6 INTO 'hdfs://<IP>.<host>/outbrain_data/outbrain_top6' using PigStorage(';');
-STORE output_top INTO 'hdfs://<IP>.<host>/outbrain_data/outbrain_output' using PigStorage(';');
+-- STORE top6 INTO 'hdfs://<IP>:<port>/outbrain/outbrain_top6' using PigStorage(';');
+STORE output_top INTO 'hdfs://<IP>:<port>/outbrain/$num' using PigStorage(';');
 
