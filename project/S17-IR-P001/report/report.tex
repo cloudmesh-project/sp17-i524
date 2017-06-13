@@ -283,7 +283,7 @@ Chameleon cloud was one of the three platforms used for deploying the real-time 
 \caption{Run time of Textblob}
 \label{fig:tbrun}
 \end{figure}
-The Naive Bayes classifier built in PySpark was implemented in multiple nodes within a cloud Virtual machine. To implement this model, Hadoop, Spark and HDFS had to be installed in each of the nodes in the cluster. As clearly seen from the Table \ref{tab-chamtime} PySpark takes longer time to to get executed as compared to Textblob due to the parallel processing of data. Also, the installation of dependencies take significant amount of time as compared to the system execution. Table \ref{runtime} gives the run time of implementing the classifier in a cluster with 1,2 and 3 worker nodes respectively. It can be seen that the run-time decreases with the increase in number of nodes in the cluster. 
+The Naive Bayes classifier built in PySpark was implemented in multiple nodes within a cloud Virtual machine. To implement this model, Hadoop, Spark and HDFS had to be installed in each of the nodes in the cluster. As clearly seen from the Table \ref{tab-chamtime} PySpark takes longer time to to get executed as compared to Textblob due to the parallel processing of data. Also, the installation of dependencies take significant amount of time as compared to the system execution. Table \ref{runtime} gives the run time of implementing the classifier in a cluster with 1,2 and 3 worker nodes respectively. It can be seen that the run-time for 3 nodes is almost similar to 1 node and higher than the 2 nodes due to the time that takes for communication between the nodes in a cluster. 
 \begin{table}[htb]
 \centering
 \caption{Run time for installation and execution}
@@ -308,9 +308,9 @@ The Naive Bayes classifier built in PySpark was implemented in multiple nodes wi
 \hline
 \multicolumn{2}{|c|}{\textbf{Run time of Naïve Bayes}} \\ \hline
 \textbf{No. of nodes}   & \textbf{Run Time (in s)}  \\ \hline
-1                          & 32                        \\ \hline
-2                          & 27                        \\ \hline
-3                          & 25                        \\ \hline
+1                           & 32                        \\ \hline
+2                          & 24                        \\ \hline
+3                          & 30                        \\ \hline
 \end{tabular}
 \end{table}
 \section{Conclusion}
