@@ -18,7 +18,7 @@
 \doi{\url{https://github.com/sakorrap/sp17-i524/blob/master/paper2/S17-IR-2013/report.pdf}}
 
 \begin{abstract}
-This paper provides a brief introduction to OpenCV. OpenCV is an open source computer vision and machine learning software library, which was originally introduced more than a decade ago by Intel. The library has more than 2500 optimized algorithms, which includes a comprehensive set of both classic and state-of-the-art computer vision and machine learning algorithms \cite{www-opencv}. 
+This paper provides a brief introduction to OpenCV. OpenCV is an open source computer vision and machine learning software library, which was originally introduced more than a decade ago by Intel. The library has more than 2500 optimized algorithms, which includes a comprehensive set of computer vision and machine learning algorithms \cite{www-opencv}. 
 \newline
 \end{abstract}
 
@@ -28,14 +28,10 @@ This paper provides a brief introduction to OpenCV. OpenCV is an open source com
 
 \maketitle
 \section{Introduction}
-Computer Vision is the science of programming for a computer to process and understand images and videos so that the machines can detect and recognize faces, identify objects, classify human actions in videos, track moving objects, etc \cite{www-about}. In order to advance vision research and disseminate vision knowledge, it is highly critical to have a library of programming functions with the optimized and portable code \cite{opencv-paper}. OpenCV was built to provide a common infrastructure for computer vision applications and to accelerate the use of machine perception \cite{www-about}. \newline In the early days of OpenCV, the goals of the project were described as \cite{www-opencv-wiki}:
-\begin{enumerate}
-    \item Advance vision research by providing not only open but also optimized code for basic vision infrastructure. No more reinventing the wheel.
-    \item Disseminate vision knowledge by providing a common infrastructure that developers could build on, so that code would be more readily readable and transferable.
-    \item Advance vision-based commercial applications by making portable, performance-optimized code available for free with a license that did not require code to be open or free itself.
-\end{enumerate}
+Computer Vision is the science of programming for a computer to process and understand images and videos so that the machines can detect and recognize faces, identify objects, classify human actions in videos, track moving objects, etc \cite{www-about}. In order to advance vision research and disseminate vision knowledge, it is highly critical to have a library of programming functions with the optimized and portable code \cite{opencv-paper}. OpenCV was built to provide a common infrastructure for computer vision applications and to accelerate the use of machine perception \cite{www-about}. 
+The goals of the project include advance vision research by providing not only open but also optimized code for basic vision infrastructure which means no more reinventing the wheel, disseminating vision knowledge by providing a common infrastructure that developers could build on for more readily readable and transferable code and advance vision-based commercial applications by making portable, performance-optimized code available for free with a license that did not require code to be open or free itself \cite{www-opencv-wiki}.
 
-It is an open-source BSD-licensed library that now includes several hundreds of computer vision and machine learning algorithms. Being a BSD-licensed product, OpenCV makes it easy for businesses to utilize and modify the code. Since the official launch of OpenCV in 1999, a number of programmers have contributed to the most recent library developments. It has C++, C, Python, Java and MATLAB interfaces and supports Windows, Linux, Android and Mac OS. Though machine learning algorithms are added to OpenCV to support computer vision develpment, they can be used in other applications like speech recognition and anomaly detection. CUDA and OpenCL interfaces are being actively developed right now \cite{www-about}.
+It is an open-source BSD-licensed library that now includes several hundreds of computer vision and machine learning algorithms. Being a BSD-licensed product, OpenCV aloows businesses to utilize and modify the code. Since the official launch of OpenCV in 1999, a number of programmers have contributed to the most recent library developments. It has C++, C, Python, Java and MATLAB interfaces and supports Windows, Linux, Android and Mac OS. Though machine learning algorithms are added to OpenCV to support computer vision develpment, they can be used in other applications like speech recognition and anomaly detection. CUDA and OpenCL interfaces are being actively developed right now \cite{www-about}.
 
 \section{Platforms for OpenCV}
 OpenCV was designed to be a cross-platform tool, due to which it is completely written in C. This makes it portable to any commercial system, right from PCs, Macs, to robotic on board computers as the C compilers were stable during the initial days of development. Moreover, low-level optimization is possible through C. When it comes to Computer Vision, such optimizations may easily lead to significant speedup \cite{www-platforms}. 
@@ -57,32 +53,24 @@ In 2011 a new module providing OpenCL accelerations of OpenCV algorithms was add
 In the 2.4 branch OpenCL-accelerated versions of functions and classes were located in a separate ocl module and in a separate namespace (\textit{cv::ocl}), and often had different names (e.g. \textit{cv::resize()} vs \textit{cv::ocl::resize()} and \textit{cv::CascadeClassifier} vs \textit{cv::ocl::OclCascadeClassifier}) that required a separate code branch in user application code. Since OpenCV 3.0 (master branch as of 2013) the OpenCL accelerated branches transparently added to the original API functions and are used automatically when possible/sensible.
 
 \section{Modules in OpenCV}
-OpenCV was built as a modular program, which means there are several shared or static libraries to pick from. An overview of the modules present in the latest version of OpenCV (3.2.0) \cite{www-opencv-intro}:
-\begin{enumerate}
-    \item \textbf{Core functionality} a compact module defining basic data structures, including the dense multi-dimensional array Mat and basic functions used by all other modules.
-    \item \textbf{Image processing} an image processing module that includes linear and non-linear image filtering, geometrical image transformations (resize, affine and perspective warping, generic table-based remapping), color space conversion, histograms, and so on.
-    \item \textbf{video} a video analysis module that includes motion estimation, background subtraction, and object tracking algorithms.
-    \item \textbf{calib3d} basic multiple-view geometry algorithms, single and stereo camera calibration, object pose estimation, stereo correspondence algorithms, and elements of 3D reconstruction.
-    \item \textbf{features2d} salient feature detectors, descriptors, and descriptor matchers.
-    \item \textbf{objdetect} detection of objects and instances of the predefined classes (for example, faces, eyes, mugs, people, cars, and so on).
-    \item \textbf{highgui} an easy-to-use interface to simple UI capabilities.
-    \item \textbf{Video I/O} an easy-to-use interface to video capturing and video codecs.
-    \item \textbf{gpu} GPU-accelerated algorithms from different OpenCV modules.
-    \item  There are other helper modules, such as FLANN and Google test wrappers, Python bindings, and others.
-\end{enumerate}
+OpenCV was built as a modular program, which means there are several shared or static libraries to pick from. An overview of the modules present in the latest version of OpenCV (3.2.0) \cite{www-opencv-intro}.
+\subsection{Core functionality} a compact module defining basic data structures, including the dense multi-dimensional array Mat and basic functions used by all other modules.
+\subsection{Image processing} an image processing module that includes linear and non-linear image filtering, geometrical image transformations (resize, affine and perspective warping, generic table-based remapping), color space conversion, histograms, and so on.
+\subsection{video} a video analysis module that includes motion estimation, background subtraction, and object tracking algorithms.
+\subsection{calib3d} basic multiple-view geometry algorithms, single and stereo camera calibration, object pose estimation, stereo correspondence algorithms, and elements of 3D reconstruction.
+\subsection{features2d} salient feature detectors, descriptors, and descriptor matchers.
+\subsection{objdetect} detection of objects and instances of the predefined classes (for example, faces, eyes, mugs, people, cars, and so on).
+\subsection{highgui} an easy-to-use interface to simple UI capabilities.
+\subsection{Video I/O} an easy-to-use interface to video capturing and video codecs.
+\subsection{gpu} GPU-accelerated algorithms from different OpenCV modules.
+\newline There are other helper modules, such as FLANN and Google test wrappers, Python bindings, and others.
 
 \section{Setup and Configuration}
 Since, Python is the most popular language for Machine Learning and Computer Vision, set up and configuration of OpenCV for Python on Windows may be done as shown below.
 
 \subsection{Setting up OpenCV Python on Windows}
-OpenCV requires numpy and matplotlib (optional but recommended) packages to be installed in a Python 2.7 environment to be able to run successfully. After making sure that the dependencies are installed, the following steps will help to setup OpenCV for Python \cite{www-opencv-python}:
-
-\begin{enumerate}
-    \item Download latest OpenCV release from sourceforge site \cite{www-opencv-sf} and double-click to extract it.
-    \item Go to \textit{opencv/build/python/2.7} folder.
-    \item Copy \textit{cv2.pyd} to \textit{C:/Python27/lib/site-packages}. 
-\end{enumerate}
-Now OpenCV will work as a Python library named cv2. For checking if it works, type the following code in Python environment.
+OpenCV requires numpy and matplotlib (optional but recommended) packages to be installed in a Python 2.7 environment to be able to run successfully. After making sure that the dependencies are installed, setup OpenCV for Python. Download latest OpenCV release from sourceforge site \cite{www-opencv-sf} and double-click to extract it. Go to \textit{opencv/build/python/2.7} folder. Copy \textit{cv2.pyd} to \textit{C:/Python27/lib/site-packages}. Now OpenCV will work as a Python library named cv2 \cite{www-opencv-python}.
+\newline For checking if the setup works, type the following code in Python environment.
 \begin{Verbatim}
 import cv2
 \end{Verbatim}
@@ -92,7 +80,7 @@ OpenCV is an open source software, and OpenCV allows redistribution in terms of 
 
 \section{Use Case}
 OpenCV library can be used for image recognition technology. There are numerous applications of image recognition, like facial recognition for security purposes, facial tagging in cameras, image and video processing in self driving cars. For instance, take a data set containing pictures taken from a forest surveillance cameras, we can process the images to find out the number of animals at any given point of time. This will be helpful in keeping track of endangered animals and to keep a check on animal poaching. 
-\newline A sample code of loading an image of a watch for the purpose of image recognition using OpenCV in Python is demonstrated below:
+\newline A sample code of loading an image of a watch for the purpose of image recognition using OpenCV in Python is demonstrate.
 \newline Here, we use numpy and matplotlib libraries which we installed earlier \cite{www-opencv-pythonprgm-tut}.
 \begin{Verbatim}
 import cv2
@@ -103,10 +91,10 @@ cv2.imshow('image',img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 \end{Verbatim}
-Images can also be displayed for which sample code is shown below \cite{www-opencv-pythonprgm-tut}:
+Images can also be displayed for which sample code is provided \cite{www-opencv-pythonprgm-tut}:
 \begin{Verbatim}
 plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
-plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+plt.xticks([]), plt.yticks([])  # to hide tick values 
 plt.plot([200,300,400],[100,200,300],'c', linewidth=5)
 plt.show()
 \end{Verbatim}
@@ -114,7 +102,7 @@ plt.show()
 The OpenCV website has detailed and structured documentation for its modules, for all operating systems and platforms. Further reading is suggested based on the requirements of OS, platform and language by clicking on the version of OpenCV that is currently in use \cite{www-opencv-docs}. 
 
 \section{Conclusion}
-OpenCV is one of the leading Computer Vision software which offers various modules for image and video processing and a library of various Machine learning algorithms. OpenCV is an ever growing platform owing to its open source nature. OpenCV is versatile in terms of its operating systems, platforms and programming languages, which makes it an even more popular tool. The open source Robot Operating System (ROS) uses OpenCV as its primary image processing software. This expands the usage of OpenCv even further. 
+OpenCV is a Computer Vision software which offers various modules for image and video processing and a library of various Machine learning algorithms. OpenCV is a growing platform owing to its open source nature. OpenCV is versatile in terms of its operating systems, platforms and programming languages, which makes it a more popular tool. The open source Robot Operating System (ROS) uses OpenCV as its primary image processing software which expands the usage of OpenCv even further. 
 
 \section*{Acknowledgements}
 

@@ -1,0 +1,57 @@
+
+A = load 'hdfs://<IP>:<port>/outbrain/clicks_train.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+B = foreach A generate (int)$0 as display_id;
+C = load 'hdfs://<IP>:<port>/outbrain/events.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+D = foreach C generate (int)$0 as display_id, (int)$2 as doc_id;
+E = join B by display_id, D by display_id;
+F = foreach E generate (int)$2 as doc_id;
+G = distinct F;
+G = LIMIT G $num;
+H = load 'hdfs://<IP>:<port>/outbrain/documents_entities.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+I = foreach H generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
+J = join I by doc_id, G by doc_id;
+J = foreach J generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
+
+K = load 'hdfs://<IP>:<port>/outbrain/documents_topics.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+L = foreach K generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
+M = join L by doc_id, G by doc_id;
+M = foreach M generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
+
+N = load 'hdfs://<IP>:<port>/outbrain/documents_categories.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+O = foreach N generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
+P = join O by doc_id, G by doc_id;
+P = foreach P generate (int)$0 as doc_id, (chararray)$1 as mapping_id, (float)$2 as confidence_level;
+
+Q = UNION J, M, P;
+
+R = load 'hdfs://<IP>:<port>/outbrain/promoted_content.csv' USING org.apache.pig.piggybank.storage.CSVExcelStorage(',','NO_MULTILINE','UNIX','SKIP_INPUT_HEADER');
+S = foreach R generate (int)$0 as ad_id, (int)$1 as ad_doc_id;
+
+T = join S by ad_doc_id, I by doc_id;
+U = foreach T generate (int)$0 as ad_id, (int)$1 as ad_doc_id, (chararray)$3 as ad_mapping_id, (float)$4 as ad_confidence_level;
+
+X = join S by ad_doc_id, L by doc_id;
+Y = foreach X generate (int)$0 as ad_id, (int)$1 as ad_doc_id, (chararray)$3 as ad_mapping_id, (float)$4 as ad_confidence_level;
+
+W = join S by ad_doc_id, O by doc_id;
+V = foreach T generate (int)$0 as ad_id, (int)$1 as ad_doc_id, (chararray)$3 as ad_mapping_id, (float)$4 as ad_confidence_level;
+
+Z = UNION U, Y, V;
+
+AA = join Q by mapping_id, Z by ad_mapping_id;
+AB = foreach AA generate doc_id, mapping_id, confidence_level, ad_id, ad_confidence_level, confidence_level*ad_confidence_level;
+AC = foreach AB generate (int)$0 as doc_id, (int)$3 as ad_id, (float)$5 as relevence_factor;
+
+grpDocumntid = GROUP AC BY doc_id;
+
+top6 = foreach grpDocumntid {
+        sorted = order AC by relevence_factor desc;
+        top    = limit sorted 6;
+        generate group, flatten(top);
+};
+
+output_top = foreach top6 generate doc_id, ad_id;
+
+-- STORE top6 INTO 'hdfs://<IP>:<port>/outbrain/outbrain_top6' using PigStorage(';');
+STORE output_top INTO 'hdfs://<IP>:<port>/outbrain/$num' using PigStorage(';');
+
