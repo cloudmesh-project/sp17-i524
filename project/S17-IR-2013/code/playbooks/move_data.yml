@@ -1,0 +1,32 @@
+---
+- hosts: cc_vm #comment: cc_vm is the group name we just defined
+  become: yes #comment: this operation needs privilege access
+  become_user: hadoop
+  tasks:
+    - copy:
+        src: /home/sahiti/outbrain/dataset.tgz
+        dest: /home/hadoop/dataset.tgz
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/sahiti/outbrain/outbrain_pig
+        dest: /home/hadoop/outbrain_pig
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+    - copy:
+        src: /home/sahiti/outbrain/benchmark_pig.sh
+        dest: /home/hadoop/benchmark_pig.sh
+        owner: hadoop
+        group: hadoop
+        mode: 0755
+    - copy:
+        src: /home/sahiti/outbrain/log4j.properties
+        dest: /home/hadoop/log4j.properties
+        owner: hadoop
+        group: hadoop
+        mode: 0644
+
+    - name: Change Permissions for the Pig Script
+      shell: "sh -lc 'chmod 777 /home/hadoop/outbrain_pig'"
