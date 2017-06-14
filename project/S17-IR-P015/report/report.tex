@@ -12,7 +12,7 @@
 
 
 
-\title{Deployment of a Storm cluster}
+\title{Deployment and performance analysis of a Storm cluster on various cloud environments}
 
 \author[1,*]{Vasanth Methkupalli}
 \author[1,**]{Ajit Balaga}
@@ -47,11 +47,12 @@ set up and operate. Storm integrates with the queueing and database
 technologies we already use. Storm is currently being used to run
 various critical computations in Twitter at scale, and in real-time,
 this led us to explore and deploy it on various cloud. In this paper
-we deploy storm on various clouds and benchmark the performance, doing real time 
-processing on sample datasets. First, we describe the architecture of Storm, its 
-deployment and its methods for distributed scaleout and fault-tolerance. We 
-performed a deployment and performance benchmarking to realise the storm on
-various clouds. We identified and examined the best clouds for
+we try to deploy storm on various clouds and benchmark the performance
+on various data, doing real time processing on sample datasets. First,
+we describe the architecture of Storm, its deployment and its methods
+for distributed scaleout and fault-tolerance. We intend to perform a
+deployment and performance benchmarking to realise the storm on
+various clouds. We wish to identify and examine the best clouds for
 storm in terms of deployment and performance.
 \end{abstract}
 
@@ -213,7 +214,7 @@ be viewed from the localhost of that particular node.
 The supervisor runs on each Storm node. It receives assignments from
 Nimbus and spawns workers based on the assignment. It also monitors
 the he alth of the workers and respawns them if necessary. The main
-thread reads the Storm configuration, initializes the Supervisor’s
+thread reads the Storm configuration, initializes the S upervisor’s
 global map, creates a persistent local state in the file system, and
 schedules recurring timer events. There are three types of events,
 which are:
@@ -287,7 +288,7 @@ update the ansible hosts file and run the ansible script to deploy the
 entire project on the cloud. The entire process of deploying the
 project on various clouds have been tried and tested, and the results
 have been collected for benchmarking. The results of benchmarking have
-been presented below, after a brief comparision and deployment
+been presented after a brief comparision and deployment
 strategy.
 
 \section{Cloud Flavor and Image Comparison}
@@ -345,7 +346,7 @@ The following commands are provided with the CMD5 storm extension:
 
 The important command in the above is the "storm cluster deploy"
 command. It utilizes four roles created using ansible, namely, setup,
-zookeeper, nimbus and supervisors. The roles are explained below:
+zookeeper, nimbus and supervisors. The roles are explained as follows:
 \begin{description}
 \item Setup: Installs software packages, java jdk, java jre,
   supervisord on all nodes in the cluster. Creates the folders for
@@ -373,11 +374,11 @@ server cluster can ensure reliability.
 
 \subsection{Chameleon Cloud}
 Chameleon cloud was used for development and most of the scripts were
-run on this cloud. The ansible scripts developed on this cloud were
+run and tested on this cloud. The ansible scripts developed on this cloud were
 then tested on the remaining clouds to ensure they are platform
 independent. The results of deployment are presented in the table
 \ref{T:bench1} and illustrated in the form of a bar plot (Fig
-\ref{barc}) below.
+\ref{barc}).
 
 \begin{table}[htb]
 \centering
@@ -405,7 +406,7 @@ independent. The results of deployment are presented in the table
 
 \subsection{JetStream Cloud}
 Automated deployment on Jestream cloud of various cluster node sizes of 5, 7 and 
-9 and results are presented below, in the form of a table \ref{T:timejet} and 
+9 and results are presented as follows, in the form of a table \ref{T:timejet} and 
 illustrated as a figure \ref{i:barjet}.
 
 \begin{table}[!htb]
@@ -424,7 +425,7 @@ illustrated as a figure \ref{i:barjet}.
 \end{tabular}
 \end{table}
 
-Below is a bar description of the time taken for deployment on different size 
+A bar description of the time taken for deployment on different size 
 clusters see Fig \ref{i:barjet}.
 
 \begin{figure}[!htb]
@@ -434,9 +435,9 @@ clusters see Fig \ref{i:barjet}.
 \end{figure}
 
 \subsection{Kilo Cloud - FutureSystems}
-Automated deployment on Jestream cloud of various cluster node sizes of 5, 7 and 
-9 and results are presented below, in the form of a table \ref{T:timekilo} and 
-illustrated as a figure \ref{i:timekilo}
+Automated deployment on Kilo cloud of various cluster node sizes
+of 5, 7 and 9 and results are presented, in the form of a table
+\ref{T:timekilo} and illustrated as a figure \ref{i:timekilo}
 
 \begin{table}[!htb]
 \centering
@@ -444,7 +445,7 @@ illustrated as a figure \ref{i:timekilo}
 \begin{center}
  \begin{tabular}{|c|| c c c|} 
  \hline
- Install Time & 5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
+ Install Time &  5 node cluster & 7 node cluster & 9 node cluster\\ [0.5ex]
  \hline\hline
  Real: & 478.426 & 592.267 & 798.894 \\ 
  \hline
@@ -456,7 +457,7 @@ illustrated as a figure \ref{i:timekilo}
 \end{center}
 \end{table}
 
-Below is a bar description of the time taken for deployment on different size 
+A bar description of the time taken for deployment on different size 
 clusters see Fig \ref{i:timekilo}.
 
 \begin{figure}[!htb]
@@ -467,18 +468,19 @@ clusters see Fig \ref{i:timekilo}.
 
 \section{Deployment Summary on various clouds}
 Comparison between installation time on the three clouds with differing
-cluster sizes is done in the figure below \ref{gvc}. The following inferences 
+cluster sizes is done in the figure \ref{gvc}. The following inferences 
 were made:
 \begin{itemize}
-\item Kilo cloud - Not conducive to development or production as the creation of 
-vms on the cloud and the installation of software took a relatively long time.
-\item Chameleon and Jetstream clouds have similar rates of deployment. As 
-observed below, jetstream is more suitable for production.
-\item All the clusters took similar amount of time for starting the zookeeper 
-and storm processes.
+\item Kilo cloud - Not conducive to development or production as the
+  creation of vms on the cloud and the installation of software took a
+  relatively long time.
+\item Chameleon and Jetstream clouds have similar rates of
+  deployment. As observed, jetstream is more suitable for production.
+\item All the clusters took similar amount of time for starting the
+  zookeeper and storm processes.
 \end{itemize}
 
-The table showcases the times plotted below. see Table \ref{T:gvc}
+The table showcases the times plotted. see Table \ref{T:gvc}
 \begin{table}[h]
 \begin{center}
   \centering
@@ -498,43 +500,57 @@ The table showcases the times plotted below. see Table \ref{T:gvc}
 \end{center}
 \end{table}
 
-A plot has been illustrated to distinguish the installation time on the different 
-clouds \ref{gvc}.
+A plot has been illustrated to distinguish the installation time on
+the different clouds see Fig \ref{gvc}.
 \begin{figure}[!htb]
   \includegraphics[width=8cm,height=8cm,keepaspectratio,width=\linewidth]{images/bar-4.png}
   \caption{Graph plot to compare the time taken to deploy on various clouds}
   \label{gvc}
 \end{figure}
 
-\section{Performance Benchmarking on various clouds:}
-As a part of this Project we would like to examine the difference in terms of 
-performance between clouds and analyze the results to discern the advantages of 
-one cloud over the other. To test the perfoemance, a topology from the 
-storm-starter project was used. The topology is based on the basic word count 
-topology with a few changes. The first difference is the rate of production of 
-sentences. The rate may be set using arguments. This enable us to perform stress 
-testing on clusters of different sizes and clouds. The second difference is the 
-number of worker nodes to be used. This property allows us to accurately define 
-the number of storm supervisor nodes to run the topology on and gather the results 
-effectively. The final difference is the time for which the topology runs. This 
-is an important feature as the metrics are printed with a period of 30 secs. This 
-implies that every 30s, the number of sentences that have been executed successfully 
-is printed and a new set of sentences are generated for the next 30 secs. We have 
-chosen a value of 5 minutes as this gives us an accurate idea of the 
-effectiveness of the cluster. The definitions of throughput and latency are 
-mentioned below:
-\textbf{\textit{Latency}} is the time required to perform some action or produce a result.
-\textbf{\textit{Throughput}} is the number os such actions performed per unit of time
+\section{Analysis of Performance Benchmarking on various clouds:}
+As a part of this Project we would like to examine the difference in
+terms of performance between clouds and analyze the results to discern
+the advantages of one cloud over the other. To test the performance, a
+topology from the storm-starter project was used. The topology is
+based on the basic word count topology with a few changes. The first
+difference is the rate of production of sentences. The rate may be set
+using arguments. This enable us to perform stress testing on clusters
+of different sizes and clouds. The second difference is the number of
+worker nodes to be used. This property allows us to accurately define
+the number of storm supervisor nodes to run the topology on and gather
+the results effectively. The final difference is the time for which
+the topology runs. This is an important feature as the metrics are
+printed with a period of 30 secs. This implies that every 30s, the
+number of sentences that have been executed successfully is printed
+and a new set of sentences are generated for the next 30 secs. We have
+chosen a value of 5 minutes as this gives us an accurate idea of the
+effectiveness of the cluster. The definitions of throughput and
+latency are mentioned as follows: \textbf{\textit{Latency}} is the
+time required to perform some action or produce a result.
+\textbf{\textit{Throughput}} is the number of such actions performed
+per unit of time.
 
-A result is produced/completed on a storm cluster when an "ack" is received. The 
-number of such acks defines the throughput of the cluster. For example, if we 
-have received 12,600 acks during a 30s time period, then the throughput rate is 
-420/sec. Higher throughput rates are desired for better computing capability 
-with lower latency.
+A result is produced/completed on a storm cluster when an "ack" is
+received. The number of such acks defines the throughput of the
+cluster. For example, if we have received 12,600 acks during a 30s
+time period, then the throughput rate is 420/sec. Higher throughput
+rates are desired for better computing capability with lower latency.
+
+
+Analysis for the entire cloud based on the mentioned parameters and
+tests were performed, the strategy has been done by writing a shell
+script, performance.sh which runs for different input sizes for a
+given cluster and collects the output in a file. This test has been
+performed on all clusters in a given cloud, repeated on different
+clouds. All the results are tabulated in the next sections, a detailed
+analysis based on the results obtained is also elucidated clearly.
+
+
 
 \subsection{Hardware:}
-All the nodes on each of the clouds deployed had the following things
-in common:
+All the nodes on each of the clouds deployed had the following features in 
+common:
 \begin{description}
 \item Image: Ubuntu-14.04-64
 \item Flavor: m1.small
@@ -545,26 +561,32 @@ in common:
 Following were the inferences and conclusions derived from the performance
 benchmarking, with respect to the ThroughputVsLatency topology.
 \begin{itemize}
-\item 5 node cluster: The throughput graph starts small and rises equally upto a 
-rate of 150000, at which point, the throughput on chameleon cloud falls rapidly. 
-The results on kilo cloud indicate that a 5 node cluster is sub-optimal for this 
-cloud. Jetstream cloud scaled very well with increase in throughput. The results 
-are tabulated here \ref{T:bench-5} and illustrated here \ref{5c}.
-\item 7 node cluster: Chameleon cloud performed better on a 7 node cluster but 
-the throughput falls rapidly after 300000. Kilo cloud performed sub-optimally at 
-all throughout levels. Jetstream cloud scaled exceptionally well with an increase 
-in throughput. The results are tabulated here \ref{T:bench-7} and illustrated 
-here \ref{7c}.
-\item 9 node cluster: The difference in performance between chameleon cloud and 
-jetstream cloud are negligible.Kilo cloud performs well upto a throughout value 
-of 150000 and falls afterwards. Jetstream cloud is consistent at all throughput 
-levels and chameleon cloud performed equally well. The results are tabulated here 
-\ref{T:bench-9} and illustrated here \ref{9c}
-\item While significant improvements were observed on clusters of larger sizes, 
-the results are not consistent at all times for chameleon cloud. Jetstream cloud 
-provided consistent results and can be used for production clusters as shown by 
-its performance results. Kilo cloud is not suitable for deployment or for 
-production. The results are consolidated in the form of a graph below \ref{ac}.
+\item 5 node cluster: The throughput graph starts small and rises
+  equally upto a rate of 150000, at which point, the throughput on
+  chameleon cloud falls rapidly.  The results on kilo cloud indicate
+  that a 5 node cluster is sub-optimal for this cloud. Jetstream cloud
+  scaled very well with increase in throughput. The results are
+  tabulated here see Table \ref{T:bench-5} and illustrated here see
+  Fig \ref{5c}.
+\item 7 node cluster: Chameleon cloud performed better on a 7 node
+  cluster but the throughput falls rapidly after 300000. Kilo cloud
+  performed sub-optimally at all throughput levels. Jetstream cloud
+  scaled exceptionally well with an increase in throughput. The
+  results are tabulated here see Table \ref{T:bench-7} and illustrated here
+  see Fig \ref{7c}.
+\item 9 node cluster: The difference in performance between chameleon
+  cloud and jetstream cloud is negligible. Kilo cloud performs well
+  upto a throughout value of 150000 and falls afterwards. Jetstream
+  cloud is consistent at all throughput levels and chameleon cloud
+  performed equally well. The results are tabulated here
+  see Table \ref{T:bench-9} and illustrated here see Fig \ref{9c}
+\item While significant improvements were observed on clusters of
+  larger sizes, the results are not consistent at all times for
+  chameleon cloud. Jetstream cloud provided consistent results and can
+  be used for production clusters as shown by its performance
+  results. Kilo cloud is not suitable for deployment or for
+  production. The results are consolidated in the form of a graph
+  see Fig \ref{ac}.
 \end{itemize}
 
 \begin{table}[!htb]
@@ -671,16 +693,21 @@ production. The results are consolidated in the form of a graph below \ref{ac}.
 \end{figure}
 
 \section{Summary}
-We have created, tested and demonstrated a fully automated program to
+We have created, tested and demonstrated a fully automated method to
 configure and deploy a Storm cluster which can be deployed on any
-cloud environment using cloudmesh. We deployed it on
-Chameleon, Jetstream and Kilo cloud. Benchmarking strategy is visualized
+cloud environment using cloudmesh. We have deployed it on
+Chameleon, Jetstream and Kilo cloud. Benchmarking strategy is envisioned
 by viewing the time it takes to deploy a particular cluster on various
 cloud environments. We did a benchmark test on Chameleon, Jetstream
 and Kilo cloud to measure the time taken to deploy 5, 7 and 9 node
 clusters, so far it has shown satisfactory results and we are striving
 to take it beyond to other cloud environments as well, outside the
-cloudmesh usage.
+cloudmesh usage. A performance benchmarking has also been done to
+better analyze the various cloud performances on deployment of a storm
+cluster. We have measured the Throughput and Latency for different
+lengths of input to check the performance on various clouds. All the
+results have been illustrated and various conclusions drawn based on
+the data obtained from the complete deployment of the storm cluster.
 
 \section{Acknowledgments}
 This project was a part of the Big Data Software and Projects
@@ -705,7 +732,7 @@ stages.
  researching for various cluster sizes, we have come to the conclusion
  that storm is better deployed on cluster sizes more than 5. However,
  the server mode configuration is quite relevant to our project, so
- used many resources from below for coding the required
+ used many resources for coding the required
  configurations. Zookeeper-\cite{www-zk1}\cite{www-zk2}\cite{www-zk3}\cite{www-zk4}\cite{www-zk5}\cite{www-zk6}\cite{www-zk7}\cite{www-zk8}
 \item The following code resources were used in analyzing the
   toplogies which were created part of development of the storm
@@ -718,15 +745,15 @@ stages.
   and other config files configuration. Zookeeper
   Troubleshooting-\cite{www-zt1}\cite{www-zt2}\cite{www-zt3}\cite{www-zt4}\cite{www-zt5}\cite{www-zt6}
 \item While checking the log files to check if storm is working or
-  not, had to explore the below resources to make sure it was up and
+  not, had to explore many resources to make sure it was up and
   running. Storm
   Troubleshooting-\cite{www-nnf1}\cite{www-nnf2}\cite{www-nnf3}\cite{www-nnf4}
-\item Storm yaml defaults file details were obtained from the below
+\item Storm yaml defaults file details were obtained from the many
   code resources.-\cite{www-sd1}
 \end{itemize}
 
 \bibliography{references}
-
+\clearpage
 \appendix
 
 \section{Work Breakdown}
