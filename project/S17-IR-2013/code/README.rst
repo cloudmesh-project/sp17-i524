@@ -1,8 +1,8 @@
-### copy files from code to $HOME/outbrain
+### To copy files from code to $HOME/outbrain
 1. cd <code_directory>/
 2. sh copy_repository_files.sh
 3. cd $HOME/outbrain/
-### deploy/redeploy cluster
+### To deploy/redeploy cluster
   # for deploying fresh and provide #nodes as argument
 3.  sh install_hadoop_pig.sh <#nodes>
   # for deploying another cluster
