@@ -19,7 +19,7 @@
 \newline Code: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-2013/code}}
 
 \begin{abstract}
-This project aims at predicting the most suitable advertisements from an available pool with unique ad\_id to be displayed on a web-page. Each webpage has a window to display six advertisements and each window has a display\_id and each advertisement is associated to. So, top six advertisements are selected based on highest relevance with the web page. Relevance factor is calculated by ranking ads based on the likelihood of click if displayed. Data is obtained as CSV files from Kaggle Data sets and is stored in Hadoop Data File system(HDFS). In this project, Ansible along with Cloudmesh client and Bash shell is used to automate the deployment of cloud architecture and necessary software on Chameleon cloud and for performance bench-marking. Apache Pig on Hadoop was chosen for data exploration and analysis. Pig engine executes the data flows in parallel by making use of Hadoop MapReduce framework.
+This project aims at predicting the most suitable advertisements from an available pool with unique ad\_id to be displayed on a web-page. Each webpage has a window to display six advertisements and each window has a display\_id in which six ads can be displayed. Thus, six best advertisements need to be selected. This selection is based on highest relevance with the web page. Relevance factor is calculated by ranking ads based on the likelihood of click if displayed. Data is obtained as CSV files from Kaggle Data sets and is stored in Hadoop Data File system(HDFS). In this project, Ansible along with Cloudmesh client and Bash shell is used to automate the deployment of cloud architecture and necessary software on Chameleon cloud and for bench-marking. Apache Pig on Hadoop was chosen for data exploration and analysis. Pig engine executes the data flows in parallel by making use of Hadoop MapReduce framework.
 \newline
 \end{abstract}
 \setboolean{displaycopyright}{true}
@@ -145,7 +145,7 @@ Figure Fig.\ref{fig:deployment_timetrend} compares the time taken for deployment
 \subsection{Performance bench-marking}
 Pig scripts were written to analyze the data that was moved to HDFS. The script takes input from HDFS location, performs a series of joins and filters out some data, and dumps the output to a HDFS location. Time taken for this entire process is recorded using time command of Linux shell. In order to automate this, the Pig script was looped in a bash script by giving the number of records to process as an input variable. 
 
-Figure Fig.\ref{fig:xlarge_20k} compares time taken for predicting top six advertisements for different cluster sizes with m1.xlarge cluster flavor. From the figure, the performance results show that it scaled linearly up to 20000 web pages. The performance also depends various things such as network connectivity, and there was a notable decrease in time taken as the cluster size increases.The graphs are plotted for time versus the number of web pages to which predictions are made.
+Figure Fig.\ref{fig:xlarge_20k} compares time taken for predicting top six advertisements for different cluster sizes with m1.xlarge cluster flavor. From the figure, the performance results show that it scaled almost linearly with some inconsistencies up to 20000 web pages. The inconsistency may be mainly due to the environment. The performance also depends on various things such as network connectivity, and there was a notable decrease in time taken as the cluster size increases.The graphs are plotted for time versus the number of web pages to which predictions are made.
 
 We can also observe that in figure Fig.\ref{fig:xlarge_20k} time taken for predicting using Pig with data files in and outside HDFS. In local, the data files are kept outside HDFS and output is written to a file outside HDFS. Whereas in 1 node, input files are put in HDFS and output is also stored to HDFS. This can be used to illustrate how the performance of Pig improves with HDFS.
 
@@ -156,7 +156,7 @@ We can also observe that in figure Fig.\ref{fig:xlarge_20k} time taken for predi
 \label{fig:xlarge_20k}
 \end{figure}
 
-A different plot is plotted to capture the time taken for different cluster sizes from 20,000 web pages on wards. Figure Fig.\ref{fig:xlarge_100k}
+Figure Fig.\ref{fig:xlarge_100k} captures the time taken for different cluster sizes from 20,000 web pages on wards. We can observe for higher number of webpages the time taken to predict the best six relevant ads is extremely high after a certain limit. We also observe that the limit is higher for larger clusters.
 
 \begin{figure}[hptb]
 \centering
@@ -168,7 +168,7 @@ A different plot is plotted to capture the time taken for different cluster size
 \section{Conclusion}
 Apache Hadoop technologies can be used to process large volumes of data in parallel to make quick analyses. Apache Pig is an add-on for Hadoop, which is a high level language for writing queries to process data. Apache Pig is efficient in query optimization and enables parallelism for its processing. It was even more efficient when data files were available in HDFS and output is written to HDFS as the time taken for either loading and/or storing significantly improved. The current project used Apache Hadoop and Pig to process large data related to online advertisement prediction. Online advertisement is one space where large amounts of data is collected and it demands the use of Hadoop like parallel processing and distributed systems to get meaningful insights from the data economically. 
 
-As we can see from the results, Apache Pig was able to handle reasonably large sized files in short times. The processing time increased as the input query size increased. These nodes can be horizontally and vertically expanded to utilize the full extent of Hadoop's parallel processing capabilities in order to scale up. 
+As we can see from the results, Apache Pig was able to handle reasonably large sized files in short times. The processing time increased as the input query size increased. These nodes can be horizontally and vertically expanded to utilize the full extent of Hadoop's parallel processing capabilities in order to scale up.
 
 \section{Future work}
 
@@ -192,7 +192,7 @@ The author thanks Professor Gregor Von Laszewski and all the AIs of big data cla
 \newpage
 \appendix
 \section{Execution instructions}
-This project requires Ubuntu 16.04 LTS (Xenial Xerus) machine. The file requirements.txt provided in Code repository can be used to install required modules in a virtual environment virtualenv. ReadMe file is provided in Code repository should be referred to deploy, analyse and benchmark.
+This project requires Ubuntu 16.04 LTS (Xenial Xerus) machine. The file requirements.txt provided in Code repository can be used to install required modules in a virtual environment virtualenv. README file is provided in Code repository should be referred to deploy, analyse and benchmark.
 \subsection{List available definitions} To list already defined clusters, stacks and sec groups
 \newline cm cluster avail - for cluster definitions
 \newline cm hadoop avail - for hadoop stack definitions
@@ -217,9 +217,10 @@ This project requires Ubuntu 16.04 LTS (Xenial Xerus) machine. The file requirem
 \newline cat \/home\/hadoop\/nohup.out
 \subsection{Output files} To see the output files
 \newline hdfs dfs -cat /outbrain/<iteration-number> (in cluster node)
+
 \section{Directory Structure}
 The Code directory /project/S17-IR-2013/code contains several sub directories. 
-\subsection{./} Contains all ReadMe, requirements.txt and copy\_repository\_files.sh
+\subsection{./} Contains all README.rst, requirements.txt and copy\_repository\_files.sh
 \newline copy\_repository\_files.sh copies all the files to outbrain directory in HOME directory. If outbrain directory already exists, then it takes the backup of the existing directory.
 \subsection{./scripts/} Contains all shell and bash scripts. All the scripts are put in sub directories.
 \subsection{./scripts/deploy/} Contains scripts for deploying cluster
@@ -234,6 +235,7 @@ The Code directory /project/S17-IR-2013/code contains several sub directories.
 \subsection{./playbooks/} Contains all Ansible YAML files
 \newline move\_data.yml is for moving files from local machine to namenode of the cluster in use. It takes input from hosts file
 \newline move\_date\_hdfs.yml is for moving data to HDFS from namenode. It also takes input from hosts file.
-
+\subsection{./pig/} Contains pig script
+\newline outbrain\_pig is pig script for selecting best six advertisements for each webpage. This script is called in benchmark\_pig.sh
 \end{document}
 

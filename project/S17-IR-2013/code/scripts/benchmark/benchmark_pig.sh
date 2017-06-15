@@ -1,7 +1,7 @@
 #!/bin/bash
 for i in `seq 1 10`;
 do
-num=$(($i*22000))
+num=$(($i*10000))
 echo "$num iteration"
 start_time=$((`date +%s%3N`))
 (pig -4 /home/hadoop/log4j.properties -p num=$num /home/hadoop/outbrain_pig) 2>>benchmark_outbrain.log
