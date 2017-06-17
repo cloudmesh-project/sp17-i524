@@ -171,11 +171,11 @@ so that they can be deployed on different platforms without worrying
 about resource dependencies. Application containerization is an OS
 (Operating System) level emph{virtualization} for deploying and
 running an application instance without launching a virtual mahine for
-each application \cite{www-containerization}. A container has its own environment
-variables, filesystem and libraries that is needed by the application,
-thus eliminating OS or hardware dependency. Containers abstract the OS
-kernel while a \emph{VM (Virtual Machine)} hypervisor abstracts an
-entire device.
+each application \cite{www-containerization}. A container has its own
+environment variables, filesystem and libraries that is needed by the
+application, thus eliminating OS or hardware dependency. Containers
+abstract the OS kernel while a \emph{VM (Virtual Machine)} hypervisor
+abstracts an entire device.
 
 Docker allows application developers to package their applications
 into isolated containers. Docker automates the repetitive tasks of
@@ -195,29 +195,30 @@ docker introduces the concept of a \emph{docker image}. The docker
 engine creates a docker image by parsing contents of a
 \emph{dockerfile}. A dockerfile is a script composed of various
 commands to build a container in a step-by-step, layer-by-layer manner
-\cite{www-docker-digitalocean}. Once an image has been built it can be shared with other
-users by pushing it to a public repository on \emph{DockerHub} or
-\emph{GoogleCloudPlatform}. In this manner, an image once built by the
-docker engine can be used across the organization by making a docker
-pull request.
+\cite{www-docker-digitalocean}. Once an image has been built it can be
+shared with other users by pushing it to a public repository on
+\emph{DockerHub} or \emph{GoogleCloudPlatform}. In this manner, an
+image once built by the docker engine can be used across the
+organization by making a docker pull request.
 
 \subsection{Kubernetes}
 Kubernetes is an open-source platform for automating deployment,
 management and scaling of containerized applications across a cluster
-\cite{www-wiki-kubernetes}. The more granular an application is, the more components it
-consists of and thus requires management of these
+\cite{www-wiki-kubernetes}. The more granular an application is, the
+more components it consists of and thus requires management of these
 components. Kubernetes helps in faster deployment of applications and
 scaling them on the fly. Moreover it optimizes the use of hardware by
 using the resources which are needed. Kubernetes provides container
 management features like component replication, load-balancing,
-service-discovery and logging across components \cite{www-kubernetes-architecture}. A Kubernetes
-cluster can be deployed on either physical or virtual machines. We
-shall be deploying a kubernetes cluster using \emph{kubeadm} - the
-kubernetes command line tool and \emph{Minikube} which is a
-lightweight Kubernetes implementation which creates a VM on the local
-machine and deploys a simple cluster containing only one node. The
-Minikube CLI provides basic bootstrapping operations for working with
-the cluster, including start, stop, status, and delete commands.
+service-discovery and logging across components
+\cite{www-kubernetes-architecture}. A Kubernetes cluster can be
+deployed on either physical or virtual machines. We shall be deploying
+a kubernetes cluster using \emph{kubeadm} - the kubernetes command
+line tool and \emph{Minikube} which is a lightweight Kubernetes
+implementation which creates a VM on the local machine and deploys a
+simple cluster containing only one node. The Minikube CLI provides
+basic bootstrapping operations for working with the cluster, including
+start, stop, status, and delete commands.
 
 \subsection{Kubernetes Terminologies}
 Kubernetes defines the following set of primitives which provide
@@ -227,8 +228,9 @@ mechanisms for deploying and scaling applications.
 A pod is the smallest unit of a kubernetes cluster and has a unique
 ip-address within the cluster. A pod consists of one or more
 containers that can share resources and can be controlled as a single
-application \cite{www-wiki-kubernetes} \cite{www-kubernetes-digitalocean}. Thus all the involved containers in a
-pod are scheduled on the same host. A pod can be thought of as a
+application \cite{www-wiki-kubernetes}
+\cite{www-kubernetes-digitalocean}. Thus all the involved containers
+in a pod are scheduled on the same host. A pod can be thought of as a
 single virtual machine in terms of resource sharing and scheduling.
 Pods can be managed manually using the \emph{Kubernetes API} or can be
 managed by a controller.
@@ -245,22 +247,24 @@ within a service that result due to pod failure or pod rescheduling.
 
 \subsubsection{Replication Controllers}
 A replication controller is a framework for horizontal scaling of
-pods. Semantics of a pod are defined in a <pod\textunderscore name>.yaml file which
-also defines the replication details that need to be done. The
-replication controller performs replication by scaling a number of
-pods across a cluster based on the pod definition file \cite{www-wiki-kubernetes}. The
-replication controller has to make sure that a certain number of
-copies of a pod are always up and running. Thus, in event of a pod
-failure it replaces the failed pod with a new replica.
+pods. Semantics of a pod are defined in a <pod\textunderscore
+name>.yaml file which also defines the replication details that need
+to be done. The replication controller performs replication by scaling
+a number of pods across a cluster based on the pod definition file
+\cite{www-wiki-kubernetes}. The replication controller has to make
+sure that a certain number of copies of a pod are always up and
+running. Thus, in event of a pod failure it replaces the failed pod
+with a new replica.
 
 \subsubsection{Labels and Selectors}
 Kubernetes allows users or internal components to assign a key-value
 pair tag to any API object in the system. An object can have one or
 more labels associated with it, but each with a unique key. eg:
-appversion = 1.0, development\textunderscore stage = 4.  Label selectors are queries
-against labels that return matching objects \cite{www-kubernetes-digitalocean}. This way each
-object in the system can be referenced with a single label or a
-combination of multiple labels for fine grained control.
+appversion = 1.0, development\textunderscore stage = 4.  Label
+selectors are queries against labels that return matching objects
+\cite{www-kubernetes-digitalocean}. This way each object in the system
+can be referenced with a single label or a combination of multiple
+labels for fine grained control.
 
 \subsection{Kubernetes architecture}
 Kubernetes exhibits the master-slave architecture. The components can
@@ -310,7 +314,8 @@ services on the cluster nodes. The scheduler has the information about
 the availability of resources on a node and schedules unscheduled pods
 on the nodes accordingly. Along with scheduling, the scheduler also
 tracks resource utilization of each node and ensures that workload
-scheduled is not in excess to the resources available \cite{www-wiki-kubernetes}.
+scheduled is not in excess to the resources available
+\cite{www-wiki-kubernetes}.
 
 \subsubsection{Controller-manager}
 The controller manager is the process embedding the different types of
@@ -324,9 +329,9 @@ The worker node also called as minion node is where the containers are
 actually deployed. The worker contains all the necessary services
 needed to manage the networking between containers, communicate with
 the master node and assign resources to the scheduled containers
-\cite{www-kubernetes-architecture}.  Every worker node must run the container runtime i.e docker
-and other components stated below to ensure proper communication with
-the master.
+\cite{www-kubernetes-architecture}.  Every worker node must run the
+container runtime i.e docker and other components stated below to
+ensure proper communication with the master.
 
 \subsubsection{Docker}
 Docker runs on each of the worker nodes. It is responsible for
@@ -339,9 +344,9 @@ responsible for maintaining the pod in the desired state. Kubelet is
 the worker service that monitors the health of each pod and
 communicates the status of each node via a heartbeat message to the
 master.  If the pod is not in the desired state, it is redeployed to
-the same node \cite{www-wiki-kubernetes}. Kubelet is also responsible for communicating
-with the etcd storage to get information about the services and update
-the storage about newly created ones.
+the same node \cite{www-wiki-kubernetes}. Kubelet is also responsible
+for communicating with the etcd storage to get information about the
+services and update the storage about newly created ones.
 
 \subsubsection{Kube-Proxy}
 \emph{Kube-proxy} acts as a network proxy and a load balancer. It is
@@ -356,6 +361,97 @@ and events in the cluster.
 
 
 \section{Design}
+
+\section{About the Application}
+We are using a series of machine learning algorithms and shall compare
+their perfomance in terms of classifier accuracy. To build our
+classifier and check its accuracy, we shall partition the data into 2
+subsets - training data and classification data. We shall choose one
+of the subsets for training and other for testing and predicting
+classifier accuracy.
+
+\subsection{The dataset}
+We are using the SMS Spam Collection dataset from UCI's
+public machine learning repository to build our classifier. The
+dataset consists of 5574 text messages, with each classified as a spam
+or ham message \cite{www-sms_spam_collection}.
+
+\subsection{Algorithms Used}
+
+\subsubsection{SVM}
+SVM (Support Vector Machines) are discriminative classifier models
+that classify the data as belonging to one of the two possible
+classes, in our case class ham and class spam. The SVM algorithm
+attempts to categorize data by drawing a hyperplane between the data
+points such that points on either end of the hyperplane belong to one
+of the two possible classes. An SVM model is representation of given
+data points in space such that the division between the classes of
+data is as clear as possible \cite{www-svm-wiki}. The aim of the algorithm
+is to find the optimum hyperplane that defines the largest possible
+margin between the classes of data.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=40mm,height=40mm]{images/svm_hyperplane.JPG}}
+\caption{The maximum margin hyperplane for SVM \cite{www-svm-tutorial}}
+\label{fig:The maximum margin hyperplane for SVM}
+\end{figure}
+
+\subsubsection{SVM Kernels}
+A simple SVM transfromation works for data with linear decision
+boundaries, where the different data points lie on either side of the
+decision boundary. But for scenarios where a linear boundary is
+efficient to classify data, we need to transform the data from its
+original coordinate space into new space so that a linear decision
+boundary can be drawn to separate the data in this transformed space
+\cite{book-dataminingintroduction}. The kernel is a similarity
+function. It is a method to compute similarity between attributes in
+the transformed attribute space. We shall use svm kernel methods as
+they eliminate the curse of dimensionality problem as they perform the
+computations in the original attribute space
+\cite{book-dataminingintroduction}. We shall avoid mathematical
+details about SVM and the kernel as they are beyond the scope of this
+report.
+
+\textbf{Polynomial kernel} - Polynomial kernel, as the name suggests, looks not
+only at the given features of the input samples but at their
+combination \cite{www-polykernel-wiki}. If a pair of words give
+interesting information rather than the individual words alone, we can
+use a quadratic kernel. Similarly, for occurences of triplets of
+words, we can use a cubic kernel. Linear kernels are special case of
+polynomial kernels where the quadratic factor is 1.
+
+
+\textbf{Radial kernel} - Radial basis kernel maps the data into infinite
+dimensional space to extract relations between the variables. It helps
+us to draw a circular decision boundaries to pick dependent features.
+
+\subsubsection{K - Nearest Neighbor}
+The k-nearest neighbor algorithm classifies a data point as belonging
+to either output class by taking a majority vote amongst its k-nearest
+neighbors. The algorithm computes distances between the test data
+point and all the stored data points or neighbors. \emph{Euclidean
+  distance} \cite{www-wiki-euclidean_distance} is used to compute
+distance metrics between attribute values of the neighbors. A sample
+figure explaining the algorithm is given below.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=40mm,height=40mm]{images/knn_example.JPG}}
+\caption{An example for the K-Nearest Neighbor algorithm \cite{www-knn-introduction}}
+\label{fig: An example for the K-Nearest Neighbor algorithm}
+\end{figure}
+
+There are 2 classes of data items in the figure - circles and
+squares. We have an unknown data point - the star and wish to find its
+real class using k-nearest neighbor algorithm. For k=3, the 3-nearest
+neighbours according to the distance metrics are all circles. Hence,
+the unknown data point is then classified as a circle. This assumption
+changes for higher values of k. To eliminate the effect of noise and
+outliers on the classification result, a weight is associated with
+each data point, with closer neighbors having higher weight over the
+distant neighboring points.
+
 \subsection{Building the Classification model}
 
 \subsubsection{CrossValidation for the training data}
@@ -469,19 +565,29 @@ engine automatically looks up on \url{http://hub.docker.com}.
 Following the FROM statement, we can specify all actions we need to
 perform like specifying the work directory for building the image or
 copying files into our work directory so that every resource is
-available under a single folder. Lastly, our docker file ends with a
-CMD statement that specifies the command that the container is
-supposed to execute on successful instantiation. CMD accepts an array
-of command names followed by the parameters. Since we want our image
-to execute our R application we shall specify the cmd as stated in the
-dockerfile below.
+available under a single folder. Our application needs several text
+mining packages to be available as a part of the installation and thus
+we use the docker RUN command to download these dependencies and make
+them part of the docker image. The R library in the docker container
+shall pre-install all the dependencies as the image is built and we
+shall only care about running the application logic. Lastly, our
+docker file ends with a CMD statement that specifies the command that
+the container is supposed to execute on successful instantiation. CMD
+accepts an array of command names followed by the parameters. Since we
+want our image to execute our R application we shall specify the command
+as stated in the dockerfile below.
 
 \begin{figure}[H]
 \begin{verbatim}
 FROM r-base
-COPY . ~/dockerDirectory/
-WORKDIR ~/dockerDirectory/
-CMD ["Rscript", "spamdetection.r"]
+COPY . ~/myscripts
+WORKDIR ~/myscripts
+RUN Rscript -e "install.packages('tm')"
+RUN Rscript -e "install.packages('e1071')"
+RUN Rscript -e "install.packages('RWeka')"
+RUN Rscript -e "install.packages('ada')"
+RUN Rscript -e "install.packages('rbenchmark')"
+CMD ["Rscript","spamdetection.r"]
 \end{verbatim}
 \caption{Dockerfile of the application}
 \label{Dockerfile of the application}
@@ -521,7 +627,11 @@ Step 3 : WORKDIR ~/dockerDirectory/
  ---> a3c4d57e23c9
 Removing intermediate container 0220b193ed11
 
-Step 4 : CMD Rscript spamdetection.r
+Step 4 : RUN Rscript -e "install.packages('tm')
+       .
+       . <installation_logs>
+       .
+Step 9 : CMD Rscript spamdetection.r
  ---> Running in 4edb44f2ffb6
  ---> a4814eeadf35
 Removing intermediate container 4edb44f2ffb6
@@ -824,9 +934,45 @@ spamdetectionapplication-1   1/1       Running
 spamdetectionapplication-2   1/1       Running
 \end{verbatim}
 \caption{Deployment with 2 replicas}
-\vspace{-3mm}
 \label{Deployment with 2 replicas}
 \end{figure}
+
+\subsubsection{Fetching the application output}
+As stated previously, a pod is a collection of multiple related
+containers. Our application executes in of the containers within the
+pod. Since our application prints output to the console, we shall be
+able to view it by accessing logs of the relevant pod.
+
+\begin{figure}[H]
+\begin{verbatim}
+kubectl get pods | grep spamdetectionapplication*
+
+kubectl logs <pod_name>
+\end{verbatim}
+\caption{Fetching logs for the application}
+\vspace{-4mm}
+\label{Fetching logs for the application}
+\end{figure}
+
+As each pod is hosted on a separate node with a unique ip address, we
+can issue a curl or a wget request to the node to fetch the output.
+Since our application output spans over multiple lines we shall
+redirect and save the output to a file so that it can be referenced at
+any point of time with ease.
+\begin{figure}[H]
+\begin{verbatim}
+curl https://<node_ip>:<node_port>/containerLogs/
+default/<pod_name>/spamdetectionapplication 
+--insecure > output.txt
+\end{verbatim}
+\caption{Saving container logs to a file}
+\vspace{-4mm}
+\label{Saving container logs to a file}
+\end{figure}
+
+Following the above steps, the application output shall be available
+in the file 'output.txt' in the current directory.
+
 
 \subsubsection{Scheduling pods on the master}
 By default, kubernetes does not allow pods to be
@@ -938,6 +1084,34 @@ policy introduced in Kubernetes 1.4. Also, using weave net as our pod
 network allows us to use the weave-kube service where we can observe
 our cluster components and their configurations on a GUI accessible by
 a web browser.
+
+\subsection{Unsuccessful download requests from within a kubernetes pod}
+
+Initially, our R application program started with many download and
+install-package statements as we needed several text mining packages
+to implement the respective algorithms. Even after successful
+deployment, we couldn't find the application output in the container
+logs. It took us a fair amount of time to figure out that something
+wasn't working correctly as the pod logs failed to highlight the
+issue. To debug in deeply, we started deploying applications with
+simple print statements to check their behavior. After several
+attempts, we could draw a conclusion that deployment would result in a
+failure if the program included package import statements that needed
+to be downloaded from an external repository. We ran the same
+application image with docker only to find it working perfectly. Thus,
+we could state that, from within a kubernetes pod, an application is
+unable to reach the network and download the desired packages. We
+could find no precise explanation of this behavior on the kubernetes
+forum or issues opened on stack overflow or kubernetes git page.
+
+As a workaround, we segregated the download statements from the R
+program and included it within our docker file. This modification
+would download and install the R libraries and packages as a part of
+the build process of the docker image, eliminating the need to install
+it post deployment. With the dependent libraries as a part of the
+docker container, the application program would run successfully and
+generate the output as a part of the logs for the pod it is associated
+with.
 
 
 \section{Discussion}
