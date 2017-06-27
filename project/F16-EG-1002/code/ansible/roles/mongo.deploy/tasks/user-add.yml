@@ -1,0 +1,15 @@
+---
+  # This playbook add essential user for mongodb
+  
+- name: Create the mongod user
+  user: name=mongod comment="MongoD"
+  become: true
+
+- name: Create the data directory for the namenode metadata
+  become: true
+  file:
+    path={{ mongodb_datadir_prefix }}
+    owner=mongod
+    group=mongod
+    state=directory
+    mode=0755

@@ -1,0 +1,34 @@
+systemLog:
+  quiet: true
+  destination: file
+  path: /var/log/mongo/mongod-{{ inventory_hostname }}.log
+  logAppend: true
+
+# fork and run in background
+processManagement:
+  fork: true
+# location of pidfile
+  pidFilePath: /var/run/mongo/mongod-{{ inventory_hostname }}.pid
+
+net:
+  port: {{ mongod_port }}
+
+setParameter:
+  enableLocalhostAuthBypass: false
+
+storage:
+  dbPath: {{ mongodb_datadir_prefix }}mongo-{{ inventory_hostname }}
+  journal:
+    enabled: true
+  mmapv1:
+    smallFiles: true
+
+security:
+  keyFile: {{ mongodb_datadir_prefix }}secret
+  javascriptEnabled: true
+
+sharding:
+  clusterRole: configsvr
+
+replication:
+  replSetName: {{ inventory_hostname }}

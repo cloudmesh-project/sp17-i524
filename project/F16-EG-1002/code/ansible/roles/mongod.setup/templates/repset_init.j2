@@ -1,0 +1,7 @@
+rs.initiate()
+sleep(13000)
+{% for item in groups['all'] %}
+rs.add("{{ hostvars[item].ansible_default_ipv4.address }}:{{ mongod_port }}")
+sleep(8000)
+{% endfor %}
+printjson(rs.status())

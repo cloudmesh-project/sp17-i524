@@ -1,0 +1,16 @@
+---
+
+# common operations for Debian-based distributions (eg Ubuntu)
+
+- name: update apt cache if timeout expired
+  become: yes
+  apt:
+    update_cache: yes
+    cache_valid_time: "{{ 60 * ansible_cloudmesh_apt_cache_valid_time }}"
+
+
+- name: install development packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ cloudmesh_client_debian_packages }}"

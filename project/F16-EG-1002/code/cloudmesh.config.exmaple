@@ -1,0 +1,12 @@
+#
+#default cloud to deploy
+cloud=chameleon
+#image for current cloud
+image=CC-CentOS7
+#root username for current image
+root_user=cc
+#flavor for instances
+flavor=m1.small
+#security group
+security_group=mongo
+
