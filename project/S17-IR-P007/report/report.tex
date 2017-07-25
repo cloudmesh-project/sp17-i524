@@ -400,7 +400,7 @@ distant neighboring points.
 \subsubsection{CrossValidation for the training data}
 
 To address the problem of incoming spam messages, a model shall be
-developed using the Bayesian Classification technique to correctly
+developed using the various classification techniques to correctly
 classify each incoming email/text message as a spam or a legitimate
 one. The model aims at developing a message filter that shall
 correctly classify messages based on word probabilities that are
@@ -938,6 +938,39 @@ Execution of the above statement shall remove the taint
 including the master node and thus allowing the scheduler to schedule
 pods across the network \cite{www-kubernetes-kubeadm}. This feature
 also allows us to create a single node cluster.
+
+\section{Classification Results}
+
+After running all the algorithms on our data file the following
+results were achieved.
+
+\begin{figure}[ht]
+\begin{center}
+ \begin{tabular}{|c | c|} 
+ \hline
+Algorithm  & Classification Accuracy (\%) \\ [0.5ex] 
+ \hline\hline
+    
+SVM Linear Kernel & 93.58 \\
+\hline
+
+SVM Polynomial Kernel & 92.12 \\
+\hline
+
+SVM Radial Kernel & 93.72 \\[1ex]
+\hline
+
+Naive Bayes Classifier & 91.76 \\[1ex]
+
+\hline
+Ada Boost  & 93.9 \\[1ex]
+\hline
+
+\end{tabular}
+\end{center}
+  \caption{Classification results}
+\end{figure}
+
 
 \section{Issues tackled with Kubernetes setup and deployment}
 
