@@ -1,0 +1,20 @@
+---
+# This book define cluster and allocate on specified cloud
+- name: virtualenv activate
+  shell: source {{cloudmesh_client_virtualenv_path}}/bin/activate
+  register: command_result
+
+- name: Cluster define
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm cluster define \
+  --count={{cluster_num}} \
+  --image={{image}} \
+  --flavor={{flavor}} \
+  --username={{root_user}} \
+  --cloud={{cloud}} \
+  --secgroup={{security_group}}
+
+- name: Cluster allocate
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm cluster allocate
+
+- name: Generate Inventory
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm cluster inventory > $(pwd)/inventory.txt

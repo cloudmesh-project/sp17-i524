@@ -1,0 +1,16 @@
+---
+# This Playbook install mongodb and config firewalld on all clusters.
+
+#
+
+- include: centos-config.yml
+  when:
+    - ansible_distribution == "CentOS"
+
+- include: centos-firewalld.yml
+  when:
+    - ansible_distribution == "CentOS"
+
+
+- include: package-install.yml
+- include: user-add.yml

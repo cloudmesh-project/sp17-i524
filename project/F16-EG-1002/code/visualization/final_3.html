@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GMV</title>
+<style>
+
+.counties {
+fill: none;
+}
+
+.states {
+fill: none;
+stroke: #fff;
+	stroke-linejoin: round;
+}
+
+.q0-9 { fill:rgb(247,251,255); }
+.q1-9 { fill:rgb(222,235,247); }
+.q2-9 { fill:rgb(198,219,239); }
+.q3-9 { fill:rgb(158,202,225); }
+.q4-9 { fill:rgb(107,174,214); }
+.q5-9 { fill:rgb(66,146,198); }
+.q6-9 { fill:rgb(33,113,181); }
+.q7-9 { fill:rgb(8,81,156); }
+.q8-9 { fill:rgb(8,48,107); }
+
+body { margin:0; padding:0; }
+#map { height:660px; top:0; bottom:0; width:100%; }
+
+</style>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script type="text/javascript" src="jscolor.js"></script>
+
+</head>
+<body>
+<h1 align="center">Ground Motion Visualization</h1>
+<p style="font-size:14px">Positive:
+<select id="ddlPositive" onchange="positive()">
+				<option value="red" selected>red</option>
+        <option value="black">black</option>
+        <option value="blue">blue</option>
+				<option value="cyan">cyan</option>
+				<option value="green">green</option>
+				<option value="yellow">yellow</option>
+				<option value="grey">grey</option>
+  </select>
+Positive amplitude visualization of seismic data from seismometer</p>
+<p style="font-size:15px">
+Negative:
+	<select id="ddlNegtive" onchange="negative()">
+					<option value="red">red</option>
+	        <option value="black">black</option>
+	        <option value="blue" selected>blue</option>
+					<option value="cyan">cyan</option>
+					<option value="green">green</option>
+					<option value="yellow">yellow</option>
+					<option value="grey">grey</option>
+	  </select>
+Negative amplitude visualization of sesimic data from seismometer
+</p>
+<p style="font-size:15px">
+Animation Speed
+<select id="ddlSpeed" onchange="speed()">
+				<option value="1" selected>1x</option>
+				<option value="2">2x</option>
+				<option value="4">4x</option>
+				<option value="8">8x</option>
+	</select>
+</p>
+<div id="time" align="center">
+</div>
+<div id="us_states">
+</div>
+<div id="map"></div>
+<script src="seismic_3groups_1.js"></script>
+<script src="seismic_3groups_2.js"></script>
+<script src="seismic_3groups_3.js"></script>
+<script src="seismic_3groups_4.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-heat/v0.1.3/leaflet-heat.js'></script>
+<script type="text/javascript">
+var poscolor = 'red';
+var negcolor = 'blue';
+var sec = 1;
+var interval = 40;//40ms
+// ------------------------------------------------------------
+// input event functions
+// ------------------------------------------------------------
+function positive(){
+	var e = document.getElementById('ddlPositive');
+	poscolor = e.options[e.selectedIndex].value;
+}
+function negative(){
+	var e = document.getElementById('ddlNegtive');
+	negcolor = e.options[e.selectedIndex].value;
+}
+function speed(){
+	var e = document.getElementById('ddlSpeed');
+	switch (e.options[e.selectedIndex].value) {
+		case '1':
+			sec = 1;
+			interval = 40;
+			break;
+		case '2':
+			sec = 2;
+		  interval = 20;
+			break;
+		case '4':
+			sec = 3;
+			interval = 10;
+			break;
+		case '8':
+			sec = 4;
+			interval = 5;
+			break;
+		default:
+		  sec = 1;
+		  interval = 40;
+		  break;
+	}
+}
+(function() {
+var map = L.mapbox.map('map', 'mapbox.light',{zoomControl: false ,attributionControl: false,
+accessToken: 'pk.eyJ1IjoidG9ueXRob21hcyIsImEiOiJjaWd5M3BnbTUwdm94eDFtMHF6c2J2MmY0In0.eIBsWw9986ELdXhTzY7Akw'
+}).setView([39.841516, -95.41665], 5);
+
+map.dragging.disable();
+map.touchZoom.disable();
+map.doubleClickZoom.disable();
+map.scrollWheelZoom.disable();
+var layerGroup = L.layerGroup().addTo(map);
+var pos = [];
+pos[0] = pos1;
+pos[1] = pos2;
+pos[2] = pos3;
+pos[3] = pos4;
+var i = 0;
+var j = 0;
+var m = 32;
+var s = 2;
+function checkTime(i) {
+        return (i < 10) ? "0" + i : i;
+    }
+function startTime() {
+	s = s + sec;
+	//console.log(s);
+	if (s >= 60){
+		s -= 60;
+		m += 1;
+
+	}
+	var minute = checkTime(m);
+            var second = checkTime(s);
+        document.getElementById('time').innerHTML = "04/07/2009 04:" + minute + ":" + second + " UTC";
+        t = setTimeout(function () {
+            startTime()
+        }, 1000);
+    }
+    startTime();
+var id = setInterval(function(){
+	 if (i != pos[j].length){
+	 	setData(layerGroup, pos[j][i]);
+	 	i++;
+	}
+	else {
+		i = 0;
+		j++;
+	}
+	if (4 == j)
+		clearInterval(id);
+}, interval);
+
+
+})();
+
+function setData(layerGroup, frame){
+	layerGroup.clearLayers();
+	var positive = frame[0].map(function (p) {
+ 	 		return [p[0], p[1], p[2]];
+ 	 });
+	 var negative = frame[1].map(function (p) {
+  	 	return [p[0], p[1], p[2]];
+  	 });
+		 var gradient = frame[2].map(function (p) {
+		 	 return [p[0], p[1], p[2]];
+		 	});
+	L.heatLayer(positive,{
+        radius : 10, // default value
+        blur : 3, // default value
+        gradient : {1: poscolor} // Values can be set for a scale of 0-1
+    }).addTo(layerGroup);
+
+		L.heatLayer(negative,{
+					radius : 6, // default value
+					blur : 3, // default value
+					gradient : {1: negcolor} // Values can be set for a scale of 0-1
+			}).addTo(layerGroup);
+
+			L.heatLayer(gradient,{
+						radius : 8, // default value
+						blur : 1, // default value
+						gradient : {1: 'grey'} // Values can be set for a scale of 0-1
+				}).addTo(layerGroup);
+}
+
+</script>
+</body>
+</html>

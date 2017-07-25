@@ -1,0 +1,53 @@
+---
+  # This playbook install all required packages for mongodb
+
+- name: Install the mongodb and python packages
+  yum:
+    name={{ item }}
+    state=present
+  become: true
+  with_items:
+   - mongodb-org
+   - mongodb-org-server
+   - gcc
+   - python-devel
+   - python-pip
+   - libpng-devel
+   - freetype-devel
+
+- name: Upgrade pip to latest
+  pip:
+    virtualenv: /home/{{ansible_ssh_user}}/env{{python_version}}
+    virtualenv_command: virtualenv-{{python_version}}
+    name: pip
+    extra_args: --upgrade
+
+- name: Upgrade setuptools to latest
+  pip:
+    virtualenv: /home/{{ansible_ssh_user}}/env{{python_version}}
+    virtualenv_command: virtualenv-{{python_version}}
+    name: setuptools
+    extra_args: --upgrade
+
+- name: Install the numpy, matplotlib and jupyter package with virtualenv
+  pip:
+    virtualenv: /home/{{ansible_ssh_user}}/env{{python_version}}
+    virtualenv_command: virtualenv-{{python_version}}
+    name: numpy scipy matplotlib ipython jupyter pandas sympy nose
+    state: latest
+    use_mirrors: no
+
+- name: Install the pymongo package at system python environment
+  pip:
+    name: pymongo
+    state: latest
+    use_mirrors: no
+  become: true
+
+- name: Install the obspy and pymongo package with virtualenv
+  pip:
+    virtualenv: /home/{{ansible_ssh_user}}/env{{python_version}}
+    virtualenv_command: virtualenv-{{python_version}}
+    name: obspy pymongo
+    state: latest
+    use_mirrors: no

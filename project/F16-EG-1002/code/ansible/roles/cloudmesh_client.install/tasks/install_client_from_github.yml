@@ -1,0 +1,25 @@
+---
+
+# Installs cloudmesh client from github into a virtualenv
+
+- name: clone cloudmesh client
+  git:
+    clone: yes
+    recursive: yes
+    refspec: "{{ cloudmesh_client_repo_branch }}"
+    repo: "{{ cloudmesh_client_repo_url }}"
+    dest: "{{ cloudmesh_client_repo_path }}"
+    
+
+- name: install requirements
+  pip:
+    virtualenv: "{{ cloudmesh_client_virtualenv_path }}"
+    chdir: "{{ cloudmesh_client_repo_path }}"
+    requirements: "requirements.txt"
+
+
+- name: install cloudmesh client
+  pip:
+    virtualenv: "{{ cloudmesh_client_virtualenv_path }}"
+    chdir: "{{ cloudmesh_client_repo_path }}"
+    name: "."

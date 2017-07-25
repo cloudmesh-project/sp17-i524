@@ -1,0 +1,81 @@
+---
+# This role deploys the mongod processes and sets up the replication set.
+
+- name: create data directory for mongodb
+  file: path={{ mongodb_datadir_prefix }}/mongo-{{ inventory_hostname }} state=directory owner=mongod group=mongod
+  #delegate_to: '{{ item }}'
+  with_items: groups.all
+  become: true
+
+- name: create log directory for mongodb
+  file: path=/var/log/mongo state=directory owner=mongod group=mongod mode=0755
+  become: true
+
+- name: create run directory for mongodb
+  file: path=/var/run/mongo state=directory owner=mongod group=mongod mode=0755
+  become: true
+
+- name: Create the mongodb service as a systemd service
+  template:
+    src=mongod.service.j2
+    dest=/usr/lib/systemd/system/mongod.service
+    mode=0655
+  #delegate_to: '{{ item }}'
+  with_items: groups.all
+  become: true
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "7"
+
+- name: Create the mongodb startup file
+  template:
+    src=mongod.j2
+    dest=/etc/init.d/mongod-{{ inventory_hostname }}
+    mode=0655
+  #delegate_to: '{{ item }}'
+  with_items: groups.replication_servers
+  become: true
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "6"
+
+
+
+- name: Create the mongodb configuration file
+  template: src=mongod.conf.j2 dest=/etc/mongod-{{ inventory_hostname }}.conf
+  #delegate_to: '{{ item }}'
+  with_items: groups.all
+  become: true
+
+- name: Copy the keyfile for authentication
+  copy: src=secret dest={{ mongodb_datadir_prefix }}/secret owner=mongod group=mongod mode=0400
+  become: true
+
+- name: Start the mongodb service
+  command: creates=/var/lock/subsys/mongod-{{ inventory_hostname }} /etc/init.d/mongod-{{ inventory_hostname }} start
+  #delegate_to: '{{ item }}'
+  with_items: groups.all
+  become: true
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "6"
+
+- name: Restart the mongodb service
+  systemd:
+    name: mongod
+    state: restarted
+    daemon_reload: yes
+  become: true
+  with_items: groups.all
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "7"
+
+- name: Create the file to initialize the mongod replica set
+  template: src=repset_init.j2 dest=/tmp/repset_init.js
+
+- name: Pause for a while
+  pause: seconds=20
+
+- name: Initialize the replication set
+  shell: /usr/bin/mongo --port "{{ mongod_port }}" /tmp/repset_init.js

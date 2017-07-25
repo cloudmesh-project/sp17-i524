@@ -1,0 +1,33 @@
+[Unit]
+Description=MongoDB configuration server service
+After=network.target
+Documentation=https://docs.mongodb.org/manual
+
+[Service]
+User=mongod
+Group=mongod
+Environment="OPTIONS=--quiet --fork --config /etc/mongoc.conf"
+ExecStart=/usr/bin/mongod $OPTIONS run
+ExecStartPre=/usr/bin/mkdir -p /var/log/mongo/
+ExecStartPre=/usr/bin/chown mongod:mongod /var/log/mongo/
+ExecStartPre=/usr/bin/chmod 0755 /var/log/mongo/
+ExecStartPre=/usr/bin/mkdir -p /var/run/mongo/
+ExecStartPre=/usr/bin/chown mongod:mongod /var/run/mongo/
+ExecStartPre=/usr/bin/chmod 0755 /var/run/mongo/
+PermissionsStartOnly=true
+PIDFile=/var/run/mongo/mongoc.pid
+# file size
+LimitFSIZE=infinity
+# cpu time
+LimitCPU=infinity
+# virtual memory size
+LimitAS=infinity
+# open files
+LimitNOFILE=64000
+# processes/threads
+LimitNPROC=64000
+# Recommended limits for for mongoc as specified in
+# http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,37 @@
+---
+# Variables listed here are applicable to all host groups
+
+#There are 2.6/3.2/3.4 for mongodb
+mongodb_version: 3.4
+
+#Python version
+python_version: 2.7
+
+# The global variable file mongodb installation
+
+# The chunksize for shards in MB
+mongos_chunk_size: 1
+
+# The port in which mongos server should listen on
+mongos_port: 8888
+
+# The port for mongo config server
+mongoc_port: 7777
+
+# The port for mongod
+mongod_port: 27001
+
+# The directory prefix where the database files would be stored
+mongodb_datadir_prefix: /data/
+
+# The interface where the mongodb process should listen on.
+# Defaults to the first interface. Change this to:
+#
+#  iface: eth1
+#
+# ...to override.
+#
+iface: '{{ ansible_default_ipv4.interface }}'
+
+# The password for admin user
+mongo_admin_pass: 123456

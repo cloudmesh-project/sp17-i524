@@ -1,0 +1,28 @@
+---
+# This playbook config centos with hosts file and EPEL rep.
+- name: Create the hosts file for all machines
+  template:
+    src=hosts.j2
+    dest=/etc/hosts
+  become: true
+
+- name: Copy the repository for mongodb-org-{{mongodb_version}}
+  copy:
+    src=mongodb-org-{{mongodb_version}}.repo.j2
+    dest=/etc/yum.repos.d/mongodb-org-{{mongodb_version}}.repo
+  become: true
+
+- name: Add EPEL yum repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    file: external_repos
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    gpgcheck: no
+  become: true
+
+- name: Import RPM key from fedoraproject
+  rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ansible_distribution_major_version}}
+    validate_certs: yes

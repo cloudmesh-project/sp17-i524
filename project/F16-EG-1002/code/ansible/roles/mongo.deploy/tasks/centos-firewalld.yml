@@ -1,0 +1,45 @@
+---
+
+# NOTE: This playbook *adds* rules.
+# It does not delete existing rules.
+
+# Strategy:
+# Use "dmz" zone and add http/https/ssh and munin-node.
+# Make dmz the default policy.
+# Add tcp ports including mongos, mongoc and mongod.
+
+- name: Install the firewalld packages
+  yum:
+    name={{ item }}
+    state=present
+  become: true
+  with_items:
+   - firewalld
+
+- name: Start firewalld service
+  service: name=firewalld state=started enabled=yes
+  become: true
+
+- name: Set dmz as default policy
+  command: firewall-cmd --set-default-zone=dmz
+  become: true
+
+- name: Allow http/https/ssh
+  command: firewall-cmd --zone=dmz --permanent --add-service=http --add-service=https --add-service=ssh
+  become: true
+
+- name: Add mongos_port
+  command: firewall-cmd --permanent --zone=dmz --add-rich-rule='rule family="ipv4" port port={{ mongos_port }} protocol="tcp" accept'
+  become: true
+
+- name: Add mongoc_port
+  command: firewall-cmd --permanent --zone=dmz --add-rich-rule='rule family="ipv4" port port={{ mongoc_port }} protocol="tcp" accept'
+  become: true
+
+- name: Add mongod_port
+  command: firewall-cmd --permanent --zone=dmz --add-rich-rule='rule family="ipv4" port port={{ mongod_port }} protocol="tcp" accept'
+  become: true
+
+- name: Restart firewalld service
+  service: name=firewalld state=restarted
+  become: true

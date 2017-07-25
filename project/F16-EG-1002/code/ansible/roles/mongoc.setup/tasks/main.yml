@@ -1,0 +1,74 @@
+---
+# This playbook  deploys the mongodb configurationdb  servers
+
+- name: Create data directory for mongoc configuration server
+  file:
+    path={{ mongodb_datadir_prefix }}/configdb
+    state=directory
+    owner=mongod
+    group=mongod
+  become: true
+
+- name: Create the mongo configuration server service as a systemd service
+  template:
+    src=mongoc.service.j2
+    dest=/usr/lib/systemd/system/mongoc.service
+    mode=0655
+  become: true
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "7"
+
+- name: Create the mongo configuration server startup file
+  template:
+    src=mongoc.j2
+    dest=/etc/init.d/mongoc
+    mode=0655
+  become: true
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "6"
+
+- name: Create the mongo configuration server file
+  template: src=mongoc.conf.j2 dest=/etc/mongoc.conf
+  become: true
+
+- name: Copy the keyfile for authentication
+  copy:
+    src=roles/mongoc.setup/files/secret
+    dest={{ mongodb_datadir_prefix }}/secret
+    owner=mongod
+    group=mongod
+    mode=0400
+  become: true
+
+- name: Start the mongo configuration server service
+  service: name=mongoc state=started
+  become: true
+
+- name: pause
+  pause: seconds=20
+
+- name: virtualenv activate
+  shell: source /home/{{ansible_ssh_user}}/env{{python_version}}/bin/activate
+  register: command_result
+
+- name: Create the file to create the mongoc user
+  template: src=create_user.j2 dest=/tmp/create_user.js
+
+- name: Create root user
+  shell: /usr/bin/mongo --port "{{ mongoc_port }}" /tmp/create_user.js
+  when: command_result|succeeded
+
+#- name: add the admin user
+#  mongodb_user:
+#    database: "admin"
+#    name: "admin"
+#    password: "{{mongo_admin_pass}}"
+#    update_password: on_create
+#    login_port: "{{mongoc_port}}"
+#    roles: userAdminAnyDatabase
+#    state: present
+#  ignore_errors: yes
+#  become: false
+#  when: command_result|succeeded

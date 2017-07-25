@@ -1,0 +1,51 @@
+---
+# This Playbook runs all the local plays in the deployment
+
+#
+- name: Copy Cloudmesh YAML template
+  template:
+    src=cloudmesh.yaml.j2
+    dest=~/.cloudmesh/cloudmesh.yaml
+    mode=0655
+
+- name: virtualenv activate
+  shell: source {{cloudmesh_client_virtualenv_path}}/bin/activate
+  register: command_result
+
+- name: reset cloudmesh client
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm reset
+  when: command_result|succeeded
+
+- name: generate key
+  command: /usr/bin/cat /dev/zero | /usr/bin/ssh-keygen -q -N ""
+
+- name: add key
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm key add --ssh
+
+- name: refresh on
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm refresh on
+
+- name: debug off
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm debug off
+
+- name: add security group
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm secgroup add {{security_group}} ssh 22 22 tcp 0.0.0.0/0
+
+- name: add security group
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm secgroup add {{security_group}} http 80 80 tcp 0.0.0.0/0
+
+- name: add security group
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm secgroup add {{security_group}} https 443 443 tcp 0.0.0.0/0
+
+- name: add security group
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm secgroup add {{security_group}} icmp 0 0 icmp 0.0.0.0/0
+
+- name: add security group
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm secgroup add {{security_group}} mongo{{item}} 270{{item}} 270{{item}} tcp 0.0.0.0/0
+  with_sequence: start=1 end={{cluster_num}}
+
+- name: upload key
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm key upload --cloud={{cloud}}
+  
+- name: upload secgroup
+  command: ~/{{cloudmesh_client_virtualenv_path}}/bin/cm secgroup upload --cloud={{cloud}}
