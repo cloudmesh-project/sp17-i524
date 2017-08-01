@@ -28,7 +28,7 @@
   backdrop for course contains more than 370 software subsystems from
   which the students can select. Chameleon cloud was used by the
   students to conduct a course project that included the creation of a
-  reproducible big data computational infrastructure with DevOps as
+  reproducible big data computational infrastructure with DevOps, as
   well as the execution of an application in this infrastructure. A
   rich variety of 31 projects were conducted. The result of the
   project with its 31 projects is published in an online class
@@ -45,20 +45,18 @@
 \section{Introduction}
 
 As part of a graduate course at Indiana University that was offered to
-online and residential students chameleon cloud was used as one of the
-major computer resources for the class. The course studied software
+online and residential students Chameleon cloud was used as one of the
+major compute resources for the class. The course studied software
 used in many commercial activities related to Big Data. The backdrop
 for course contains more than 370 software subsystems that have been
-studied in part and collaboratively in class. The software
+studied in collaboratively in class. The software
 architecture represented by this collection has been discused and work
 towards identifying best practices to deploy, access and interface
-with them.
-
-Topics of this class will included:
+with them has been conducted. Topics of this class included:
 
 \begin{enumerate}
 \item The cloud computing architecture underlying open source big data
-  software and frameworks and contrast of them to high performance
+  software and frameworks that contrast them to high performance
   computing.
 \item Analysis of software as part of an architecture with its
   different layers covering broad functionality and rationale for each
@@ -66,18 +64,17 @@ Topics of this class will included:
 \item Identification on how to create and replicate software
   environments combining cloud and DevOps technologies.
 \item The main activity of the course included building a significant
-  project using multiple complex subsystems to create a reproducible
-  big data software stack  combined with user code and data. 
+  project using multiple complex big data subsystems to create a reproducible
+  big data software stack combined with user code and data. 
 \end{enumerate}
-
 
 Topics taught in this class are therefore highly relevant for industry
 as it not only exposes students to theoretical concepts with the topic
 of big data, but also through practice while having access to clouds
 and making them usable through DevOps and collaborative code
 experiences. Students were using cloudmesh client
-\cite{www-cloudmesh-client} making it possible to execute the code on
-multiple different clouds and enabling comparative studies. Figure
+\cite{www-cloudmesh-client} making it possible to easily execute the code on
+multiple different clouds and enabling comparative benchmark studies. Figure
 \ref{F:course} illustrates that we pursued the theoretical and
 practical components of this course in parallel.
 
@@ -92,30 +89,28 @@ practical components of this course in parallel.
 \section{Cloud Usage}
 
 The course had 62 registered users and used 91\% of its allocation
-with 18195 SUs.  From 31 project 27 projects completed while the other
-4 are still being completed. As the chameleon cloud allocation for
-this project expires July 31, we will have to apply for an extension.
-Furthermore we will run out of compute time for the outstanding
-projects so we like to ask for an increase in the allocation.
+with 18195 SUs.  From 31 projects, 27 of them were completed while the other
+4 are still being worked on. As the chameleon cloud allocation for
+this project expires on July 31, we will have to apply for an extension.
+Furthermore, we will run out of compute time for the outstanding
+projects so we need to ask for an increase in the allocation.
 
-In addition to Chameleon cloud we also used Jetstream and the
-Futuresystems cloud. Adding these clouds was essential to obtain
+In addition to Chameleon cloud, we also used Jetstream and the
+FutureSystems cloud. Adding these clouds was essential to obtain
 comparisons of chameleon cloud to other clouds.
 
 \section{Projects}
 
 The projects conducted as part of this class contained three major
 portions. First, students had to design a software stack that relates
-to big data and uses DevOps methods based on ansible to create a
+to big data and uses DevOps methods using {\it ansible} to create a
 reproducible cyber infrastructure. This infrastructure had than to be
 replicated on other clouds if the project was conducted in a
 team. Chameleon cloud was recommended to be used as the default
 cloud. Only after the projects were executable on chameleon other
-clouds were allowed to be used. 
-
-A detailed report of all projects is available online \cite{www-las-i524-sp17}. To
-provide an overview of the richness of the projects we provide here a
-list of the titles:
+clouds were allowed to be used.  A detailed report of all projects is
+available online \cite{www-las-i524-sp17}. To provide an overview of
+the richness of the projects we provide here a list of the titles:
 
 \begin{itemize}
 
@@ -178,47 +173,79 @@ and Cloudmesh
 
 \section{Experimental configuration}
 
-Conducting a class project with many students provides its unique
-challenges that are worth while to analyze as part of Chameleon Clouds
-mission to support educational projects. We will outline here some
-challenges and important contributions of chameleon cloud.
+Conducting a class with many students provides its unique challenges
+which are amplified when complex software and complex projects are
+required as part of the course. Hence, it is worth while to analyze as
+part of Chameleon Clouds mission how to support such educational projects. We
+will outline here some challenges and important contributions of our
+activities to Chameleon Cloud.
 
 \subsection{Resource Requirements}
 
-Based on our rich experience with other clouds such as FutureGrid
-and Futuresystems we knew that the class projects needed to be limited
+Based on our rich experience with other clouds, such as FutureGrid
+and FutureSystems, we knew that the class projects needed to be limited
 in order to stay within 20K SUs. Thus we limited each project team to
-only running 3 virtual machines as part of their project and making
+utilize only 3 virtual machines as part of their project and making
 sure that the application and data sizes were small in nature while
-limiting the possible analysis. Furthermore, one of the requirements
-was to be able to start and stop virtual machines while not
-encountering too much penalties as this supported the goal of teaching
-DevOps which not only requires a ``perfect'' application to be executed,
-but to develop a software stack that can be reproduced and potentially
-executed elsewhere. Hence the charge rate of starting and stopping VMs
-must be small.
+limiting the possible analysis. Furthermore, we asked the students to
+stop their machine when not in use.
+
+Hence we have for cloud usage the requirement, to start and stop
+virtual machines while not encountering too much penalties as this
+supported the goal of teaching DevOps. Naturally, this requires not
+only a ``perfect'' application to be executed, but to support the
+process of developing the software stack that can be reproduced and
+potentially executed on other clouds. Hence the charge rate of
+starting and stopping VMs must be small.
 
 Lessons learned: In contrast to jetstream chameleon cloud provided a
 reasonable charge rate that did not impact the overall allocation
 adversely. However, we found that it would be useful to have a more
 clear and prominent description of the charge formula published in
-order to educate the students better of prudent usage. Jetstream did
-also not have this information published and after our allocation on
-jetstream (which was much smaller) expired, we found we weer charged
-on jetstream a full hour every time a students started a VM. However
-as they did this several times per hour on jetstream we ran out of SUs
-quickly and our allocation was renewed and the accounting was switched
-off to enable continued use. We hope that chameleon cloud will
+order to educate the students better of prudent usage. Just as
+Chameleon Cloud Jetstream did also not have this information
+published.  After our allocation on jetstream (which was much smaller)
+expired, we found we were charged on jetstream a full hour every time
+a students started a VM. This charge seems unreasonably high for our
+class goals and we need to discuss with jetstream management changes
+to it. This information was not available to us when we formulated the
+allocation proposal.  As students started and restarted VMs this
+several times per hour on jetstream we ran out of SUs quickly. Our
+allocation was renewed after several interactions while initially
+being declined with the comment we need to provide justification and
+performance analysis. Naturally if you are in a middle of an
+educational project that has not yet produced this result such request
+can not be completed. Only after we contacted the excellent Jetspeeds
+technical team directly via phone this situation was rectified by
+switching off accounting for this project to enable continued use. We
+found that the allocation process for educational projects in XSEDE
+does not include the important aspect to easily renew an allocation if
+one runs out of node hours. We found that chameleon cloud has a better
+charge rate for starting and stopping VMs as any research cloud should
+have, making jetstream less desirable for research classes and
+encourages resource hogging for an hour and not allowing for flexible
+development of utilizing VM startup. We hope that chameleon cloud will
 continue their charge model and make sure that start of VMS is not
 taxed at all.
 
+Overall we also found that in contrast to FutureGrid both clouds do
+not offer easily sufficient access to real time monitoring data going
+beyond just the hours run by a VM but also including time for starting
+and stopping VMs. 
+
 \subsection{Capability Requirements}
 
-Base don experience we found that offering bare-metal as part of a
+Based on our current experience we found that offering bare-metal as part of a
 class such as the one described is not feasible due to the lack of
-experience of most of the students. The VM model is much more
+experience of most of the students. The risk to expose security issues
+is far to high in order to justify that a class such as the one we
+offered would have access to bare-metal. Please note that the authors
+are pioneered offering bare metal services on clouds \cite{las08federated-cloud}
+
+
+The VM model is much more
 suitable. At time we noticed that chameleon cloud was too busy so it
-woudl have helped to have access to a queuing system that allows
+would have helped to have access to a queuing system that allows
 scheduling of vm execution. However, during development waiting is
 naturally not a good idea and most students recognized when chameleon
 was too busy or had other interruptions.
@@ -310,7 +337,7 @@ chameleon jetstream and Futuresystems, thus in a case of an outage
 they could easily continue their work elsewhere. It also allowed
 performance studies between the clouds. A full report with all
 completed projects is available online. The biggest issue we had were
-the untransparant bugs in the SSO framework offered between XSEDE,
+the bugs in the SSO framework offered between XSEDE,
 chameleon cloud and jetstream.
 
 
