@@ -240,15 +240,18 @@ class such as the one described is not feasible due to the lack of
 experience of most of the students. The risk to expose security issues
 is far to high in order to justify that a class such as the one we
 offered would have access to bare-metal. Please note that the authors
-are pioneered offering bare metal services on clouds \cite{las08federated-cloud}
+are pioneered offering bare metal services on clouds
+\cite{las08federated-cloud}. For this class the VM model is much more
+suitable. 
 
+\subsection{Capacity Requirements}
 
-The VM model is much more
-suitable. At time we noticed that chameleon cloud was too busy so it
-would have helped to have access to a queuing system that allows
-scheduling of vm execution. However, during development waiting is
-naturally not a good idea and most students recognized when chameleon
-was too busy or had other interruptions.
+At time we noticed that chameleon cloud was too busy and not all
+request could be fulfilled. Thus, it would have helped to have access
+to a queuing system that allows scheduling of vm execution. However,
+during development waiting is naturally not a good idea and most
+students recognized when chameleon was too busy or had other
+interruptions. 
 
 \subsection{Monitoring Requirements}
 
@@ -256,7 +259,10 @@ Due to the many users in this project it is not sufficient to just
 provide the overall charge. It is important that the project managere
 can see the individual charges of all users. This service is
 conveniently offered by Futuresystems and we propose reintegration
-into chameleon cloud.
+into chameleon cloud. We also noticed that students overlooked the
+outage notice and a much more clear communication of the status of the
+coud on its front page of the portal must be available. We again refer
+back to FutureGrid that provided such features.
 
 \subsection{Features offered by Chameleon Cloud}
 
@@ -269,8 +275,8 @@ information not just for one cloud but many clouds from the
 commandline. Furthermore, almost all vm management was conducted via
 the cloudmesh client. This convenient mechanism was superior to the
 native client offered by OpenStack. GUIs were inconvenient including
-iPlant and horizon as they do not offer scriptability.
-
+CyVerse and Horizon as they do not offer easy scriptability while
+applying it to multi-clouds. 
 
 \subsection{New software created}
 
@@ -279,7 +285,7 @@ As part of this class we improved the cloudmesh client software
 \cite{www-cloudmesh-rest} that was essential to the success of the
 class.
 
-In addition many DevOps deployments for deploying virtual clusters
+In addition, many DevOps deployments for deploying virtual clusters
 based on hadoop, docker swarm, kubernetes and others have been
 developed and are available as part of the open source class repository
 including the applications and documentation on how to deploy and run
@@ -290,55 +296,63 @@ them.
 It is clear that the class has a significant user management
 challenge. We found that the management for large project could be
 improved and inspiration from FutureSystems/Grid could be utilized to
-improve the easy in which project membership could be managed.
+improve the ease in which project membership could be managed.
 
-The biggest issue however we had with the user management provided
+The biggest issue however we had was with the user management provided
 across different clouds and high performance compute infrastructure
 such as XSEDE. As it turns out a broken process is offered to users
 that have accounts on one or more resources that provide user
 management through the centralized user management service for XSEDE,
-chameleon and jetstream. In certain cases where users have existing
-accounts on one or more resources it lead to the situation where some
-users could not access one ore more of these systems. Some students
-could not identify this issue at all and only after a significant time
-not being able to login they reported issues. Initially they just
-thought the process takes time. However, as we found out the process
-was broken. 
+chameleon and jetstream. After many tickets it was not clear to us if
+the problem has generally been solved, or if it was just solved for
+the users that ran into the issue. We observed that in certain cases,
+where users have existing accounts on one or more resources, it leads
+to the situation where some users could not access one ore more of the
+systems. Obviously the students with this issue could not identify if
+they are effected as they thought their account approval is in process
+and they need to wait. Only after all other class members were well
+into their project execution it became clear that the user
+accountmanagement had an issue. Consequently, we found that the
+process was broken.
 
 Based on our experience with other clouds and infrastructure, students
 have no issue remembering multiple account names and passwords for
 different services (this is naturally the nature of the cloud, they
-have Google, Microsoft, box, ...), but they have an issue of a SSO
-service offered that does not 100\% work. The students gave the
-recommendation that Chameleon cloud fixes this issue.
+have Google, Microsoft, box, ...), but they have an issue of an
+account service trying to offer SSO and ease of account management
+does not 100\% work. The students gave the recommendation that
+Chameleon cloud fixes this issue with the organization that offers
+this service to chameleon cloud.
 
 \subsection{Performance Comparison}
 
 We have conducted detailed performance studies on applications
-comparing chameleon cloud, jetstream and Futuresystems. While
-Futuresystems is an older cloud and can not compete on a vm level on
+comparing chameleon cloud, jetstream and FutureSystems. While
+FutureSystems is an older cloud and can not compete on a vm level on
 speed, it still provides a reliable basis for running VMs. The speed
 between Chameleon Cloud and jetstream VMs is very similar. We ran in
 both clouds via cloudmesh. Jetstream was accessed in friendly user
-mode and experienced at time network outages which were in that mode
-to be expected. IN general chameleon cloud was a very reliable cloud
-and due to the staff support at University of Chicago we were able to
-overcome the reported issues.
+mode and experienced at times network outages which we expected. We
+had good communication with the technical group to jetstream whenever
+we contacted the directly by phone. In general chameleon cloud was a
+very reliable cloud and due to the staff support at University of
+Chicago we were able to overcome any reported issue quickly.
 
 \section{Conclusion}
 
 We were able to support 62 students as part of the class using
 chameleon cloud as the main resource. The experience was so good that
-we in=tend to apply again for vm usage of another class in the fall. A
-significant amount of software was been able to be developed as part
-of this class while using DevOps and making the results freely
-available. Cloudmesh allowed the class to easily switch between
-chameleon jetstream and Futuresystems, thus in a case of an outage
-they could easily continue their work elsewhere. It also allowed
-performance studies between the clouds. A full report with all
-completed projects is available online. The biggest issue we had were
-the bugs in the SSO framework offered between XSEDE,
-chameleon cloud and jetstream.
+we intend to apply again for vm usage of another class in the fall. A
+significant amount of software was developed as part of this class
+while using DevOps and making the results freely available. Cloudmesh
+client allowed the class to easily switch between chameleon jetstream
+and FutureSystems, thus in a case of an outage they could easily
+continue their work elsewhere. In fact we believe that cloudmesh
+client was one of the reasons for the class to be possible and easily
+accessible to the students. It also allowed performance studies
+between the clouds. A full report with all completed projects is
+available online. The biggest issue we had were the bugs in the SSO
+framework offered between XSEDE, chameleon cloud and jetstream.
 
 
 \bibliographystyle{ACM-Reference-Format}
