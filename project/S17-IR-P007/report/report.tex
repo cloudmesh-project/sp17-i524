@@ -1129,6 +1129,58 @@ docker container, the application program would run successfully and
 generate the output as a part of the logs for the pod it is associated
 with.
 
+\section{Benchmarking Results}
+
+Application benchmarking was accomplished by executing the application
+on a kubernetes cluster with two nodes on both chameleon and kilo
+clouds. To observe execution time of different algorithms, we inserted
+checkpoints in the R application to measure time taken by each
+algorithm on different clouds. We referred to the application output
+file to get the runtime of all 5 algorithms on our dataset.
+
+\begin{figure}[ht]
+\begin{center}
+ \begin{tabular}{|c | c| c|} 
+ \hline
+ Algorithm  & Chameleon cloud & Kilo cloud \\
+ & execution time & execution time \\
+ & (seconds) & (seconds) \\ [0.5ex] 
+ \hline\hline
+    
+SVM Linear Kernel & 1.15 & 1.22 \\
+\hline
+
+SVM Polynomial Kernel & 1.68 & 1.72 \\
+\hline
+
+SVM Radial Kernel & 1.75 & 1.78 \\[1ex]
+\hline
+
+Ada Boost & 20.25 & 21.75 \\[1ex]
+
+\hline
+Naive Bayes & 5.93 & 6.21 \\[1ex]
+\hline
+
+\end{tabular}
+\end{center}
+  \caption{Algorithm execution time on Chameleon and Kilo cloud}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=60mm,height=60mm]{images/algo_comparison.jpg}}
+\caption{fig: Graph plot of algorithm execution time on chameleon and kilo clouds}
+\label{fig: Graph plot of algorithm execution time on chameleon and kilo clouds}
+\end{figure}
+
+Further, the stopwatch command on CMD5 module was used to benchmark
+execution time of kubernetes cluster creation, software deployment and
+installation on both chameleon and kilo cloud. By segmenting the
+all-round application runtime into software installation, cluster
+creation and code deployment we can clearly observe the performance of
+the cluster on each cloud.
+
 
 \section{Discussion}
 TBD
