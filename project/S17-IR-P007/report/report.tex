@@ -979,6 +979,253 @@ including the master node and thus allowing the scheduler to schedule
 pods across the network \cite{www-kubernetes-kubeadm}. This feature
 also allows us to create a single node cluster.
 
+\section{Deployment using CMD5 Module}
+All the steps required for kubernetes have been implemented using
+Ansible along with the python CMD5 module \cite{www-cmd5}.Python's CMD
+module is a very useful package for creating shell like commands but
+it does not offer the extension of dynamic integration with any new
+customized commands which was the reason why CMD5 module was
+introduced. CMD5 has been rewritten on earlier versions of cmd3 and
+cloudmesh client.
+
+\subsection{Installation of CMD5 Module}
+To install CMD5 module, there are couple of ways to go it but the most
+convenient way is to checkout 3 repositories and install them to get
+the functionality of CMD5 up and running.
+
+Open up the terminal on your windows or mac workstation and clone the
+following 3 repostories. Its is mandatory to have GIT already
+installed. \newline git clone
+https://github.com/cloudmesh/cloudmesh.common.git \newline git clone
+https://github.com/cloudmesh/cloudmesh.cmd5.git \newline  git clone
+https://github.com/cloudmesh/cloudmesh.sys.git \newline
+
+After cloning these repositories, you may enter the root folder of
+these repositories and execute
+\newline
+python setup.py install \newline
+pip install .
+
+\subsection{Running the CMD5 module}
+To launch CMD5, you should open the terminal and type in cms.  This
+would launch the CMD5 module with few already existing commands like
+EOF, echo, help, stopwatch etc.
+These commands will install common, sys and cmd5 modules in your
+workstation which would lead to successful installation of the CMD5
+module.
+
+\subsection{Creation of customised CMD5 commands}
+To create your own customized CMD5 command, you must type in 
+
+\begin{figure}[H]
+\begin{verbatim}
+$ cms sys command generate <nameofyourcommand>
+\end{verbatim}
+\caption{Creation of customised CMD5 command}
+\label{Creation of customised CMD5 command}
+\end{figure}
+
+This command would create a CMD5 command with the name mentioned in
+<nameofyourcommand> placeholder. It downloads a template from
+cloudmesh called cloubmesh.bar and generates a new directory
+cloudmesh.nameofyourcommand with all the files which are needed to
+create your own command. It also registers it dynamically with cloudmesh.
+Later, you should cd in the newly created directory and execute \newline
+python setup.py install \newline
+pip install . \newline'
+
+\section{cloudmesh.kubernetes command}
+For the kubernetes application, using the features of CMD5, we have
+created our own customised kubernetes command called as
+cloudmesh.kubernetes. Later we have extended the kubernetes command to
+create various commands which will help in setting up a cloud custer,
+deploying kubernetes and performing benchmarks of the kubernetes
+cluster.
+
+We have created 8 Kubernetes CMD5 commands and those commands trigger
+the ansible commands which perform the automated deployment for our
+spam detection application.\newline
+
+\subsection{Kubernetes Name command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes name <nameOfTheCluster>
+\end{verbatim}
+\caption{Command to give the cluster a name}
+\vspace{-4mm}
+\label{Command to given the cluster a name}
+\end{figure}
+
+This command assignes the name for the cluster given in
+<nameOfTheCluster> placeholder. When is cluster is deployed, it will
+create a cluster with this name on the cloud.
+
+\subsection{Kubernetes Size command}
+
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes size <sizeOfCluster>
+\end{verbatim}
+\caption{Command to define the cluster size}
+\vspace{-4mm}
+\label{Command to define the cluster size}
+\end{figure}
+
+This command would create a cluster with the mentioned size in
+<sizeOfCluster> placeholder. For example Kubernetes size
+2  would create a cluster with 2 instances on the specified file.
+
+\subsection{Kubernetes Image command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes image <imageName>
+\end{verbatim}
+\caption{Command to define the type of image for the cluster}
+\vspace{-4mm}
+\label{Command to define the type of image for the cluster}
+\end{figure}
+
+This command is used to define the type of image which you want for
+the cluster.  For example the image name could be
+CC-Ubuntu16.04-20160610 which is a valid chameleon image. We can also
+define any valid image for the kilo cloud as well.  Important thing is
+here that whichever cloud you might define for the cluster, it should
+match with its equivalend valid image.
+
+\subsection{Kubernetes Flavor command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ Kubernetes flavor <flavorSize>
+\end{verbatim}
+\caption{Command to define the flavor for the cluster}
+\vspace{-4mm}
+\label{Command to define the flavor for the cluster}
+\end{figure}
+
+This command is used to define the flavor for each instance within the
+cluster. The 3 different types of flavors can be m1.small,
+m1.medium and m1.large.  Depending upon the small, medium, large it
+allocates the cluster size.
+
+\subsection{Kubernetes Cloud command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ Kubernetes cloud <cloudName>
+\end{verbatim}
+\caption{Command to define the cloud on which the cluster will be created}
+\vspace{-4mm}
+\label{Command to define the cloud}
+\end{figure}
+
+This command is used to create the cluster with details mentioned
+above on the cloud provided in the cloudname.  For example -
+Kubernetes cloud chameleon. This would create the cluster on chameleon
+cloud when the kubernetes cluster deploy command will be called.
+
+\subsection{Kubernetes cluster info command}
+
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ Kubernetes cluster info
+\end{verbatim}
+\caption{Command to get details of the cluster to be created}
+\vspace{-4mm}
+\label{Command to getthe details of the cluster to be created}
+\end{figure}
+
+This command would list of the details of the kubernetes cluster which
+was set using the name, size, image, flavor and cloud commands. This
+would help in giving you all the details for your kubernetes
+cluster. This command would print out the name of the cluster, its
+size, the image and the flavor used and on which cloud on the console
+itself.
+
+\subsection{Kubernetes cluster deploy command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ Kubernetes cluster deploy
+\end{verbatim}
+\caption{Command to deploy the cluster on the cloud}
+\vspace{-4mm}
+\label{Command to deploy the cluster on the cloud}
+\end{figure}
+
+This command would deploy the Kubernetes cluster with the details set
+in the name, size, image, flavor and cloud commands. If any of the
+above parameters are not set, this would not deploy the cluster and
+ask the user to enter the required details before deploying it.
+
+It first creates a cluster with the number of instances equal to the
+size mentioned in the kubernetes size command with the image and
+flavor also mentioned in the respective kubernetes commands and
+deploys it on the cloud mentioned in the kubernetes cloud command.
+After the cluster is created, it calls a series of ansible tasks which
+install some pre requiste softwares on these instances, make one as
+the master instance and others as slave instances and installs
+kubernetes on all the instances and joins the slaves to the master
+creating a kubernetes cluster.
+
+\subsection{Kubernetes cluster benchmark command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ Kubernetes cluster benchmark
+\end{verbatim}
+\caption{Command to benchmark the kubernetes cluster}
+\vspace{-4mm}
+\label{Command to benchmark the kubernetes cluster}
+\end{figure}
+
+This command would benchmark the kubernetes cluster for the spam
+detection application. This would create a docker image for the R
+programming language and then create a kubernetes pod and runs the pod
+on any of the slaves connected to it. This tasks are performed by the
+kubernetes master instance.
+
+Running the pod makes the execution of the spam detection application
+and its gives the output after some stipulated time.
+
+\section{Ansible Deployment}
+Ansible is used for automated deployment of your application on any
+local or remote cluster.
+
+
+\subsection{Inventory file and Roles}
+The inventory file is used to let ansible know which all instances
+does it has to connect and do the required tasks. For our kubernetes
+deployment, the IP addresses which are generated by the respective
+cloud are stored in the inventory file using ssh-keyscan command. This
+command is executed throught the CMD5 module. For our application we
+create an inventory file having one instance allocated to the
+Kubernetes-master host and rest all instances allocated to the
+kubernetes-slave hosts.  The number of instances depend upon the
+Kubernetes size command.
+
+\subsection{Roles}
+The roles concept in Ansible allows to draw a logical meaning to the
+tasks being performed. You can create as many roles as possible and
+define the tasks in those roles. You can then define the list of the
+role names in the yml file which would be executed.
+
+For our Kubernetes project, we have created 5 yml files which would be
+executed to perform tasks on the remote cloud cluster.  These files
+contain the host name and the roles in it.
+
+The first file which is triggered when the CMD5 kubernetes cluster
+deploy command is called is the installations.yml
+
+
+
+
+
+
 \section{Classification Results}
 
 After running all the algorithms on our data file the following
