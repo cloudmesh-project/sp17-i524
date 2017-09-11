@@ -101,7 +101,7 @@ storage     &     335TB     &                   2TB  & 2 TB\\ [1ex]
 
 \section{Experimental configuration}
 
-Cloudmesh client is used to simplify management of vms accross
+Cloudmesh client is used to simplify management of vms across
 different clouds.  The Cloudmesh Client toolkit is an open source
 client interface that standardizes access to various clouds, clusters,
 and workstations \cite{www-cloudmesh}.  Cloudmesh Client is a python
@@ -125,12 +125,12 @@ clouds.
 \subsection{Resource Requirements}
 
 As this project was a class project the available VM hours were
-limited, HOwever we have been able to conduct a significant
-comparision given the restrictions.
+limited. However, we have been able to conduct a significant
+comparison given the restrictions.
 
 \subsection{Capability Requirements}
 
-The main feture we needed for this project was the creation of VMs and
+The main feature we needed for this project was the creation of VMs and
 the execution of our applications within these VMs
 
 \subsection{Monitoring Requirements}
@@ -152,8 +152,8 @@ class.
 
 \subsection{Performance Comparison}
 
-We have conducted a significant performance comparision among all
-clouds. However in thsis document we only list a few highlights.
+We have conducted a significant performance comparison among all
+clouds. However, in this document we only list a few highlights.
 
 \subsection{Computing Resources}
 
@@ -238,7 +238,7 @@ than one third the run time of one shard.  Increases in shards beyond
 two show much smaller incremental gains.
 
 Perfomance on Chameleon Cloud and Jetstream is very similar for the
-find test.  Kilo performance is worse, although proportunately better
+find test.  Kilo performance is worse, although proportionately better
 than on the mongoimport test.  This is an interesting observation as
 for both deployment and mongoimport, performance was much better on
 Chameleon and Futuresystems than Kilo.  One difference from the
@@ -295,7 +295,7 @@ than Chameleon for the import test.
 
 
 Figure \ref{fig:shard-mapreduce} shows the performance of MapReduce
-across varous sharding configurations on our three clouds.  These
+across various sharding configurations on our three clouds.  These
 results are relatively similar to the find results.  While results are
 inconsistent, particularly on Futuresystems, likely due to
 environmental issues, all clouds show an overall decrease in
@@ -429,7 +429,7 @@ operations.
 \section{Conclusion}
 
 We have created, tested, and demonstrated a fully automated program to
-configure and deploy a sharded MongoDB clus- ter to three cloud
+configure and deploy a sharded MongoDB cluster to three cloud
 environments: Chameleon, Jetstream, and FutureSystems. Using a
 combination of Python, Bash, and Cloudmesh Client, the a cluster is
 dynamically deployed with a selected number of Config Server Replicas,
