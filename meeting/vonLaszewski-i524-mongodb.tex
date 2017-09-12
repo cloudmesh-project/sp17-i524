@@ -215,6 +215,20 @@ Due to its stability and performance, Chameleon was chosen as the
 environment to test MongoDB version 3.4 versus 3.2, due to its
 stability.
 
+\subsection{Data}
+
+
+The data set used in the benchmarking testing and analysis is Major
+League Baseball PITCH f/x data obtained by using the program Baseball
+on a Stick (BBOS).  BBOS is a Python program created by "willkoky" and
+hosted on sourceforge.net which extracts data from mlb.com and loads
+it into a MySQL database.  While it would be possible to convert this
+program to populate the MongoDB database directly, collecting all of
+the data is a time consuming process. Therefore, the data was captured
+locally to the default MySQL database and then extracted to a CSV file
+to be loaded to MongoDB.  This file contains 5,508,014 rows and 61
+columns.  It is 1.58 GB in size uncompressed.
+
 \subsubsection{Impact of Sharding on Reads}
 
 
