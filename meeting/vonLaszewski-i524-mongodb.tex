@@ -66,7 +66,7 @@ cloud. Adding these clouds was essential to obtain comparisons of
 chameleon cloud to other clouds.  A full report is available as part
 of the Class proceedings.
 
-Table \ref{tab:cloud-comparison} shows a comparison of key server computing
+Table \ref{T:cloud-comparison} shows a comparison of key server computing
 resources on Chameleon, FutureSystems, and Jetstream cloud
 environments.
 
@@ -92,7 +92,7 @@ storage     &     335TB     &                   2TB  & 2 TB\\ [1ex]
  \hline
 
 \end{tabular}
-  \label{tab:cloud-comparison}
+  \label{T:cloud-comparison}
 \end{table}
 
 
@@ -165,7 +165,7 @@ flavor for Chameleon Cloud and FutureSystems, while  m1.small was used
 on Jetstream.  Jetstream has more resources allocated to each flavor
 than Chameleon and FutureSystems, which are similar.  In order to
 perform similar tests on each cloud, flavors with identical CPU and
-memory were selected. Table \ref{tab:computing-resources} shows the
+memory were selected. Table \ref{T:computing-resources} shows the
 comparative resources of the flavors used in our testing.  While
 storage is lower on Jetstream, it is sufficient for out tests and
 should not significantly impact performance. 
@@ -174,8 +174,10 @@ should not significantly impact performance.
 
 The configuration parameters and cluster and Ansible deployment times
 are captured in a file for each deployment (benchmarking timings are
-later captured as well).  Total run time for a few interesting
-configurations are shown in Table \ref{tab:deploy-times}.
+later captured as well).  
+
+% Total run time for a few interesting
+% configurations are shown in Table \ref{tab:deploy-times}.
 
 Deployment A constitutes a simple deployment with only one of each component
 being created.  This deployment may only be suitable for a development

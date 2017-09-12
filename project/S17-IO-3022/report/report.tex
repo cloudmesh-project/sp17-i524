@@ -23,7 +23,9 @@ Code: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IO-302
 
 
 \begin{abstract}
-Extracting and identifying traffic signals from the videos captured by Robot swarms to help in recognizing the pattern and benchmarking the performance of the setup.
+  Extracting and identifying traffic signals from the videos captured
+  by Robot swarms to help in recognizing the pattern and benchmarking
+  the performance of the setup.
 \end{abstract}
 
 \setboolean{displaycopyright}{true}
@@ -33,10 +35,24 @@ Extracting and identifying traffic signals from the videos captured by Robot swa
 \maketitle
 
 \section{Introduction}
-For test purpose we created some mobile videos of traffic in a simulated traffic setup. All saved video files are uploaded on the Hadoop HDFS \cite{www-apache-hadoop}. Batch processing is enabled on the input video files to search for key images, namely the red, green and yellow signals in the images using the OpenCV \cite{www-opencv} library's Template matching functionality. 
-Hadoop Map reduce \cite{www-apache-hadoop} is used for processing and analysis of the images in the videos and getting a count of the how many red or green or yellow signals are encountered.
 
-collectd \cite{www-collectd} is used for benchmarking of the setup with Apache Hadoop using various sized data sets and number of nodes.
+For test purpose we created some mobile videos of traffic in a
+simulated traffic setup. All saved video files are uploaded on the
+Hadoop HDFS \cite{www-apache-hadoop}. Batch processing is enabled on
+the input video files to search for key images, namely the red, green
+and yellow signals in the images using the OpenCV \cite{www-opencv}
+library's Template matching functionality.  Hadoop Map reduce
+\cite{www-apache-hadoop} is used for processing and analysis of the
+images in the videos and getting a count of the how many red or green
+or yellow signals are encountered.
+
+\begin{itemize}
+\item a
+\item b
+\end{itemize}
+
+collectd \cite{www-collectd} is used for benchmarking of the setup
+with Apache Hadoop using various sized data sets and number of nodes.
 
 \section{Technology Used}
 
