@@ -242,7 +242,7 @@ for report in reports:
     pdf = report.replace(".tex",".pdf")
     title = report
    
-
+    print("\\phantomsection")
     print("\\addtocounter{section}{1}")
     print("\\addcontentsline{toc}{section}{\\arabic{section} ",
               id + "\\newline",
