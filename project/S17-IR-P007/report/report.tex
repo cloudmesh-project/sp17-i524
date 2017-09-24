@@ -2,8 +2,7 @@
 \usepackage{fancyvrb}
 \usepackage{listings}
 \usepackage{hyperref}
-\usepackage{float}
-
+\usepackage{float} 
 
 \journal{i524} 
 
@@ -67,7 +66,7 @@ libraries to implement these algorithms.
 
 To automate application deployment such that it can be tested on any
 environment, docker is used to containerize the application along with
-the application dependent libraries. The cluster management tool -
+the its dependent libraries. The cluster management tool -
 \emph{Kubernetes}, is used to auto deploy the application on a
 multi-node cluster. Scripts are written in \emph{Ansible}
 \cite{www-ansible} to automate the deployment process. As Kubernetes
@@ -95,8 +94,8 @@ A major difference in Ansible and many other tools in the
 space is its architecture.
 
 \subsubsection{Architecture}
-Ansible is an agentless tool,it doesn't requires any software to be
-installed on the remote machines to make them manageable. By default
+Ansible is an agentless tool, it doesn't require any software to be
+installed on the remote machine to make them manageable. By default
 it manages remote machines over SSH or WinRM, which are natively
 present on those platforms \cite{www-ansible-architecture}.
 
@@ -512,9 +511,6 @@ clouds or on multiple clusters of a single cloud. Deployment script
 should install all necessary software along with the project code to
 Kubernetes cluster nodes using the Docker image.
 
-\subsection{Deployment process - Ansible}
-<TODO - describe the ansible deployment and scripts>
-
 \subsection{Dockerizing the application}
 To containerize our application, we need to create a docker image for
 it. To create a docker image we need to create a docker file that
@@ -545,22 +541,7 @@ together that we shall use \cite{www-rbase-docker}.  The argument
 following the FROM clause is a repository/tag name that the docker
 engine automatically looks up on \url{http://hub.docker.com}.
 
-Following the FROM statement, we can specify all actions we need to
-perform like specifying the work directory for building the image or
-copying files into our work directory so that every resource is
-available under a single folder. Our application needs several text
-mining packages to be available as a part of the installation and thus
-we use the docker RUN command to download these dependencies and make
-them part of the docker image. The R library in the docker container
-shall pre-install all the dependencies as the image is built and we
-shall only care about running the application logic. Lastly, our
-docker file ends with a CMD statement that specifies the command that
-the container is supposed to execute on successful instantiation. CMD
-accepts an array of command names followed by the parameters. Since we
-want our image to execute our R application we shall specify the command
-as stated in the dockerfile below.
-
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{verbatim}
 FROM r-base
 COPY . ~/myscripts
@@ -576,15 +557,27 @@ CMD ["Rscript","spamdetection.r"]
 \label{Dockerfile of the application}
 \end{figure}
 
+Following the FROM statement, we can specify all actions we need to
+perform like specifying the work directory for building the image or
+copying files into our work directory so that every resource is
+available under a single folder. Our application needs several text
+mining packages to be available as a part of the installation and thus
+we use the docker RUN command to download these dependencies and make
+them part of the docker image. The R library in the docker container
+shall pre-install all the dependencies as the image is built and we
+shall only care about running the application logic. Lastly, our
+docker file ends with a CMD statement that specifies the command that
+the container is supposed to execute on successful instantiation. CMD
+accepts an array of command names followed by the parameters. Since we
+want our image to execute our R application we shall specify the command
+as stated in the dockerfile below.
 
 \subsubsection{Creating a docker image}
-
 Once the Dockerfile is built, we can build the image using docker
-build command as follows :
-
+build command as follows.
 \begin{figure}[H]
 \begin{verbatim}
-cc@rahpsing-055:~/dockerDirectory$ sudo docker build 
+cc@rahpsing-055:~$ sudo docker build 
 -t  spamdetectionapplication  ~/dockerDirectory/
 
 Sending build context to Docker daemon  12.8 kB
@@ -592,10 +585,6 @@ Step 1 : FROM r-base
 latest: Pulling from library/r-base
 c560cd7bd403: Pull complete 
 b190a5321f19: Pull complete 
-3933674049c0: Pull complete 
-99d11fb944ea: Pull complete 
-34522f7c3788: Pull complete 
-c2a798388711: Pull complete 
 
 Digest: sha256:e192edf861d61caff0b329436...
 Status: Downloaded newer image for r-base:latest
@@ -607,16 +596,13 @@ Removing intermediate container 8fb4aaaec0d8
 
 Step 3 : WORKDIR ~/dockerDirectory/
  ---> Running in 0220b193ed11
- ---> a3c4d57e23c9
 Removing intermediate container 0220b193ed11
-
 Step 4 : RUN Rscript -e "install.packages('tm')
-       .
-       . <installation_logs>
-       .
+         <installation-logs>
+  ...... <intermediate-steps>......
+
 Step 9 : CMD Rscript spamdetection.r
  ---> Running in 4edb44f2ffb6
- ---> a4814eeadf35
 Removing intermediate container 4edb44f2ffb6
 Successfully built a4814eeadf35
 \end{verbatim}
@@ -708,10 +694,6 @@ simple 'docker pull' from any machine to deploy the container with no
 dependencies. This is possible as the image wraps together the
 application code file, the data file and dependent r-base package from
 the latest version of R available on dockerhub's library.
-
-
-\subsection{Deployment via Minikube}
-TODO
 
 \subsection{Deployment via kubeadm}
 
@@ -979,6 +961,247 @@ including the master node and thus allowing the scheduler to schedule
 pods across the network \cite{www-kubernetes-kubeadm}. This feature
 also allows us to create a single node cluster.
 
+\section{Deployment using CMD5 Module}
+All the steps required for kubernetes have been implemented using
+Ansible along with the python CMD5 module \cite{www-cmd5}.Python's CMD
+module is a very useful package for creating shell like commands but
+it does not offer the extension of dynamic integration with any new
+customized commands which was the reason why CMD5 module was
+introduced. CMD5 has been rewritten on earlier versions of cmd3 and
+cloudmesh client.
+
+\subsection{Installation of CMD5 Module}
+To install CMD5 module, there are couple of ways to go it but the most
+convenient way is to checkout 3 repositories and install them to get
+the functionality of CMD5 up and running.
+
+Open up the terminal on your windows or mac workstation and clone the
+following 3 repostories. Its is mandatory to have GIT already
+installed. \newline git clone
+https://github.com/cloudmesh/cloudmesh.common.git \newline git clone
+https://github.com/cloudmesh/cloudmesh.cmd5.git \newline  git clone
+https://github.com/cloudmesh/cloudmesh.sys.git \newline
+
+After cloning these repositories, you may enter the root folder of
+these repositories and execute
+\newline
+python setup.py install \newline
+pip install .
+
+\subsection{Running the CMD5 module}
+To launch CMD5, you should open the terminal and type in cms.  This
+would launch the CMD5 module with few already existing commands like
+EOF, echo, help, stopwatch etc.
+These commands will install common, sys and cmd5 modules in your
+workstation which would lead to successful installation of the CMD5
+module.
+
+\subsection{Creation of customised CMD5 commands}
+To create your own customized CMD5 command, you must type in 
+
+\begin{figure}[H]
+\begin{verbatim}
+$ cms sys command generate <nameofyourcommand>
+\end{verbatim}
+\caption{Creation of customised CMD5 command}
+\label{Creation of customised CMD5 command}
+\end{figure}
+
+This command would create a CMD5 command with the name mentioned in
+<nameofyourcommand> placeholder. It downloads a template from
+cloudmesh called cloubmesh.bar and generates a new directory
+cloudmesh.nameofyourcommand with all the files which are needed to
+create your own command. It also registers it dynamically with cloudmesh.
+Later, you should cd in the newly created directory and execute \newline
+python setup.py install \newline
+pip install . \newline'
+
+\section{cloudmesh.kubernetes command}
+For the kubernetes application, using the features of CMD5, we have
+created our own customised kubernetes command called as
+cloudmesh.kubernetes. Later we have extended the kubernetes command to
+create various commands which will help in setting up a cloud custer,
+deploying kubernetes and performing benchmarks of the kubernetes
+cluster.
+
+We have created 8 Kubernetes CMD5 commands and those commands trigger
+the ansible commands which perform the automated deployment for our
+spam detection application.\newline
+
+\subsection{Kubernetes Name command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes name <nameOfTheCluster>
+\end{verbatim}
+\caption{Command to give the cluster a name}
+\vspace{-4mm}
+\label{Command to given the cluster a name}
+\end{figure}
+
+This command assignes the name for the cluster given in
+<nameOfTheCluster> placeholder. When is cluster is deployed, it will
+create a cluster with this name on the cloud.
+
+\subsection{Kubernetes Size command}
+
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes size <sizeOfCluster>
+\end{verbatim}
+\caption{Command to define the cluster size}
+\vspace{-4mm}
+\label{Command to define the cluster size}
+\end{figure}
+
+This command would create a cluster with the mentioned size in
+<sizeOfCluster> placeholder. For example Kubernetes size
+2  would create a cluster with 2 instances on the specified file.
+
+\subsection{Kubernetes Image command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes image <imageName>
+\end{verbatim}
+\caption{Command to define the type of image for the cluster}
+\vspace{-4mm}
+\label{Command to define the type of image for the cluster}
+\end{figure}
+
+This command is used to define the type of image which you want for
+the cluster.  For example the image name could be
+CC-Ubuntu16.04-20160610 which is a valid chameleon image. We can also
+define any valid image for the kilo cloud as well.  Important thing is
+here that whichever cloud you might define for the cluster, it should
+match with its equivalend valid image.
+
+\subsection{Kubernetes Flavor command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes flavor <flavorSize>
+\end{verbatim}
+\caption{Command to define the flavor for the cluster}
+\vspace{-4mm}
+\label{Command to define the flavor for the cluster}
+\end{figure}
+
+This command is used to define the flavor for each instance within the
+cluster. The 3 different types of flavors can be m1.small,
+m1.medium and m1.large.  Depending upon the small, medium, large it
+allocates the cluster size.
+
+\subsection{Kubernetes Cloud command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cloud <cloudName>
+\end{verbatim}
+\caption{Command to define the cloud on which the cluster will be created}
+\vspace{-4mm}
+\label{Command to define the cloud}
+\end{figure}
+
+This command is used to create the cluster with details mentioned
+above on the cloud provided in the cloudname.  For example -
+Kubernetes cloud chameleon. This would create the cluster on chameleon
+cloud when the kubernetes cluster deploy command will be called.
+
+\subsection{Kubernetes cluster info command}
+
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cluster info
+\end{verbatim}
+\caption{Command to get details of the cluster to be created}
+\vspace{-4mm}
+\label{Command to getthe details of the cluster to be created}
+\end{figure}
+
+This command would list of the details of the kubernetes cluster which
+was set using the name, size, image, flavor and cloud commands. This
+would help in giving you all the details for your kubernetes
+cluster. This command would print out the name of the cluster, its
+size, the image and the flavor used and on which cloud on the console
+itself.
+
+\subsection{Kubernetes cluster deploy command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cluster deploy
+\end{verbatim}
+\caption{Command to deploy the cluster on the cloud}
+\vspace{-4mm}
+\label{Command to deploy the cluster on the cloud}
+\end{figure}
+
+This command would deploy the Kubernetes cluster with the details set
+in the name, size, image, flavor and cloud commands. If any of the
+above parameters are not set, this would not deploy the cluster and
+ask the user to enter the required details before deploying it.
+
+It first creates a cluster with the number of instances equal to the
+size mentioned in the kubernetes size command with the image and
+flavor also mentioned in the respective kubernetes commands and
+deploys it on the cloud mentioned in the kubernetes cloud command.
+After the cluster is created, it calls a series of ansible tasks which
+install some pre requiste softwares on these instances, make one as
+the master instance and others as slave instances and installs
+kubernetes on all the instances and joins the slaves to the master
+creating a kubernetes cluster.
+
+\subsection{Kubernetes cluster benchmark command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cluster benchmark
+\end{verbatim}
+\caption{Command to benchmark the kubernetes cluster}
+\vspace{-4mm}
+\label{Command to benchmark the kubernetes cluster}
+\end{figure}
+
+This command would benchmark the kubernetes cluster for the spam
+detection application. This would create a docker image for the R
+programming language and then create a kubernetes pod and runs the pod
+on any of the slaves connected to it. This tasks are performed by the
+kubernetes master instance.
+
+Running the pod makes the execution of the spam detection application
+and its gives the output after some stipulated time.
+
+\section{Ansible Deployment}
+Ansible is used for automated deployment of your application on any
+local or remote cluster.
+
+\subsection{Inventory file and Roles}
+The inventory file is used to let ansible know which all instances
+does it has to connect and do the required tasks. For our kubernetes
+deployment, the IP addresses which are generated by the respective
+cloud are stored in the inventory file using ssh-keyscan command. This
+command is executed throught the CMD5 module. For our application we
+create an inventory file having one instance allocated to the
+Kubernetes-master host and rest all instances allocated to the
+kubernetes-slave hosts.  The number of instances depend upon the
+Kubernetes size command.
+
+\subsection{Roles}
+The roles concept in Ansible allows to draw a logical meaning to the
+tasks being performed. You can create as many roles as possible and
+define the tasks in those roles. You can then define the list of the
+role names in the yml file which would be executed.
+
+For our Kubernetes project, we have created 5 yml files which would be
+executed to perform tasks on the remote cloud cluster.  These files
+contain the host name and the roles in it.
+
+The first time which is triggered when the CMD5 kubernetes cluster
+deploy command is called is the installations.yml
+
 \section{Classification Results}
 
 After running all the algorithms on our data file the following
@@ -1170,8 +1393,8 @@ Naive Bayes & 5.93 & 6.21 \\[1ex]
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=60mm,height=60mm]{images/algo_comparison.jpg}}
-\caption{fig: Graph plot of algorithm execution time on chameleon and kilo clouds}
-\label{fig: Graph plot of algorithm execution time on chameleon and kilo clouds}
+\caption{Graph plot of algorithm execution time on chameleon and kilo clouds}
+\label{Graph plot of algorithm execution time on chameleon and kilo clouds}
 \end{figure}
 
 Further, the stopwatch command on CMD5 module was used to benchmark
@@ -1182,23 +1405,129 @@ creation and code deployment we can clearly observe the performance of
 the cluster on each cloud.
 
 
-\section{Discussion}
-TBD
+\begin{figure}[ht]
+\begin{center}
+ \begin{tabular}{|c | c| c|} 
+ \hline
+ Tasks  & Chameleon cloud & Kilo cloud \\
+ & execution time & execution time \\
+ & (seconds) & (seconds) \\ [0.5ex] 
+ \hline\hline
+    
+VM creation & 122 & 148 \\
+\hline
 
-\section{Conclusion}
+Prerequisites & 28.23 & 38.21 \\
+\hline
 
-TBD
+Software installation & 42.83  & 56.43 \\[1ex]
+\hline
+
+Kubernetes Cluster & 20.25 & 21.75 \\
+Creation & & \\[1ex]
+
+\hline
+Pod network & 5.93 & 6.21 \\
+installation & & \\[1ex]
+
+\hline
+Application runtime & 47.28 & 53.24\\[1ex]
+\hline
+
+\end{tabular}
+\end{center}
+  \caption{Algorithm execution time on Chameleon and Kilo cloud}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=60mm,height=60mm]{images/benchmark_results.png}}
+\caption{Graph plot of algorithm execution time on chameleon and kilo clouds}
+\label{Graph plot of algorithm execution time on chameleon and kilo clouds}
+\end{figure}
+
+The benchmarking time mentioned above is an average of 5 runs on both
+chameleon and kilo clouds. Segregating the application deployment
+process into several tasks allowed us to compare time taken by each
+step on both clouds.  VM creation - This task included cloudmesh and
+kilo cluster creation.  Prerequisites - Installation of git and
+updating the system using apt-get update.  Software installation -
+This step included downloading docker, kubeadm and kubectl packages,
+extracting and installing them.  Kubernetes Cluster Creation - This
+step included creating a kubernetes cluster using the kubectl init
+command. The init command takes some time to generate a unique token
+for the master machine which can be used by clients to join the
+cluster and serve as slaves. This step accounts for the time taken for
+clients to join the cluster.  Pod network installation - Pods and
+nodes in a kubernetes cluster cannot communicate without agreeing on a
+common pod network. We used weave-net as the pod network for our
+cluster. Pods cannot start running services unless all the services
+that are part of the CNI are active.  Application runtime - This is
+the time taken by the entire program to run including reading of the
+data file and execution of each algorithm.
+
+\section{Summary}
+
+We have successfully deployed and benchmarked a standalone application
+on a kubernetes cluster on both Chameleon and Kilo Clouds. This
+project helped us understand the notion of application portability
+using docker and deployment management using kubernetes.  Benchmarking
+results proved that Chameleon cloud performed far better than Kilo
+cloud in all aspects of application deployment as well as execution
+results.
+
+While the application code was developed in a reasonable time, a lot
+of effort was put to find the correct steps of a standalone
+application deployment with kubernetes. We have highlighted a few
+major issues that we faced in this report. Because we went through a
+barrage of failures, we ended up discovering more about kubernetes and
+its deployment features than what was needed for this
+project. However, our struggles also convey that although kubernetes
+offers a variety of cluster management functionalities, it has a steep
+learning curve. Any organization that intends to switch to kubernetes
+for deployment management would need to train its developers and use
+it on sandbox environment for a while before implementing it in
+production.
 
 \section{Acknowledgement}
 
-We acknowledge our professor Gregor von Laszewski and all associate
-instructors for helping us and guiding us throughout this project.
-
-\section{Appendices}
-TBD
+We acknowledge our professor Gregor von Laszewski and all the
+associate instructors for motivating and guiding us throughout this
+project.
 
 % Bibliography
 
 \bibliography{references} 
 
+\section*{Author Biographies}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm]
+                                               % as required for
+                                               % separation of bio
+                                               % photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/rahul_singh.jpg}
+  \end{wrapfigure}
+  \noindent
++{\bfseries Rahul Singh} received his Bachelors in Computer
+Engineering from University of Mumbai, India. He is currently pursuing
+his Masters in Computer Science at School Of Informatics and
+Computing, Indiana University Bloomington.
+
+\end{minipage}
+\endgroup
+
+\section{Work breakdown}
+Rahul Singh created the code for spam detection along with its docker
+image. He was responsible for doing research on kubernetes and
+discovering the correct steps for deploying of the application on a
+kubernetes cluster. He has worked on sections of the report related to
+the application, docker and kubernetes. Application benhmarking was
+done in conjunction with Sagar Vora.\\
+
+Sagar Vora was responsible for automating the entire deployment
+process using Ansible and converting the code to CMD5 module. Ansible
+and CMD5 sections of the report were done by him. Application
+benchmarking was done in conjunction with Rahul Singh.
 \end{document}
