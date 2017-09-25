@@ -1,0 +1,28 @@
+---
+
+# apt cache valid time in minutes
+ansible_cloudmesh_apt_cache_valid_time: 60
+
+cloudmesh_client_debian_packages:
+  - git
+  - python-dev
+  - python-pip
+  - python-virtualenv
+  - libssl-dev
+  - libffi-dev
+  - libsqlite3-dev
+  - openssh-client
+
+cloudmesh_client_trusty_packages: []
+cloudmesh_client_xenial_packages: []
+
+
+cloudmesh_client_virtualenv_name: "ENV"
+cloudmesh_client_virtualenv_path: "{{ ansible_env.HOME }}/{{ cloudmesh_client_virtualenv_name }}"
+
+cloudmesh_client_install_via_github: yes
+
+cloudmesh_client_repo_url: "https://github.com/cloudmesh/client.git"
+cloudmesh_client_repo_path: "{{ ansible_env.HOME }}/github.com/cloudmesh/{{ cloudmesh_client_repo_url | basename | splitext | first }}"
+cloudmesh_client_repo_branch: master
+

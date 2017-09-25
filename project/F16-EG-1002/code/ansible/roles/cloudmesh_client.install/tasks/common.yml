@@ -1,0 +1,6 @@
+---
+# common tasks, eg updating package manager
+
+- include: common_debian.yml
+  when: ansible_os_family == 'Debian'
+

@@ -1,0 +1,6 @@
+---
+
+- name: Install Cloudmesh Client
+  hosts: all
+  roles:
+    - ansible-cloudmesh-client

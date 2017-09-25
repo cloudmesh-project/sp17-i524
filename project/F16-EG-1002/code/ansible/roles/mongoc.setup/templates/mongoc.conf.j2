@@ -1,0 +1,32 @@
+systemLog:
+  quiet: true
+  destination: file
+  path: /var/log/mongo/mongod-config.log
+  logAppend: true
+
+# fork and run in background
+processManagement:
+  fork: true
+# location of pidfile
+  pidFilePath: /var/run/mongo/mongoc.pid
+
+net:
+  port: {{ mongoc_port }}
+
+setParameter:
+  enableLocalhostAuthBypass: false
+
+storage:
+  dbPath: {{ mongodb_datadir_prefix }}configdb
+  journal:
+    enabled: true
+
+security:
+  keyFile: {{ mongodb_datadir_prefix }}secret
+  javascriptEnabled: true
+
+sharding:
+  clusterRole: configsvr
+
+#replication:
+#  replSetName:

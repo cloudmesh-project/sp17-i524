@@ -1,0 +1,10 @@
+---
+
+- include: common.yml
+
+- include: ubuntu_16.04.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04'
+
+- include: install_client_from_github.yml
+  when: cloudmesh_client_install_via_github
+

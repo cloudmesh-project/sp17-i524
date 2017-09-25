@@ -173,7 +173,9 @@ titlepage = '''
 \\titlepagedecoration
 \\end{titlepage}
 '''
-print ("""
+
+
+print ('''
 \\documentclass[12pt]{article}
 \\usepackage{fullpage}
 \\usepackage[final]{pdfpages}
@@ -181,11 +183,9 @@ print ("""
 \usepackage{tocloft}
 \\renewcommand\\cftsecafterpnum{\\vskip0pt}
 \\renewcommand\\cftsubsecafterpnum{\\vskip0pt}
-
-% Adjust sectional unit title fonts in ToC
 \\renewcommand{\\cftsecfont}{\\sffamily}
 \\renewcommand{\\cftsubsecfont}{\\sffamily}
-""")
+''')
 
 print(titlepagemacro)
 
@@ -238,7 +238,7 @@ for report in reports:
     pdf = report.replace(".tex",".pdf")
     title = report
    
-
+    print("\\phantomsection")
     print("\\addtocounter{section}{1}")
     print("\\addcontentsline{toc}{section}{\\arabic{section} ",
               id + "\\newline",

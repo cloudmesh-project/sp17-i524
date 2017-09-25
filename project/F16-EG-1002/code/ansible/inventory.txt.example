@@ -1,0 +1,5 @@
+[all]
+xl41-001 ansible_ssh_host="129.114.32.236"
+xl41-002 ansible_ssh_host="129.114.32.250"
+xl41-003 ansible_ssh_host="129.114.33.22"
+xl41-004 ansible_ssh_host="129.114.32.254"

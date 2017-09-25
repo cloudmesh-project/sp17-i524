@@ -1,0 +1,28 @@
+---
+# This Playbook would deploy the whole mongodb cluster with replication and sharding.
+
+# This part install cloudmesh from github repo and setup virtualenv
+#- name: Install Cloudmesh Client
+#  hosts: local
+#  roles:
+#  - role: cloudmesh_client.install
+#  - role: cluster.deploy
+
+
+- name: Deploy mongod on all instances
+  hosts: all
+  roles:
+    - role: mongo.deploy
+    - role: mongoc.setup
+    - role: mongod.setup
+
+
+#- hosts: all
+#  roles:
+#    - mongod.setup
+#
+
+# - mongos
+#- hosts: mongo_servers
+#  tasks:
+#  - include: roles/mongod/tasks/shards.yml

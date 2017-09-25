@@ -1,3 +1,6 @@
+#
+# run in python2
+#
 from __future__ import print_function
 import glob
 from ruamel import yaml
@@ -173,6 +176,7 @@ titlepage = '''
 \\titlepagedecoration
 \\end{titlepage}
 '''
+
 print ("""
 \\documentclass[12pt]{article}
 \\usepackage{fullpage}
@@ -238,7 +242,7 @@ for report in reports:
     pdf = report.replace(".tex",".pdf")
     title = report
    
-
+    print("\\phantomsection")
     print("\\addtocounter{section}{1}")
     print("\\addcontentsline{toc}{section}{\\arabic{section} ",
               id + "\\newline",

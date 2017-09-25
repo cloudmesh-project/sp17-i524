@@ -1,0 +1,28 @@
+# Variable for cluster deployment on localhost
+
+#project name on cloud
+project_name: CH-818414
+#default cloud to deploy
+cloud: chameleon
+#image for current cloud
+image: CC-CentOS7
+#root username for current image
+root_user: cc
+#flavor for instances
+flavor: m1.small
+#security group
+security_group: mongo
+#number of instances
+cluster_num: 4
+#first name
+firstname: Xu
+#last name
+lastname: Liu
+#email
+email: xl41@iu.edu
+#github username
+github: tonythomascn
+#user name for specified cloud
+user: xl41
+#password for specified cloud / "read" will require passsword when prompt
+passwd: read
