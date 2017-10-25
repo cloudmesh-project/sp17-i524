@@ -3,22 +3,22 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{float}
-
+\usepackage{dirtytalk}
 
 \journal{i524} 
 
 \title{Deploying a spam message detection application using R over Docker and Kubernetes}
 
 \author[1,*]{Sagar Vora}
-\author[1]{Rahul Singh}
+\author[1,**]{Rahul Singh}
 
 \affil[1]{School of Informatics and Computing, Bloomington, IN 47408, U.S.A.}
 
 \affil[*]{Corresponding authors: vorasagar7@gmail.com, rahul\textunderscore singh919@yahoo.com}
 
-\dates{project-P007, \today}
+\dates{Project-S17-IR-P007, \today}
 
-\ociscodes{Docker, Ansible, Kubernetes, R, Pandas, Spam}
+\ociscodes{Docker, Ansible, Kubernetes, R, Spam}
 
 % replace this with your url in github/gitlab
 \doi{Report: \url{https://github.com/cloudmesh/sp17-i524/tree/master/project/S17-IR-P007/report/report.pdf}\\
@@ -29,7 +29,7 @@ Application containerization and automated deployment allows
 developers to focus on writing code without worrying about the
 environment in which their software is supposed to run. This paper
 aims to containerize a standalone R application and deploy it on a
-multi node kubernetes cluster and benchmark application performance on
+multi-node kubernetes cluster and benchmark application performance on
 different clouds. Email spam messages are a nuisance to the web
 community. If not filtered accurately, they may work like an
 email-bomb attack where a stream of spam messages shall make a user to
@@ -58,111 +58,124 @@ add value to a user of the web. Messages which are inappropriate,
 unsolicited, repeated and irrelevant can be all classified as spam. In
 this report, we are using data mining algorithms like \emph{SVM
   (Simple Vector Machine)}, \emph{KNN (K-Nearest Neighbor)} and
-AdaBoost over an SMS collection dataset of 5574 messages to
-differentiate spam messages from legitimate ones. \emph{R} shall be
-used to develop the code as it provides supporting text mining
-libraries to implement these algorithms.
+\emph{AdaBoost} over an SMS collection dataset of 5574 messages to
+differentiate spam messages from legitimate ones. \emph{R}
+\cite{www-about-rproject} shall be used to develop the code as it
+provides supporting text mining libraries to implement these
+algorithms.
 
 \noindent
-
 To automate application deployment such that it can be tested on any
-environment, docker is used to containerize the application along with
-the application dependent libraries. The cluster management tool -
-\emph{Kubernetes}, is used to auto deploy the application on a
-multi-node cluster. Scripts are written in \emph{Ansible}
+environment, \emph{Docker} \cite{www-docker-about} is used to
+containerize the application along with the its dependent
+libraries. The cluster management tool - \emph{Kubernetes}
+\cite{www-kubernetes-home}, is used to auto deploy the application on
+a multi-node cluster. Scripts are written in \emph{Ansible}
 \cite{www-ansible} to automate the deployment process. As Kubernetes
 itself scales the application container according to our
 specification, a deployment engineer shall only be responsible to
-write a yaml specificaion file that is read by the kubernetes
-engine. Application benchmarking results are achieved by running the
-ansible scripts to deploy the application on Chameleon cloud and Kilo
-cloud.
+write a yaml specification file that is read by the kubernetes
+engine. Application benchmarking results are achieved by running CMD5
+commands that trigger ansible scripts to deploy the application on
+Chameleon cloud and Kilo cloud.
 
 
 \section{ELEMENTS OF THE PROJECT}
 
 \subsection{Ansible}
-No one likes repetitive tasks, with Ansible, IT
-admins can begin automating away the drudgery from their daily routine
-tasks. Ansible is a simple automation language that can perfectly
-describe an IT application infrastructure. Ansible is an open source
-automation engine which can be used to automate cloud provisioning,
-configuration management, and application deployment. It can also
-perform more advanced IT tasks such as continuous deployment or
-rolling out updates with zero downtime.
-
-A major difference in Ansible and many other tools in the
-space is its architecture.
+Human labour has been replaced by machines and the world is moving
+towards an age of automation. Computer Scientists prefer writing
+scripts to perform their daily activities instead of manually
+performing them again and again. Ansible is an open source automation
+engine that can be used to automate tasks such as cloud instance
+creation and deployment, configuration management, and application
+deployment. Apart from these basic tasks, Ansible can also be used to
+perform advanced tasks such as continuous deployment or rolling out
+updates without turning off the entire cluster.
 
 \subsubsection{Architecture}
-Ansible is an agentless tool,it doesn't requires any software to be
-installed on the remote machines to make them manageable. By default
-it manages remote machines over SSH or WinRM, which are natively
-present on those platforms \cite{www-ansible-architecture}.
+Ansible doesn't require any software to be installed on the remote
+machine in order to control it. It implicitly manages remote machines
+using \emph{SSH} \cite{www-ssh} or \emph{WinRM}
+\cite{www-winrm-microsoft}, which are natively present on those
+platforms \cite{www-ansible-architecture}.
 
-Like other configuration management software, Ansible
-distinguishes between two types of servers: one being the controlling
-machines and other being the nodes. Ansible uses a single controlling
-machine where the orchestration begins. Nodes are then controlled by a
-controlling machine over SSH \cite{www-ssh}. The location of the nodes
-are described by the inventory of the controlling machine.
+\noindent
+Ansible architecture comprises of two types of servers, the
+\emph{controlling machine} and the \emph{nodes}
+\cite{www-wiki-ansible}. The controlling machine is responsible for
+managing the nodes over SSH. The location of these nodes is described
+by the controlling machine using its \emph{inventory}
+\cite{www-ansible-inventory}.
 
-Ansible modules are deployed by Ansible over SSH. These modules are
-temporarily stored in the nodes and communicate with the controlling
-machine through a JSON protocol over the standard output
 
 \subsubsection{Playbooks}
 
-Playbooks \cite{www-ansible-playbook} are Ansible’s configuration,
-deployment, and orchestration language. They let us control the remote
-systems with a policy which we might want them to enforce. If Ansible
-modules act as tools in your workshop, then playbooks are your
-instruction manuals, and your inventory of hosts are your raw
-material. Playbooks can be used to manage configurations of and
-deployments to remote machines. They can sequence multi-tier rollouts
-involving rolling updates, and can delegate actions to other hosts,
-interacting with monitoring servers and load balancers.
+\say{\emph{Playbooks} are a powerful mode of using Ansible’s
+  configuration, deployment, and orchestration capabilities}
+\cite{www-ansible-playbook}. Using playbooks we can govern the rules
+of managing and controlling remote machines. Using inventory files in
+conjunction with the playbooks, we can break down our ansible tasks
+into Ansible roles format, where each role is binded with a set of
+commands to be executed. The roles are defined in the playbooks which
+Ansible executes in a sequential fashion. Playbooks can also be used
+to manage configuration and deployment to remote machines.
 
-\subsubsection{Ansible Galaxy}
+\subsection{Executing a Playbook}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ ansible-playbook xxx_playbook.yml -i inventory.txt
+\end{verbatim}
+\caption{Command to execute a playbook}
+\vspace{-4mm}
+\label{Command to execute a playbook}
+\end{figure}
+
+\noindent
+The \say{ansible-playbook} command followed by the playbook name is
+used to execute the playbook.  The \say{-i} option specifies the
+inventory file that is to be used in conjunction with the playbook
+file.
 
 \subsection{R}
 R is a language and environment for statistical computing and graphics
-\cite{www-about-rproject}. Pandas does not provide a significant
-statistical modeling environment as it is still a work in progress. R
-provides a variety of statistical model analysis, classification,
-clustering and graphical techniques to provide this
-environment. Integrating Python's efficiency with R's capability
-allows us to build a highly a desirable analysis model for our
-application.
+\cite{www-about-rproject}. R provides a variety of statistical model
+analysis, classification, clustering and graphical techniques to
+provide this environment. R's capability allows us to build a highly a
+desirable analysis model for our application.
 
 
 \subsection{Docker}
 
-\emph{Docker} is an open-source project that automates application
-deployment by packaging the application in
-\emph{containers}. Containers provide application portability by
-bundling together an application and its needed resources in a package
-so that they can be deployed on different platforms without worrying
-about resource dependencies. Application containerization is an OS
-(Operating System) level emph{virtualization} for deploying and
-running an application instance without launching a virtual mahine for
-each application \cite{www-containerization}. A container has its own
-environment variables, filesystem and libraries that is needed by the
-application, thus eliminating OS or hardware dependency. Containers
-abstract the OS kernel while a \emph{VM (Virtual Machine)} hypervisor
+Docker is an open-source project that automates application deployment
+by packaging the application in \emph{containers}. Containers provide
+application portability by bundling together an application and its
+needed resources in a package so that they can be deployed on
+different platforms without worrying about resource
+dependencies. Application containerization is an OS (Operating System)
+level \emph{virtualization} \cite{www-virtualization-wiki} for
+deploying and running an application instance without launching a
+virtual mahine for each application \cite{www-containerization}. A
+container has its own environment variables, filesystem and libraries
+that is needed by the application, thus eliminating OS or hardware
+dependency. Containers abstract the OS kernel while a \emph{VM
+  (Virtual Machine)} \cite{www-virtualmachine-wiki} hypervisor
 abstracts an entire device.
 
+\noindent
 Docker allows application developers to package their applications
 into isolated containers. Docker automates the repetitive tasks of
 setting up and configuring development environments thus allowing
 developers to focus only on building software. A dockerized
 application can simply ship between platforms as the complexity of
-software dependencies is handled by the container.  Docker
-standardizes container creation and can be used to pack, ship and run
-an application as a lightweight container that can run in any
-environment. Docker can be integrated with other devops applications
-like Puppet, Chef, Vagrant, Ansible and Kubernetes. We shall use
-Docker with Ansible and Kubernetes in our project.
+software dependencies is handled by the container. Docker standardizes
+container creation and can be used to pack, ship and run an
+application as a lightweight container that can run in any
+environment. Docker can be integrated with other devOps applications
+like \emph{Puppet}, \emph{Chef}, \emph{Vagrant}, \emph{Ansible} and
+\emph{Kubernetes}. We shall use Docker with Ansible and Kubernetes in
+our project.
 
 \subsubsection{Dockerfile and DockerImage}
 To package an application and its dependencies in a single file,
@@ -180,20 +193,17 @@ organization by making a docker pull request.
 Kubernetes is an open-source platform for automating deployment,
 management and scaling of containerized applications across a cluster
 \cite{www-wiki-kubernetes}. The more granular an application is, the
-more components it consists of and thus requires management of these
-components. Kubernetes helps in faster deployment of applications and
-scaling them on the fly. Moreover it optimizes the use of hardware by
-using the resources which are needed. Kubernetes provides container
-management features like component replication, load-balancing,
-service-discovery and logging across components
+more components it consists of and thus requires organized management
+of these components. Kubernetes helps in faster deployment of
+applications and scaling them on the fly. Moreover it optimizes the
+use of hardware by using the resources which are needed. Kubernetes
+provides container management features like component replication,
+load-balancing, service-discovery and logging across components
 \cite{www-kubernetes-architecture}. A Kubernetes cluster can be
 deployed on either physical or virtual machines. We shall be deploying
 a kubernetes cluster using \emph{kubeadm} - the kubernetes command
-line tool and \emph{Minikube} which is a lightweight Kubernetes
-implementation which creates a VM on the local machine and deploys a
-simple cluster containing only one node. The Minikube CLI provides
-basic bootstrapping operations for working with the cluster, including
-start, stop, status, and delete commands.
+line tool that allows us to setup and maintain nodes in a cluster by
+parsing \emph{yaml} structured deployment files.
 
 \subsection{Kubernetes Terminologies}
 Kubernetes defines the following set of primitives which provide
@@ -201,10 +211,10 @@ mechanisms for deploying and scaling applications.
 
 \subsubsection{Pods}
 A pod is the smallest unit of a kubernetes cluster and has a unique
-ip-address within the cluster. A pod consists of one or more
+IP address within the cluster. A pod consists of one or more
 containers that can share resources and can be controlled as a single
 application \cite{www-wiki-kubernetes}
-\cite{www-kubernetes-digitalocean}. Thus all the involved containers
+\cite{www-kubernetes-digitalocean}. Thus, all the involved containers
 in a pod are scheduled on the same host. A pod can be thought of as a
 single virtual machine in terms of resource sharing and scheduling.
 Pods can be managed manually using the \emph{Kubernetes API} or can be
@@ -213,17 +223,17 @@ managed by a controller.
 \subsubsection{Services}
 A kubernetes service is a collection of pods that perform the same
 function and are presented as a single entity. This way a service can
-be emphasized as a one tier of a multi-tier application. Service act
+be emphasized as a one tier of a multi-tier application. Service acts
 as an interface to a group of containers so that service-consumers
 need only reference the single access location. Kubernetes facilitates
-service discovery by assigning a stable IP address and a namespace to
+service discovery by assigning an IP address and a namespace to
 a service. This idea abstracts the change of IP addresses of pods
 within a service that result due to pod failure or pod rescheduling.
 
 \subsubsection{Replication Controllers}
 A replication controller is a framework for horizontal scaling of
-pods. Semantics of a pod are defined in a <pod\textunderscore
-name>.yaml file which also defines the replication details that need
+pods. Semantics of a pod are defined in a \emph{<pod\textunderscore
+name>.yaml} file which also defines the replication details that need
 to be done. The replication controller performs replication by scaling
 a number of pods across a cluster based on the pod definition file
 \cite{www-wiki-kubernetes}. The replication controller has to make
@@ -235,7 +245,7 @@ with a new replica.
 Kubernetes allows users or internal components to assign a key-value
 pair tag to any API object in the system. An object can have one or
 more labels associated with it, but each with a unique key. eg:
-appversion = 1.0, development\textunderscore stage = 4.  Label
+appversion = 1.0, development\textunderscore stage = 4. Label
 selectors are queries against labels that return matching objects
 \cite{www-kubernetes-digitalocean}. This way each object in the system
 can be referenced with a single label or a combination of multiple
@@ -253,7 +263,7 @@ that manage the master or control plane.
 \label{fig:Kubernetes Minimum Architecture}
 \end{figure}
 
-
+\noindent
 \textbf{Kubernetes Master Node/Control plane}
 \newline
 The Kubernetes master node is responsible for managing the kubernetes
@@ -267,8 +277,8 @@ the control plane consists of several components:
 The API server is the most fundamental component of the Kubernetes
 master and serves as the entry point for all the REST commands used to
 control the cluster. The API server serves up the Kubernetes API using
-JSON over HTTP, providing both internal and external interface to the
-cluster \cite{www-kubernetes-digitalocean}
+\emph{JSON} over \emph{HTTP}, providing both internal and external
+interface to the cluster \cite{www-kubernetes-digitalocean}
 \cite{www-apiserver-kmblog}. It validates the REST requests, executes
 them and updates the status of the objects in the \emph{etcd} storage.
 
@@ -280,8 +290,8 @@ of the cluster at any point of time
 and provides a simple HTTP/JSON API as an interface for setting or
 retrieving values from the store. Other components watch the state of
 the etcd store to bring themselves up to the desired state. Data being
-stored in the etcd store are deployed services, pods, replication
-information etc.
+stored in the etcd store are deployed services, pods and replication
+information.
 
 \subsubsection{Scheduler}
 The scheduler component is responsible for the deployment of pods and
@@ -296,7 +306,7 @@ scheduled is not in excess to the resources available
 The controller manager is the process embedding the different types of
 controllers like the Replication Controller or the DaemonSet
 Controller on a kubernetes master. The controllers query the API
-Server to manipulate the resources like pods,services etc. which they
+server to manipulate the resources like pods and services  which they
 manage.
 
 \subsection{Worker Node}
@@ -304,7 +314,7 @@ The worker node also called as minion node is where the containers are
 actually deployed. The worker contains all the necessary services
 needed to manage the networking between containers, communicate with
 the master node and assign resources to the scheduled containers
-\cite{www-kubernetes-architecture}.  Every worker node must run the
+\cite{www-kubernetes-architecture}. Every worker node must run the
 container runtime i.e docker and other components stated below to
 ensure proper communication with the master.
 
@@ -318,15 +328,15 @@ starting the container.
 responsible for maintaining the pod in the desired state. Kubelet is
 the worker service that monitors the health of each pod and
 communicates the status of each node via a heartbeat message to the
-master.  If the pod is not in the desired state, it is redeployed to
+master. If the pod is not in the desired state, it is redeployed to
 the same node \cite{www-wiki-kubernetes}. Kubelet is also responsible
 for communicating with the etcd storage to get information about the
 services and update the storage about newly created ones.
 
 \subsubsection{Kube-Proxy}
 \emph{Kube-proxy} acts as a network proxy and a load balancer. It is
-responsible for networking of TCP and UDP packets to the appropriate
-container based on the IP address of each packet
+responsible for networking of \emph{TCP} and \emph{UDP} packets to the
+appropriate container based on the IP address of each packet
 \cite{www-wiki-kubernetes} \cite{www-kubernetes-architecture}.
 
 \subsubsection{Kubectl}
@@ -386,17 +396,18 @@ they eliminate the curse of dimensionality problem as they perform the
 computations in the original attribute space
 \cite{book-dataminingintroduction}. We shall avoid mathematical
 details about SVM and the kernel as they are beyond the scope of this
-report.
+report.\newline
 
+\noindent
 \textbf{Polynomial kernel} - Polynomial kernel, as the name suggests, looks not
 only at the given features of the input samples but at their
 combination \cite{www-polykernel-wiki}. If a pair of words give
 interesting information rather than the individual words alone, we can
 use a quadratic kernel. Similarly, for occurences of triplets of
 words, we can use a cubic kernel. Linear kernels are special case of
-polynomial kernels where the quadratic factor is 1.
+polynomial kernels where the quadratic factor is 1.\newline
 
-
+\noindent
 \textbf{Radial kernel} - Radial basis kernel maps the data into infinite
 dimensional space to extract relations between the variables. It helps
 us to draw a circular decision boundaries to pick dependent features.
@@ -417,6 +428,7 @@ figure explaining the algorithm is given below.
 \label{fig: An example for the K-Nearest Neighbor algorithm}
 \end{figure}
 
+\noindent
 There are 2 classes of data items in the figure - circles and
 squares. We have an unknown data point - the star and wish to find its
 real class using k-nearest neighbor algorithm. For k=3, the 3-nearest
@@ -426,6 +438,23 @@ changes for higher values of k. To eliminate the effect of noise and
 outliers on the classification result, a weight is associated with
 each data point, with closer neighbors having higher weight over the
 distant neighboring points.
+
+\subsubsection{AdaBoost}
+
+AdaBoost (Adaptive Boost) works on the principle of generating better
+classifiers by adapting existing classifiers according to the data
+over which the classification process is to be performed. AdaBoost
+combines the output of several classifiers into a weighted sum that
+represents the final output of the algorithm
+\cite{www-adaboost-wiki}. At each step in the algorithm, a boosting
+sequence is performed that finds weak classifiers by comparing the
+ratios of misclassified samples by each classifier and then tweaks
+them to generate classifiers that provide more accurate data. Unlike
+SVM, AdaBoost works with only those attributes of the data that
+improve the predictive power of the classifier and does not suffer
+from the \emph{curse of dimensionality}
+\cite{www-curseofdimensionality-wiki} drawback of most data mining
+algorithms.
 
 \subsubsection{Naive Bayes Classifier}
 
@@ -438,6 +467,7 @@ word probability in a table that shall be cross-referenced to
 determine the class of the record on classification data
 \cite{paper-classification-of-email}.
 
+\noindent
 A selected few words have more probability of occuring in a spam
 messages than in the legitimate ones. Eg: The word "Lottery" shall be
 encountered more often in a spam message.  The classifier shall
@@ -445,7 +475,7 @@ correlate the bag of words with spam and non-spam messages and then
 use Bayes Theorem to calculate a probability score that shall indicate
 whether a message is a spam or not. The results shall be verified with
 the results available on the training dataset and the classifier
-accuracy shall be calculated.  The classifier shall use the Bayesian
+accuracy shall be calculated. The classifier shall use the Bayesian
 theorem over the training dataset to calculate probabilities of such
 words that occur more often in spam messages and later use a summation
 of scores of the occurence of these word probabilities to estimate
@@ -455,6 +485,7 @@ learned a high probability for spam based words whereas, words in
 legitimate message like family member or friends names shall have a
 very low probability of occurence.
 
+\noindent
 Once the training process has been completed, the posterior
 probability for all the words in the new input email is computed using
 Bayes theorem. A threshold value shall be defined to classify a
@@ -470,9 +501,10 @@ a spam \cite{www-wiki-naivebayes}.
 To address the problem of incoming spam messages, a model shall be
 developed using the various classification techniques to correctly
 classify each incoming email/text message as a spam or a legitimate
-one. The training dataset to build the
-model consists of 5574 message records.
+one. The training dataset to build the model consists of 5574 message
+records.
 
+\noindent
 To develop an efficient training model, we shall partition the data
 into 2 subsets - the training data and testing data. We shall choose
 one of the subsets for building a classification model and the other
@@ -480,7 +512,7 @@ to evaluate the model's performance. The training process involves
 creating a document term matrix for the occurence of each word in the
 spam marked messages. This matrix describes the frequency of terms in
 each of the messages, with the rows corresponding to documents in the
-dataset and columns corresponding to the terms.  Using the document
+dataset and columns corresponding to the terms. Using the document
 term matrix, we find highly repeated words in spam messages across the
 training set. We vectorize the training and the test data set using
 these word frequencies and provide this vectorized data as input to
@@ -499,21 +531,19 @@ vice-versa. Based on these results, we calculate the accuracy of
 classification by dividing the number correct results by the total
 records in the dataset.
 
+\noindent
 Further, a higher classification accuracy shall be achieved through
 filtering by looking at the message header i.e the sender's
-number/name. Thereby if a message from a particular sender is
+number/name. Thereby, if a message from a particular sender is
 repeatedly marked as spam by the user, the classifier need not
 evaluate the message body if it is from the same sender.
 
 \section{DEPLOYMENT}
-Our application will be deployed using Ansible \cite{www-ansible}
-playbook. Automated deployment should happen on two or more nodes
-clouds or on multiple clusters of a single cloud. Deployment script
-should install all necessary software along with the project code to
-Kubernetes cluster nodes using the Docker image.
-
-\subsection{Deployment process - Ansible}
-<TODO - describe the ansible deployment and scripts>
+Our application will be deployed using Ansible playbook. Automated
+deployment is performed on a multi-node cluster on both Chameleon and
+Kilo clouds. Deployment script shall install all required software
+components along with the project code to Kubernetes cluster nodes using the
+Docker image.
 
 \subsection{Dockerizing the application}
 To containerize our application, we need to create a docker image for
@@ -527,7 +557,7 @@ Dockerfile. A dockerfile is a series of text commands that a user can
 run on a command line to build an image \cite{www-dockerfile-documentation}.
 \newline
 Instructions within a Dockerfile have the following format:
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{verbatim}
  INSTRUCTION  arguments
 \end{verbatim}
@@ -535,32 +565,19 @@ Instructions within a Dockerfile have the following format:
 \label{Syntax of every command in a dockerfile}
 \end{figure}
 
+\noindent
 Docker reads the instructions from a dockerfile in the order they are
 written. The very first line of a docker file must be a 'FROM' clause
 which specifies the base image from which the image is being built. As
 our application works with R, we need to specify the base package as
-one that shall help us run our R application. \emph{DockerHub} has a
-r-base package that binds the latest version of R and its libraries
-together that we shall use \cite{www-rbase-docker}.  The argument
-following the FROM clause is a repository/tag name that the docker
-engine automatically looks up on \url{http://hub.docker.com}.
+one that shall help us run our R application. \emph{DockerHub}
+\cite{www-dockerhub-libraries} has a r-base package that binds the
+latest version of R and its libraries together
+\cite{www-rbase-docker}. The argument following the FROM clause is a
+repository/tag name that the docker engine automatically looks up on
+dockerhub.
 
-Following the FROM statement, we can specify all actions we need to
-perform like specifying the work directory for building the image or
-copying files into our work directory so that every resource is
-available under a single folder. Our application needs several text
-mining packages to be available as a part of the installation and thus
-we use the docker RUN command to download these dependencies and make
-them part of the docker image. The R library in the docker container
-shall pre-install all the dependencies as the image is built and we
-shall only care about running the application logic. Lastly, our
-docker file ends with a CMD statement that specifies the command that
-the container is supposed to execute on successful instantiation. CMD
-accepts an array of command names followed by the parameters. Since we
-want our image to execute our R application we shall specify the command
-as stated in the dockerfile below.
-
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{verbatim}
 FROM r-base
 COPY . ~/myscripts
@@ -576,15 +593,28 @@ CMD ["Rscript","spamdetection.r"]
 \label{Dockerfile of the application}
 \end{figure}
 
+\noindent
+Following the FROM statement, we can specify all actions we need to
+perform like specifying the work directory for building the image or
+copying files into our work directory so that every resource is
+available under a single folder. Our application needs several text
+mining packages to be available as a part of the installation and thus
+we use the docker RUN command to download these dependencies and make
+them part of the docker image. The R library in the docker container
+shall pre-install all the dependencies as the image is built and we
+shall only care about running the application logic. Lastly, our
+docker file ends with a CMD statement that specifies the command that
+the container is supposed to execute on successful instantiation. CMD
+accepts an array of command names followed by the parameters. Since we
+want our image to execute our R application we shall specify the
+command as stated in the dockerfile below.
 
 \subsubsection{Creating a docker image}
-
 Once the Dockerfile is built, we can build the image using docker
-build command as follows :
-
-\begin{figure}[H]
+build command as follows.
+\begin{figure}[h]
 \begin{verbatim}
-cc@rahpsing-055:~/dockerDirectory$ sudo docker build 
+cc@rahpsing-055:~$ sudo docker build 
 -t  spamdetectionapplication  ~/dockerDirectory/
 
 Sending build context to Docker daemon  12.8 kB
@@ -592,10 +622,6 @@ Step 1 : FROM r-base
 latest: Pulling from library/r-base
 c560cd7bd403: Pull complete 
 b190a5321f19: Pull complete 
-3933674049c0: Pull complete 
-99d11fb944ea: Pull complete 
-34522f7c3788: Pull complete 
-c2a798388711: Pull complete 
 
 Digest: sha256:e192edf861d61caff0b329436...
 Status: Downloaded newer image for r-base:latest
@@ -607,16 +633,13 @@ Removing intermediate container 8fb4aaaec0d8
 
 Step 3 : WORKDIR ~/dockerDirectory/
  ---> Running in 0220b193ed11
- ---> a3c4d57e23c9
 Removing intermediate container 0220b193ed11
-
 Step 4 : RUN Rscript -e "install.packages('tm')
-       .
-       . <installation_logs>
-       .
+         <installation-logs>
+  ...... <intermediate-steps>......
+
 Step 9 : CMD Rscript spamdetection.r
  ---> Running in 4edb44f2ffb6
- ---> a4814eeadf35
 Removing intermediate container 4edb44f2ffb6
 Successfully built a4814eeadf35
 \end{verbatim}
@@ -624,7 +647,7 @@ Successfully built a4814eeadf35
 \label{Building an image from a dockerfile}
 \end{figure}
 
-
+\noindent
 The built image is placed in our machine's local docker registry and
 can be viewed with the 'docker images' command.
 
@@ -641,28 +664,32 @@ r-base                    latest  16fe32463d  645.6 MB
 
 \subsubsection{Running the application}
 
-We shall run our application using the docker run command.
+\noindent
+Once our docker image is built, it can be executed using the docker
+run command.
 
 \begin{figure}[H]
 \begin{verbatim}
- docker run spamdetection
+ docker run spamdetectionapplication
 \end{verbatim}
 \caption{Running a docker image}
 \label{Running a docker image}
 \end{figure}
 
+\noindent
 We can check the container id of our application along with other
 important information using the 'docker ps' command.
  
 \subsubsection{Sharing the docker image}
 
 By default, the docker CLI points to docker's public registry which is
-located at \url{http://hub.docker.com}. We need to create a docker
+located on dockerhub's website. We need to create a docker
 account to upload our application image so that it could be directly
 referenced by kubernetes later. Once a docker account is registered,
 create a public repository and give it a name. The repository shall be
 accessible by the format '<username>/repositoryname'.
 
+\noindent
 To tag the current docker image that we created on our system we need
 to inform the docker engine to point to our registry. To do so, we
 shall use login command provided by the docker CLI.
@@ -675,9 +702,10 @@ shall use login command provided by the docker CLI.
 \label{Linking a dockerhub account to the local registry}
 \end{figure}
 
+\noindent
 The login request shall ask for a valid docker account userid and
 password. Once authenticated, the docker engine shall establish a link
-with the registry associated with the username.  To upload our docker
+with the registry associated with the username. To upload our docker
 image to the repository, we need to tag the image. Docker provides the
 'tag' command to do so.
 
@@ -690,7 +718,7 @@ image to the repository, we need to tag the image. Docker provides the
 \label{Tagging a local docker image}
 \end{figure}
 
-
+\noindent
 The <tag> can be any name given by the user to uniquely identify the
 image. Once tagged, we need to push the image to the repository using
 the command line 'docker push' command.
@@ -703,15 +731,12 @@ the command line 'docker push' command.
 \label{Pushing an docker image to a registry}
 \end{figure}
 
+\noindent
 As the image is now publicly available on the repository, we can do a
 simple 'docker pull' from any machine to deploy the container with no
 dependencies. This is possible as the image wraps together the
 application code file, the data file and dependent r-base package from
 the latest version of R available on dockerhub's library.
-
-
-\subsection{Deployment via Minikube}
-TODO
 
 \subsection{Deployment via kubeadm}
 
@@ -723,12 +748,13 @@ VM's, cloud servers or physical servers \cite{www-kubernetes-kubeadm}.
 To create a kubernetes cluster, it is essential to install docker,
 kubelet, kubectl and kubeadm on all the machines that are to be a part
 of the network. Kubelet shall help to start pods and containers on all
-the machines of the network.  kubectl allows us to monitor the
+the machines of the network. Kubectl allows us to monitor the
 activities of the cluster once it is up and running. Primarily, it is
 used only on the master node. Kubeadm is used to setup the cluster by
 allowing multiple worker nodes to bind with the master on a unique
 network identifier token.
 
+\noindent
 Once the mentioned components are installed, we need to initialize the
 master so that it can accept requests from other service nodes to join
 the cluster. Master initialization is done with the 'init' command.
@@ -741,6 +767,7 @@ the cluster. Master initialization is done with the 'init' command.
 \label{The master initialization command}
 \end{figure}
 
+\noindent
 Executing the above command tells kubernetes that the host machine
 shall serve as the master in the cluster. Kubeadm initializes all the
 other dependent components like the API server and generates a unique
@@ -756,6 +783,7 @@ part of the join command.
 \label{Syntax of the join command}
 \end{figure}
 
+\noindent
 A few seconds after running the join command we can query the master
 to list the available nodes in the cluster using 'kubectl get nodes' command.
 
@@ -771,16 +799,18 @@ rahpsing-057   Ready     2m
 \label{Registering nodes to the cluster}
 \end{figure}
 
+\noindent
 Before the master is ready to schedule pods, it is imperative that the
 API server and the kubedns service are up and running. We can check
 the status of all the services of the system using the
-'--all-namespaces' agrument along with the "get nodes" command.
+'get nodes' command with the '--all-namespaces' argument.
 
+\noindent
 The kubedns service is responsible for networking with its client
 nodes. Without the kubedns service, the kubernetes master shall be
 unable to schedule pods on the worker nodes as pods cannot communicate
 with each other. To get the service up and running, we need to install
-a pod network.  Kubernetes provides many addon services that can be
+a pod network. Kubernetes provides many addon services that can be
 used to setup the cluster network policy and enable networking. Of the
 list of available addons we shall use 'weave-net' as it provides us
 with a network policy and does not require an external database
@@ -819,6 +849,7 @@ kubernetes cluster. Semantics of a pod are defined in a pod.yaml file
 which is then passed to the kubectl CLI to initialize the pod and
 maintain its desired state.
 
+\noindent
 The pod.yaml file specifies the containers that compose a pod. Each
 container works on top of a docker image that it runs once
 instantiated. We shall use the spamdetection image for our container
@@ -828,13 +859,14 @@ specified in the pod.yaml file on docker's public repository. If the
 matching image is found, the pod is created successfully or it results
 in a pod failure.
 
+\noindent
 Once the semantics of a pod are fixed we can use kubectl to
 instantiate the pod. We can also use 'kubectly apply' if we wish to
 make changes to the definition of the pod and want the implementation
 to reflect it.
 
 
-\begin{figure}[htbp]
+\begin{figure}
 \begin{verbatim}
  kubectl create -f pod.yaml
 \end{verbatim}
@@ -842,11 +874,12 @@ to reflect it.
 \label{Creating a pod}
 \end{figure}
 
+\noindent
 kubectl provides 'get XXX' commands to query status of any type of
 object in the system. We can check the status of our pods by using the
 API's get pods command.
 
-\begin{figure}[htpb]
+\begin{figure}
 \begin{verbatim}
 $ kubectl get pods
 NAME                 READY     STATUS    AGE
@@ -855,6 +888,7 @@ spamdetectionimage   0/1       Running   46s
 \caption{Status of pods in the cluster}
 \label{Status of pods in the cluster}
 \end{figure}
+\noindent
 To get a detailed view of each element we can use the 'describe
 <element\textunderscore name>' command where <element\textunderscore
 name> is unique under each type of component in the system.
@@ -874,7 +908,7 @@ given point in time the system will have 2 replicas of our application
 running. After defining the number, we define the containers whose
 replicas we wish to maintain.
 
-\begin{figure}[H]
+\begin{figure}
 \begin{verbatim}
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -899,10 +933,12 @@ spec:
 \label{Deployment file of the application}
 \end{figure}
 
+\noindent
 kubectl command to create a deployment is the same as the one we used
 to create a pod. The Kube Control API parses the yaml file and
 understands the type of object it is expected to create.
 
+\noindent
 As with pods, the command to list the deployments running on the
 cluster is 'kubectl get deployments'. Now that our deployment is
 created we can check its status by using various kubectl commands. As
@@ -937,11 +973,12 @@ kubectl logs <pod_name>
 \label{Fetching logs for the application}
 \end{figure}
 
+\noindent
 As each pod is hosted on a separate node with a unique ip address, we
-can issue a curl or a wget request to the node to fetch the output.
-Since our application output spans over multiple lines we shall
-redirect and save the output to a file so that it can be referenced at
-any point of time with ease.
+can issue a \emph{curl} or a \emph{wget} request to the node to fetch
+the output.  Since the output produced by our application spans over
+multiple lines we shall redirect and save the output to a file so that
+it can be referenced at any point of time with ease.
 \begin{figure}[H]
 \begin{verbatim}
 curl https://<node_ip>:<node_port>/containerLogs/
@@ -953,6 +990,7 @@ default/<pod_name>/spamdetectionapplication
 \label{Saving container logs to a file}
 \end{figure}
 
+\noindent
 Following the above steps, the application output shall be available
 in the file 'output.txt' in the current directory.
 
@@ -973,16 +1011,342 @@ allowing pod execution.
 \label{Command to schedule pods on the master}
 \end{figure}
 
+\noindent
 Execution of the above statement shall remove the taint
 'node-role.kubernetes.io/master' from all the nodes in the network
 including the master node and thus allowing the scheduler to schedule
 pods across the network \cite{www-kubernetes-kubeadm}. This feature
 also allows us to create a single node cluster.
 
+\section{Deployment using CMD5 Module}
+All the steps required for kubernetes have been implemented using
+Ansible along with python's CMD5 module \cite{www-cmd5}. Python's
+CMD module is a very useful package for creating shell like commands
+but it does not offer the extension of dynamic integration with any
+new customized commands which was the reason why CMD5 module was
+introduced. CMD5 has been rewritten on earlier versions of CMD3 and
+cloudmesh client.
+
+\subsection{Installation of CMD5 Module}
+The most convenient way to install CMD5 module is to checkout all its
+necessary repositories and install the setup file so that we may
+create new commands for our use.
+
+\noindent
+Use the terminal on your windows or mac workstation and clone the
+following 3 repostories. It is mandatory to have \emph{Git}
+\cite{www-git} already installed.
+
+\begin{figure}[H]
+\begin{verbatim}
+$ git clone
+https://github.com/cloudmesh/cloudmesh.common.git
+\end{verbatim}
+\caption{Cloning the cloudmesh.common repo}
+\label{Cloning the cloudmesh.common repo}
+\end{figure}
+
+\begin{figure}[H]
+\begin{verbatim}
+$ git clone
+https://github.com/cloudmesh/cloudmesh.cmd5.git
+\end{verbatim}
+\caption{Cloning the cloudmesh.cmd5 repo}
+\label{Cloning the cloudmesh.cmd5 repo}
+\end{figure}
+
+\begin{figure}[H]
+\begin{verbatim}
+$ git clone
+https://github.com/cloudmesh/cloudmesh.sys.git
+\end{verbatim}
+\caption{Cloning the cloudmesh.sys repo}
+\label{Cloning the cloudmesh.sys repo}
+\end{figure}
+
+\noindent
+After cloning these repositories, we need to enter each repository and
+execute the following statements.
+\newline
+
+\begin{figure}[H]
+\begin{verbatim}
+$ python setup.py install
+\end{verbatim}
+\caption{Executing the setup file}
+\label{Executing the setup file}
+\end{figure}
+
+\begin{figure}[H]
+\begin{verbatim}
+$ pip install .
+\end{verbatim}
+\caption{Installing the command}
+\label{Installing the command}
+\end{figure}
+
+\noindent
+These commands will install common, sys and cmd5 modules in our
+workstation which would lead to successful installation of the CMD5
+module.
+
+\subsection{Running the CMD5 module}
+To launch CMD5, you should open the terminal and type in cms. This
+would launch the CMD5 module with few already existing commands like
+EOF, echo, help, stopwatch etc.
+
+These commands will install common, sys and cmd5 modules in your
+workstation which could be used to generate new commands.
+
+\subsection{Creation of customised CMD5 commands}
+To create your own customized CMD5 command, you must type in the
+following.
+
+\begin{figure}[H]
+\begin{verbatim}
+$ cms sys command generate <command_name>
+\end{verbatim}
+\caption{Creation of customised CMD5 command}
+\label{Creation of customised CMD5 command}
+\end{figure}
+
+
+\noindent
+This command would create a CMD5 command with the name provided as an
+argument. It downloads a template from cloudmesh called cloubmesh.bar
+and generates a new directory cloudmesh.<command\textunderscore name>
+with all the files which are needed to create the new command. It also
+registers it dynamically with cloudmesh. To finish we need to move
+into the newly created directory and execute install the command.
+
+\section{cloudmesh.kubernetes command}
+For our kubernetes deployment, we have
+created our own customized kubernetes command called
+cloudmesh.kubernetes. We have extended the kubernetes command to
+create various sub-commands that help us in setting up a cloud cluster,
+deploying kubernetes and performing benchmarks of the application.
+
+\noindent
+We have created 8 Kubernetes CMD5 sub-commands and each of those
+commands trigger execution of relevant ansible scripts which perform
+the automated deployment for our spam detection application.\newline
+
+\subsection{Kubernetes Name command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes name <cluster_name>
+\end{verbatim}
+\caption{Command to give the cluster a name}
+\vspace{-4mm}
+\label{Command to given the cluster a name}
+\end{figure}
+
+The name option assigns a name to the cluster that is passed as an
+argument. The cluster when deployed will be identified by this name on the
+cloud.
+\subsection{Kubernetes Size command}
+
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes size <size_of_cluster>
+\end{verbatim}
+\caption{Command to define the cluster size}
+\vspace{-4mm}
+\label{Command to define the cluster size}
+\end{figure}
+
+The size option creates a cluster with the desired number of
+nodes. For example, Kubernetes size 2 would create a cluster with 2
+nodes on the specified cloud.
+
+\subsection{Kubernetes Image command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes image <image_name>
+\end{verbatim}
+\caption{Command to define the type of image for the cluster}
+\vspace{-4mm}
+\label{Command to define the type of image for the cluster}
+\end{figure}
+
+This command is used to define the type of image to be used by the
+cluster. For example, the image name could be CC-Ubuntu16.04-20160610
+which is a valid chameleon image. We can also define any valid image
+for the kilo cloud as well. The hard restriction here is that
+whichever cloud we decide to use for the cluster, the image name
+specified to be used should be a valid image available on the cloud.
+
+\subsection{Kubernetes Flavor command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes flavor <flavor_size>
+\end{verbatim}
+\caption{Command to define the flavor for the cluster}
+\vspace{-4mm}
+\label{Command to define the flavor for the cluster}
+\end{figure}
+
+This command is used to define the flavor for each instance within the
+cluster. The 3 different types of flavors can be m1.small, m1.medium
+and m1.large. Depending upon the small, medium or large flavor value
+we are allocated an instance with the appropriate configurations.
+
+\subsection{Kubernetes Cloud command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cloud <cloud_name>
+\end{verbatim}
+\caption{Command to define the cloud on which the cluster will be created}
+\vspace{-4mm}
+\label{Command to define the cloud}
+\end{figure}
+
+This command is used to specify the cloud on which the cluster is to
+be created. Deployment of our application was performed using kilo
+and chameleon clouds as parameter to this command. This setting will
+create the cluster on the desired cloud when the kubernetes cluster
+deploy command will be executed.
+
+\subsection{Kubernetes cluster info command}
+
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cluster info
+\end{verbatim}
+\caption{Command to get details of the cluster to be created}
+\vspace{-4mm}
+\label{Command to getthe details of the cluster to be created}
+\end{figure}
+
+This command would list all the details of the kubernetes cluster
+which was set using the name, size, image, flavor and cloud
+commands. This command helps us to know all the details for our
+kubernetes cluster. This command would print out the name of the
+cluster, its size, the image, the flavor used and the cloud on which
+deployment is expected to be performed.
+
+\subsection{Kubernetes cluster deploy command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cluster deploy
+\end{verbatim}
+\caption{Command to deploy the cluster on the cloud}
+\vspace{-4mm}
+\label{Command to deploy the cluster on the cloud}
+\end{figure}
+
+This command would deploy the Kubernetes cluster with the details set
+in the name, size, image, flavor and cloud commands. If any of the
+above parameters are not set, this would not deploy the cluster and
+ask the user to enter the required details before deploying it.
+
+\noindent
+The deploy command first creates a cluster with the number of
+instances equal to the size specified using the size command with the
+image and flavor specified and deploys the cluster on the cloud
+specified using the kubernetes cloud command. Once the cluster is
+created, the command invokes a series of ansible tasks which install
+the deployment specific pre requiste software on these instances, make
+one instance as the master and others as slave instances. Next,
+Ansible tasks are invoked which install kubernetes on all the
+instances and joins the slaves to the master creating a kubernetes
+cluster.
+
+\subsection{Kubernetes cluster benchmark command}
+%\vspace{-1mm}
+\begin{figure}[H]
+\begin{verbatim}
+$ kubernetes cluster benchmark
+\end{verbatim}
+\caption{Command to benchmark the kubernetes cluster}
+\vspace{-4mm}
+\label{Command to benchmark the kubernetes cluster}
+\end{figure}
+
+This command would benchmark the kubernetes cluster for our spam
+detection application. This command downloads our application docker
+image hosted on dockerhub and deploys it to the cluster. Kubernetes
+creates the desired number of pods based on our deployment
+specification and executes our application by following commands in
+the dockerfile. The kubernetes master is responsible for scheduling of
+pods for the deployment. The pods can begin execution only when all
+the network services in the cluster are ready. We have used
+\emph{weave-net} as our pod-network provider. Weave-net takes a few
+minutes to initialize its networking services and hence we have to
+wait for the pods to be ready before we can fetch the application
+output.
+
+\section{Ansible Deployment}
+Ansible is used for automated deployment of our application on any
+local or remote cluster.
+
+\subsection{Inventory file}
+The inventory file is used to help ansible know which all instances it
+needs to connect to along with a list of the required tasks. For our
+kubernetes deployment, the IP addresses which are generated by the
+respective cloud are stored in the inventory file using
+\emph{ssh-keyscan} command. For our application, we create an
+inventory file having one instance allocated to the kubernetes-master
+host and all other instances allocated to the kubernetes-slave
+hosts. The number of instances depend upon the kubernetes size
+command.
+
+\subsection{Roles and Playbook}
+The roles concept in Ansible allows us to draw a logical meaning to the
+tasks being performed. We can create as many roles as possible and
+define the tasks in those roles. We can then define the list of the
+role-names in the yaml file which would be executed.\newline
+
+\noindent
+For our project, we have created 5 yaml files which serve as our
+playbooks and invoke ansible roles that perform tasks on the remote
+cloud cluster. Each yaml file contains the host name and the roles it
+shall invoke on execution.\newline
+
+\noindent
+The first playbook that is triggered when the CMD5 kubernetes cluster
+deploy command is executed is the installations.yml. This playbook
+performs initial cleaning of previously present files if any on the
+cluster, installs git and performs an update operation on all the
+instances in the cluster.\newline
+
+\noindent
+The playbook kubernetes.yml invokes the setup role which installs
+kubernetes and its dependencies on all the nodes in the
+cluster. \newline
+
+\noindent
+The third playbook to be executed is master.yml playbook. It
+initializes one of the nodes in the cluster as master and initializes
+the kubernetes cluster.\newline
+
+\noindent
+After the master is up and running, the slaves.yml playbook is
+executed which connects the other instances in the cluster to the
+master instance. Each of the slaves executes the kubeadm join command
+which consists of the master's ip address and a unique connection
+token generated by the master to identify itself in the cluster. The
+first 4 playbooks are part of the Kubernetes deploy command.\newline
+
+\noindent
+Once the kubernetes cluster is setup and the master and slave nodes
+are initialized we execute the runningapplicationonkubernetes.yml
+playbook which deploys the spam detection application on one of the
+slave which is dynamically chosen by the master and performs
+benchmarking of the time taken by various algorithms in classifying an
+email as spam or valid.
+
 \section{Classification Results}
 
-After running all the algorithms on our data file the following
-results were achieved.
+After running all the aforementioned algorithms on our data file the
+following results were achieved.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1030,7 +1394,7 @@ myapplication   0/1    ImagePullBackOff  21
 The ImagePullBackOff error indicates that the container was unable to
 fetch the desired image from the repository specified. This happens in
 case of improper tag names associated with the application image or
-reference to a repository that doesnt exist.  By default, any text
+reference to a repository that doesnt exist. By default, any text
 specified against the 'image' key in the pod or deployment file makes
 a direct lookup on dockerhub. Thus any docker image that has been
 built on the system cannot be referenced by the kubernetes engine
@@ -1095,11 +1459,11 @@ cluster. Kubernetes provides various addons to be used as its pod
 network. We tried to use \emph{flannel} but were unable to bind it to
 our network and get the dns service working. After numerous attempts
 we figured out that \emph{weave-net} is the best pod-network that we
-could use as its network was updated to work with the CNI networking
-policy introduced in Kubernetes 1.4. Also, using weave net as our pod
-network allows us to use the weave-kube service where we can observe
-our cluster components and their configurations on a GUI accessible by
-a web browser.
+could use as its network was updated to work with the \emph{CNI}
+networking policy introduced in Kubernetes 1.4. Also, using weave net
+as our pod network allows us to use the weave-kube service where we
+can observe our cluster components and their configurations on a GUI
+accessible by a web browser.
 
 \subsection{Unsuccessful download requests from within a kubernetes pod}
 
@@ -1120,6 +1484,7 @@ unable to reach the network and download the desired packages. We
 could find no precise explanation of this behavior on the kubernetes
 forum or issues opened on stack overflow or kubernetes git page.
 
+\noindent
 As a workaround, we segregated the download statements from the R
 program and included it within our docker file. This modification
 would download and install the R libraries and packages as a part of
@@ -1170,10 +1535,11 @@ Naive Bayes & 5.93 & 6.21 \\[1ex]
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=60mm,height=60mm]{images/algo_comparison.jpg}}
-\caption{fig: Graph plot of algorithm execution time on chameleon and kilo clouds}
-\label{fig: Graph plot of algorithm execution time on chameleon and kilo clouds}
+\caption{Graph plot of algorithm execution time on chameleon and kilo clouds}
+\label{Graph plot of algorithm execution time on chameleon and kilo clouds}
 \end{figure}
 
+\noindent
 Further, the stopwatch command on CMD5 module was used to benchmark
 execution time of kubernetes cluster creation, software deployment and
 installation on both chameleon and kilo cloud. By segmenting the
@@ -1182,23 +1548,152 @@ creation and code deployment we can clearly observe the performance of
 the cluster on each cloud.
 
 
-\section{Discussion}
-TBD
+\begin{figure}[ht]
+\begin{center}
+ \begin{tabular}{|c | c| c|} 
+ \hline
+ Tasks  & Chameleon cloud & Kilo cloud \\
+ & execution time & execution time \\
+ & (seconds) & (seconds) \\ [0.5ex] 
+ \hline\hline
+    
+VM creation & 122 & 148 \\
+\hline
 
-\section{Conclusion}
+Prerequisites & 28.23 & 38.21 \\
+\hline
 
-TBD
+Software installation & 42.83  & 56.43 \\[1ex]
+\hline
+
+Kubernetes Cluster & 20.25 & 21.75 \\
+Creation & & \\[1ex]
+
+\hline
+Pod network & 5.93 & 6.21 \\
+installation & & \\[1ex]
+
+\hline
+Application runtime & 47.28 & 53.24\\[1ex]
+\hline
+
+\end{tabular}
+\end{center}
+  \caption{Algorithm execution time on Chameleon and Kilo cloud}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\fbox{\includegraphics[width=60mm,height=60mm]{images/benchmark_results.png}}
+\caption{Graph plot of application deployment time on chameleon and kilo clouds}
+\label{Graph plot of application deployment time on chameleon and kilo clouds}
+\end{figure}
+
+\noindent
+The benchmarking time mentioned above is an average of 5 runs on both
+chameleon and kilo clouds. Segregating the application deployment
+process into several tasks allowed us to compare time taken by each
+step on both clouds.\newline VM creation - This task included
+cloudmesh and kilo cluster creation. \newline Prerequisites -
+Installation of git and updating the system using apt-get
+update. \newline Software installation - This step included
+downloading docker, kubeadm and kubectl packages, extracting and
+installing them. \newline Kubernetes Cluster Creation - This step
+included creating a kubernetes cluster using the kubectl init
+command. The init command takes some time to generate a unique token
+for the master machine which can be used by clients to join the
+cluster and serve as slaves. This step accounts for the time taken for
+clients to join the cluster. \newline Pod network installation - Pods
+and nodes in a kubernetes cluster cannot communicate without agreeing
+on a common pod network. We used weave-net as the pod network for our
+cluster. Pods cannot start running services unless all the services
+that are part of the CNI are active. \newline Application runtime -
+This is the time taken by the entire program to run including reading
+of the data file and execution of each algorithm.
+
+\section{Summary}
+
+We have successfully deployed and benchmarked a standalone application
+on a kubernetes cluster on both Chameleon and Kilo Clouds. This
+project helped us understand the notion of application portability
+using docker and deployment management using kubernetes. Benchmarking
+results proved that Chameleon cloud performed far better than Kilo
+cloud in all aspects of application deployment as well as execution
+results.
+
+\noindent
+While the application code was developed in a reasonable time, a lot
+of effort was put to find the correct steps of a standalone
+application deployment with kubernetes. We have highlighted a few
+major issues that we faced in this report. Because we went through a
+barrage of failures, we ended up discovering more about kubernetes and
+its deployment features than what was needed for this
+project. However, our struggles also convey that although kubernetes
+offers a variety of cluster management functionalities, it has a steep
+learning curve. Any organization that intends to switch to kubernetes
+for deployment management would need to train its developers and use
+it on sandbox environment for a while before implementing it in
+production.
 
 \section{Acknowledgement}
 
-We acknowledge our professor Gregor von Laszewski and all associate
-instructors for helping us and guiding us throughout this project.
-
-\section{Appendices}
-TBD
+We would like acknowledge our professor Gregor von Laszewski and all
+the associate instructors for motivating and guiding us throughout
+this project.
 
 % Bibliography
 
 \bibliography{references} 
 
+\section*{Author Biographies}
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm]
+                                               % as required for
+                                               % separation of bio
+                                               % photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/rahul_singh.jpg}
+  \end{wrapfigure}
+  \noindent
++{\bfseries Rahul Singh} received his Bachelors in Computer
+Engineering from University of Mumbai, India. He is currently pursuing
+his Masters in Computer Science at School Of Informatics and
+Computing, Indiana University Bloomington.
+
+\end{minipage}
+\endgroup
+
+\noindent
+\begingroup
+\setlength\intextsep{0pt}
+\begin{minipage}[t][3.2cm][t]{1.0\columnwidth} % Adjust height [3.2cm]
+                                               % as required for
+                                               % separation of bio
+                                               % photos.
+  \begin{wrapfigure}{L}{0.25\columnwidth}
+    \includegraphics[width=0.25\columnwidth]{images/sagar_vora.png}
+  \end{wrapfigure}
+  \noindent
++{\bfseries Sagar Vora} received his Bachelors in Computer Sciecne
+from University of Mumbai, India. He is currently pursuing his Masters
+in Computer Science at School Of Informatics and Computing, Indiana
+University Bloomington. During the summer, he interned at Yahoo Inc.
+
+\end{minipage}
+\endgroup
+
+\section{Work breakdown}
+Rahul Singh created the code for spam detection along with its docker
+image. He was responsible for doing research on kubernetes and
+discovering the correct steps for deploying of the application on a
+kubernetes cluster. He has worked on sections of the report related to
+the application, docker and kubernetes. Application benhmarking was
+done in conjunction with Sagar Vora.\\
+
+\noindent
+Sagar Vora was responsible for automating the entire deployment
+process using Ansible and converting the code to CMD5 module. Ansible
+and CMD5 sections of the report were done by him. Application
+benchmarking was done in conjunction with Rahul Singh.
 \end{document}
