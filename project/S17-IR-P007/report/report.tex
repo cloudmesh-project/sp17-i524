@@ -3,7 +3,6 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{float}
-\usepackage{dirtytalk}
 
 \journal{i524} 
 
@@ -66,7 +65,7 @@ algorithms.
 
 \noindent
 To automate application deployment such that it can be tested on any
-environment, \emph{docker} \cite{www-docker-about} is used to
+environment, \emph{Docker} \cite{www-docker-about} is used to
 containerize the application along with the its dependent
 libraries. The cluster management tool - \emph{Kubernetes}
 \cite{www-kubernetes-home}, is used to auto deploy the application on
@@ -111,8 +110,8 @@ by the controlling machine using its \emph{inventory}
 
 \subsubsection{Playbooks}
 
-\say{\emph{Playbooks} are a powerful mode of using Ansible’s
-  configuration, deployment, and orchestration capabilities}
+"{\emph{Playbooks} are a powerful mode of using Ansible’s
+  configuration, deployment, and orchestration capabilities"
 \cite{www-ansible-playbook}. Using playbooks we can govern the rules
 of managing and controlling remote machines. Using inventory files in
 conjunction with the playbooks, we can break down our ansible tasks
@@ -133,8 +132,8 @@ $ ansible-playbook xxx_playbook.yml -i inventory.txt
 \end{figure}
 
 \noindent
-The \say{ansible-playbook} command followed by the playbook name is
-used to execute the playbook.  The \say{-i} option specifies the
+The \emph{ansible-playbook} command followed by the playbook name is
+used to execute the playbook. The \emph{-i} option specifies the
 inventory file that is to be used in conjunction with the playbook
 file.
 
@@ -169,12 +168,13 @@ into isolated containers. Docker automates the repetitive tasks of
 setting up and configuring development environments thus allowing
 developers to focus only on building software. A dockerized
 application can simply ship between platforms as the complexity of
-software dependencies is handled by the container. Docker
-standardizes container creation and can be used to pack, ship and run
-an application as a lightweight container that can run in any
+software dependencies is handled by the container. Docker standardizes
+container creation and can be used to pack, ship and run an
+application as a lightweight container that can run in any
 environment. Docker can be integrated with other devOps applications
-like Puppet, Chef, Vagrant, Ansible and Kubernetes. We shall use
-Docker with Ansible and Kubernetes in our project.
+like \emph{Puppet}, \emph{Chef}, \emph{Vagrant}, \emph{Ansible} and
+\emph{Kubernetes}. We shall use Docker with Ansible and Kubernetes in
+our project.
 
 \subsubsection{Dockerfile and DockerImage}
 To package an application and its dependencies in a single file,
@@ -556,7 +556,7 @@ Dockerfile. A dockerfile is a series of text commands that a user can
 run on a command line to build an image \cite{www-dockerfile-documentation}.
 \newline
 Instructions within a Dockerfile have the following format:
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{verbatim}
  INSTRUCTION  arguments
 \end{verbatim}
@@ -611,7 +611,7 @@ command as stated in the dockerfile below.
 \subsubsection{Creating a docker image}
 Once the Dockerfile is built, we can build the image using docker
 build command as follows.
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{verbatim}
 cc@rahpsing-055:~$ sudo docker build 
 -t  spamdetectionapplication  ~/dockerDirectory/
@@ -1028,11 +1028,11 @@ cloudmesh client.
 
 \subsection{Installation of CMD5 Module}
 The most convenient way to install CMD5 module is to checkout all its
-necessary repositories and install the setup file to get the functionality of
-CMD5 up and running.
+necessary repositories and install the setup file so that we may
+create new commands for our use.
 
 \noindent
-Open up the terminal on your windows or mac workstation and clone the
+Use the terminal on your windows or mac workstation and clone the
 following 3 repostories. It is mandatory to have \emph{Git}
 \cite{www-git} already installed.
 
@@ -1041,8 +1041,8 @@ following 3 repostories. It is mandatory to have \emph{Git}
 $ git clone
 https://github.com/cloudmesh/cloudmesh.common.git
 \end{verbatim}
-\caption{cloning the cloudmesh.common repo}
-\label{cloning the cloudmesh.common repo}
+\caption{Cloning the cloudmesh.common repo}
+\label{Cloning the cloudmesh.common repo}
 \end{figure}
 
 \begin{figure}[H]
@@ -1064,7 +1064,7 @@ https://github.com/cloudmesh/cloudmesh.sys.git
 \end{figure}
 
 \noindent
-After cloning these repositories, you may enter each repository and
+After cloning these repositories, we need to enter each repository and
 execute the following statements.
 \newline
 
@@ -1072,20 +1072,20 @@ execute the following statements.
 \begin{verbatim}
 $ python setup.py install
 \end{verbatim}
-\caption{setting up the repo}
-\label{running the setup for the repo}
+\caption{Executing the setup file}
+\label{Executing the setup file}
 \end{figure}
 
 \begin{figure}[H]
 \begin{verbatim}
 $ pip install .
 \end{verbatim}
-\caption{installing the repo}
-\label{Installing the repo}
+\caption{Installing the command}
+\label{Installing the command}
 \end{figure}
 
 \noindent
-These commands will install common, sys and cmd5 modules in your
+These commands will install common, sys and cmd5 modules in our
 workstation which would lead to successful installation of the CMD5
 module.
 
@@ -1095,8 +1095,7 @@ would launch the CMD5 module with few already existing commands like
 EOF, echo, help, stopwatch etc.
 
 These commands will install common, sys and cmd5 modules in your
-workstation which would lead to successful installation of the CMD5
-module.
+workstation which could be used to generate new commands.
 
 \subsection{Creation of customised CMD5 commands}
 To create your own customized CMD5 command, you must type in the
@@ -1104,7 +1103,7 @@ following.
 
 \begin{figure}[H]
 \begin{verbatim}
-$ cms sys command generate <nameofyourcommand>
+$ cms sys command generate <command_name>
 \end{verbatim}
 \caption{Creation of customised CMD5 command}
 \label{Creation of customised CMD5 command}
@@ -1112,81 +1111,78 @@ $ cms sys command generate <nameofyourcommand>
 
 
 \noindent
-This command would create a CMD5 command with the name provided as an argument. It downloads a template from
-cloudmesh called cloubmesh.bar and generates a new directory
-cloudmesh.<nameofyourcommand> with all the files which are needed to
-create the new command. It also registers it dynamically with
-cloudmesh. To finish we need to move into the newly created directory and
-execute \newline \$ python setup.py install \newline \$ pip install
-. \newline This will successfully install the newly created command
-with the CMD5 module.
+This command would create a CMD5 command with the name provided as an
+argument. It downloads a template from cloudmesh called cloubmesh.bar
+and generates a new directory cloudmesh.<command\textunderscore name>
+with all the files which are needed to create the new command. It also
+registers it dynamically with cloudmesh. To finish we need to move
+into the newly created directory and execute install the command.
 
 \section{cloudmesh.kubernetes command}
 For our kubernetes deployment, we have
-created our own customized kubernetes command called as
+created our own customized kubernetes command called
 cloudmesh.kubernetes. We have extended the kubernetes command to
 create various sub-commands that help us in setting up a cloud cluster,
 deploying kubernetes and performing benchmarks of the application.
 
 \noindent
-We have created 8 Kubernetes CMD5 sub-commands and those commands trigger
-the ansible commands which perform the automated deployment for our
-spam detection application.\newline
+We have created 8 Kubernetes CMD5 sub-commands and each of those
+commands trigger execution of relevant ansible scripts which perform
+the automated deployment for our spam detection application.\newline
 
 \subsection{Kubernetes Name command}
 %\vspace{-1mm}
 \begin{figure}[H]
 \begin{verbatim}
-$ kubernetes name <nameOfTheCluster>
+$ kubernetes name <cluster_name>
 \end{verbatim}
 \caption{Command to give the cluster a name}
 \vspace{-4mm}
 \label{Command to given the cluster a name}
 \end{figure}
 
-This command assigns a name to the cluster given in <nameOfTheCluster>
-placeholder. When the cluster is deployed, it will create a cluster
-with this name on the cloud.
-
+The name option assigns a name to the cluster that is passed as an
+argument. The cluster when deployed will be identified by this name on the
+cloud.
 \subsection{Kubernetes Size command}
 
 %\vspace{-1mm}
 \begin{figure}[H]
 \begin{verbatim}
-$ kubernetes size <sizeOfCluster>
+$ kubernetes size <size_of_cluster>
 \end{verbatim}
 \caption{Command to define the cluster size}
 \vspace{-4mm}
 \label{Command to define the cluster size}
 \end{figure}
 
-This command would create a cluster with the mentioned size in
-<sizeOfCluster> placeholder. For example, Kubernetes size 2 would
-create a cluster with 2 instances on the specified cloud.
+The size option creates a cluster with the desired number of
+nodes. For example, Kubernetes size 2 would create a cluster with 2
+nodes on the specified cloud.
 
 \subsection{Kubernetes Image command}
 %\vspace{-1mm}
 \begin{figure}[H]
 \begin{verbatim}
-$ kubernetes image <imageName>
+$ kubernetes image <image_name>
 \end{verbatim}
 \caption{Command to define the type of image for the cluster}
 \vspace{-4mm}
 \label{Command to define the type of image for the cluster}
 \end{figure}
 
-This command is used to define the type of image which you want for
-the cluster. For example, the image name could be
-CC-Ubuntu16.04-20160610 which is a valid chameleon image. We can also
-define any valid image for the kilo cloud as well. Important thing
-here is that whichever cloud you might define for the cluster, it
-should match with its equivalent valid image.
+This command is used to define the type of image to be used by the
+cluster. For example, the image name could be CC-Ubuntu16.04-20160610
+which is a valid chameleon image. We can also define any valid image
+for the kilo cloud as well. The hard restriction here is that
+whichever cloud we decide to use for the cluster, the image name
+specified to be used should be a valid image available on the cloud.
 
 \subsection{Kubernetes Flavor command}
 %\vspace{-1mm}
 \begin{figure}[H]
 \begin{verbatim}
-$ kubernetes flavor <flavorSize>
+$ kubernetes flavor <flavor_size>
 \end{verbatim}
 \caption{Command to define the flavor for the cluster}
 \vspace{-4mm}
@@ -1202,17 +1198,18 @@ we are allocated an instance with the appropriate configurations.
 %\vspace{-1mm}
 \begin{figure}[H]
 \begin{verbatim}
-$ kubernetes cloud <cloudName>
+$ kubernetes cloud <cloud_name>
 \end{verbatim}
 \caption{Command to define the cloud on which the cluster will be created}
 \vspace{-4mm}
 \label{Command to define the cloud}
 \end{figure}
 
-This command is used to create the cluster with details mentioned
-above on the cloud provided in the cloudname placeholder. For example,
-Kubernetes cloud chameleon. This would create the cluster on chameleon
-cloud when the kubernetes cluster deploy command will be executed.
+This command is used to specify the cloud on which the cluster is to
+be created. Deployment of our application was performed using kilo
+and chameleon clouds as parameter to this command. This setting will
+create the cluster on the desired cloud when the kubernetes cluster
+deploy command will be executed.
 
 \subsection{Kubernetes cluster info command}
 
@@ -1228,10 +1225,10 @@ $ kubernetes cluster info
 
 This command would list all the details of the kubernetes cluster
 which was set using the name, size, image, flavor and cloud
-commands. This would help in giving you all the details for your
+commands. This command helps us to know all the details for our
 kubernetes cluster. This command would print out the name of the
-cluster, its size, the image and the flavor used and on which cloud on
-the console itself.
+cluster, its size, the image, the flavor used and the cloud on which
+deployment is expected to be performed.
 
 \subsection{Kubernetes cluster deploy command}
 %\vspace{-1mm}
@@ -1249,17 +1246,17 @@ in the name, size, image, flavor and cloud commands. If any of the
 above parameters are not set, this would not deploy the cluster and
 ask the user to enter the required details before deploying it.
 
-
 \noindent
-It first creates a cluster with the number of instances equal to the
-size mentioned in the kubernetes size command with the image and
-flavor also mentioned in the respective kubernetes commands and
-deploys it on the cloud mentioned in the kubernetes cloud command.
-After the cluster is created, it calls a series of ansible tasks which
-install some pre requiste softwares on these instances, make one as
-the master instance and others as slave instances and installs
-kubernetes on all the instances and joins the slaves to the master
-creating a kubernetes cluster.
+The deploy command first creates a cluster with the number of
+instances equal to the size specified using the size command with the
+image and flavor specified and deploys the cluster on the cloud
+specified using the kubernetes cloud command. Once the cluster is
+created, the command invokes a series of ansible tasks which install
+the deployment specific pre requiste software on these instances, make
+one instance as the master and others as slave instances. Next,
+Ansible tasks are invoked which install kubernetes on all the
+instances and joins the slaves to the master creating a kubernetes
+cluster.
 
 \subsection{Kubernetes cluster benchmark command}
 %\vspace{-1mm}
@@ -1272,74 +1269,83 @@ $ kubernetes cluster benchmark
 \label{Command to benchmark the kubernetes cluster}
 \end{figure}
 
-This command would benchmark the kubernetes cluster for the spam
-detection application. This would create a docker image for the R
-programming language and then create a kubernetes pod and runs the pod
-on any of the slaves connected to it. This tasks are performed by the
-kubernetes master instance. Running the pod makes the execution of the
-spam detection application and its gives the output after some
-stipulated time.
+This command would benchmark the kubernetes cluster for our spam
+detection application. This command downloads our application docker
+image hosted on dockerhub and deploys it to the cluster. Kubernetes
+creates the desired number of pods based on our deployment
+specification and executes our application by following commands in
+the dockerfile. The kubernetes master is responsible for scheduling of
+pods for the deployment. The pods can begin execution only when all
+the network services in the cluster are ready. We have used
+\emph{weave-net} as our pod-network provider. Weave-net takes a few
+minutes to initialize its networking services and hence we have to
+wait for the pods to be ready before we can fetch the application
+output.
 
 \section{Ansible Deployment}
-Ansible is used for automated deployment of your application on any
+Ansible is used for automated deployment of our application on any
 local or remote cluster.
 
 \subsection{Inventory file}
-The inventory file is used to let ansible know which all instances
-does it has to connect and do the required tasks. For our kubernetes
-deployment, the IP addresses which are generated by the respective
-cloud are stored in the inventory file using ssh-keyscan command. This
-command is executed throught the CMD5 module. For our application, we
-create an inventory file having one instance allocated to the
-Kubernetes-master host and rest all instances allocated to the
-kubernetes-slave hosts. The number of instances depend upon the
-Kubernetes size command.
+The inventory file is used to help ansible know which all instances it
+needs to connect to along with a list of the required tasks. For our
+kubernetes deployment, the IP addresses which are generated by the
+respective cloud are stored in the inventory file using
+\emph{ssh-keyscan} command. For our application, we create an
+inventory file having one instance allocated to the kubernetes-master
+host and all other instances allocated to the kubernetes-slave
+hosts. The number of instances depend upon the kubernetes size
+command.
 
 \subsection{Roles and Playbook}
-The roles concept in Ansible allows to draw a logical meaning to the
-tasks being performed. You can create as many roles as possible and
-define the tasks in those roles. You can then define the list of the
-role names in the yml file which would be executed.\newline
+The roles concept in Ansible allows us to draw a logical meaning to the
+tasks being performed. We can create as many roles as possible and
+define the tasks in those roles. We can then define the list of the
+role-names in the yaml file which would be executed.\newline
 
 \noindent
-For our Kubernetes project, we have created 5 yml files called as
-ansible playbook which would be executed to perform tasks on the
-remote cloud cluster. These files contain the host name and the roles
-in it.\newline
+For our project, we have created 5 yaml files which serve as our
+playbooks and invoke ansible roles that perform tasks on the remote
+cloud cluster. Each yaml file contains the host name and the roles it
+shall invoke on execution.\newline
 
 \noindent
-The first playbook which is triggered when the CMD5 kubernetes cluster
+The first playbook that is triggered when the CMD5 kubernetes cluster
 deploy command is executed is the installations.yml. This playbook
-does initial cleaning of previously present files if any on the
+performs initial cleaning of previously present files if any on the
 cluster, installs git and performs an update operation on all the
 instances in the cluster.\newline
 
 \noindent
-Next up is kubernetes.yml playbook which has the setup role which sets
-up kubernetes in all the instances in the cluster. \newline
+The playbook kubernetes.yml invokes the setup role which installs
+kubernetes and its dependencies on all the nodes in the
+cluster. \newline
 
 \noindent
 The third playbook to be executed is master.yml playbook. It
-initializes one of the cluster as master instance in the kubernetes
-cluster and initializes the kubernetes cluster.\newline
+initializes one of the nodes in the cluster as master and initializes
+the kubernetes cluster.\newline
 
 \noindent
 After the master is up and running, the slaves.yml playbook is
-executed which connects the rest of all the instances to the master
-instance. It takes the master's ip address and token generated and
-executes the join command in kubeadm library. The first 4 playbooks
-are part of the Kubernetes deploy command.\newline
+executed which connects the other instances in the cluster to the
+master instance. Each of the slaves executes the kubeadm join command
+which consists of the master's ip address and a unique connection
+token generated by the master to identify itself in the cluster. The
+first 4 playbooks are part of the Kubernetes deploy command.\newline
 
 \noindent
-Last is the runningapplicationonkubernetes.yml playbook which executes
-the spam detection application on one of the slave which is
-dynamically chosen and performs benchmarking of the time taken by
-various algorithms in classifying an email as spam or valid.
+Once the kubernetes cluster is setup and the master and slave nodes
+are initialized we execute the runningapplicationonkubernetes.yml
+playbook which deploys the spam detection application on one of the
+slave which is dynamically chosen by the master and performs
+benchmarking of the time taken by various algorithms in classifying an
+email as spam or valid.
 
 \section{Classification Results}
 
-After running all the algorithms on our data file the following
-results were achieved.
+After running all the aforementioned algorithms on our data file the
+following results were achieved.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1452,11 +1458,11 @@ cluster. Kubernetes provides various addons to be used as its pod
 network. We tried to use \emph{flannel} but were unable to bind it to
 our network and get the dns service working. After numerous attempts
 we figured out that \emph{weave-net} is the best pod-network that we
-could use as its network was updated to work with the CNI networking
-policy introduced in Kubernetes 1.4. Also, using weave net as our pod
-network allows us to use the weave-kube service where we can observe
-our cluster components and their configurations on a GUI accessible by
-a web browser.
+could use as its network was updated to work with the \emph{CNI}
+networking policy introduced in Kubernetes 1.4. Also, using weave net
+as our pod network allows us to use the weave-kube service where we
+can observe our cluster components and their configurations on a GUI
+accessible by a web browser.
 
 \subsection{Unsuccessful download requests from within a kubernetes pod}
 
@@ -1578,30 +1584,31 @@ Application runtime & 47.28 & 53.24\\[1ex]
 \begin{figure}[htbp]
 \centering
 \fbox{\includegraphics[width=60mm,height=60mm]{images/benchmark_results.png}}
-\caption{Graph plot of algorithm execution time on chameleon and kilo clouds}
-\label{Graph plot of algorithm execution time on chameleon and kilo clouds}
+\caption{Graph plot of application deployment time on chameleon and kilo clouds}
+\label{Graph plot of application deployment time on chameleon and kilo clouds}
 \end{figure}
 
 \noindent
 The benchmarking time mentioned above is an average of 5 runs on both
 chameleon and kilo clouds. Segregating the application deployment
 process into several tasks allowed us to compare time taken by each
-step on both clouds. VM creation - This task included cloudmesh and
-kilo cluster creation. Prerequisites - Installation of git and
-updating the system using apt-get update. Software installation -
-This step included downloading docker, kubeadm and kubectl packages,
-extracting and installing them. Kubernetes Cluster Creation - This
-step included creating a kubernetes cluster using the kubectl init
+step on both clouds.\newline VM creation - This task included
+cloudmesh and kilo cluster creation. \newline Prerequisites -
+Installation of git and updating the system using apt-get
+update. \newline Software installation - This step included
+downloading docker, kubeadm and kubectl packages, extracting and
+installing them. \newline Kubernetes Cluster Creation - This step
+included creating a kubernetes cluster using the kubectl init
 command. The init command takes some time to generate a unique token
 for the master machine which can be used by clients to join the
 cluster and serve as slaves. This step accounts for the time taken for
-clients to join the cluster. Pod network installation - Pods and
-nodes in a kubernetes cluster cannot communicate without agreeing on a
-common pod network. We used weave-net as the pod network for our
+clients to join the cluster. \newline Pod network installation - Pods
+and nodes in a kubernetes cluster cannot communicate without agreeing
+on a common pod network. We used weave-net as the pod network for our
 cluster. Pods cannot start running services unless all the services
-that are part of the CNI are active. Application runtime - This is
-the time taken by the entire program to run including reading of the
-data file and execution of each algorithm.
+that are part of the CNI are active. \newline Application runtime -
+This is the time taken by the entire program to run including reading
+of the data file and execution of each algorithm.
 
 \section{Summary}
 
@@ -1664,7 +1671,7 @@ Computing, Indiana University Bloomington.
                                                % separation of bio
                                                % photos.
   \begin{wrapfigure}{L}{0.25\columnwidth}
-    \includegraphics[width=0.25\columnwidth]{images/sagar_vora.png}
+    \includegraphics[width=0.25\columnwidth]{images/sagar_vora.jpg}
   \end{wrapfigure}
   \noindent
 +{\bfseries Sagar Vora} received his Bachelors in Computer Sciecne
