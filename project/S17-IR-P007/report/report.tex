@@ -83,7 +83,7 @@ Chameleon cloud and Kilo cloud.
 
 \subsection{Ansible}
 Human labour has been replaced by machines and the world is moving
-towards an age of automation. Computer Scientists prefer writing
+towards an age of automation. Computer scientists prefer writing
 scripts to perform their daily activities instead of manually
 performing them again and again. Ansible is an open source automation
 engine that can be used to automate tasks such as cloud instance
@@ -141,7 +141,7 @@ file.
 R is a language and environment for statistical computing and graphics
 \cite{www-about-rproject}. R provides a variety of statistical model
 analysis, classification, clustering and graphical techniques to
-provide this environment. R's capability allows us to build a highly a
+provide this environment. R's capability allows us to build a highly
 desirable analysis model for our application.
 
 
@@ -155,7 +155,7 @@ different platforms without worrying about resource
 dependencies. Application containerization is an OS (Operating System)
 level \emph{virtualization} \cite{www-virtualization-wiki} for
 deploying and running an application instance without launching a
-virtual mahine for each application \cite{www-containerization}. A
+virtual machine for each application \cite{www-containerization}. A
 container has its own environment variables, filesystem and libraries
 that is needed by the application, thus eliminating OS or hardware
 dependency. Containers abstract the OS kernel while a \emph{VM
@@ -267,10 +267,10 @@ that manage the master or control plane.
 \newline
 The Kubernetes master node is responsible for managing the kubernetes
 cluster and orchestrating the worker nodes, where the actual pods are
-scheduled. The master node can work as a single node cluster where it
-can schedule pods to work on the master node itself by tainting the
-schedule policy rule on the node. The master node also referred as
-the control plane consists of several components:
+scheduled. The master node can also work as a single node cluster
+where it can schedule pods to work on the master node itself by
+tainting the schedule policy rule on the node. The master node also
+referred as the control plane consists of several components:
 
 \subsubsection{API Server}
 The API server is the most fundamental component of the Kubernetes
@@ -346,7 +346,7 @@ and events in the cluster.
 
 \section{Design}
 
-\section{About the Application}
+\subsection{About the Application}
 We are using a series of machine learning algorithms and shall compare
 their perfomance in terms of classifier accuracy. To build our
 classifier and check its accuracy, we shall partition the data into 2
@@ -1085,7 +1085,7 @@ $ pip install .
 \end{figure}
 
 \noindent
-These commands will install common, sys and cmd5 modules in our
+These commands will install common, sys and cmd5 modules in your
 workstation which would lead to successful installation of the CMD5
 module.
 
@@ -1093,9 +1093,6 @@ module.
 To launch CMD5, you should open the terminal and type in cms. This
 would launch the CMD5 module with few already existing commands like
 EOF, echo, help, stopwatch etc.
-
-These commands will install common, sys and cmd5 modules in your
-workstation which could be used to generate new commands.
 
 \subsection{Creation of customised CMD5 commands}
 To create your own customized CMD5 command, you must type in the
@@ -1116,7 +1113,8 @@ argument. It downloads a template from cloudmesh called cloubmesh.bar
 and generates a new directory cloudmesh.<command\textunderscore name>
 with all the files which are needed to create the new command. It also
 registers it dynamically with cloudmesh. To finish we need to move
-into the newly created directory and execute install the command.
+into the newly created directory and execute the setup and install
+commands.
 
 \section{cloudmesh.kubernetes command}
 For our kubernetes deployment, we have
@@ -1253,10 +1251,9 @@ image and flavor specified and deploys the cluster on the cloud
 specified using the kubernetes cloud command. Once the cluster is
 created, the command invokes a series of ansible tasks which install
 the deployment specific pre requiste software on these instances, make
-one instance as the master and others as slave instances. Next,
-Ansible tasks are invoked which install kubernetes on all the
-instances and joins the slaves to the master creating a kubernetes
-cluster.
+one instance as the master and others as slaves. Next, Ansible tasks
+are invoked which install kubernetes on all the instances and joins
+the slaves to the master creating a kubernetes cluster.
 
 \subsection{Kubernetes cluster benchmark command}
 %\vspace{-1mm}
@@ -1317,8 +1314,8 @@ cluster, installs git and performs an update operation on all the
 instances in the cluster.\newline
 
 \noindent
-The playbook kubernetes.yml invokes the setup role which installs
-kubernetes and its dependencies on all the nodes in the
+The second playbook kubernetes.yml invokes the setup role which
+installs kubernetes and its dependencies on all the nodes in the
 cluster. \newline
 
 \noindent
@@ -1397,7 +1394,7 @@ reference to a repository that doesnt exist. By default, any text
 specified against the 'image' key in the pod or deployment file makes
 a direct lookup on dockerhub. Thus any docker image that has been
 built on the system cannot be referenced by the kubernetes engine
-unless it is tagged an uploaded to a public repository on
+unless it is tagged and uploaded to a public repository on
 dockerhub. Dockerhub allows users to create public repositories for no
 charges. Thus, the only way to use your custom created image is to
 register for an account on dockerhub, create a public repository,
