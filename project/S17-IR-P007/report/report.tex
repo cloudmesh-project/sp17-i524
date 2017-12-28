@@ -961,16 +961,11 @@ containers. Our application executes in of the containers within the
 pod. Since our application prints output to the console, we shall be
 able to view it by accessing logs of the relevant pod.
 
-\begin{figure}[H]
 \begin{verbatim}
-kubectl get pods | grep spamdetectionapplication*
+$ kubectl get pods | grep spamdetectionapplication*
 
-kubectl logs <pod_name>
+$ kubectl logs <pod_name>
 \end{verbatim}
-\caption{Fetching logs for the application}
-\vspace{-4mm}
-\label{Fetching logs for the application}
-\end{figure}
 
 \noindent
 As each pod is hosted on a separate node with a unique ip address, we
@@ -978,37 +973,27 @@ can issue a \emph{curl} or a \emph{wget} request to the node to fetch
 the output.  Since the output produced by our application spans over
 multiple lines we shall redirect and save the output to a file so that
 it can be referenced at any point of time with ease.
-\begin{figure}[H]
+
 \begin{verbatim}
-curl https://<node_ip>:<node_port>/containerLogs/
+$ curl https://<node_ip>:<node_port>/containerLogs/
 default/<pod_name>/spamdetectionapplication 
 --insecure > output.txt
 \end{verbatim}
-\caption{Saving container logs to a file}
-\vspace{-4mm}
-\label{Saving container logs to a file}
-\end{figure}
 
 \noindent
 Following the above steps, the application output shall be available
 in the file 'output.txt' in the current directory.
-
 
 \subsubsection{Scheduling pods on the master}
 By default, kubernetes does not allow pods to be
 scheduled on the master node for security purposes. However, this
 setting can be overridden by removing the taint on the master node and
 allowing pod execution.
-%\vspace{-1mm}
-\begin{figure}[H]
+
 \begin{verbatim}
- kubectl taint nodes --all node-role.kubernetes.io/
+$ kubectl taint nodes --all node-role.kubernetes.io/
  master-
 \end{verbatim}
-\caption{Command to schedule pods on the master}
-\vspace{-4mm}
-\label{Command to schedule pods on the master}
-\end{figure}
 
 \noindent
 Execution of the above statement shall remove the taint
@@ -1036,53 +1021,32 @@ Use the terminal on your windows or mac workstation and clone the
 following 3 repostories. It is mandatory to have \emph{Git}
 \cite{www-git} already installed.
 
-\begin{figure}[H]
 \begin{verbatim}
 $ git clone
 https://github.com/cloudmesh/cloudmesh.common.git
 \end{verbatim}
-\caption{Cloning the cloudmesh.common repo}
-\label{Cloning the cloudmesh.common repo}
-\end{figure}
 
-\begin{figure}[H]
 \begin{verbatim}
 $ git clone
 https://github.com/cloudmesh/cloudmesh.cmd5.git
 \end{verbatim}
-\caption{Cloning the cloudmesh.cmd5 repo}
-\label{Cloning the cloudmesh.cmd5 repo}
-\end{figure}
 
-\begin{figure}[H]
 \begin{verbatim}
 $ git clone
 https://github.com/cloudmesh/cloudmesh.sys.git
 \end{verbatim}
-\caption{Cloning the cloudmesh.sys repo}
-\label{Cloning the cloudmesh.sys repo}
-\end{figure}
 
 \noindent
 After cloning these repositories, we need to enter each repository and
 execute the following statements.
-\newline
 
-\begin{figure}[H]
 \begin{verbatim}
 $ python setup.py install
 \end{verbatim}
-\caption{Executing the setup file}
-\label{Executing the setup file}
-\end{figure}
 
-\begin{figure}[H]
 \begin{verbatim}
 $ pip install .
 \end{verbatim}
-\caption{Installing the command}
-\label{Installing the command}
-\end{figure}
 
 \noindent
 These commands will install common, sys and cmd5 modules in your
@@ -1098,14 +1062,9 @@ EOF, echo, help, stopwatch etc.
 To create your own customized CMD5 command, you must type in the
 following.
 
-\begin{figure}[H]
 \begin{verbatim}
 $ cms sys command generate <command_name>
 \end{verbatim}
-\caption{Creation of customised CMD5 command}
-\label{Creation of customised CMD5 command}
-\end{figure}
-
 
 \noindent
 This command would create a CMD5 command with the name provided as an
@@ -1129,46 +1088,31 @@ commands trigger execution of relevant ansible scripts which perform
 the automated deployment for our spam detection application.\newline
 
 \subsection{Kubernetes Name command}
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
 $ kubernetes name <cluster_name>
 \end{verbatim}
-\caption{Command to give the cluster a name}
-\vspace{-4mm}
-\label{Command to given the cluster a name}
-\end{figure}
 
+\noindent
 The name option assigns a name to the cluster that is passed as an
 argument. The cluster when deployed will be identified by this name on the
 cloud.
-\subsection{Kubernetes Size command}
 
-%\vspace{-1mm}
-\begin{figure}[H]
+\subsection{Kubernetes Size command}
 \begin{verbatim}
 $ kubernetes size <size_of_cluster>
 \end{verbatim}
-\caption{Command to define the cluster size}
-\vspace{-4mm}
-\label{Command to define the cluster size}
-\end{figure}
 
+\noindent
 The size option creates a cluster with the desired number of
 nodes. For example, Kubernetes size 2 would create a cluster with 2
 nodes on the specified cloud.
 
 \subsection{Kubernetes Image command}
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
 $ kubernetes image <image_name>
 \end{verbatim}
-\caption{Command to define the type of image for the cluster}
-\vspace{-4mm}
-\label{Command to define the type of image for the cluster}
-\end{figure}
 
+\noindent
 This command is used to define the type of image to be used by the
 cluster. For example, the image name could be CC-Ubuntu16.04-20160610
 which is a valid chameleon image. We can also define any valid image
@@ -1177,32 +1121,22 @@ whichever cloud we decide to use for the cluster, the image name
 specified to be used should be a valid image available on the cloud.
 
 \subsection{Kubernetes Flavor command}
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
 $ kubernetes flavor <flavor_size>
 \end{verbatim}
-\caption{Command to define the flavor for the cluster}
-\vspace{-4mm}
-\label{Command to define the flavor for the cluster}
-\end{figure}
 
+\noindent
 This command is used to define the flavor for each instance within the
 cluster. The 3 different types of flavors can be m1.small, m1.medium
 and m1.large. Depending upon the small, medium or large flavor value
 we are allocated an instance with the appropriate configurations.
 
 \subsection{Kubernetes Cloud command}
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
 $ kubernetes cloud <cloud_name>
 \end{verbatim}
-\caption{Command to define the cloud on which the cluster will be created}
-\vspace{-4mm}
-\label{Command to define the cloud}
-\end{figure}
 
+\noindent
 This command is used to specify the cloud on which the cluster is to
 be created. Deployment of our application was performed using kilo
 and chameleon clouds as parameter to this command. This setting will
@@ -1210,17 +1144,11 @@ create the cluster on the desired cloud when the kubernetes cluster
 deploy command will be executed.
 
 \subsection{Kubernetes cluster info command}
-
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
 $ kubernetes cluster info
 \end{verbatim}
-\caption{Command to get details of the cluster to be created}
-\vspace{-4mm}
-\label{Command to getthe details of the cluster to be created}
-\end{figure}
 
+\noindent
 This command would list all the details of the kubernetes cluster
 which was set using the name, size, image, flavor and cloud
 commands. This command helps us to know all the details for our
@@ -1229,16 +1157,11 @@ cluster, its size, the image, the flavor used and the cloud on which
 deployment is expected to be performed.
 
 \subsection{Kubernetes cluster deploy command}
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
 $ kubernetes cluster deploy
 \end{verbatim}
-\caption{Command to deploy the cluster on the cloud}
-\vspace{-4mm}
-\label{Command to deploy the cluster on the cloud}
-\end{figure}
 
+\noindent
 This command would deploy the Kubernetes cluster with the details set
 in the name, size, image, flavor and cloud commands. If any of the
 above parameters are not set, this would not deploy the cluster and
@@ -1256,16 +1179,11 @@ are invoked which install kubernetes on all the instances and joins
 the slaves to the master creating a kubernetes cluster.
 
 \subsection{Kubernetes cluster benchmark command}
-%\vspace{-1mm}
-\begin{figure}[H]
 \begin{verbatim}
-$ kubernetes cluster benchmark
+$ Kubernetes cluster Benchmark
 \end{verbatim}
-\caption{Command to benchmark the kubernetes cluster}
-\vspace{-4mm}
-\label{Command to benchmark the kubernetes cluster}
-\end{figure}
 
+\noindent
 This command would benchmark the kubernetes cluster for our spam
 detection application. This command downloads our application docker
 image hosted on dockerhub and deploys it to the cluster. Kubernetes
