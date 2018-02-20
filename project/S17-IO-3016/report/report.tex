@@ -17,8 +17,8 @@
 \ociscodes{CouchDB}
 
 % replace this with your url in github/gitlab
-\doi{Report: \url{https://github.com/lmundia/sp17-i524/tree/master/project/S17-IO-3016/report/report.pdf}\\
-Code: \url{https://github.com/lmundia/sp17-i524/tree/master/project/S17-IO-3016/code}}
+\doi{Report: \url{https://github.com/rrufael/sp17-i524/blob/master/project/S17-IO-3016/report/report.pdf}\\
+Code: \url{https://github.com/rrufael/sp17-i524/tree/master/project/S17-IO-3016/code}}
 
 
 
@@ -40,11 +40,19 @@ CouchDB \cite{www-Couchdb} is a no sql database management system
 under Apache. Data is stored as documents in CouchDB. In this project
 CouchDB cluster of one or more Chameleon cloud VMs is deployed using
 Ansible playbook and benchmarking is done to measure the time it took
-for deployement using a TBD benchmarking tool.
+for deployement using Bash scripts.After installation of CouchDB
+cluster on Chameleon cloud VM, benchmarking test will be performed on
+measuring write and read time on CouchDB database. The dataset which
+is going to be used for write and read on CouchDB is the wine review
+dataset \cite{www-WineReview}.
 
 \section{Execution Plan}
 
-This section depicts week by week execution plan for the project
+This section depicts week by week execution plan for the project. My
+plan is to finish the project in six weeks. To accomplish this I need
+Chameleon cloud allocation for six weeks. I plan on using 10 node
+hours per week. The anticipated node hours I will need to complete
+the project is 60 node hours on Chameleon cloud.
 
 \subsection{Week 1}
 
@@ -73,6 +81,11 @@ VMs. Benchmark time it takes to deploy CouchDB on Chameleon Cloud VMs.
 
 Analysis of the benchmark results for deployment of CouchDB
 cluster. Document results in report and finalize report.
+
+\subsection{Week 6}
+
+Load the wine review dataset into CouchDB database, benchmark write time
+and read time.
 
 \section{Technologies Used}
 \begin{itemize}
