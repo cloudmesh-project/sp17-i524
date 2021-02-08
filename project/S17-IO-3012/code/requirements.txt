@@ -33,7 +33,7 @@ functools32==3.2.3.post2
 future==0.15.2
 futures==3.0.5
 gitchangelog==2.3.0
-httplib2==0.9.1
+httplib2==0.19.0
 httpsig==1.1.2
 humanize==0.5.1
 idna==2.1
