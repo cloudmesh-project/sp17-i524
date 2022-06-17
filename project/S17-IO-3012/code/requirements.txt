@@ -81,6 +81,6 @@ stevedore==1.15.0
 unity-lens-photos==1.0
 urllib3==1.16
 virtualenv==15.1.0
-Werkzeug==0.11.10
+Werkzeug==0.15.3
 wrapt==1.10.8
 WTForms==2.1
